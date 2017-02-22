@@ -1,5 +1,3 @@
-//TEST, GEEN ECHTE KLASSE
-
 
 /*
  * This code was written by Casper Verswijvelt
@@ -14,24 +12,53 @@ package domein;
  */
 public class Kaart {
     //Atributen
-    private int nummer;
-    private boolean speciaal;
+    private int waarde;
+    private char type;
     
     //Constructor
-    public Kaart(int nummer) {
+    public Kaart(char type,int waarde) {
+        controleerType(type);
+        controleerWaarde(waarde);
         
+        this.waarde = waarde;
+        this.type = type;
+    }
+    
+    //Methodes
+    @Override
+    public String toString(){
+        return String.format("%s%d"
+                ,type=='*'?"+/-":type
+                ,waarde);
     }
     //Controle
-    
+    public void controleerWaarde(int waarde) {
+        if(waarde<1||waarde>6)
+            throw new IllegalArgumentException("De waarde van een kaart kan minimaal 1 en maximaal 6 zijn.");
+    }
+    public void controleerType(char type) {
+        if(type!='+' && type!='-' && type!='*' )
+            throw new IllegalArgumentException("Het type kan '+', '-' of '*' zijn.");
+    }
     //Getters & Setters
-
-    public int getNummer() {
-        return nummer;
+    public int getWaarde() {
+        return waarde;
     }
 
-    public void setNummer(int nummer) {
-        this.nummer = nummer;
+    public void setWaarde(int waarde) {
+        controleerWaarde(waarde);
+        this.waarde = waarde;
     }
+
+    public char getType() {
+        return type;
+    }
+
+    public void setType(char type) {
+        controleerType(type);
+        this.type = type;
+    }
+    
     
     
 }
