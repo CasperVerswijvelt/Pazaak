@@ -39,6 +39,16 @@ public class Stapel {
         this.kaarten.addAll(Arrays.asList(kaartenArray));
     }
     
+    //Methodes
+    @Override
+    public String toString() {
+        String res = "";
+        for(Kaart kaart: kaarten) {
+            res+= kaart + " ";
+        }
+        return res;
+    }
+    
     //Getters & Setters
 
     public List<Kaart> getKaarten() {

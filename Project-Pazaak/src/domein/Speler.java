@@ -16,18 +16,22 @@ public class Speler {
     private int krediet;
     private String naam;
     private int geboorteJaar;
+    private Stapel stapel;
     
-    //Constructtor
-    public Speler(String naam, int geboorteJaar, int krediet) {
+    //Constructors
+        //Nieuwe speler
+    public Speler(String naam, int geboorteJaar, int krediet, Stapel stapel) {
         controleerGeboorteJaar(geboorteJaar);
         controleerNaam(naam);
         
+        this.stapel = stapel;
         this.naam=naam;
         this.geboorteJaar=geboorteJaar;
         this.krediet=krediet;
     }
+        //Speler uit DB
     public Speler(String naam, int geboorteJaar) {
-        this(naam, geboorteJaar, 0);
+        this(naam, geboorteJaar, 0, new Stapel());
     }
     
     //Getters & Setters
@@ -56,6 +60,15 @@ public class Speler {
         controleerGeboorteJaar(geboorteJaar);
         this.geboorteJaar = geboorteJaar;
     }
+
+    public Stapel getStapel() {
+        return stapel;
+    }
+
+    public void setStapel(Stapel stapel) {
+        this.stapel = stapel;
+    }
+    
     
     //Controle
     private void controleerNaam(String naam) {
