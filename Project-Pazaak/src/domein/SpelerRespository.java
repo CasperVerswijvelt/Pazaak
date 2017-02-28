@@ -11,10 +11,8 @@ public class SpelerRespository {
     public SpelerRespository() {
         this.spelers = new ArrayList<>();
     }
-    /**
-     *
-     * @param speler
-     */
+    
+    //Methodes
     public void voegToe(Speler speler) {
         if(!bestaat(speler.getNaam()))
             spelers.add(speler);
@@ -22,10 +20,6 @@ public class SpelerRespository {
             throw new IllegalArgumentException("Naam is al in gebruik!");
     }
 
-    /**
-	 * 
-	 * @param naam
-	 */
     private boolean bestaat(String naam) {
         if (spelers == null) {
             return false;
@@ -36,4 +30,15 @@ public class SpelerRespository {
         }
         return false;
     }
+    
+    //Getters & Setterr
+
+    public Collection<Speler> getSpelers() {
+        return spelers;
+    }
+
+    public void setSpelers(Collection<Speler> spelers) {
+        this.spelers = spelers;
+    }
+    
 }

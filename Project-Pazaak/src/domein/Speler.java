@@ -8,7 +8,6 @@ public class Speler {
     private int krediet;
     private int geboorteDatum;
     private Stapel stapel;
-    private int taal;
 
     /**
      *
@@ -21,7 +20,7 @@ public class Speler {
     
 
     //Constructors
-    //Speler uit DB
+        //Speler uit DB
     public Speler(String naam, int geboorteJaar, int krediet, Stapel stapel) {
         controleerGeboorteJaar(geboorteJaar);
         controleerNaam(naam);
@@ -31,7 +30,7 @@ public class Speler {
         this.geboorteDatum = geboorteJaar;
         this.krediet = krediet;
     }
-    //Nieuwe speler
+        //Nieuwe speler
     public Speler(String naam, int geboorteDatum) {
         this(naam, geboorteDatum, 0, new Stapel());
     }
