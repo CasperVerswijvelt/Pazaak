@@ -1,7 +1,7 @@
 /*
  * This code was written by Casper Verswijvelt
  * Any unauthorized use is illegal.
- * � Casper Verswijvelt 2016-2017
+ * ? Casper Verswijvelt 2016-2017
  */
 package domein;
 
@@ -12,22 +12,48 @@ import domein.*;
  * @author Casper
  */
 public class DomeinController {
+    //Attributen
 
-	private Spel spel;
+    private Spel spel;
+    private SpelerRespository spelerRepo;
 
-	/**
-	 * 
-	 * @param naam
-	 * @param geboorteDatum
-	 */
-	public void maakNieuweSpelerAan(String naam, int geboorteDatum) {
-		
-	}
+    //Constructor
+    public DomeinController() {
+        spel = new Spel();
+        spelerRepo= new SpelerRespository();
+    }
 
-	public void startPazaak() {
-		// TODO - implement DomeinController.startPazaak
-		throw new UnsupportedOperationException();
-	}
+    /**
+     *
+     * @param naam
+     * @param geboorteDatum
+     */
+    public void maakNieuweSpelerAan(String naam, int geboorteDatum) {
+        spelerRepo.maakNieuweSpelerAan(naam, geboorteDatum);
+    }
+
+    public void startPazaak() {
+        // TODO - implement DomeinController.startPazaak
+        throw new UnsupportedOperationException();
+    }
     
+    //Getters & Setters
+
+    public Spel getSpel() {
+        return spel;
+    }
+
+    public void setSpel(Spel spel) {
+        this.spel = spel;
+    }
+
+    public SpelerRespository getSpelerRepo() {
+        return spelerRepo;
+    }
+
+    public void setSpelerRepo(SpelerRespository spelerRepo) {
+        this.spelerRepo = spelerRepo;
+    }
     
+
 }

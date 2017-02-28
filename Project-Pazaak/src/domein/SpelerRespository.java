@@ -11,15 +11,16 @@ public class SpelerRespository {
     public SpelerRespository() {
         this.spelers = new ArrayList<>();
     }
-    
+
     //Methodes
     public void voegToe(Speler speler) {
-        if(!bestaat(speler.getNaam()))
+        if (!bestaat(speler.getNaam())) {
             spelers.add(speler);
-        else
+        } else {
             throw new IllegalArgumentException("Naam is al in gebruik!");
+        }
     }
-
+    
     private boolean bestaat(String naam) {
         if (spelers == null) {
             return false;
@@ -30,15 +31,24 @@ public class SpelerRespository {
         }
         return false;
     }
-    
-    //Getters & Setterr
 
+    //Getters & Setterr
     public Collection<Speler> getSpelers() {
         return spelers;
     }
-
+    
     public void setSpelers(Collection<Speler> spelers) {
         this.spelers = spelers;
+    }
+
+    /**
+     *
+     * @param naam
+     * @param geboorteDatum
+     */
+    public void maakNieuweSpelerAan(String naam, int geboorteDatum) {
+        Speler speler = new Speler(naam, geboorteDatum);
+        spelers.add(speler);
     }
     
 }
