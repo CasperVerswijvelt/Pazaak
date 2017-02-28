@@ -1,23 +1,39 @@
 package domein;
 
+import java.util.*;
+
 public class SpelerRespository {
 
-	/**
-	 * 
-	 * @param speler
-	 */
-	public void voegToe(Speler speler) {
-		// TODO - implement SpelerRespository.voegToe
-		throw new UnsupportedOperationException();
-	}
+    //Attributen
+    private Collection<Speler> spelers;
 
-	/**
+    //Constructor
+    public SpelerRespository() {
+        this.spelers = new ArrayList<>();
+    }
+    /**
+     *
+     * @param speler
+     */
+    public void voegToe(Speler speler) {
+        if(!bestaat(speler.getNaam()))
+            spelers.add(speler);
+        else
+            throw new IllegalArgumentException("Naam is al in gebruik!");
+    }
+
+    /**
 	 * 
 	 * @param naam
 	 */
-	public void bestaat(String naam) {
-		// TODO - implement SpelerRespository.bestaat
-		throw new UnsupportedOperationException();
-	}
-
+    private boolean bestaat(String naam) {
+        if (spelers == null) {
+            return false;
+        } else {
+            for (Speler speler : spelers) {
+                return speler.getNaam().toLowerCase().equals(naam.toLowerCase());
+            }
+        }
+        return false;
+    }
 }
