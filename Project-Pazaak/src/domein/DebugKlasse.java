@@ -13,14 +13,13 @@ import java.util.Scanner;
  */
 public class DebugKlasse {
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Naam: ");
-        String naam = in.next();
-        System.out.print("Geboortejaar: ");
-        int geboortejaar = in.nextInt();
+        SpelerRespository repo = new SpelerRespository();
+        Speler speler = new Speler("jon", 1998);
+        Speler speler2 = new Speler("jan", 1988);
         
-        Speler speler = new Speler(naam, geboortejaar);
-        System.out.println(speler.getStapel());
-        System.out.println(speler.getKrediet());
+        repo.voegToe(speler);
+        repo.voegToe(speler2);
+        
+        
     }
 }
