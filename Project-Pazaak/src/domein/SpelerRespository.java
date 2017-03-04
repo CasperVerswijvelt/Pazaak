@@ -21,7 +21,7 @@ public class SpelerRespository {
         }
     }
     
-    private boolean bestaat(String naam) {
+    public boolean bestaat(String naam) {
         if (spelers == null) {
             return false;
         } else {
@@ -48,7 +48,7 @@ public class SpelerRespository {
      */
     public void maakNieuweSpelerAan(String naam, int geboorteDatum) {
         Speler speler = new Speler(naam, geboorteDatum);
-        spelers.add(speler);
+        this.voegToe(speler);
     }
     
 }
