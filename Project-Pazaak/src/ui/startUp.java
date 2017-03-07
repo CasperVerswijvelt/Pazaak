@@ -23,6 +23,11 @@ public class startUp {
         new Main().main();
         
         SpelerMapper sp = new SpelerMapper();
+        
+        Speler speler = new Speler("Matthias",1997);
+        speler.setKrediet(69);
+        sp.slaKredietOp(speler);
+                
         for(Speler s: sp.geefAlleSpelers()){
             System.out.println(s.toString());
         }
