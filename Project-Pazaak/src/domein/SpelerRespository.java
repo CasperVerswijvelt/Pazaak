@@ -23,19 +23,8 @@ public class SpelerRespository {
         }
     }
 
-    public boolean bestaat(String naam) {
-
-//        for (Speler speler : sm.geefAlleSpelers()) {
-//            return speler.getNaam().toLowerCase().equals(naam.toLowerCase());
-//        }
-//        return false;
-
-        try{
-            sm.geefSpeler(naam);
-        }catch(RuntimeException e) {
-            return false;
-        }
-        return true;
+    private boolean bestaat(String naam) {
+        return sm.geefSpeler(naam)!=null;
     }
 
     //Getters & Setterr

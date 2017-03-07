@@ -26,6 +26,8 @@ public class Main {
         
         System.out.println(r.getString("WELCOME"));
         
+        dc.maakNieuweSpelerAan("Goran", 1990);
+        
         
         
         

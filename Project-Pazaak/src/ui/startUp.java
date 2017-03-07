@@ -1,6 +1,7 @@
 package ui;
 
 
+import domein.DomeinController;
 import domein.Speler;
 import persistentie.SpelerMapper;
 import ui.Main;
@@ -20,17 +21,18 @@ import ui.Main;
  */
 public class startUp {
     public static void main(String[] args) {
-        new Main().main();
-        
-        SpelerMapper sp = new SpelerMapper();
-        
-        Speler speler = new Speler("Matthias",1997);
-        speler.setKrediet(69);
-        sp.slaKredietOp(speler);
-                
-        for(Speler s: sp.geefAlleSpelers()){
-            System.out.println(s.toString());
-        }
+       // new Main().main();
+       new Console(new DomeinController()).start();
+//        
+//        SpelerMapper sp = new SpelerMapper();
+//        
+//        Speler speler = new Speler("Matthias",1997);
+//        speler.setKrediet(69);
+//        sp.slaKredietOp(speler);
+//                
+//        for(Speler s: sp.geefAlleSpelers()){
+//            System.out.println(s.toString());
+//        }
 //        Speler speler2 = new Speler("Casper",1998);
 //        sp.voegToe(speler2);
 //        Speler speler = sp.geefSpeler("Casper");
