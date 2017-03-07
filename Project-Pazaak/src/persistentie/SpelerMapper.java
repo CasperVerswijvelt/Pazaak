@@ -48,6 +48,7 @@ public class SpelerMapper {
                     + "VALUES (?, ?)");
             query.setString(1, speler.getNaam());
             query.setInt(2, speler.getGeboorteDatum());
+            query.executeUpdate();
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
