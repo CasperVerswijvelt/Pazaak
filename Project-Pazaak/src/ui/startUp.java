@@ -1,6 +1,8 @@
 package ui;
 
 
+import domein.Speler;
+import persistentie.SpelerMapper;
 import ui.Main;
 
 
@@ -18,7 +20,11 @@ import ui.Main;
  */
 public class startUp {
     public static void main(String[] args) {
-        new Main().main();
-
+        //new Main().main();
+        SpelerMapper sp = new SpelerMapper();
+        Speler speler2 = new Speler("Casper",1998);
+        sp.voegToe(speler2);
+        Speler speler = sp.geefSpeler("Goran");
+        System.out.println(speler2.getNaam());
     }
 }
