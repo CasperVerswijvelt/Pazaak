@@ -21,18 +21,17 @@ public class Speler {
 
     //Constructors
         //Speler uit DB
-    public Speler(String naam, int geboorteJaar, int krediet, Stapel stapel) {
+    public Speler(String naam, int geboorteJaar, int krediet) {
         controleerGeboorteJaar(geboorteJaar);
         controleerNaam(naam);
 
-        this.stapel = stapel;
         this.naam = naam;
         this.geboorteDatum = geboorteJaar;
         this.krediet = krediet;
     }
         //Nieuwe speler
     public Speler(String naam, int geboorteDatum) {
-        this(naam, geboorteDatum, 0, new Stapel());
+        this(naam, geboorteDatum, 0);
     }
 
     //Methodes
