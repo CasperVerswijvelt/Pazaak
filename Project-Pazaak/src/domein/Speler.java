@@ -93,7 +93,7 @@ public class Speler {
     
     @Override
     public String toString(){
-        return String.format("%s, %d", getNaam(), getGeboorteDatum());
+        return String.format("%s, %d, %d", getNaam(), getGeboorteDatum(), getKrediet());
     }
 
 }
