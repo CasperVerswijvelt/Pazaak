@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -30,7 +32,7 @@ public class SpelerMapper {
                 if (rs.next()) {
                     String naam2 = rs.getString("naam");
                     int geboortedatum = rs.getInt("geboortedatum");
-                    speler = new Speler(naam2,geboortedatum);
+                    speler = new Speler(naam2, geboortedatum);
                 }
             }
         } catch (SQLException ex) {
@@ -38,8 +40,8 @@ public class SpelerMapper {
         }
         return speler;
     }
-    
-public void voegToe(Speler speler) {
+
+    public void voegToe(Speler speler) {
 
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
             PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.Speler (naam, geboortedatum)"
@@ -50,5 +52,23 @@ public void voegToe(Speler speler) {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+    }
+    
+    public List<Speler> geefAlleSpelers() {
+        List<Speler> spelers = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.Speler");
+            try (ResultSet rs = query.executeQuery()) {
+                while(rs.next()) {
+                    String naam = rs.getString("naam");
+                    int geboortedatum = rs.getInt("geboortedatum");
+                    spelers.add(new Speler(naam,geboortedatum));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return spelers;
     }
 }
