@@ -1,54 +1,51 @@
 package domein;
 
 import java.util.*;
+import persistentie.SpelerMapper;
 
 public class SpelerRespository {
 
     //Attributen
-    private Collection<Speler> spelers;
+//    private Collection<Speler> spelers;
+    private SpelerMapper sm;
 
     //Constructor
     public SpelerRespository() {
-        this.spelers = new ArrayList<>();
+        sm = new SpelerMapper();
     }
 
     //Methodes
     public void voegToe(Speler speler) {
         if (!bestaat(speler.getNaam())) {
-            spelers.add(speler);
+            sm.voegToe(speler);
         } else {
             throw new IllegalArgumentException("Naam is al in gebruik!");
         }
     }
-    
+
     public boolean bestaat(String naam) {
-        if (spelers == null) {
+
+//        for (Speler speler : sm.geefAlleSpelers()) {
+//            return speler.getNaam().toLowerCase().equals(naam.toLowerCase());
+//        }
+//        return false;
+
+        try{
+            sm.geefSpeler(naam);
+        }catch(RuntimeException e) {
             return false;
-        } else {
-            for (Speler speler : spelers) {
-                return speler.getNaam().toLowerCase().equals(naam.toLowerCase());
-            }
         }
-        return false;
+        return true;
     }
 
     //Getters & Setterr
-    public Collection<Speler> getSpelers() {
-        return spelers;
-    }
-    
-    public void setSpelers(Collection<Speler> spelers) {
-        this.spelers = spelers;
+    public List<Speler> getSpelers() {
+        return sm.geefAlleSpelers();
     }
 
-    /**
-     *
-     * @param naam
-     * @param geboorteDatum
-     */
     public void maakNieuweSpelerAan(String naam, int geboorteDatum) {
         Speler speler = new Speler(naam, geboorteDatum);
         this.voegToe(speler);
     }
-    
+
 }
