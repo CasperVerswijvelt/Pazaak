@@ -64,7 +64,8 @@ public class SpelerMapper {
                 while(rs.next()) {
                     String naam = rs.getString("naam");
                     int geboortedatum = rs.getInt("geboortedatum");
-                    spelers.add(new Speler(naam,geboortedatum));
+                    int krediet = rs.getInt("krediet");
+                    spelers.add(new Speler(naam, geboortedatum, krediet));
                 }
             }
         } catch (SQLException ex) {
@@ -72,4 +73,18 @@ public class SpelerMapper {
         }
         return spelers;
     }
+    
+    public void slaKredietOp(Speler speler) {
+        try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
+            PreparedStatement query = conn.prepareStatement("UPDATE ID222177_g37.Speler SET krediet = ? WHERE naam = ?");
+            query.setInt(1, speler.getKrediet());
+            query.setString(2, speler.getNaam());
+            query.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    
+    
+    
 }
