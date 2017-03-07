@@ -21,7 +21,11 @@ import ui.Main;
 public class startUp {
     public static void main(String[] args) {
         new Main().main();
-//        SpelerMapper sp = new SpelerMapper();
+        
+        SpelerMapper sp = new SpelerMapper();
+        for(Speler s: sp.geefAlleSpelers()){
+            System.out.println(s.toString());
+        }
 //        Speler speler2 = new Speler("Casper",1998);
 //        sp.voegToe(speler2);
 //        Speler speler = sp.geefSpeler("Casper");

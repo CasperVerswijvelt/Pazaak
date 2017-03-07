@@ -90,7 +90,10 @@ public class Speler {
     public void setStapel(Stapel stapel) {
         this.stapel = stapel;
     }
-
     
+    @Override
+    public String toString(){
+        return String.format("%s, %d", getNaam(), getGeboorteDatum());
+    }
 
 }
