@@ -6,20 +6,56 @@
 package ui;
 
 import domein.DomeinController;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 
 /**
  *
  * @author goran
  */
 public class Console {
+    private DomeinController dc;
+    private Locale l = new Locale("nl", "BE");
+    private ResourceBundle r;
 
-    Console(DomeinController domeinController) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Console(DomeinController dc) {
+        this.dc = dc;
     }
 
     void start() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates..
-        //dit is in plaats van de main klasse de code moet je naar hier verplaatsen!
+        taalSelectie();
+        
+        System.out.println(r.getString("WELCOME"));
+        
+        dc.maakNieuweSpelerAan("Goraneger", 1990);
+    }
+    
+    private void taalSelectie() {
+        Scanner in = new Scanner(System.in);
+        System.out.printf("Language selection %n%n"
+                + "1. Nederlands%n"
+                + "2. English%n"
+                + "3. Français%n%n");
+        int input = 0;
+        do {
+            System.out.printf("Language nr: ");
+            input = in.nextInt();
+            if (input < 1 || input > 3) {
+                System.out.println("That is not a valid language!");
+            } else {
+                switch (input) {
+                    case 2:
+                        l = new Locale("en","GB");
+                        break;
+                    case 3:
+                        l = new Locale("fr","FR");
+                        break;
+                }
+                
+                r = ResourceBundle.getBundle("language/Language",l);
+            }
+        } while (input < 1 || input > 3);
     }
     
 }

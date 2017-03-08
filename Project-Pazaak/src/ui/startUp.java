@@ -2,9 +2,6 @@ package ui;
 
 
 import domein.DomeinController;
-import domein.Speler;
-import persistentie.SpelerMapper;
-import ui.Main;
 
 
 
@@ -21,7 +18,7 @@ import ui.Main;
  */
 public class startUp {
     public static void main(String[] args) {
-       // new Main().main();
+//        new Main().main();
        new Console(new DomeinController()).start();
 //        
 //        SpelerMapper sp = new SpelerMapper();
