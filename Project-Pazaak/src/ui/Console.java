@@ -28,7 +28,6 @@ public class Console {
         
         System.out.println(r.getString("WELCOME"));
         
-        dc.maakNieuweSpelerAan("Goraneger", 1990);
     }
     
     private void taalSelectie() {
