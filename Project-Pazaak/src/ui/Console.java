@@ -20,7 +20,7 @@ public class Console {
     private ResourceBundle r;
     private Locale l = new Locale("nl", "BE");
     
-    Console(DomeinController dc) {
+    public Console(DomeinController dc) {
         this.dc = dc;
     }
     

@@ -1,9 +1,10 @@
-package ui;
+package main;
 
 
 import domein.DomeinController;
 import domein.Speler;
 import persistentie.SpelerMapper;
+import ui.Console;
 
 
 

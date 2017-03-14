@@ -24,7 +24,13 @@ public class UC1 {
         DomeinController dc = new DomeinController();
 
         System.out.print(r.getString("NEWPLAYERNAME"));
-       
+        naam=input.next();
+        
+        System.out.print(r.getString("NEWPLAYERYEAR"));
+        gebJaar=input.nextInt();
+        
+        dc.maakNieuweSpelerAan(naam, gebJaar);
+        
     }
 
 }
