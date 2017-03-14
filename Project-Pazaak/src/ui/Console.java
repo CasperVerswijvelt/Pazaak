@@ -25,7 +25,9 @@ public class Console {
     }
     
     public void start() {
-        new UC2().start();
+        UC2 uc2 = new UC2();
+        uc2.start();
+        r= uc2.getResourceBundle();
         System.out.println(r.getString("WELCOME"));
         switch (menu() ){
             case 1: 
@@ -36,7 +38,7 @@ public class Console {
     private int menu() {
         Scanner invoer = new Scanner(System.in);
         int keuze;
-        System.out.println("Om een nieuwe speler aan te maken duw 1");
+        System.out.println(r.getString("NEWPLAYERPRESS1"));
         keuze = invoer.nextInt();
         return keuze;
     }

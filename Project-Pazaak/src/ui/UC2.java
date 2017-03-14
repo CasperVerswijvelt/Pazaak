@@ -42,4 +42,10 @@ public class UC2 {
             }
         } while (input < 1 || input > 3);
     }
+
+    public ResourceBundle getResourceBundle() {
+        return r;
+    }
+    
+    
 }
