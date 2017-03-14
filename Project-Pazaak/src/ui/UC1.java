@@ -13,23 +13,18 @@ import java.util.Scanner;
  *
  * @author Bruno
  */
-public class UC1
-{
-    
-        //attributen
-        private String naam;
-        private int gebJaar;
-        private ResourceBundle r;
-        
+public class UC1 {
+
+    //attributen
+    private String naam;
+    private int gebJaar;
+
+    public void start(ResourceBundle r) {
         Scanner input = new Scanner(System.in);
         DomeinController dc = new DomeinController();
-        
+
         System.out.print(r.getString("NEWPLAYERNAME"));
-        
-        
-        
        
-        
-        
-          
+    }
+
 }
