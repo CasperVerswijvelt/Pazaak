@@ -6,6 +6,7 @@
 package ui;
 
 import domein.DomeinController;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -14,15 +15,15 @@ import java.util.Scanner;
  * @author goran
  */
 public class Console {
-    
+
     private DomeinController dc;
     private ResourceBundle r;
+    private Locale l = new Locale("nl", "BE");
     
-    Console(DomeinController domeinController) {
-        this.dc = domeinController;
-        //hier eventuele attributen initalieser
-    
+    Console(DomeinController dc) {
+        this.dc = dc;
     }
+    
     public void start() {
         new UC2().start();
         System.out.println(r.getString("WELCOME"));
@@ -31,9 +32,7 @@ public class Console {
                 dc.maakNieuweSpelerAan("Goran", 1990);
                 
         }
-    
 }
-
     private int menu() {
         Scanner invoer = new Scanner(System.in);
         int keuze;

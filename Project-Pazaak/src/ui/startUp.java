@@ -20,7 +20,7 @@ import persistentie.SpelerMapper;
  */
 public class startUp {
     public static void main(String[] args) {
-       // new Main().main();
+//        new Main().main();
        new Console(new DomeinController()).start();
 //        
 //        SpelerMapper sp = new SpelerMapper();
