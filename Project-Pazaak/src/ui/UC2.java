@@ -1,43 +1,22 @@
 /*
- * This code was written by Casper Verswijvelt
- * Any unauthorized use is illegal.
- * © Casper Verswijvelt 2016-2017
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package ui;
 
-import domein.DomeinController;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
 /**
  *
- * @author Casper
+ * @author goran
  */
-public class Main {
-
+public class UC2 {
     private Locale l = new Locale("nl", "BE");
     private ResourceBundle r;
-
-    public void main() {
-        DomeinController dc = new DomeinController();
-
-        taalSelectie();
-        
-        System.out.println(r.getString("WELCOME"));
-        
-        dc.maakNieuweSpelerAan("Goran", 1990);
-        
-        
-        
-        
-
-//        dc.maakNieuweSpelerAan("jan", 1998);
-//        dc.maakNieuweSpelerAan("ja4", 1998);
-//        System.out.println(dc.getSpelerRepo().getSpelers().size());
-    }
-
-    private void taalSelectie() {
+    public void start() {
         Scanner in = new Scanner(System.in);
         System.out.printf("Language selection %n%n"
                 + "1. Nederlands%n"
@@ -52,14 +31,14 @@ public class Main {
             } else {
                 switch (input) {
                     case 2:
-                        l = new Locale("en","GB");
+                        l = new Locale("en", "GB");
                         break;
                     case 3:
-                        l = new Locale("fr","FR");
+                        l = new Locale("fr", "FR");
                         break;
                 }
-                
-                r = ResourceBundle.getBundle("language/Language",l);
+
+                r = ResourceBundle.getBundle("language/Language", l);
             }
         } while (input < 1 || input > 3);
     }

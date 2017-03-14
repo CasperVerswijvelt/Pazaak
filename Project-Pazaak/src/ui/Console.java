@@ -6,20 +6,39 @@
 package ui;
 
 import domein.DomeinController;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 
 /**
  *
  * @author goran
  */
 public class Console {
-
-    Console(DomeinController domeinController) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    void start() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates..
-        //dit is in plaats van de main klasse de code moet je naar hier verplaatsen!
-    }
     
+    private DomeinController dc;
+    private ResourceBundle r;
+    
+    Console(DomeinController domeinController) {
+        this.dc = domeinController;
+        //hier eventuele attributen initalieser
+    
+    }
+    public void start() {
+        new UC2().start();
+        System.out.println(r.getString("WELCOME"));
+        switch (menu() ){
+            case 1: 
+                dc.maakNieuweSpelerAan("Goran", 1990);
+                
+        }
+    
+}
+
+    private int menu() {
+        Scanner invoer = new Scanner(System.in);
+        int keuze;
+        System.out.println("Om een nieuwe speler aan te maken duw 1");
+        keuze = invoer.nextInt();
+        return keuze;
+    }
 }

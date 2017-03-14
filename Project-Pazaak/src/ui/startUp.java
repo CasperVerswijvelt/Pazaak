@@ -4,7 +4,6 @@ package ui;
 import domein.DomeinController;
 import domein.Speler;
 import persistentie.SpelerMapper;
-import ui.Main;
 
 
 
