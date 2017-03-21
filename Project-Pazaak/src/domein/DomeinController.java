@@ -6,6 +6,7 @@
 package domein;
 
 import domein.*;
+import exceptions.PlayerAlreadyExistsException;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class DomeinController {
      * @param naam
      * @param geboorteDatum
      */
-    public void maakNieuweSpelerAan(String naam, int geboorteDatum) {
+    public void maakNieuweSpelerAan(String naam, int geboorteDatum) throws PlayerAlreadyExistsException {
         spelerRepo.maakNieuweSpelerAan(naam, geboorteDatum);
     }
     

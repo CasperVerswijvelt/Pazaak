@@ -8,7 +8,7 @@ package ui;
 import domein.DomeinController;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-
+import exceptions.PlayerAlreadyExistsException;
 /**
  *
  * @author Bruno
@@ -23,18 +23,18 @@ public class UC1 {
         Scanner input = new Scanner(System.in);
         DomeinController dc = new DomeinController();
 
-        
         boolean opnieuw = true;
         do {
-            System.out.print(r.getString("NEWPLAYERNAME"));
-            naam = input.next();
-
-            System.out.print(r.getString("NEWPLAYERYEAR"));
-            gebJaar = input.nextInt();
             try {
+                System.out.print(r.getString("NEWPLAYERNAME"));
+                naam = input.nextLine();
+
+                System.out.print(r.getString("NEWPLAYERYEAR"));
+                gebJaar = Integer.parseInt(input.nextLine());
+
                 dc.maakNieuweSpelerAan(naam, gebJaar);
                 opnieuw = false;
-            } catch (IllegalArgumentException e) {
+            } catch (PlayerAlreadyExistsException e) {
                 System.out.println(r.getString("PLAYERALREADYEXISTS"));
             }
         } while (opnieuw);

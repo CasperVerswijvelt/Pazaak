@@ -5,6 +5,7 @@
  */
 package ui;
 
+import exceptions.InvalidNumberException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -14,22 +15,31 @@ import java.util.Scanner;
  * @author goran
  */
 public class UC2 {
-    private Locale l = new Locale("nl", "BE");
+
+    private Locale l;
     private ResourceBundle r;
-    public void start() {
+
+    public void start(){
         Scanner in = new Scanner(System.in);
-        System.out.printf("Language selection %n%n"
-                + "1. Nederlands%n"
-                + "2. English%n"
-                + "3. Français%n%n");
-        int input = 0;
+        System.out.printf("Language selection %n"
+                + " 1. Nederlands%n"
+                + " 2. English%n"
+                + " 3. Français%n");
+        boolean opnieuw = true;
         do {
-            System.out.printf("Language nr: ");
-            input = in.nextInt();
-            if (input < 1 || input > 3) {
-                System.out.println("That is not a valid language!");
-            } else {
+            try {
+
+                System.out.print("Language: ");
+
+                int input = Integer.parseInt(in.nextLine());
+                if (input < 1 || input > 3) {
+                    throw new InvalidNumberException("Enter a number between 1 and 3");
+                }
+                
                 switch (input) {
+                    default:
+                        l = new Locale("nl", "BE");
+                        break;
                     case 2:
                         l = new Locale("en", "GB");
                         break;
@@ -39,13 +49,16 @@ public class UC2 {
                 }
 
                 r = ResourceBundle.getBundle("language/Language", l);
-            }
-        } while (input < 1 || input > 3);
+                opnieuw = false;
+
+            } catch (NumberFormatException  | InvalidNumberException e) {
+                System.out.println("Enter a number ranging from 1 to 3!");
+            } 
+        } while (opnieuw);
     }
 
     public ResourceBundle getResourceBundle() {
         return r;
     }
-    
-    
+
 }

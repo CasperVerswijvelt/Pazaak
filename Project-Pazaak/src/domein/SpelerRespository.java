@@ -2,6 +2,7 @@ package domein;
 
 import java.util.*;
 import persistentie.SpelerMapper;
+import exceptions.PlayerAlreadyExistsException;
 
 public class SpelerRespository {
 
@@ -32,7 +33,7 @@ public class SpelerRespository {
         return sm.geefAlleSpelers();
     }
 
-    public void maakNieuweSpelerAan(String naam, int geboorteDatum) {
+    public void maakNieuweSpelerAan(String naam, int geboorteDatum) throws PlayerAlreadyExistsException {
         Speler speler = new Speler(naam, geboorteDatum);
         this.voegToe(speler);
     }
