@@ -47,7 +47,6 @@ public class UC2 {
                         l = new Locale("fr", "FR");
                         break;
                 }
-
                 r = ResourceBundle.getBundle("language/Language", l);
                 opnieuw = false;
 

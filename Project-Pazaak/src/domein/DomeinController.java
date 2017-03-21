@@ -29,13 +29,18 @@ public class DomeinController {
      *
      * @param naam
      * @param geboorteDatum
+     * @throws exceptions.PlayerAlreadyExistsException
      */
     public void maakNieuweSpelerAan(String naam, int geboorteDatum) throws PlayerAlreadyExistsException {
-        spelerRepo.maakNieuweSpelerAan(naam, geboorteDatum);
+        spelerRepo.voegToe(new Speler(naam, geboorteDatum));
     }
     
     public List<String> geefAlleSpelerNamen() {
         return spelerRepo.geefSpelerNamenLijst();
+    }
+    
+    public boolean spelerBestaat(String naam) {
+        return spelerRepo.bestaat(naam);
     }
 
     public void startPazaak() {

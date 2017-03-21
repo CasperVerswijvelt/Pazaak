@@ -24,7 +24,7 @@ public class SpelerRespository {
         }
     }
 
-    private boolean bestaat(String naam) {
+    public boolean bestaat(String naam) {
         return sm.geefSpeler(naam)!=null;
     }
 

@@ -14,15 +14,19 @@ import exceptions.PlayerAlreadyExistsException;
  * @author Bruno
  */
 public class UC1 {
-
     //attributen
     private String naam;
     private int gebJaar;
+    private final DomeinController dc;
+    private final ResourceBundle r;
+    
+    public UC1(DomeinController dc, ResourceBundle r) {
+        this.dc = dc;
+        this.r = r;
+    }
 
-    public void start(ResourceBundle r) {
+    public void start() {
         Scanner input = new Scanner(System.in);
-        DomeinController dc = new DomeinController();
-
         boolean opnieuw = true;
         do {
             try {
