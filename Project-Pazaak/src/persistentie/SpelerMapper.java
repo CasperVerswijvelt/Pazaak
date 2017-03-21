@@ -73,6 +73,8 @@ public class SpelerMapper {
         }
         return spelers;
     }
+    
+
     public List<String> geefAlleSpelerNamen() {
         List<String> spelers = new ArrayList<>();
         try {

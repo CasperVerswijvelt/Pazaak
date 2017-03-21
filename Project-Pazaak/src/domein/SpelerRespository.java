@@ -42,4 +42,8 @@ public class SpelerRespository {
         return sm.geefAlleSpelerNamen();
     }
 
+    public int geefAantalSpelers() {
+        return sm.geefAlleSpelers().size();
+    }
+
 }

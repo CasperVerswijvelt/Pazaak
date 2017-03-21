@@ -44,8 +44,10 @@ public class DomeinController {
     }
 
     public void startPazaak() {
-        // TODO - implement DomeinController.startPazaak
         throw new UnsupportedOperationException();
+    }
+    public int geefAantalSpelers() {
+        return spelerRepo.geefAantalSpelers();
     }
     
     //Getters & Setters

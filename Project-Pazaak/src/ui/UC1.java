@@ -40,6 +40,8 @@ public class UC1 {
                 opnieuw = false;
             } catch (PlayerAlreadyExistsException e) {
                 System.out.println(r.getString("PLAYERALREADYEXISTS"));
+            } catch(IllegalArgumentException e){
+                System.out.println(r.getString("NAMEREQUIREMENTS"));
             }
         } while (opnieuw);
 

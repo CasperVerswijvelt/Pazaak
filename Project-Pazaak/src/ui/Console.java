@@ -17,6 +17,9 @@ import java.util.Scanner;
  */
 public class Console {
 
+    //Attributen
+    private final static Scanner in = new Scanner(System.in);
+
     private final DomeinController dc;
     private ResourceBundle r;
 
@@ -28,45 +31,52 @@ public class Console {
         UC2 uc2 = new UC2();
         uc2.start();
         r = uc2.getResourceBundle();
+        printLijn();
         System.out.println(r.getString("WELCOME"));
-        boolean opnieuw = true;
-        do {
+        gameMenu();
+
+    }
+
+    private void gameMenu() {
+        int keuze;
+        printLijn();
+        System.out.printf(" 0. %s%n"
+                + " 1. %s%n"
+                + " 2. %s%n",
+                r.getString("EXIT"),
+                r.getString("NEWPLAYEROPTION"),
+                r.getString("STARTGAMEOPTION"));
+//        boolean opnieuw = true;
+//        do {
+            System.out.print(r.getString("CHOICE")+": ");
             try {
-                switch (gameMenu()) {
+                keuze = in.nextInt();
+                if (keuze > 2 || keuze < 0) {
+                    throw new InvalidNumberException();
+                }
+                printLijn();
+                switch (keuze) {
                     case 1:
-                        new UC1(dc,r).start();
+                        new UC1(dc, r).start();
+                        gameMenu();
                         break;
                     case 2:
-                        new UC3(dc,r).start();
+                        new UC3(dc, r).start();
                         break;
                     case 0:
+                        
                         System.exit(0);
                 }
-                opnieuw = false;
+                
             } catch (InvalidNumberException e) {
                 System.out.println(r.getString("INVALIDCHOICE"));
             } catch (NoPlayersAvailableException e) {
-                continue;
+                System.out.printf(r.getString("NOTENOUGHPLAYERS") + "%n", Integer.parseInt(e.getMessage()));
             }
-        } while (opnieuw);
+//        } while (opnieuw);
+
     }
-
-    private int gameMenu() throws InvalidNumberException {
-        Scanner invoer = new Scanner(System.in);
-        int keuze;
-        System.out.printf(" 0. %s%n"
-                + " 1. %s%n"
-                + " 2. %s%n"
-                + "%s: ",
-                r.getString("EXIT"),
-                r.getString("NEWPLAYEROPTION"),
-                r.getString("STARTGAMEOPTION"),
-                r.getString("CHOICE"));
-        keuze = invoer.nextInt();
-        if (keuze > 2 || keuze < 0) {
-            throw new InvalidNumberException();
-        }
-        return keuze;
-
+    public void printLijn(){
+        System.out.println("------------------------------");
     }
 }

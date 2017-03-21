@@ -9,6 +9,7 @@ import domein.DomeinController;
 import domein.Wedstrijd;
 import exceptions.NoPlayersAvailableException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -33,34 +34,34 @@ public class UC3 {
 
     //Methodes
     public void start() throws NoPlayersAvailableException {
-        int aantalSpelersBeschikbaar = dc.geefAlleSpelerNamen().size();
+        int aantalSpelersBeschikbaar = dc.geefAantalSpelers();
         if (aantalSpelersBeschikbaar < 2) {
-            System.out.printf(r.getString("NOTENOUGHPLAYERS") + "%n", aantalSpelersBeschikbaar);
-            throw new NoPlayersAvailableException();
+            throw new NoPlayersAvailableException(aantalSpelersBeschikbaar + "");
         } else {
             List<String> spelerLijst = dc.geefAlleSpelerNamen();
-            toonBeschikbareSpelers(spelerLijst);
-            String eersteNaam="";
+            System.out.println(r.getString("CHOOSETWOPLAYERS"));
+            
             String geselecteerdeSpelers[] = new String[2];
+
             for (int i = 0; i < 2; i++) {
                 String naam;
-                boolean bestaat = false;
+                int keuze=0;
+                toonBeschikbareSpelers(spelerLijst);// HIER BEZIG HIER BEZIG HIER BEZIG HIER BEZIG HIER BEZIG HIER BEZIG
                 do {
-                    System.out.printf(r.getString("PLAYERNAMEPROMPT") + "%n", i + 1);
-                    naam = in.nextLine();
-                    bestaat = !(spelerLijst.indexOf(naam) == -1);
-                    
-                    if(bestaat){
-                        spelerLijst.remove(naam);
-                        if(i==0) eersteNaam = naam;
-                    }else{
-                        if(eersteNaam.equals(naam)){
-                            System.out.println(r.getString("MUSTCHOOSEDIFFERENTPLAYER"));
-                        } else {
-                            System.out.println(r.getString("PLAYERNOTFOUND"));
-                        }
+                    System.out.printf(r.getString("PLAYERNAMEPROMPT"), i + 1);
+                    try{
+                        keuze = in.nextInt();
+                    }catch(InputMismatchException e) {
+                        
                     }
-                } while (!bestaat);
+                    
+
+                    
+                        
+                        
+                } while (keuze <1||keuze>spelerLijst.size());
+                naam = spelerLijst.get(keuze-1);
+                spelerLijst.remove(naam);
                 geselecteerdeSpelers[i] = naam;
             }
             new Wedstrijd(geselecteerdeSpelers[0], geselecteerdeSpelers[1]);
@@ -70,8 +71,8 @@ public class UC3 {
 
     private void toonBeschikbareSpelers(List<String> lijst) {
 
-        for (String naam : lijst) {
-            System.out.println(" + " + naam);
+        for (int i = 0; i < lijst.size(); i++) {
+            System.out.println(" "+(i+1)+". " + lijst.get(i));
         }
     }
 }
