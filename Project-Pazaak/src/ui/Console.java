@@ -31,7 +31,8 @@ public class Console {
         System.out.println(r.getString("WELCOME"));
         switch (menu() ){
             case 1: 
-                dc.maakNieuweSpelerAan("Goran", 1990);
+                new UC1().start(r);
+                new UC3().start(r);
                 
         }
 }

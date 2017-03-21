@@ -6,6 +6,7 @@
 package domein;
 
 import domein.*;
+import java.util.List;
 
 /**
  *
@@ -30,6 +31,10 @@ public class DomeinController {
      */
     public void maakNieuweSpelerAan(String naam, int geboorteDatum) {
         spelerRepo.maakNieuweSpelerAan(naam, geboorteDatum);
+    }
+    
+    public List<String> geefAlleSpelerNamen() {
+        return spelerRepo.geefSpelerNamenLijst();
     }
 
     public void startPazaak() {

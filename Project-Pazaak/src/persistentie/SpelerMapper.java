@@ -73,6 +73,22 @@ public class SpelerMapper {
         }
         return spelers;
     }
+    public List<String> geefAlleSpelerNamen() {
+        List<String> spelers = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
+            PreparedStatement query = conn.prepareStatement("SELECT naam FROM ID222177_g37.Speler");
+            try (ResultSet rs = query.executeQuery()) {
+                while(rs.next()) {
+                    String naam = rs.getString("naam");
+                    spelers.add(naam);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return spelers;
+    }
     
     public void slaKredietOp(Speler speler) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {

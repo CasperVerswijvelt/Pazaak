@@ -37,4 +37,8 @@ public class SpelerRespository {
         this.voegToe(speler);
     }
 
+    public List<String> geefSpelerNamenLijst() {
+        return sm.geefAlleSpelerNamen();
+    }
+
 }
