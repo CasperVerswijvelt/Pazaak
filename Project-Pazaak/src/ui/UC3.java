@@ -6,9 +6,9 @@
 package ui;
 
 import domein.DomeinController;
-import domein.Speler;
 import domein.Wedstrijd;
 import exceptions.NoPlayersAvailableException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -38,8 +38,9 @@ public class UC3 {
             System.out.printf(r.getString("NOTENOUGHPLAYERS") + "%n", aantalSpelersBeschikbaar);
             throw new NoPlayersAvailableException();
         } else {
-            List<String> SpelerLijst = dc.geefAlleSpelerNamen();
-            toonBeschikbareSpelers(); // NIET OPNIEUW UIT DATABANK HALEN
+            List<String> spelerLijst = dc.geefAlleSpelerNamen();
+            toonBeschikbareSpelers(spelerLijst);
+            String eersteNaam="";
             String geselecteerdeSpelers[] = new String[2];
             for (int i = 0; i < 2; i++) {
                 String naam;
@@ -47,9 +48,18 @@ public class UC3 {
                 do {
                     System.out.printf(r.getString("PLAYERNAMEPROMPT") + "%n", i + 1);
                     naam = in.nextLine();
-                    bestaat = SpelerLijst.contains("naam");
-                    if(!bestaat)
-                        System.out.println(r.getString("PLAYERNOTFOUND"));
+                    bestaat = !(spelerLijst.indexOf(naam) == -1);
+                    
+                    if(bestaat){
+                        spelerLijst.remove(naam);
+                        if(i==0) eersteNaam = naam;
+                    }else{
+                        if(eersteNaam.equals(naam)){
+                            System.out.println(r.getString("MUSTCHOOSEDIFFERENTPLAYER"));
+                        } else {
+                            System.out.println(r.getString("PLAYERNOTFOUND"));
+                        }
+                    }
                 } while (!bestaat);
                 geselecteerdeSpelers[i] = naam;
             }
@@ -58,9 +68,9 @@ public class UC3 {
 
     }
 
-    private void toonBeschikbareSpelers() {
+    private void toonBeschikbareSpelers(List<String> lijst) {
 
-        for (String naam : dc.geefAlleSpelerNamen()) {
+        for (String naam : lijst) {
             System.out.println(" + " + naam);
         }
     }
