@@ -77,6 +77,6 @@ public class Console {
 
     }
     public void printLijn(){
-        System.out.println("------------------------------");
+        System.out.println("----------------------------------------");
     }
 }

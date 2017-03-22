@@ -46,20 +46,25 @@ public class UC3 {
             for (int i = 0; i < 2; i++) {
                 String naam;
                 int keuze=0;
-                toonBeschikbareSpelers(spelerLijst);// HIER BEZIG HIER BEZIG HIER BEZIG HIER BEZIG HIER BEZIG HIER BEZIG
+                toonBeschikbareSpelers(spelerLijst);
+                boolean valideKeuze = true;
                 do {
                     System.out.printf(r.getString("PLAYERNAMEPROMPT"), i + 1);
                     try{
-                        keuze = in.nextInt();
-                    }catch(InputMismatchException e) {
-                        
+                        keuze = Integer.parseInt(in.nextLine());
+                        valideKeuze = keuze<=spelerLijst.size() && keuze >0;
+                        if(!valideKeuze)
+                            throw new IllegalArgumentException();
+                    }catch(Exception e) {
+                        valideKeuze = false;
+                        System.out.println(r.getString("INVALIDCHOICE"));
                     }
                     
 
                     
                         
                         
-                } while (keuze <1||keuze>spelerLijst.size());
+                } while (!valideKeuze);
                 naam = spelerLijst.get(keuze-1);
                 spelerLijst.remove(naam);
                 geselecteerdeSpelers[i] = naam;
