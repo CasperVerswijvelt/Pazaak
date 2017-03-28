@@ -25,12 +25,7 @@ public class SpelerRespository {
     }
 
     public boolean bestaat(String naam) {
-        return sm.geefSpeler(naam)!=null;
-    }
-
-    //Getters & Setterr
-    public List<Speler> getSpelers() {
-        return sm.geefAlleSpelers();
+        return sm.geefSpeler(naam) != null;
     }
 
     public void maakNieuweSpelerAan(String naam, int geboorteDatum) throws PlayerAlreadyExistsException {
@@ -49,21 +44,30 @@ public class SpelerRespository {
     public String[] geefSpelerInfo(String naam) {
         Speler speler = sm.geefSpeler(naam);
         String info[] = new String[4];
-        
+
         info[0] = speler.getNaam();
         info[1] = speler.getKrediet() + "";
         info[2] = speler.getGeboorteDatum() + "";
-        
+
         String kaarten = "";
-        for(Kaart element: speler.getStartStapel()) {
-            kaarten+=element.toString()+", ";
+        for (Kaart element : speler.getStartStapel()) {
+            kaarten += element.toString() + ", ";
         }
         info[3] = kaarten;
-        
+
         return info;
     }
+
     public Speler geefSpeler(String naam) {
         return sm.geefSpeler(naam);
+    }
+    public List<Kaart> geefStartStapel(Speler speler) {
+        return speler.getStartStapel();
+    }
+
+    //Getters & Setterr
+    public List<Speler> getSpelers() {
+        return sm.geefAlleSpelers();
     }
 
 }

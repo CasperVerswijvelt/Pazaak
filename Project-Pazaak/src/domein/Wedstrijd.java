@@ -6,6 +6,8 @@
 package domein;
 
 import exceptions.CardStackTooBigException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -14,47 +16,50 @@ import exceptions.CardStackTooBigException;
  */
 public class Wedstrijd {
     //Attributen
-    private final Speler speler1;
-    private final Speler speler2;
-    private Kaart[] wedstrijdStapelSpeler1;
-    private Kaart[] wedstrijdStapelSpeler2;
+    private final List<Speler> spelers;
+    private List< List<Kaart> > wedstrijdStapels;
+
     
     
     //Constructor
     public Wedstrijd(Speler speler1, Speler speler2) {
-        this.speler1 = speler1;
-        this.speler2 = speler2;
-        this.wedstrijdStapelSpeler1 = new Kaart[6];
-        this.wedstrijdStapelSpeler2 = new Kaart[6];
+
+        this.wedstrijdStapels = new ArrayList<>();
+        this.spelers = new ArrayList<>();
+        
+        this.spelers.set(0, speler1);
+        this.spelers.set(1, speler2);
+        
     }
     //Controle
-    public void controleerWedstrijdStapel(Kaart [] stapel) {
-        if(stapel.length != 6)
+    private void controleerWedstrijdStapel(List<Kaart>  stapel) {
+        if(stapel.size() > 6)
             throw new CardStackTooBigException();
     }
     
     //Methodes
-    
+    public void voegKaartToe(int speler,Kaart kaart) {
+        wedstrijdStapels.get(speler).add(kaart);
+    }
     
     //Getters & Setters
 
-    public Kaart[] getWedstrijdStapel() {
-        return wedstrijdStapelSpeler1;
+    public List<Kaart> getWedstrijdStapels(int index) {
+        return wedstrijdStapels.get(index);
     }
 
-    public void setWedstrijdStapelSpeler1(Kaart[] wedstrijdStapelSpeler1) {
-        controleerWedstrijdStapel(wedstrijdStapelSpeler1);
-        this.wedstrijdStapelSpeler1 = wedstrijdStapelSpeler1;
+    public void setWedstrijdStapel(int index,List<Kaart> stapel) {
+        controleerWedstrijdStapel(stapel);
+        this.wedstrijdStapels.set(index, stapel);
     }
 
-    public Kaart[] getWedstrijdStapelSpeler2() {
-        return wedstrijdStapelSpeler2;
+    public List<Speler> getSpelers() {
+        return spelers;
     }
-
-    public void setWedstrijdStapelSpeler2(Kaart[] wedstrijdStapelSpeler2) {
-        controleerWedstrijdStapel(wedstrijdStapelSpeler2);
-        this.wedstrijdStapelSpeler2 = wedstrijdStapelSpeler2;
-    }
+    
+    
+    
+    
     
     
     

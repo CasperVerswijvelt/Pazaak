@@ -69,7 +69,9 @@ public class UC3 {
                 spelerLijst.remove(naam);
                 geselecteerdeSpelers[i] = naam;
             }
-            new Wedstrijd(dc.geefSpeler(geselecteerdeSpelers[0]), dc.geefSpeler(geselecteerdeSpelers[1]));
+            ///NIET JUIST, MOET VIA DC
+            Wedstrijd w = new Wedstrijd(dc.geefSpeler(geselecteerdeSpelers[0]), dc.geefSpeler(geselecteerdeSpelers[1]));
+            new UC4().start(dc, r, w);
         }
 
     }

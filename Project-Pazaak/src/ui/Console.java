@@ -46,8 +46,8 @@ public class Console {
                 r.getString("EXIT"),
                 r.getString("NEWPLAYEROPTION"),
                 r.getString("STARTGAMEOPTION"));
-//        boolean opnieuw = true;
-//        do {
+        boolean opnieuw = true;
+        do {
             System.out.print(r.getString("CHOICE")+": ");
             try {
                 keuze = in.nextInt();
@@ -73,7 +73,7 @@ public class Console {
             } catch (NoPlayersAvailableException e) {
                 System.out.printf(r.getString("NOTENOUGHPLAYERS") + "%n", Integer.parseInt(e.getMessage()));
             }
-//        } while (opnieuw);
+        } while (opnieuw);
 
     }
     public void printLijn(){

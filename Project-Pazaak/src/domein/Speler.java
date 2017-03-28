@@ -3,14 +3,14 @@ package domein;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
+import java.util.List;
 
 public class Speler {
     //Attributen
     private String naam;
     private int krediet;
     private int geboorteDatum;
-    private Collection<Kaart> startStapel;
+    private List<Kaart> startStapel;
 
     /**
      *
@@ -90,11 +90,12 @@ public class Speler {
         controleerGeboorteJaar(geboorteJaar);
         this.geboorteDatum = geboorteJaar;
     }
-    public Collection<Kaart> getStartStapel() {
+    public List<Kaart> getStartStapel() {
         return startStapel;
+        // + gekochte kaarten uit databank halen
     }
 
-    public void setStartStapel(Collection<Kaart> kaarten) {
+    public void setStartStapel(List<Kaart> kaarten) {
         this.startStapel = kaarten;
     }
 

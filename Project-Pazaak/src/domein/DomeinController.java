@@ -7,6 +7,7 @@ package domein;
 
 import domein.*;
 import exceptions.PlayerAlreadyExistsException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,6 +73,15 @@ public class DomeinController {
     }
     public Speler geefSpeler(String naam) {
         return spelerRepo.geefSpeler(naam);
+    }
+    public String geefStartStapel(Speler speler) {
+        List<Kaart> kaarten = spelerRepo.geefStartStapel(speler);
+        String res = "";
+        for(Kaart element : kaarten){
+            res+=element.toString()+"\n";
+        }
+        
+        return res;
     }
     
 
