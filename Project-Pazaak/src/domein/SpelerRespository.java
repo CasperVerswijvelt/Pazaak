@@ -62,5 +62,8 @@ public class SpelerRespository {
         
         return info;
     }
+    public Speler geefSpeler(String naam) {
+        return sm.geefSpeler(naam);
+    }
 
 }

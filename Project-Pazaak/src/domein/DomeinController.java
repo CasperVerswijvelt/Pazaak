@@ -70,6 +70,9 @@ public class DomeinController {
     public String[] geefSpelerInfo(String naam) {
         return spelerRepo.geefSpelerInfo(naam);
     }
+    public Speler geefSpeler(String naam) {
+        return spelerRepo.geefSpeler(naam);
+    }
     
 
 }

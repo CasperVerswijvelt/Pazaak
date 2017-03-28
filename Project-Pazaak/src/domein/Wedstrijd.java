@@ -14,13 +14,13 @@ import java.util.List;
  */
 public class Wedstrijd {
     //Attributen
-    private List<Speler> spelers;
+    private Speler speler1;
+    private Speler speler2;
     
     //Constructor
-    public Wedstrijd(String speler1, String speler2) {
-        spelers = new ArrayList<>();
-//        spelers.add(speler1);
-//        spelers.add(speler2);
+    public Wedstrijd(Speler speler1, Speler speler2) {
+        this.speler1 = speler1;
+        this.speler2 = speler2;
     }
     
             

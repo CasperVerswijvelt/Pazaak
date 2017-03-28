@@ -8,8 +8,6 @@ package ui;
 import domein.DomeinController;
 import domein.Wedstrijd;
 import exceptions.NoPlayersAvailableException;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -71,7 +69,7 @@ public class UC3 {
                 spelerLijst.remove(naam);
                 geselecteerdeSpelers[i] = naam;
             }
-            new Wedstrijd(geselecteerdeSpelers[0], geselecteerdeSpelers[1]);
+            new Wedstrijd(dc.geefSpeler(geselecteerdeSpelers[0]), dc.geefSpeler(geselecteerdeSpelers[1]));
         }
 
     }
