@@ -16,11 +16,11 @@ public class SpelerRespository {
     }
 
     //Methodes
-    public void voegToe(Speler speler) {
+    public void voegToe(Speler speler) throws PlayerAlreadyExistsException {
         if (!bestaat(speler.getNaam())) {
             sm.voegToe(speler);
         } else {
-            throw new IllegalArgumentException("Naam is al in gebruik!");
+            throw new PlayerAlreadyExistsException("Naam is al in gebruik!");
         }
     }
 
