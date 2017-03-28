@@ -46,8 +46,7 @@ public class UC1 {
                 System.out.println(r.getString("NAMEREQUIREMENTS"));
             }
         } while (opnieuw);
-        for(String element : dc.geefSpelerInfo(naam)) 
-            System.out.println(element);
+        System.out.printf("%s: %s %n%s: %s %n%s: %s %n%s: %s %n", r.getString("NAME"),dc.geefSpelerInfo(naam)[0], r.getString("CREDITS"), dc.geefSpelerInfo(naam)[1], r.getString("BIRTH"), dc.geefSpelerInfo(naam)[2], r.getString("CARDS"), dc.geefSpelerInfo(naam)[3]);
 
     }
 
