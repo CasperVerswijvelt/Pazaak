@@ -55,6 +55,7 @@ public class UC3 {
                         valideKeuze = keuze<=spelerLijst.size() && keuze >0;
                         if(!valideKeuze)
                             throw new IllegalArgumentException();
+                        
                     }catch(Exception e) {
                         valideKeuze = false;
                         System.out.println(r.getString("INVALIDCHOICE"));
@@ -66,6 +67,7 @@ public class UC3 {
                         
                 } while (!valideKeuze);
                 naam = spelerLijst.get(keuze-1);
+                System.out.printf(r.getString("PLAYERSELECTED")+"/n", naam);
                 spelerLijst.remove(naam);
                 geselecteerdeSpelers[i] = naam;
             }

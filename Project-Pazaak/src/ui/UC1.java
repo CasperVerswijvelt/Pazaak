@@ -38,6 +38,7 @@ public class UC1 {
 
                 dc.maakNieuweSpelerAan(naam, gebJaar);
                 opnieuw = false;
+                System.out.println(r.getString("PLAYERADDED"));
             } catch (PlayerAlreadyExistsException e) {
                 System.out.println(r.getString("PLAYERALREADYEXISTS"));
             } catch(IllegalArgumentException e){
