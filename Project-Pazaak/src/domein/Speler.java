@@ -10,7 +10,7 @@ public class Speler {
     private String naam;
     private int krediet;
     private int geboorteDatum;
-    private Collection<Kaart> kaarten;
+    private Collection<Kaart> startStapel;
 
     /**
      *
@@ -32,7 +32,7 @@ public class Speler {
         this.geboorteDatum = geboorteJaar;
         this.krediet = krediet;
         
-        kaarten = new ArrayList<>();
+        startStapel = new ArrayList<>();
         
         maakStartStapel();
         
@@ -90,12 +90,12 @@ public class Speler {
         controleerGeboorteJaar(geboorteJaar);
         this.geboorteDatum = geboorteJaar;
     }
-    public Collection<Kaart> getKaarten() {
-        return kaarten;
+    public Collection<Kaart> getStartStapel() {
+        return startStapel;
     }
 
-    public void setKaarten(Collection<Kaart> kaarten) {
-        this.kaarten = kaarten;
+    public void setStartStapel(Collection<Kaart> kaarten) {
+        this.startStapel = kaarten;
     }
 
     
@@ -118,7 +118,7 @@ public class Speler {
         kaartenArray[8] = new Kaart(3, '*');
         kaartenArray[9] = new Kaart(1, '*');
 
-        this.kaarten.addAll(Arrays.asList(kaartenArray));
+        this.startStapel.addAll(Arrays.asList(kaartenArray));
     }
 
 }

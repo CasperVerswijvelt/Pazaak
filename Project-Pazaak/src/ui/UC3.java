@@ -65,7 +65,7 @@ public class UC3 {
                         
                 } while (!valideKeuze);
                 naam = spelerLijst.get(keuze-1);
-                System.out.printf(r.getString("PLAYERSELECTED")+"/n", naam);
+                System.out.printf(r.getString("PLAYERSELECTED")+"%n", naam);
                 spelerLijst.remove(naam);
                 geselecteerdeSpelers[i] = naam;
             }

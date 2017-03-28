@@ -55,7 +55,7 @@ public class SpelerRespository {
         info[2] = speler.getGeboorteDatum() + "";
         
         String kaarten = "";
-        for(Kaart element: speler.getKaarten()) {
+        for(Kaart element: speler.getStartStapel()) {
             kaarten+=element.toString()+", ";
         }
         info[3] = kaarten;
