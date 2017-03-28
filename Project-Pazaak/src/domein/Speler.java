@@ -1,13 +1,16 @@
 package domein;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 
 public class Speler {
     //Attributen
     private String naam;
     private int krediet;
     private int geboorteDatum;
-    private Stapel stapel;
+    private Collection<Kaart> kaarten;
 
     /**
      *
@@ -28,6 +31,12 @@ public class Speler {
         this.naam = naam;
         this.geboorteDatum = geboorteJaar;
         this.krediet = krediet;
+        
+        kaarten = new ArrayList<>();
+        
+        maakStartStapel();
+        
+        
     }
         //Nieuwe speler
     public Speler(String naam, int geboorteDatum) {
@@ -81,18 +90,35 @@ public class Speler {
         controleerGeboorteJaar(geboorteJaar);
         this.geboorteDatum = geboorteJaar;
     }
-
-    public Stapel getStapel() {
-        return stapel;
+    public Collection<Kaart> getKaarten() {
+        return kaarten;
     }
 
-    public void setStapel(Stapel stapel) {
-        this.stapel = stapel;
+    public void setKaarten(Collection<Kaart> kaarten) {
+        this.kaarten = kaarten;
     }
+
     
     @Override
     public String toString(){
         return String.format("%s, %d, %d", getNaam(), getGeboorteDatum(), getKrediet());
+    }
+
+    private void maakStartStapel() {
+        Kaart[] kaartenArray = new Kaart[10];
+
+        kaartenArray[0] = new Kaart(2, '+');
+        kaartenArray[1] = new Kaart(4, '+');
+        kaartenArray[2] = new Kaart(5, '+');
+        kaartenArray[3] = new Kaart(6, '+');
+        kaartenArray[4] = new Kaart(1, '-');
+        kaartenArray[5] = new Kaart(2, '-');
+        kaartenArray[6] = new Kaart(3, '-');
+        kaartenArray[7] = new Kaart(5, '-');
+        kaartenArray[8] = new Kaart(3, '*');
+        kaartenArray[9] = new Kaart(1, '*');
+
+        this.kaarten.addAll(Arrays.asList(kaartenArray));
     }
 
 }

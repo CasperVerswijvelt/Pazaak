@@ -9,6 +9,7 @@ import domein.DomeinController;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import exceptions.PlayerAlreadyExistsException;
+import java.util.Arrays;
 /**
  *
  * @author Bruno
@@ -45,6 +46,8 @@ public class UC1 {
                 System.out.println(r.getString("NAMEREQUIREMENTS"));
             }
         } while (opnieuw);
+        for(String element : dc.geefSpelerInfo(naam)) 
+            System.out.println(element);
 
     }
 

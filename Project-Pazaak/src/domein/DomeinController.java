@@ -67,6 +67,9 @@ public class DomeinController {
     public void setSpelerRepo(SpelerRespository spelerRepo) {
         this.spelerRepo = spelerRepo;
     }
+    public String[] geefSpelerInfo(String naam) {
+        return spelerRepo.geefSpelerInfo(naam);
+    }
     
 
 }

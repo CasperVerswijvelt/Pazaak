@@ -46,4 +46,21 @@ public class SpelerRespository {
         return sm.geefAlleSpelers().size();
     }
 
+    public String[] geefSpelerInfo(String naam) {
+        Speler speler = sm.geefSpeler(naam);
+        String info[] = new String[4];
+        
+        info[0] = speler.getNaam();
+        info[1] = speler.getKrediet() + "";
+        info[2] = speler.getGeboorteDatum() + "";
+        
+        String kaarten = "";
+        for(Kaart element: speler.getKaarten()) {
+            kaarten+=element.toString()+", ";
+        }
+        info[3] = kaarten;
+        
+        return info;
+    }
+
 }
