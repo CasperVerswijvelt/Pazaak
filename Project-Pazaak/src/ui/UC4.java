@@ -61,7 +61,7 @@ public class UC4 {
                 } while (!valideKeuze);
                 wedstrijdStapel.add(startStapel.get(keuze - 1));
                 System.out.println(startStapel.get(keuze - 1));
-                startStapel.remove(i);
+                startStapel.remove(keuze-1);
             }
             for(int j = 0;j<2;j++) {
                 wedstrijdStapel.remove((int)(Math.random()*wedstrijdStapel.size()));
