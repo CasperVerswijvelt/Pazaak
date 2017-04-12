@@ -17,12 +17,11 @@ import java.util.List;
 public class DomeinController {
     //Attributen
 
-    private Spel spel;
+    private Wedstrijd wedstrijd;
     private SpelerRespository spelerRepo;
 
     //Constructor
     public DomeinController() {
-        spel = new Spel();
         spelerRepo= new SpelerRespository();
     }
 
@@ -50,17 +49,11 @@ public class DomeinController {
     public int geefAantalSpelers() {
         return spelerRepo.geefAantalSpelers();
     }
+    public void maakNieuweWedstrijdAan(Speler speler1, Speler speler2) {
+        this.wedstrijd = new Wedstrijd(speler1, speler2);
+    }
     
     //Getters & Setters
-
-    public Spel getSpel() {
-        return spel;
-    }
-
-    public void setSpel(Spel spel) {
-        this.spel = spel;
-    }
-
     public SpelerRespository getSpelerRepo() {
         return spelerRepo;
     }
@@ -80,9 +73,12 @@ public class DomeinController {
         for(Kaart element : kaarten){
             res+=element.toString()+"\n";
         }
-        
         return res;
     }
+    public Wedstrijd geefWedstrijd() {
+        return wedstrijd;
+    }
+    
     
 
 }

@@ -6,6 +6,7 @@
 package ui;
 
 import domein.DomeinController;
+import domein.Speler;
 import domein.Wedstrijd;
 import exceptions.NoPlayersAvailableException;
 import java.util.List;
@@ -69,9 +70,8 @@ public class UC3 {
                 spelerLijst.remove(naam);
                 geselecteerdeSpelers[i] = naam;
             }
-            ///NIET JUIST, MOET VIA DC
-            Wedstrijd w = new Wedstrijd(dc.geefSpeler(geselecteerdeSpelers[0]), dc.geefSpeler(geselecteerdeSpelers[1]));
-            new UC4().start(dc, r, w);
+            dc.maakNieuweWedstrijdAan(dc.geefSpeler(geselecteerdeSpelers[0]), dc.geefSpeler(geselecteerdeSpelers[1]));
+            new UC4().start(dc, r, dc.geefWedstrijd());
         }
 
     }
@@ -82,4 +82,6 @@ public class UC3 {
             System.out.println(" "+(i+1)+". " + lijst.get(i));
         }
     }
+
+    
 }

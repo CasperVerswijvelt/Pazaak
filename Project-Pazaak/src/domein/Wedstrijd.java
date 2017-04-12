@@ -25,15 +25,16 @@ public class Wedstrijd {
     public Wedstrijd(Speler speler1, Speler speler2) {
 
         this.wedstrijdStapels = new ArrayList<>();
+        wedstrijdStapels.add(null);wedstrijdStapels.add(null);
         this.spelers = new ArrayList<>();
         
-        this.spelers.set(0, speler1);
-        this.spelers.set(1, speler2);
+        this.spelers.add(0,speler1);
+        this.spelers.add(1,speler2);
         
     }
     //Controle
     private void controleerWedstrijdStapel(List<Kaart>  stapel) {
-        if(stapel.size() > 6)
+        if(stapel.size() > 4)
             throw new CardStackTooBigException();
     }
     
