@@ -26,8 +26,8 @@ public class Kaart {
 
     //Controle
     public void controleerWaarde(int waarde) {
-        if (waarde < 1 || waarde > 6) {
-            throw new IllegalArgumentException("De waarde van een kaart kan minimaal 1 en maximaal 6 zijn.");
+        if (waarde < 1 || waarde > 10) {
+            throw new IllegalArgumentException("De waarde van een kaart kan minimaal 1 en maximaal 10 zijn.");
         }
     }
 

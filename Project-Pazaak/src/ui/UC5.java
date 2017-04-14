@@ -19,8 +19,11 @@ public class UC5 {
     public static void start(DomeinController dc, ResourceBundle r, Wedstrijd w) {
         
         while(!w.heeftWinnaar()) {
-            UC6.start();
+            UC6.start(dc, r, w);
         }
+        
+        
+        //Spel beëindigd
         Speler winnaar = w.geefWinnaar();
         winnaar.setKrediet(winnaar.getKrediet()+5);
         dc.slaKredietOp(winnaar);

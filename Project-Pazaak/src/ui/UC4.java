@@ -9,12 +9,11 @@ import domein.DomeinController;
 import domein.Kaart;
 import domein.Speler;
 import domein.Wedstrijd;
-import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import static ui.Console.printLijn;
 
 /**
  *
@@ -22,7 +21,8 @@ import java.util.Scanner;
  */
 public class UC4 {
 
-    public void start(DomeinController dc, ResourceBundle r, Wedstrijd w) {
+    public void start(DomeinController dc, ResourceBundle r) {
+        Wedstrijd w = dc.geefWedstrijd();
         Scanner in = new Scanner(System.in);
         List<Speler> spelers = w.getSpelers();
         printLijn();
@@ -71,12 +71,11 @@ public class UC4 {
             System.out.println(w.getWedstrijdStapels(i));
             
         }
+        
+        UC5.start(dc, r, w);
 
     }
 
-    public void printLijn() {
-        System.out.println("----------------------------------------");
-    }
 
     private void toonStapel(List wedstrijdStapel) {
         for (int i = 0; i < wedstrijdStapel.size(); i++) {

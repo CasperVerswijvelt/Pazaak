@@ -14,9 +14,8 @@ import java.util.ResourceBundle;
  * @author Casper
  */
 class UC6 {
-
     static void start(DomeinController dc, ResourceBundle r, Wedstrijd w) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        w.startSet();
     }
     
 }

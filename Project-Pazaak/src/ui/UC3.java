@@ -71,7 +71,7 @@ public class UC3 {
                 geselecteerdeSpelers[i] = naam;
             }
             dc.maakNieuweWedstrijdAan(dc.geefSpeler(geselecteerdeSpelers[0]), dc.geefSpeler(geselecteerdeSpelers[1]));
-            new UC4().start(dc, r, dc.geefWedstrijd());
+            new UC4().start(dc, r);
         }
 
     }

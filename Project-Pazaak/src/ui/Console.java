@@ -76,7 +76,7 @@ public class Console {
         } while (opnieuw);
 
     }
-    public void printLijn(){
+    public static void printLijn(){
         System.out.println("----------------------------------------");
     }
 }

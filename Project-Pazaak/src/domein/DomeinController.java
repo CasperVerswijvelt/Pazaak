@@ -35,9 +35,7 @@ public class DomeinController {
         spelerRepo.voegToe(new Speler(naam, geboorteDatum));
     }
     
-    public List<String> geefAlleSpelerNamen() {
-        return spelerRepo.geefSpelerNamenLijst();
-    }
+    
     
     public boolean spelerBestaat(String naam) {
         return spelerRepo.bestaat(naam);
@@ -46,14 +44,21 @@ public class DomeinController {
     public void startPazaak() {
         throw new UnsupportedOperationException();
     }
-    public int geefAantalSpelers() {
-        return spelerRepo.geefAantalSpelers();
-    }
+    
     public void maakNieuweWedstrijdAan(Speler speler1, Speler speler2) {
         this.wedstrijd = new Wedstrijd(speler1, speler2);
     }
+    public void slaKredietOp(Speler speler) {
+        spelerRepo.slaKredietOp(speler);
+    }
     
     //Getters & Setters
+    public List<String> geefAlleSpelerNamen() {
+        return spelerRepo.geefSpelerNamenLijst();
+    }
+    public int geefAantalSpelers() {
+        return spelerRepo.geefAantalSpelers();
+    }
     public SpelerRespository getSpelerRepo() {
         return spelerRepo;
     }

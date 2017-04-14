@@ -32,7 +32,12 @@ public class SpelerRespository {
         Speler speler = new Speler(naam, geboorteDatum);
         this.voegToe(speler);
     }
+    
+    public void slaKredietOp(Speler speler) {
+        sm.slaKredietOp(speler);
+    }
 
+    //Getters & Setterr
     public List<String> geefSpelerNamenLijst() {
         return sm.geefAlleSpelerNamen();
     }
@@ -65,7 +70,7 @@ public class SpelerRespository {
         return speler.getStartStapel();
     }
 
-    //Getters & Setterr
+    
     public List<Speler> getSpelers() {
         return sm.geefAlleSpelers();
     }
