@@ -40,23 +40,27 @@ public class DomeinController {
     public boolean spelerBestaat(String naam) {
         return spelerRepo.bestaat(naam);
     }
-
-    public void startPazaak() {
-        throw new UnsupportedOperationException();
-    }
-    
+    //AAN TE PASSEN//////////////////////////////////////////////////////////////////////// 
     public void maakNieuweWedstrijdAan(Speler speler1, Speler speler2) {
         this.wedstrijd = new Wedstrijd(speler1, speler2);
     }
+    // AAN TE PASSEN///////////////////////////////////////////////////////////////////////
     public void slaKredietOp(Speler speler) {
         spelerRepo.slaKredietOp(speler);
     }
-    
+    // Metode selecteer speler
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Methode geefGeselecteerdeSpelers
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Methode geefSpelersZonderWedstrijdStapel
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Methode selecteerSpelerWedstrijdStapel
+    ///////////////////////////////////////////////////////////////////////////////////////
     //Getters & Setters
     public List<String> geefAlleSpelerNamen() {
         return spelerRepo.geefSpelerNamenLijst();
     }
-    public int geefAantalSpelers() {
+    private int geefAantalSpelers() {
         return spelerRepo.geefAantalSpelers();
     }
     public SpelerRespository getSpelerRepo() {
@@ -69,9 +73,7 @@ public class DomeinController {
     public String[] geefSpelerInfo(String naam) {
         return spelerRepo.geefSpelerInfo(naam);
     }
-    public Speler geefSpeler(String naam) {
-        return spelerRepo.geefSpeler(naam);
-    }
+    // AAN TE PASSEN PARAMETER////////////////////////////////////////////////////////////
     public String geefStartStapel(Speler speler) {
         List<Kaart> kaarten = spelerRepo.geefStartStapel(speler);
         String res = "";
@@ -80,10 +82,17 @@ public class DomeinController {
         }
         return res;
     }
+    
     public Wedstrijd geefWedstrijd() {
         return wedstrijd;
     }
-    
-    
+    // Methode voegKaartToe //////////////////////////////////////////////////////////////
+    // Methode selecteerKaart/////////////////////////////////////////////////////////////
+    // Methode geefNietgeselecteerdeKaarten///////////////////////////////////////////////
+    // Methode geefWedstrijdStapel////////////////////////////////////////////////////////
+    // Methode veranderKrediet////////////////////////////////////////////////////////////
+    // Methode maakNieuweSet//////////////////////////////////////////////////////////////
+    // Methode geefSpelerAanBeurt/////////////////////////////////////////////////////////
+    // VRAAG UC6 WAAROM IS HET NIET MOGELIJK OM JE SPELBORD TE BEVRIEZEN NA HET GEBRUIK VAN EEN SPECIALE KAART? MOET JE NIET TERUG NAAR STAP 6 IPV 8 IN UC
 
 }

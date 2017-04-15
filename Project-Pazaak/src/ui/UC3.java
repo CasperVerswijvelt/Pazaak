@@ -70,6 +70,7 @@ public class UC3 {
                 spelerLijst.remove(naam);
                 geselecteerdeSpelers[i] = naam;
             }
+            // AAN TE PASSEN!!!!
             dc.maakNieuweWedstrijdAan(dc.geefSpeler(geselecteerdeSpelers[0]), dc.geefSpeler(geselecteerdeSpelers[1]));
             new UC4().start(dc, r);
         }
