@@ -17,10 +17,15 @@ import static ui.Console.printLijn;
  * @author Casper
  */
 class UC6 {
+
     private ResourceBundle r;
+    private DomeinController dc;
+    private Scanner in;
+
     public void start(DomeinController dc, ResourceBundle r) {
-        Scanner in = new Scanner(System.in);
+        this.in = new Scanner(System.in);
         this.r = r;
+        this.dc = dc;
 
         dc.maakNieuweSet();
         System.out.println("");
@@ -32,11 +37,11 @@ class UC6 {
 
             dc.deelKaartUit();
             String[][] spelbord = dc.geefSpelBord();
-            
+
             toonSpelbord(spelbord);
             int score = dc.geefScore();
             System.out.println("SCORE= " + score);
-            if(score>20){
+            if (score > 20) {
                 printLijn();
                 continue;
             }
@@ -67,39 +72,88 @@ class UC6 {
                 }
 
             } while (!valideKeuze);
-            
-            
-            switch(acties.get(keuze-1)) {
-                case "FREEZE": 
-                    dc.bevriesBord(); 
+
+            switch (acties.get(keuze - 1)) {
+                case "FREEZE":
+                    dc.bevriesBord();
                     break;
-                case "USEGAMECARD": 
+                case "USEGAMECARD":
+                    gebruikWedstrijdKaartOptie();
+                    break;
             }
-            dc.eindigBeurt(); 
-            
-            
-            
-            
+            dc.eindigBeurt();
+
             printLijn();
         }
         String uitslag = dc.geefSetUitslag();
-        System.out.println(uitslag.equals("TIE")?"TIE":uitslag + " WINS THE SET");
-        
-        
+        System.out.println(uitslag.equals("TIE") ? "TIE" : uitslag + " WINS THE SET");
+
+    }
+
+    private void toonSpelbord(String[][] spelbord) {
+        String res = "CURRENTBOARD: ";
+        for (int i = 0; i < spelbord.length; i++) {
+            res += spelbord[i][1] + spelbord[i][0] + " ";
+        }
+        System.out.println(res);
+    }
+
+    private void gebruikWedstrijdKaartOptie() {
+        System.out.println("YOUR CARDS:");
+        String[][] stapel = dc.geefWedstrijdStapel();
+
+        int keuze = 0;
+        boolean valideKeuze;
+
+        //mogelijke opties tonen
+        toonStapel(stapel);
+
+        //Keuze inlezen
+        do {
+            System.out.printf(r.getString("CHOICE") + ": ");
+
+            try {
+                keuze = Integer.parseInt(in.nextLine());
+                valideKeuze = keuze <= stapel.length && keuze > 0;
+                if (!valideKeuze) {
+                    throw new IllegalArgumentException();
+                }
+
+            } catch (IllegalArgumentException e) {
+                valideKeuze = false;
+                System.out.println(r.getString("INVALIDCHOICE"));
+            }
+
+        } while (!valideKeuze);
+
+        String[] gekozenKaart = stapel[keuze - 1];
+        char type= gekozenKaart[1].charAt(0);
+        if (type == '*') {
+            do {
+                System.out.println("+ OR -:");
+                try {
+                    keuze = in.nextLine().charAt(0);
+                    valideKeuze = keuze == '+' || keuze == '-';
+                    if (!valideKeuze) {
+                        throw new IllegalArgumentException();
+                    }
+                    type = (char)keuze;
+
+                } catch (IllegalArgumentException e) {
+                    valideKeuze = false;
+                    System.out.println(r.getString("INVALIDCHOICE"));
+                }
+
+            } while (!valideKeuze);
+        }
+        dc.gebruikWedstrijdKaart(gekozenKaart, type);
+
     }
 
     private void toonStapel(String[][] stapel) {
         for (int i = 0; i < stapel.length; i++) {
-            System.out.println(" " + (i + 1) + ". " + stapel[i][1] + stapel[1][0]);
+            System.out.println(" " + (i + 1) + ". " + stapel[i][1] + stapel[i][0]);
         }
-    }
-
-    private void toonSpelbord(String[][] spelbord) {
-        String res = "CURRENTBOARD= ";
-        for (int i = 0; i < spelbord.length; i++) {
-            res+= spelbord[i][1] + spelbord[i][0] + " ";
-        }
-        System.out.println(res);
     }
 
 }
