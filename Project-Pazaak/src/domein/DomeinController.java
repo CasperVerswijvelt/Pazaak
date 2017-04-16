@@ -1,98 +1,205 @@
-/*
- * This code was written by Casper Verswijvelt
- * Any unauthorized use is illegal.
- * ? Casper Verswijvelt 2016-2017
- */
 package domein;
 
-import domein.*;
-import exceptions.PlayerAlreadyExistsException;
-import java.util.ArrayList;
-import java.util.List;
+import exceptions.NoPlayersAvailableException;
+import java.util.*;
 
 /**
- *
  * @author Casper
  */
 public class DomeinController {
-    //Attributen
 
+    //Attributen
+    private final SpelerRespository spelerRepo;
     private Wedstrijd wedstrijd;
-    private SpelerRespository spelerRepo;
+    private final List<Speler> geselecteerdeSpelers;
+    private final List<Kaart> geselecteerdeKaarten;
+    private Speler geselecteerdeSpelerWedstrijdstapel;
 
     //Constructor
     public DomeinController() {
-        spelerRepo= new SpelerRespository();
+        this.spelerRepo = new SpelerRespository();
+        this.geselecteerdeSpelers = new ArrayList<>();
+        this.geselecteerdeKaarten = new ArrayList<>();
+    }
+    
+    public void maakNieuweSpelerAan(String naam, int geboorteJaar) {
+        spelerRepo.maakNieuweSpelerAan(naam, geboorteJaar);
+    }
+    
+    public boolean spelerBestaat(String naam) {
+        return spelerRepo.bestaat(naam);
+    }
+    
+    public String[] geefSpelerInfo(String naam) {
+        return spelerRepo.geefSpelerInfo(naam);
+    }
+    
+    public List<String> geefAlleSpelerNamen() {
+        return spelerRepo.geefSpelersLijst();
     }
 
     /**
      *
      * @param naam
-     * @param geboorteDatum
-     * @throws exceptions.PlayerAlreadyExistsException
      */
-    public void maakNieuweSpelerAan(String naam, int geboorteDatum) throws PlayerAlreadyExistsException {
-        spelerRepo.voegToe(new Speler(naam, geboorteDatum));
+    public void selecteerSpeler(String naam) {
+        Speler speler = spelerRepo.geefSpeler(naam);
+        
+        this.geselecteerdeSpelers.add(speler);
+        
+        if (this.geselecteerdeSpelers.size() > 2) {
+            this.geselecteerdeSpelers.remove(0);
+        }
     }
     
+    public List<String> geefGeselecteerdeSpelers() {
+        List<String> lijst = new ArrayList<>();
+        
+        for (Speler element : geselecteerdeSpelers) {
+            lijst.add(element.getNaam());
+        }
+        
+        return lijst;
+    }
     
+    public void maakNieuweWedstrijd() {
+        if (geselecteerdeSpelers.size() < 2) {
+            throw new NoPlayersAvailableException();
+        }
+        this.wedstrijd = new Wedstrijd(geselecteerdeSpelers.get(0), geselecteerdeSpelers.get(1));
+        
+        geselecteerdeSpelers.clear();
+    }
     
-    public boolean spelerBestaat(String naam) {
-        return spelerRepo.bestaat(naam);
+    public String[][] geefStartStapel() {
+        
+        return kaartenAlsString(geselecteerdeSpelerWedstrijdstapel.geefStartStapel());
     }
-    //AAN TE PASSEN//////////////////////////////////////////////////////////////////////// 
-    public void maakNieuweWedstrijdAan(Speler speler1, Speler speler2) {
-        this.wedstrijd = new Wedstrijd(speler1, speler2);
+    
+    public int geefAantalSpelers() {
+        return spelerRepo.geefSpelersLijst().size();
     }
-    // AAN TE PASSEN///////////////////////////////////////////////////////////////////////
-    public void slaKredietOp(Speler speler) {
-        spelerRepo.slaKredietOp(speler);
-    }
-    // Metode selecteer speler
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Methode geefGeselecteerdeSpelers
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Methode geefSpelersZonderWedstrijdStapel
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Methode selecteerSpelerWedstrijdStapel
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //Getters & Setters
-    public List<String> geefAlleSpelerNamen() {
-        return spelerRepo.geefSpelerNamenLijst();
-    }
-    private int geefAantalSpelers() {
-        return spelerRepo.geefAantalSpelers();
-    }
-    public SpelerRespository getSpelerRepo() {
-        return spelerRepo;
-    }
+    
+    public List<String> geefSpelersZonderWedstrijdStapel() {
 
-    public void setSpelerRepo(SpelerRespository spelerRepo) {
-        this.spelerRepo = spelerRepo;
-    }
-    public String[] geefSpelerInfo(String naam) {
-        return spelerRepo.geefSpelerInfo(naam);
-    }
-    // AAN TE PASSEN PARAMETER////////////////////////////////////////////////////////////
-    public String geefStartStapel(Speler speler) {
-        List<Kaart> kaarten = spelerRepo.geefStartStapel(speler);
-        String res = "";
-        for(Kaart element : kaarten){
-            res+=element.toString()+"\n";
+        List<Speler> spelers = wedstrijd.geefSpelersZonderWedstrijdStapel();
+        List<String> res = new ArrayList<>();
+        
+        for (Speler element : spelers) {
+            res.add(element.getNaam());
         }
         return res;
     }
     
-    public Wedstrijd geefWedstrijd() {
-        return wedstrijd;
+    public void selecterSpelerWedstrijdStapel(String naam) {
+        this.geselecteerdeSpelerWedstrijdstapel = wedstrijd.geefSpeler(naam);
     }
-    // Methode voegKaartToe //////////////////////////////////////////////////////////////
-    // Methode selecteerKaart/////////////////////////////////////////////////////////////
-    // Methode geefNietgeselecteerdeKaarten///////////////////////////////////////////////
-    // Methode geefWedstrijdStapel////////////////////////////////////////////////////////
-    // Methode veranderKrediet////////////////////////////////////////////////////////////
-    // Methode maakNieuweSet//////////////////////////////////////////////////////////////
-    // Methode geefSpelerAanBeurt/////////////////////////////////////////////////////////
-    // VRAAG UC6 WAAROM IS HET NIET MOGELIJK OM JE SPELBORD TE BEVRIEZEN NA HET GEBRUIK VAN EEN SPECIALE KAART? MOET JE NIET TERUG NAAR STAP 6 IPV 8 IN UC
-
+    
+    //WERKT MOGELIJK NIET
+    public String[][] geefNietGeselecteerdeKaarten() {
+        List<Kaart> nietGeselecteerdeKaarten = geselecteerdeSpelerWedstrijdstapel.geefStartStapel();
+        
+        for (Kaart element : geselecteerdeKaarten) {
+            nietGeselecteerdeKaarten.remove(element);
+        }
+        
+        return kaartenAlsString(nietGeselecteerdeKaarten);
+        
+    }
+    
+    public void selecteerKaart(String[] kaart) {
+        this.geselecteerdeKaarten.add((new Kaart(Integer.parseInt(kaart[0]), kaart[1].charAt(0))));
+    }
+    
+    public void maakWedstrijdStapel() {
+        wedstrijd.maakWedstrijdstapel(geselecteerdeKaarten, geselecteerdeSpelerWedstrijdstapel);
+        geselecteerdeKaarten.clear();
+    }
+    
+    public void maakNieuweSet() {
+        wedstrijd.maakNieuweSet();
+    }
+    
+    public String geefSpelerAanBeurt() {
+        return wedstrijd.geefSpelerAanBeurt();
+    }
+    
+    public void veranderKrediet(String naam, int aantal) {
+        Speler speler = wedstrijd.geefSpeler(naam);
+        speler.setKrediet(speler.getKrediet() + aantal);
+        spelerRepo.slaKredietOp(speler);
+    }
+    
+    public void deelKaartUit() {
+        wedstrijd.deelKaartUit();
+    }
+    
+    public String[][] geefSpelBord() {
+        return kaartenAlsString(wedstrijd.geefSpelBord());
+    }
+    
+    public int geefScore() {
+        return wedstrijd.geefScore();
+    }
+    
+    public List<String> geefMogelijkeActies() {
+        return wedstrijd.geefMogelijkeActies();
+    }
+    
+    public void eindigBeurt() {
+        wedstrijd.eindigBeurt();
+    }
+    
+    public void bevriesBord() {
+        wedstrijd.bevriesBord();
+    }
+    
+    public String[][] geefWedstrijdStapel() {
+        return kaartenAlsString(wedstrijd.geefWedstrijdStapel());
+    }
+    
+    public void gebruikWedstrijdKaart(String[] kaart) {
+        wedstrijd.gebruikWedstrijdKaart(new Kaart(Integer.parseInt(kaart[0]), kaart[1].charAt(0)), kaart[2].charAt(0));
+    }
+    
+    public boolean setIsKlaar() {
+        return wedstrijd.setIsKlaar();
+    }
+    
+    public String geefSetUitslag() {
+        return wedstrijd.geefSetUitslag();
+    }
+    
+    public String geefWinnaar() {
+        return wedstrijd.geefWinnaar().getNaam();
+    }
+    public boolean wedstrijdIsKlaar() {
+        return wedstrijd.isKlaar();
+    }
+    private String[][] kaartenAlsString(List<Kaart> kaarten) {
+        String[][] res = new String[kaarten.size()][2];
+        
+        for (int i = 0; i < kaarten.size(); i++) {
+            res[i][0] = kaarten.get(i).getWaarde() + "";
+            res[i][1] = kaarten.get(i).getType() + "";
+        }
+        return res;
+    }
+    
+    public String[] geefWedstrijdSpelers() {
+        List<Speler> spelers = wedstrijd.geefSpelers();
+        String[] res = new String[spelers.size()];
+        for(int i = 0; i<spelers.size();i++)
+            res[i] = spelers.get(i).getNaam();
+            
+        return res;
+    }
+    public int[] geefWedstrijdTussenstand() {
+        return wedstrijd.geefTussenstand();
+    }
+    public void verhoogAantalWins(){
+        wedstrijd.verhoogAantalWins();
+    
+    }
+    
 }

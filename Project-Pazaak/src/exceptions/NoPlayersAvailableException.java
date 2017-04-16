@@ -9,7 +9,7 @@ package exceptions;
  *
  * @author Casper
  */
-public class NoPlayersAvailableException extends Exception{
+public class NoPlayersAvailableException extends IllegalArgumentException{
     public NoPlayersAvailableException(){
         super();
     }

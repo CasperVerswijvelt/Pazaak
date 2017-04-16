@@ -38,23 +38,27 @@ public class Console {
     }
 
     private void gameMenu() {
-        int keuze;
-        printLijn();
-        System.out.printf(" 0. %s%n"
-                + " 1. %s%n"
-                + " 2. %s%n",
-                r.getString("EXIT"),
-                r.getString("NEWPLAYEROPTION"),
-                r.getString("STARTGAMEOPTION"));
         boolean opnieuw = true;
         do {
-            System.out.print(r.getString("CHOICE")+": ");
+            int keuze;
+            printLijn();
+            System.out.printf(" 0. %s%n"
+                    + " 1. %s%n"
+                    + " 2. %s%n"
+                    + " 3 .%s%n",
+                    r.getString("EXIT"),
+                    r.getString("NEWPLAYEROPTION"),
+                    r.getString("STARTGAMEOPTION"),
+                    r.getString("BUYCARDOPTION"));
+
+            System.out.print(r.getString("CHOICE") + ": ");
             try {
                 keuze = in.nextInt();
-                if (keuze > 2 || keuze < 0) {
+                printLijn();
+                if (keuze > 3 || keuze < 0) {
                     throw new InvalidNumberException();
                 }
-                printLijn();
+                
                 switch (keuze) {
                     case 1:
                         new UC1(dc, r).start();
@@ -63,11 +67,14 @@ public class Console {
                     case 2:
                         new UC3(dc, r).start();
                         break;
+                    case 3:
+                        System.out.println(r.getString("TODO"));
+                        break;
                     case 0:
-                        
+
                         System.exit(0);
                 }
-                
+
             } catch (InvalidNumberException e) {
                 System.out.println(r.getString("INVALIDCHOICE"));
             } catch (NoPlayersAvailableException e) {
@@ -76,7 +83,8 @@ public class Console {
         } while (opnieuw);
 
     }
-    public static void printLijn(){
+
+    public static void printLijn() {
         System.out.println("----------------------------------------");
     }
 }

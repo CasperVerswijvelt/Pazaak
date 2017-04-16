@@ -1,44 +1,54 @@
 package domein;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 public class Speler {
-
     //Attributen
-    private String naam;
+    private final Collection<Kaart> startStapel;
+    private final String naam;
     private int krediet;
-    private int geboorteDatum;
-    private List<Kaart> startStapel;
+    private final int geboorteJaar;
 
-    /**
-     *
-     * @param naam
-     * @param geboorteDatum
-     */
-    //Constructors
-    //Speler uit DB
+    //Constructor
     public Speler(String naam, int geboorteJaar, int krediet) {
         controleerGeboorteJaar(geboorteJaar);
         controleerNaam(naam);
 
         this.naam = naam;
-        this.geboorteDatum = geboorteJaar;
+        this.geboorteJaar = geboorteJaar;
         this.krediet = krediet;
 
         startStapel = new ArrayList<>();
 
         maakStartStapel();
-
-    }
-    //Nieuwe speler
-
-    public Speler(String naam, int geboorteDatum) {
-        this(naam, geboorteDatum, 0);
     }
 
+    //Methodes
+    private void maakStartStapel() {
+        Kaart[] kaartenArray = new Kaart[10];
+
+        kaartenArray[0] = new Kaart(2, '+');
+        kaartenArray[1] = new Kaart(4, '+');
+        kaartenArray[2] = new Kaart(5, '+');
+        kaartenArray[3] = new Kaart(6, '+');
+        kaartenArray[4] = new Kaart(1, '-');
+        kaartenArray[5] = new Kaart(2, '-');
+        kaartenArray[6] = new Kaart(3, '-');
+        kaartenArray[7] = new Kaart(5, '-');
+        kaartenArray[8] = new Kaart(3, '*');
+        kaartenArray[9] = new Kaart(1, '*');
+        
+        // + gekochte kaarten uit databank halen
+
+        this.startStapel.addAll(Arrays.asList(kaartenArray));
+    }
+    @Override
+    public String toString() {
+        return String.format("%s, %d, %d", naam, geboorteJaar, krediet);
+    }
+
+    
+    
     //Controle
     private void controleerNaam(String naam) {
         if (naam.length() < 3) {
@@ -53,31 +63,16 @@ public class Speler {
             throw new IllegalArgumentException("Speler moet minstens 6 jaar of maximum 99 jaar oud worden dit jaar.");
         }
     }
-
-    //Methodes
-    @Override
-    public String toString() {
-        return String.format("%s, %d, %d", getNaam(), getGeboorteDatum(), getKrediet());
+    
+    //Getters & Settesr
+    public List<Kaart> geefStartStapel() {
+        return (List)startStapel;
     }
 
-    private void maakStartStapel() {
-        Kaart[] kaartenArray = new Kaart[10];
-
-        kaartenArray[0] = new Kaart(2, '+');
-        kaartenArray[1] = new Kaart(4, '+');
-        kaartenArray[2] = new Kaart(5, '+');
-        kaartenArray[3] = new Kaart(6, '+');
-        kaartenArray[4] = new Kaart(1, '-');
-        kaartenArray[5] = new Kaart(2, '-');
-        kaartenArray[6] = new Kaart(3, '-');
-        kaartenArray[7] = new Kaart(5, '-');
-        kaartenArray[8] = new Kaart(3, '*');
-        kaartenArray[9] = new Kaart(1, '*');
-
-        this.startStapel.addAll(Arrays.asList(kaartenArray));
+    public String getNaam() {
+        return naam;
     }
 
-    //Getters & Setters
     public int getKrediet() {
         return krediet;
     }
@@ -86,31 +81,7 @@ public class Speler {
         this.krediet = krediet;
     }
 
-    public String getNaam() {
-        return naam;
+    public int getGeboorteJaar() {
+        return geboorteJaar;
     }
-
-    public void setNaam(String naam) {
-        controleerNaam(naam);
-        this.naam = naam;
-    }
-
-    public int getGeboorteDatum() {
-        return geboorteDatum;
-    }
-
-    public void setGeboorteJaar(int geboorteJaar) {
-        controleerGeboorteJaar(geboorteJaar);
-        this.geboorteDatum = geboorteJaar;
-    }
-
-    public List<Kaart> getStartStapel() {
-        return startStapel;
-        // + gekochte kaarten uit databank halen
-    }
-
-    public void setStartStapel(List<Kaart> kaarten) {
-        this.startStapel = kaarten;
-    }
-
 }

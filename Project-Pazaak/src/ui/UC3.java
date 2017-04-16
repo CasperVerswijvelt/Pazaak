@@ -33,15 +33,14 @@ public class UC3 {
 
     //Methodes
     public void start() throws NoPlayersAvailableException {
-        int aantalSpelersBeschikbaar = dc.geefAantalSpelers();
+        List<String> spelerLijst = dc.geefAlleSpelerNamen();
+        int aantalSpelersBeschikbaar = spelerLijst.size();
         if (aantalSpelersBeschikbaar < 2) {
             throw new NoPlayersAvailableException(aantalSpelersBeschikbaar + "");
         } else {
-            List<String> spelerLijst = dc.geefAlleSpelerNamen();
             System.out.println(r.getString("CHOOSETWOPLAYERS"));
-            
-            String geselecteerdeSpelers[] = new String[2];
 
+            //2 spelers vragen
             for (int i = 0; i < 2; i++) {
                 String naam;
                 int keuze=0;
@@ -68,10 +67,10 @@ public class UC3 {
                 naam = spelerLijst.get(keuze-1);
                 System.out.printf(r.getString("PLAYERSELECTED")+"%n", naam);
                 spelerLijst.remove(naam);
-                geselecteerdeSpelers[i] = naam;
+                dc.selecteerSpeler(naam);
             }
-            // AAN TE PASSEN!!!!
-            dc.maakNieuweWedstrijdAan(dc.geefSpeler(geselecteerdeSpelers[0]), dc.geefSpeler(geselecteerdeSpelers[1]));
+
+            dc.maakNieuweWedstrijd();
             new UC4().start(dc, r);
         }
 

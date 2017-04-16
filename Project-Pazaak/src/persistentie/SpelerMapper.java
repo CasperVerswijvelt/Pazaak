@@ -30,7 +30,8 @@ public class SpelerMapper {
                 if (rs.next()) {
                     String naam2 = rs.getString("naam");
                     int geboortedatum = rs.getInt("geboortedatum");
-                    speler = new Speler(naam2, geboortedatum);
+                    int krediet = rs.getInt("krediet");
+                    speler = new Speler(naam2, geboortedatum, krediet);
                 }
             }
         } catch (SQLException ex) {
@@ -45,7 +46,7 @@ public class SpelerMapper {
             PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.Speler (naam, geboortedatum)"
                     + "VALUES (?, ?)");
             query.setString(1, speler.getNaam());
-            query.setInt(2, speler.getGeboorteDatum());
+            query.setInt(2, speler.getGeboorteJaar());
             query.executeUpdate();
 
         } catch (SQLException ex) {

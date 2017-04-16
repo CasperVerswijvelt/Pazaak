@@ -5,8 +5,6 @@ public class Kaart {
     private int waarde;
     private char type;
 
-
-
     //Constructor
     public Kaart(int waarde, char type) {
         controleerType(type);
@@ -15,7 +13,7 @@ public class Kaart {
         this.waarde = waarde;
         this.type = type;
     }
-
+    
     //Methodes
     @Override
     public String toString() {
@@ -25,18 +23,18 @@ public class Kaart {
     }
 
     //Controle
-    public void controleerWaarde(int waarde) {
+    private void controleerWaarde(int waarde) {
         if (waarde < 1 || waarde > 10) {
             throw new IllegalArgumentException("De waarde van een kaart kan minimaal 1 en maximaal 10 zijn.");
         }
     }
 
-    public void controleerType(char type) {
+    private void controleerType(char type) {
         if (type != '+' && type != '-' && type != '*') {
             throw new IllegalArgumentException("Het type kan '+', '-' of '*' zijn.");
         }
     }
-
+    
     //Getters & Setters
     public int getWaarde() {
         return waarde;
@@ -55,5 +53,6 @@ public class Kaart {
         controleerType(type);
         this.type = type;
     }
+    
 
 }

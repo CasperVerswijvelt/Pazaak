@@ -9,6 +9,7 @@ import domein.DomeinController;
 import domein.Speler;
 import domein.Wedstrijd;
 import java.util.ResourceBundle;
+import static ui.Console.printLijn;
 
 /**
  *
@@ -16,19 +17,24 @@ import java.util.ResourceBundle;
  */
 public class UC5 {
 
-    public static void start(DomeinController dc, ResourceBundle r, Wedstrijd w) {
-        
-        while(!w.heeftWinnaar()) {
-            UC6.start(dc, r, w);
+    public static void start(DomeinController dc, ResourceBundle r) {
+
+        while (!dc.wedstrijdIsKlaar()) {
+            new UC6().start(dc, r);
+            dc.verhoogAantalWins();
+            
+            String[] spelers = dc.geefWedstrijdSpelers();
+            int[] tussenstand = dc.geefWedstrijdTussenstand();
+            System.out.println(" " + spelers[0] + " " + tussenstand[0] + "  -  " + tussenstand[1] + " " + spelers[1]);
+
+            printLijn();
         }
-        
-        
+
+        String winnaar = dc.geefWinnaar();
         //Spel beëindigd
-        Speler winnaar = w.geefWinnaar();
-        winnaar.setKrediet(winnaar.getKrediet()+5);
-        dc.slaKredietOp(winnaar);
-        System.out.printf(r.getString("WINNER")+"%s",winnaar.getNaam());
-        System.out.printf(r.getString("NEWCREDIT")+"%d",winnaar.getKrediet());
+        dc.veranderKrediet(dc.geefWinnaar(), 5);
+        System.out.printf(r.getString("WINNER") + "%s", winnaar);
+        System.out.printf(r.getString("NEWCREDIT") + "%d", dc.geefSpelerInfo(winnaar)[1]);
     }
-    
+
 }
