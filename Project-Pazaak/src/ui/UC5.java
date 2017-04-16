@@ -33,8 +33,8 @@ public class UC5 {
         String winnaar = dc.geefWinnaar();
         //Spel beëindigd
         dc.veranderKrediet(dc.geefWinnaar(), 5);
-        System.out.printf(r.getString("WINNER") + "%s", winnaar);
-        System.out.printf(r.getString("NEWCREDIT") + "%d", dc.geefSpelerInfo(winnaar)[1]);
+        System.out.printf(r.getString("WINNER") + "%s%n", winnaar);
+        System.out.printf(r.getString("NEWCREDIT") + "%d%n", Integer.parseInt(dc.geefSpelerInfo(winnaar)[1]));
     }
 
 }

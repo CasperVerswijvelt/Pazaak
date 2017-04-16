@@ -158,8 +158,8 @@ public class DomeinController {
         return kaartenAlsString(wedstrijd.geefWedstrijdStapel());
     }
     
-    public void gebruikWedstrijdKaart(String[] kaart) {
-        wedstrijd.gebruikWedstrijdKaart(new Kaart(Integer.parseInt(kaart[0]), kaart[1].charAt(0)), kaart[2].charAt(0));
+    public void gebruikWedstrijdKaart(String[] kaart, char type) {
+        wedstrijd.gebruikWedstrijdKaart(new Kaart(Integer.parseInt(kaart[0]), kaart[1].charAt(0)), type);
     }
     
     public boolean setIsKlaar() {
