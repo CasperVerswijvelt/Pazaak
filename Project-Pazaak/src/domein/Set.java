@@ -130,10 +130,17 @@ public class Set {
             int score1 = berekenScore(spelbord1), score2 = berekenScore(spelbord2);
             if(score1==score2) 
                 return 2;
-            else if(score1>score2 && score1<21)
-                return 0;
-            else 
-                return 1;
+            else {
+                if(score1>20)
+                    return 1;
+                if(score2>20)
+                    return 0;
+                if(score1>score2)
+                    return 0;
+                else
+                    return 1;
+            }
+                  
         } else // Set nog niet ten einde
             return -1;
     }
