@@ -8,6 +8,7 @@ package ui;
 import domein.DomeinController;
 import exceptions.InvalidNumberException;
 import exceptions.NoPlayersAvailableException;
+import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -53,11 +54,12 @@ public class Console {
 
             System.out.print(r.getString("CHOICE") + ": ");
             try {
-                keuze = in.nextInt();
-                printLijn();
+                keuze = Integer.parseInt(in.nextLine());
+                
                 if (keuze > 3 || keuze < 0) {
                     throw new InvalidNumberException();
                 }
+                printLijn();
                 
                 switch (keuze) {
                     case 1:
@@ -76,7 +78,8 @@ public class Console {
                         System.exit(0);
                 }
 
-            } catch (InvalidNumberException e) {
+            } catch (InvalidNumberException  | NumberFormatException e) {
+                printLijn();
                 System.out.println(r.getString("INVALIDCHOICE"));
             } catch (NoPlayersAvailableException e) {
                 System.out.printf(r.getString("NOTENOUGHPLAYERS") + "%n", Integer.parseInt(e.getMessage()));
