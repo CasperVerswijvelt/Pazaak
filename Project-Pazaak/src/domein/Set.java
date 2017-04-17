@@ -6,7 +6,6 @@ public class Set {
 
     //Attributen
     private List<Kaart> setStapel;
-//    private final List<Speler> spelers;
     private final List<Kaart> spelbord1;
     private final List<Kaart> spelbord2;
     private boolean speler1AanBeurt;
@@ -22,10 +21,6 @@ public class Set {
 
         //stapel aanmaken
         maakSetstapel();
-
-//        spelers = new ArrayList<>();
-//        spelers.add(speler1);
-//        spelers.add(speler2);
     }
 
     private void maakSetstapel() {
@@ -40,10 +35,6 @@ public class Set {
         Collections.shuffle(setStapel);
     }
 
-//    public String geefSpelerAanBeurt() {
-//        return speler1AanBeurt ? spelers.get(0).getNaam() : spelers.get(1).getNaam();
-//    }
-
     public int geefSpelerAanBeurtIndex() {
         return speler1AanBeurt ? 0 : 1;
     }
@@ -53,9 +44,9 @@ public class Set {
         setStapel.remove(0);
 
         if (speler1AanBeurt) {
-            spelbord1.add(kaart);
+            voegSpelbordKaartToe(spelbord1, kaart);
         } else {
-            spelbord2.add(kaart);
+            voegSpelbordKaartToe(spelbord2, kaart);
         }
     }
 
@@ -77,8 +68,10 @@ public class Set {
 
     public List<String> geefMogelijkeActies() {
         List res = new ArrayList<>();
-        res.add("FREEZE");
-        res.add("ENDTURN");
+        if(!bevroren[geefSpelerAanBeurtIndex()]){
+            res.add("FREEZE");
+            res.add("ENDTURN");
+        }
 
         return res;
     }
@@ -102,9 +95,9 @@ public class Set {
     public void gebruikWedstrijdKaart(Kaart kaart, char type) {
         kaart.setType(type);
         if (speler1AanBeurt) {
-            spelbord1.add(kaart);
+            voegSpelbordKaartToe(spelbord1, kaart);
         } else {
-            spelbord2.add(kaart);
+            voegSpelbordKaartToe(spelbord2, kaart);
         }
     }
 
@@ -155,5 +148,11 @@ public class Set {
             }
         }
         return score;
+    }
+    private void voegSpelbordKaartToe(List<Kaart> spelbord, Kaart kaart) {
+        spelbord.add(kaart);
+        if(berekenScore(spelbord) == 20) {
+            bevroren[geefSpelerAanBeurtIndex()] = true;
+        }
     }
 }

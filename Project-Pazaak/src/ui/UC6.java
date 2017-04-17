@@ -37,8 +37,12 @@ class UC6 {
             //Kaart uitdelen
             dc.deelKaartUit();
             
-            //Huidig pelbord tonen
+            //Uitgedeelde kaart tonen
             String[][] spelbord = dc.geefSpelBord();
+            String[] uitgedeeldeKaart = spelbord[spelbord.length-1];
+            System.out.printf(r.getString("GIVENCARD")+"%n", formatteerKaart(uitgedeeldeKaart));
+            
+            //Huidig pelbord tonen
             System.out.print(r.getString("CURRENTBOARD"));
             toonSpelbord(spelbord);
             
@@ -49,6 +53,11 @@ class UC6 {
             //Getrokken kaart zorgt ervoor dat score groter is dan 20, opties moeten niet getoond worden
             if (score > 20) {
                 printLijn();
+                break;
+            }
+            if(score==20){
+                printLijn();
+                dc.eindigBeurt();
                 continue;
             }
 
@@ -61,8 +70,10 @@ class UC6 {
                 System.out.println(" " + i + ". " + r.getString(acties.get(i - 1)));
             }
             String[][] WedstrijdStapel = dc.geefWedstrijdStapel();
-            System.out.print(r.getString("CARDS") + ": " );
+            if(acties.size() == 3)
+                System.out.printf("%11s", r.getString("CARDS") + ": " );
             toonSpelbord(WedstrijdStapel);
+            
             //Keuze inlezen
             do {
                 System.out.printf(r.getString("CHOICE") + ": ");
