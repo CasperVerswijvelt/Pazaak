@@ -6,12 +6,11 @@
 package ui;
 
 import domein.DomeinController;
-import domein.Speler;
-import domein.Wedstrijd;
 import exceptions.NoPlayersAvailableException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import static ui.Console.printLijn;
 
 /**
  *
@@ -44,6 +43,7 @@ public class UC3 {
             for (int i = 0; i < 2; i++) {
                 String naam;
                 int keuze=0;
+                printLijn();
                 toonBeschikbareSpelers(spelerLijst);
                 boolean valideKeuze = true;
                 do {

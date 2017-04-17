@@ -73,11 +73,7 @@ public class Wedstrijd {
     }
 
     public String geefSpelerAanBeurt() {
-        return huidigeSet.geefSpelerAanBeurt();
-    }
-
-    public int geefSpelerAanBeurtIndex() {
-        return huidigeSet.geefSpelerAanBeurtIndex();
+        return spelers.get(huidigeSet.geefSpelerAanBeurtIndex()).getNaam();
     }
 
     public void deelKaartUit() {
@@ -122,6 +118,15 @@ public class Wedstrijd {
     }
 
     public void gebruikWedstrijdKaart(Kaart kaart, char type) {
+        List<Kaart> wedstrijdStapel = geefWedstrijdStapel();
+        for(Kaart element : wedstrijdStapel) {
+            if(element.equals(kaart)) {
+                wedstrijdStapel.remove(element);
+                break;
+            }
+                
+        }
+
         huidigeSet.gebruikWedstrijdKaart(kaart, type);
     }
 
@@ -130,7 +135,16 @@ public class Wedstrijd {
     }
 
     public String geefSetUitslag() {
-        return huidigeSet.geefSetUitslag();
+        int uitslag =  huidigeSet.geefSetUitslagIndex();
+        
+        switch(uitslag) {
+            case 0 : case 1:
+                return spelers.get(uitslag).getNaam();
+            case 2 :
+                return "TIE";
+            default: 
+                return null;
+        }
     }
 
     public Speler geefWinnaar() {
@@ -165,10 +179,10 @@ public class Wedstrijd {
         return aantalGewonnen;
     }
 
-    public void verhoogAantalWins() {
-        String uitslag = huidigeSet.geefSetUitslag();
-        if(!uitslag.equals("TIE")) {
-            aantalGewonnen[spelers.indexOf(geefSpeler(uitslag))] ++;
+    public void registreerAantalWins() {
+        int uitslag = huidigeSet.geefSetUitslagIndex();
+        if(uitslag == 0 || uitslag ==1) {
+            aantalGewonnen[uitslag] ++;
         }
     }
 }

@@ -84,7 +84,32 @@ public class Console {
 
     }
 
+    
+    //Methodes die overal in CUI gebruikt worden
     public static void printLijn() {
         System.out.println("----------------------------------------");
+    }
+    public static void toonSpelbord(String[][] spelbord) {
+        String res = "";
+        for (int i = 0; i < spelbord.length; i++) {
+            res += spelbord[i][1] + spelbord[i][0] + " ";
+        }
+        System.out.println(res);
+    }
+    public static void toonStapel(String[][] stapel) {
+        for (int i = 0; i < stapel.length; i++) {
+            System.out.println(" " + (i + 1) + ". " + formatteerKaart(stapel[i]));
+        }
+    }
+    
+    public static String formatteerKaart(String[] kaart) {
+        String res = "";
+        String type = kaart[1];
+        if(kaart[1].equals("*")) {
+            
+            type = "+/-";
+        }
+        res = type + kaart[0];
+        return res;
     }
 }

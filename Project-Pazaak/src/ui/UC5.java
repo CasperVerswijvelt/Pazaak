@@ -6,8 +6,6 @@
 package ui;
 
 import domein.DomeinController;
-import domein.Speler;
-import domein.Wedstrijd;
 import java.util.ResourceBundle;
 import static ui.Console.printLijn;
 
@@ -21,7 +19,7 @@ public class UC5 {
 
         while (!dc.wedstrijdIsKlaar()) {
             new UC6().start(dc, r);
-            dc.verhoogAantalWins();
+            dc.registreerAantalWins();
             
             String[] spelers = dc.geefWedstrijdSpelers();
             int[] tussenstand = dc.geefWedstrijdTussenstand();

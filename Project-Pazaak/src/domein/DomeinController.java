@@ -197,8 +197,8 @@ public class DomeinController {
     public int[] geefWedstrijdTussenstand() {
         return wedstrijd.geefTussenstand();
     }
-    public void verhoogAantalWins(){
-        wedstrijd.verhoogAantalWins();
+    public void registreerAantalWins(){
+        wedstrijd.registreerAantalWins();
     
     }
     

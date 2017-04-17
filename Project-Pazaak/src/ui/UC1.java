@@ -9,7 +9,6 @@ import domein.DomeinController;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import exceptions.PlayerAlreadyExistsException;
-import java.util.Arrays;
 /**
  *
  * @author Bruno

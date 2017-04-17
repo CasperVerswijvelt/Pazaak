@@ -6,7 +6,7 @@ public class Set {
 
     //Attributen
     private List<Kaart> setStapel;
-    private final List<Speler> spelers;
+//    private final List<Speler> spelers;
     private final List<Kaart> spelbord1;
     private final List<Kaart> spelbord2;
     private boolean speler1AanBeurt;
@@ -23,9 +23,9 @@ public class Set {
         //stapel aanmaken
         maakSetstapel();
 
-        spelers = new ArrayList<>();
-        spelers.add(speler1);
-        spelers.add(speler2);
+//        spelers = new ArrayList<>();
+//        spelers.add(speler1);
+//        spelers.add(speler2);
     }
 
     private void maakSetstapel() {
@@ -40,9 +40,9 @@ public class Set {
         Collections.shuffle(setStapel);
     }
 
-    public String geefSpelerAanBeurt() {
-        return speler1AanBeurt ? spelers.get(0).getNaam() : spelers.get(1).getNaam();
-    }
+//    public String geefSpelerAanBeurt() {
+//        return speler1AanBeurt ? spelers.get(0).getNaam() : spelers.get(1).getNaam();
+//    }
 
     public int geefSpelerAanBeurtIndex() {
         return speler1AanBeurt ? 0 : 1;
@@ -117,25 +117,25 @@ public class Set {
 
     }
 
-    public String geefSetUitslag() {
+    public int geefSetUitslagIndex() {
         if(setIsKlaar()) { // Set ten einde
             
             //Kijken of er een speler 9 kaarten heeft behaald
             if(spelbord1.size() > 8)
-                return spelers.get(0).getNaam();
+                return 0;
             else if(spelbord2.size() > 8)
-                return spelers.get(1).getNaam();
+                return 1;
             
             //geen 9 kaarten behaald, er wordt naar score gekeken voor uitslag
             int score1 = berekenScore(spelbord1), score2 = berekenScore(spelbord2);
             if(score1==score2) 
-                return "TIE";
+                return 2;
             else if(score1>score2 && score1<21)
-                return spelers.get(0).getNaam();
+                return 0;
             else 
-                return spelers.get(1).getNaam();
+                return 1;
         } else // Set nog niet ten einde
-            return null;
+            return -1;
     }
 
     private int berekenScore(List<Kaart> kaarten) {

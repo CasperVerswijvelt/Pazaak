@@ -6,12 +6,10 @@
 package ui;
 
 import domein.DomeinController;
-import domein.Wedstrijd;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import static ui.Console.printLijn;
-
+import static ui.Console.*;
 /**
  *
  * @author Casper
@@ -28,19 +26,27 @@ class UC6 {
         this.dc = dc;
 
         dc.maakNieuweSet();
-        System.out.println("");
+        System.out.println(r.getString("NEWSETBEGINS"));
+        printLijn();
 
         //Zolang set niet klaar is word er verder gespeeld
         while (!dc.setIsKlaar()) {
 
             System.out.printf(r.getString("TURN") + " ...%n", dc.geefSpelerAanBeurt());
 
+            //Kaart uitdelen
             dc.deelKaartUit();
+            
+            //Huidig pelbord tonen
             String[][] spelbord = dc.geefSpelBord();
-
+            System.out.print(r.getString("CURRENTBOARD"));
             toonSpelbord(spelbord);
+            
+            //Score tonen
             int score = dc.geefScore();
-            System.out.println("SCORE= " + score);
+            System.out.println(r.getString("SCORE") + score);
+            
+            //Getrokken kaart zorgt ervoor dat score groter is dan 20, opties moeten niet getoond worden
             if (score > 20) {
                 printLijn();
                 continue;
@@ -52,7 +58,7 @@ class UC6 {
             //Mogelijke acties tonen
             List<String> acties = dc.geefMogelijkeActies();
             for (int i = 1; i <= acties.size(); i++) {
-                System.out.println(" " + i + ". " + acties.get(i - 1));
+                System.out.println(" " + i + ". " + r.getString(acties.get(i - 1)));
             }
 
             //Keuze inlezen
@@ -60,19 +66,25 @@ class UC6 {
                 System.out.printf(r.getString("CHOICE") + ": ");
 
                 try {
+                    //Keuze inlezen
                     keuze = Integer.parseInt(in.nextLine());
+                    
+                    //Keuze valideren
                     valideKeuze = keuze <= acties.size() && keuze > 0;
                     if (!valideKeuze) {
                         throw new IllegalArgumentException();
                     }
-
+                
+                //Keuze is neit valide
                 } catch (IllegalArgumentException e) {
                     valideKeuze = false;
                     System.out.println(r.getString("INVALIDCHOICE"));
                 }
 
+            //Zolang keuze niet valide is word deze opnieuw opgevraagd
             } while (!valideKeuze);
 
+            //Gekozen keuze wordt geselecteerd
             switch (acties.get(keuze - 1)) {
                 case "FREEZE":
                     dc.bevriesBord();
@@ -80,26 +92,22 @@ class UC6 {
                 case "USEGAMECARD":
                     gebruikWedstrijdKaartOptie();
                     break;
+                //case "ENDTURN" moet niet worden bekeken want dit wordt standaard op het einde uitgevoerd
             }
+            
             dc.eindigBeurt();
 
             printLijn();
         }
         String uitslag = dc.geefSetUitslag();
-        System.out.println(uitslag.equals("TIE") ? "TIE" : uitslag + " WINS THE SET");
+        System.out.println(uitslag.equals("TIE") ? r.getString("TIE")+"!" : uitslag + " "+r.getString("WINSTHESET") + "!");
 
     }
 
-    private void toonSpelbord(String[][] spelbord) {
-        String res = "CURRENTBOARD: ";
-        for (int i = 0; i < spelbord.length; i++) {
-            res += spelbord[i][1] + spelbord[i][0] + " ";
-        }
-        System.out.println(res);
-    }
+    
 
     private void gebruikWedstrijdKaartOptie() {
-        System.out.println("YOUR CARDS:");
+        System.out.println(r.getString("YOURCARDS"));
         String[][] stapel = dc.geefWedstrijdStapel();
 
         int keuze = 0;
@@ -130,7 +138,7 @@ class UC6 {
         char type= gekozenKaart[1].charAt(0);
         if (type == '*') {
             do {
-                System.out.println("+ OR -:");
+                System.out.print("+ "+r.getString("OR")+ "-: ");
                 try {
                     keuze = in.nextLine().charAt(0);
                     valideKeuze = keuze == '+' || keuze == '-';
@@ -139,7 +147,7 @@ class UC6 {
                     }
                     type = (char)keuze;
 
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
                     valideKeuze = false;
                     System.out.println(r.getString("INVALIDCHOICE"));
                 }
@@ -147,13 +155,11 @@ class UC6 {
             } while (!valideKeuze);
         }
         dc.gebruikWedstrijdKaart(gekozenKaart, type);
+        gekozenKaart[1] = type+"";
+        System.out.println(formatteerKaart(gekozenKaart) + " " + r.getString("SELECTED"));
 
     }
 
-    private void toonStapel(String[][] stapel) {
-        for (int i = 0; i < stapel.length; i++) {
-            System.out.println(" " + (i + 1) + ". " + stapel[i][1] + stapel[i][0]);
-        }
-    }
+    
 
 }

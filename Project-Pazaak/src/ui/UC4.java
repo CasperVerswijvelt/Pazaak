@@ -6,13 +6,12 @@
 package ui;
 
 import domein.DomeinController;
-import domein.Kaart;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import static ui.Console.printLijn;
+import static ui.Console.*;
 
 /**
  *
@@ -42,31 +41,41 @@ public class UC4 {
             //6 kaarten kiezen
             for (int k = 0; k < 6; k++) {
                 
-                int keuze = 0;
-                toonStapel(startStapel);
+                //Kaarten tonen
+                String[][] array = new String[startStapel.size()][2];
+                startStapel.toArray(array);
+                toonStapel(array);
+                
                 boolean valideKeuze;
+                int keuze = 0;
                 do {
                     System.out.printf(r.getString("CARDPROMPT"));
                     try {
+                        //Keuze inlezen en valideren
                         keuze = Integer.parseInt(in.nextLine());
                         valideKeuze = keuze <= startStapel.size() && keuze > 0;
                         if (!valideKeuze) {
                             throw new IllegalArgumentException();
                         }
 
+                    //Keuze niet valide
                     } catch (IllegalArgumentException e) {
                         valideKeuze = false;
                         System.out.println(r.getString("INVALIDCHOICE"));
                     }
-
+                //Keuze wordt opnieuw opgevraagd zolang deze nie valide is
                 } while (!valideKeuze);
+                
+                //Gekozen kaart wordt geselecteerd en getoond
                 dc.selecteerKaart(startStapel.get(keuze - 1));
-                System.out.println(startStapel.get(keuze - 1)[0]+startStapel.get(keuze - 1)[1]);
+                System.out.println(formatteerKaart(startStapel.get(keuze - 1)) + " " + r.getString("SELECTED"));
+                
+                //Gekozen kaart wordt uit mogelijke keuzes gehaald
                 startStapel.remove(keuze-1);
                 
             }
 
-            
+            //Wedstrdijstapel wordt gemaakt met geselecteerde kaarten
             dc.maakWedstrijdStapel();
             printLijn();
             
@@ -74,12 +83,5 @@ public class UC4 {
         
         UC5.start(dc, r);
 
-    }
-
-
-    private void toonStapel(List<String[]> wedstrijdStapel) {
-        for (int i = 0; i < wedstrijdStapel.size(); i++) {
-            System.out.println(" " + (i + 1) + ". " + wedstrijdStapel.get(i)[1]+ wedstrijdStapel.get(i)[0]);
-        }
     }
 }
