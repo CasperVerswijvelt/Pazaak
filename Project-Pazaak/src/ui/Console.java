@@ -71,7 +71,8 @@ public class Console {
                         System.out.println(r.getString("TODO"));
                         break;
                     case 0:
-
+                        System.out.println(r.getString("EXITGAME"));
+                        printLijn();
                         System.exit(0);
                 }
 
@@ -87,12 +88,12 @@ public class Console {
     
     //Methodes die overal in CUI gebruikt worden
     public static void printLijn() {
-        System.out.println("----------------------------------------");
+        System.out.println("-------------------------------------------------");
     }
     public static void toonSpelbord(String[][] spelbord) {
         String res = "";
-        for (int i = 0; i < spelbord.length; i++) {
-            res += spelbord[i][1] + spelbord[i][0] + " ";
+        for (String[] kaart : spelbord) {
+            res += formatteerKaart(kaart) + " ";
         }
         System.out.println(res);
     }

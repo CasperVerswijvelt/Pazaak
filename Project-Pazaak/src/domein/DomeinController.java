@@ -75,6 +75,9 @@ public class DomeinController {
         
         return kaartenAlsString(geselecteerdeSpelerWedstrijdstapel.geefStartStapel());
     }
+    public String[][] geefStartStapel(String naam) {
+        return kaartenAlsString(spelerRepo.geefStartStapel(naam));
+    }
     
     public int geefAantalSpelers() {
         return spelerRepo.geefSpelersLijst().size();

@@ -9,14 +9,13 @@ import domein.DomeinController;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import exceptions.PlayerAlreadyExistsException;
+import static ui.Console.*;
 /**
  *
  * @author Bruno
  */
 public class UC1 {
     //attributen
-    private String naam;
-    private int gebJaar;
     private final DomeinController dc;
     private final ResourceBundle r;
     
@@ -27,6 +26,10 @@ public class UC1 {
 
     public void start() {
         Scanner input = new Scanner(System.in);
+        
+        String naam="";
+        int gebJaar;
+        
         boolean opnieuw = true;
         do {
             try {
@@ -39,13 +42,18 @@ public class UC1 {
                 dc.maakNieuweSpelerAan(naam, gebJaar);
                 opnieuw = false;
                 System.out.println(r.getString("PLAYERADDED"));
+                printLijn();
             } catch (PlayerAlreadyExistsException e) {
                 System.out.println(r.getString("PLAYERALREADYEXISTS"));
             } catch(IllegalArgumentException e){
                 System.out.println(r.getString("NAMEREQUIREMENTS"));
             }
+        //Zolang opgegeven info niet aan vereisten voldoet wordt deze opnieuw opgevraagd
         } while (opnieuw);
-        System.out.printf("%s: %s %n%s: %s %n%s: %s %n%s: %s %n", r.getString("NAME"),dc.geefSpelerInfo(naam)[0], r.getString("CREDITS"), dc.geefSpelerInfo(naam)[1], r.getString("BIRTH"), dc.geefSpelerInfo(naam)[2], r.getString("CARDS"), dc.geefSpelerInfo(naam)[3]);
+        String[] info = dc.geefSpelerInfo(naam);
+        
+        System.out.printf("%s: %s %n%s: %s %n%s: %s %n%s: ", r.getString("NAME"),info[0], r.getString("CREDITS"), info[1], r.getString("BIRTH"), info[2], r.getString("CARDS"));
+        toonSpelbord(dc.geefStartStapel(naam));
 
     }
 
