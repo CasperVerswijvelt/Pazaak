@@ -60,7 +60,9 @@ class UC6 {
             for (int i = 1; i <= acties.size(); i++) {
                 System.out.println(" " + i + ". " + r.getString(acties.get(i - 1)));
             }
-
+            String[][] WedstrijdStapel = dc.geefWedstrijdStapel();
+            System.out.print(r.getString("CARDS") + ": " );
+            toonSpelbord(WedstrijdStapel);
             //Keuze inlezen
             do {
                 System.out.printf(r.getString("CHOICE") + ": ");
@@ -157,6 +159,7 @@ class UC6 {
         dc.gebruikWedstrijdKaart(gekozenKaart, type);
         gekozenKaart[1] = type+"";
         System.out.println(formatteerKaart(gekozenKaart) + " " + r.getString("SELECTED"));
+        System.out.println(r.getString("SCORE") + ": " + dc.geefScore());
 
     }
 
