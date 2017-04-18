@@ -17,7 +17,8 @@ public class UC5 {
 
     public static void start(DomeinController dc, ResourceBundle r) {
 
-        while (!dc.wedstrijdIsKlaar()) {
+        //Zolang de wedstrijd nog niet klaar is, wordt een nieuwe set gespeeld
+        do {
             new UC6().start(dc, r);
             dc.registreerAantalWins();
             
@@ -26,7 +27,7 @@ public class UC5 {
             System.out.println(" " + spelers[0] + " " + tussenstand[0] + "  -  " + tussenstand[1] + " " + spelers[1]);
 
             printLijn();
-        }
+        }while (!dc.wedstrijdIsKlaar());
 
         String winnaar = dc.geefWinnaar();
         //Spel beëindigd

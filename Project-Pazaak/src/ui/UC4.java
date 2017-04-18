@@ -44,7 +44,7 @@ public class UC4 {
                 //Kaarten tonen
                 String[][] array = new String[startStapel.size()][2];
                 startStapel.toArray(array);
-                toonStapel(array);
+                System.out.println(formatteerStapelAlsLijst(array));;
                 
                 boolean valideKeuze;
                 int keuze = 0;

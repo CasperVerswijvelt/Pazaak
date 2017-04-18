@@ -65,6 +65,11 @@ public class Set {
             return berekenScore(spelbord2);
         }
     }
+    public boolean isBevroren() {
+        if(bevroren[geefSpelerAanBeurtIndex()])
+            return true;
+        return false;
+    }
 
     public List<String> geefMogelijkeActies() {
         List res = new ArrayList<>();
@@ -151,8 +156,9 @@ public class Set {
     }
     private void voegSpelbordKaartToe(List<Kaart> spelbord, Kaart kaart) {
         spelbord.add(kaart);
-        if(berekenScore(spelbord) == 20) {
-            bevroren[geefSpelerAanBeurtIndex()] = true;
-        }
+        //Speler zou volgende comment code zelf moeten kiezen eigenlijk
+//        if(berekenScore(spelbord) == 20) {
+//            bevroren[geefSpelerAanBeurtIndex()] = true;
+//        }
     }
 }

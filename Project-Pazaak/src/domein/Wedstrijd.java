@@ -90,7 +90,7 @@ public class Wedstrijd {
 
     public List<String> geefMogelijkeActies() {
         List res = huidigeSet.geefMogelijkeActies();
-        if (!wedstrijdStapels.get(huidigeSet.geefSpelerAanBeurtIndex()).isEmpty()) {
+        if (!wedstrijdStapels.get(huidigeSet.geefSpelerAanBeurtIndex()).isEmpty() && !res.isEmpty()) {
             res.add("USEGAMECARD");
         }
         return res;
