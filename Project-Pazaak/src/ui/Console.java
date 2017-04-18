@@ -93,17 +93,21 @@ public class Console {
     public static void printLijn() {
         System.out.println("-------------------------------------------------");
     }
-    public static void toonSpelbord(String[][] spelbord) {
+    public static String formatteerStapelOpLijn(String[][] spelbord) {
         String res = "";
         for (String[] kaart : spelbord) {
             res += formatteerKaart(kaart) + " ";
         }
-        System.out.println(res);
+        return res;
     }
-    public static void toonStapel(String[][] stapel) {
+    public static String formatteerStapelAlsLijst(String[][] stapel) {
+        String res = "";
         for (int i = 0; i < stapel.length; i++) {
-            System.out.println(" " + (i + 1) + ". " + formatteerKaart(stapel[i]));
+            res+= " " + (i + 1) + ". " + formatteerKaart(stapel[i]);
+            if(i!=stapel.length-1)
+                res+= "\n";
         }
+        return res;
     }
     
     public static String formatteerKaart(String[] kaart) {
