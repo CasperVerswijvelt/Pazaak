@@ -5,14 +5,20 @@ public class Kaart {
     //Attributen
     private int waarde;
     private char type;
+    private int prijs;
 
     //Constructor
     public Kaart(int waarde, char type) {
+        this(waarde, type, 0);
+    }
+
+    public Kaart(int waarde, char type, int prijs) {
         controleerType(type);
         controleerWaarde(waarde);
 
         this.waarde = waarde;
         this.type = type;
+        this.prijs = prijs;
     }
 
     //Methodes
@@ -33,14 +39,14 @@ public class Kaart {
 
     //Controle
     private void controleerWaarde(int waarde) {
-        if (waarde < 1 || waarde > 10) {
-            throw new IllegalArgumentException("De waarde van een kaart kan minimaal 1 en maximaal 10 zijn.");
+        if (waarde < 0 || waarde > 10) {
+            throw new IllegalArgumentException("De waarde van een kaart kan minimaal 0 en maximaal 10 zijn.");
         }
     }
 
     private void controleerType(char type) {
-        if (type != '+' && type != '-' && type != '*') {
-            throw new IllegalArgumentException("Het type kan '+', '-' of '*' zijn.");
+        if (type != '+' && type != '-' && type != '*' && type != 'T'&& type != 'D'&& type != 'W'&& type != 'C') {
+            throw new IllegalArgumentException("Het type kan '+', '-', '*', 'T', 'D', 'W', of 'C' zijn, (" + type + " ingegeven)");
         }
     }
 
@@ -62,5 +68,14 @@ public class Kaart {
         controleerType(type);
         this.type = type;
     }
+
+    public int getPrijs() {
+        return prijs;
+    }
+
+    public void setPrijs(int prijs) {
+        this.prijs = prijs;
+    }
+    
 
 }

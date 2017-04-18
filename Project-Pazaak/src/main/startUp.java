@@ -1,6 +1,8 @@
 package main;
 
 import domein.DomeinController;
+import domein.SpelerRespository;
+import persistentie.KaartMapper;
 import ui.Console;
 
 /*
@@ -17,6 +19,7 @@ public class startUp {
 
     public static void main(String[] args) {
         new Console(new DomeinController()).start();
+//System.out.println(new KaartMapper().geefAlleAankoopbareKaarten());;
 
     }
 }

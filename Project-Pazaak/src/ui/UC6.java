@@ -160,7 +160,7 @@ class UC6 {
         } while (!valideKeuze);
 
         String[] gekozenKaart = stapel[keuze - 1];
-        char type = gekozenKaart[1].charAt(0);
+        char type = gekozenKaart[0].charAt(0);
         if (type == '*') {
             do {
                 System.out.print("+ " + r.getString("OR") + "-: ");
@@ -180,7 +180,7 @@ class UC6 {
             } while (!valideKeuze);
         }
         dc.gebruikWedstrijdKaart(gekozenKaart, type);
-        gekozenKaart[1] = type + "";
+        gekozenKaart[0] = type + "";
         System.out.println(formatteerKaart(gekozenKaart) + " " + r.getString("SELECTED"));
         System.out.println(r.getString("SCORE") + ": " + dc.geefScore());
 

@@ -30,9 +30,9 @@ public class UC4 {
         printLijn();
 
         //Spelers overlopen
-        for (int i = 0; i < spelers.size(); i++) {
-            System.out.printf(r.getString("SELECTCARDSFORPLAYER") + "%n", spelers.get(i));
-            dc.selecterSpelerWedstrijdStapel(spelers.get(i));
+        for (String speler : spelers) {
+            System.out.printf(r.getString("SELECTCARDSFORPLAYER") + "%n", speler);
+            dc.selecterSpelerWedstrijdStapel(speler);
             List<String[]> startStapel = new ArrayList<>(Arrays.asList(dc.geefStartStapel()));
             
 

@@ -11,9 +11,9 @@ public class Set {
     private boolean speler1AanBeurt;
     private final boolean bevroren[];
 
-    public Set(Speler speler1, Speler speler2) {
+    public Set(boolean eersteSpelerBegint) {
         bevroren = new boolean[2];
-        speler1AanBeurt = true;
+        speler1AanBeurt = eersteSpelerBegint;
 
         // 2 spelborden aanmaken voor de spelers
         spelbord1 = new ArrayList<>();

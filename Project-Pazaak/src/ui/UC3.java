@@ -10,7 +10,7 @@ import exceptions.NoPlayersAvailableException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import static ui.Console.printLijn;
+import static ui.Console.*;
 
 /**
  *
@@ -31,7 +31,7 @@ public class UC3 {
     }
 
     //Methodes
-    public void start() throws NoPlayersAvailableException {
+    public void start() {
         List<String> spelerLijst = dc.geefAlleSpelerNamen();
         int aantalSpelersBeschikbaar = spelerLijst.size();
         if (aantalSpelersBeschikbaar < 2) {
@@ -41,31 +41,7 @@ public class UC3 {
 
             //2 spelers vragen
             for (int i = 0; i < 2; i++) {
-                String naam;
-                int keuze=0;
-                printLijn();
-                toonBeschikbareSpelers(spelerLijst);
-                boolean valideKeuze = true;
-                do {
-                    System.out.printf(r.getString("PLAYERNAMEPROMPT"), i + 1);
-                    try{
-                        keuze = Integer.parseInt(in.nextLine());
-                        valideKeuze = keuze<=spelerLijst.size() && keuze >0;
-                        if(!valideKeuze)
-                            throw new IllegalArgumentException();
-                        
-                    }catch(Exception e) {
-                        valideKeuze = false;
-                        System.out.println(r.getString("INVALIDCHOICE"));
-                    }
-                    
-
-                    
-                        
-                        
-                } while (!valideKeuze);
-                naam = spelerLijst.get(keuze-1);
-                System.out.printf(r.getString("PLAYERSELECTED")+"%n", naam);
+                String naam = promptSpelerUitLijst(r, spelerLijst, String.format(r.getString("PLAYERNAMEPROMPT"), i + 1));
                 spelerLijst.remove(naam);
                 dc.selecteerSpeler(naam);
             }
@@ -74,13 +50,6 @@ public class UC3 {
             new UC4().start(dc, r);
         }
 
-    }
-
-    private void toonBeschikbareSpelers(List<String> lijst) {
-
-        for (int i = 0; i < lijst.size(); i++) {
-            System.out.println(" "+(i+1)+". " + lijst.get(i));
-        }
     }
 
     

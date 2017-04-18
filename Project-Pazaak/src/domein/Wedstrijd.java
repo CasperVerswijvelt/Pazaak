@@ -9,6 +9,7 @@ public class Wedstrijd {
     private Set huidigeSet;
     private List<List<Kaart>> wedstrijdStapels;
     private int[] aantalGewonnen;
+    private boolean eersteSpelerBegint;
 
     /**
      *
@@ -16,11 +17,12 @@ public class Wedstrijd {
      * @param speler2
      */
     public Wedstrijd(Speler speler1, Speler speler2) {
-        aantalGewonnen = new int[2];
+        this.aantalGewonnen = new int[2];
         this.wedstrijdStapels = new ArrayList<>();
-        wedstrijdStapels.add(null);
-        wedstrijdStapels.add(null);
+        this.wedstrijdStapels.add(null);
+        this.wedstrijdStapels.add(null);
         this.spelers = new ArrayList<>();
+        this.eersteSpelerBegint = true;
 
         int gebJaarSpeler1 = speler1.getGeboorteJaar(), gebJaarSpeler2 = speler2.getGeboorteJaar();
 
@@ -69,7 +71,8 @@ public class Wedstrijd {
     }
 
     public void maakNieuweSet() {
-        this.huidigeSet = new Set(spelers.get(0), spelers.get(1));
+        this.huidigeSet = new Set(eersteSpelerBegint);
+        veranderBeginSpeler();
     }
 
     public String geefSpelerAanBeurt() {
@@ -168,6 +171,10 @@ public class Wedstrijd {
             }
         }
         return false;
+    }
+    
+    private void veranderBeginSpeler() {
+        this.eersteSpelerBegint = ! this.eersteSpelerBegint;
     }
 
     //Getters & Setters

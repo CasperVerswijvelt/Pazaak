@@ -111,12 +111,13 @@ public class DomeinController {
     }
     
     public void selecteerKaart(String[] kaart) {
-        this.geselecteerdeKaarten.add((new Kaart(Integer.parseInt(kaart[0]), kaart[1].charAt(0))));
+        this.geselecteerdeKaarten.add(stringAlsKaart(kaart));
     }
     
     public void maakWedstrijdStapel() {
         wedstrijd.maakWedstrijdstapel(geselecteerdeKaarten, geselecteerdeSpelerWedstrijdstapel);
         geselecteerdeKaarten.clear();
+        geselecteerdeSpelerWedstrijdstapel = null;
     }
     
     public void maakNieuweSet() {
@@ -162,7 +163,7 @@ public class DomeinController {
     }
     
     public void gebruikWedstrijdKaart(String[] kaart, char type) {
-        wedstrijd.gebruikWedstrijdKaart(new Kaart(Integer.parseInt(kaart[0]), kaart[1].charAt(0)), type);
+        wedstrijd.gebruikWedstrijdKaart(stringAlsKaart(kaart), type);
     }
     
     public boolean setIsKlaar() {
@@ -180,11 +181,12 @@ public class DomeinController {
         return wedstrijd.isKlaar();
     }
     private String[][] kaartenAlsString(List<Kaart> kaarten) {
-        String[][] res = new String[kaarten.size()][2];
+        String[][] res = new String[kaarten.size()][3];
         
         for (int i = 0; i < kaarten.size(); i++) {
-            res[i][0] = kaarten.get(i).getWaarde() + "";
-            res[i][1] = kaarten.get(i).getType() + "";
+            res[i][0] = kaarten.get(i).getType() + "";
+            res[i][1] = kaarten.get(i).getWaarde() + "";
+            res[i][2] = kaarten.get(i).getPrijs()+"";
         }
         return res;
     }
@@ -202,7 +204,22 @@ public class DomeinController {
     }
     public void registreerAantalWins(){
         wedstrijd.registreerAantalWins();
+    }
     
+    public String[][] geefNogNietGekochteKaarten(String naam){
+        return kaartenAlsString(spelerRepo.geefNogNietGekochteKaarten(naam));
+    }
+    
+    public String[][] geefAangekochteKaarten(String naam) {
+        return kaartenAlsString(spelerRepo.geefAangekochteKaarten(naam));
+    }
+    
+    public void koopKaart(String naam, String[] kaart){
+        spelerRepo.koopKaart(naam, stringAlsKaart(kaart));
+    }
+
+    private Kaart stringAlsKaart(String[] kaart) {
+        return new Kaart(Integer.parseInt(kaart[1]), kaart[0].charAt(0), Integer.parseInt(kaart[2]));
     }
     
 }

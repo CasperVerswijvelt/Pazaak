@@ -24,9 +24,13 @@ public class UC5 {
             
             String[] spelers = dc.geefWedstrijdSpelers();
             int[] tussenstand = dc.geefWedstrijdTussenstand();
-            System.out.println(" " + spelers[0] + " " + tussenstand[0] + "  -  " + tussenstand[1] + " " + spelers[1]);
+            System.out.println(spelers[0] + " " + tussenstand[0] + "  -  " + tussenstand[1] + " " + spelers[1]);
 
             printLijn();
+            
+            //Optie sla spel op
+            
+            
         }while (!dc.wedstrijdIsKlaar());
 
         String winnaar = dc.geefWinnaar();
