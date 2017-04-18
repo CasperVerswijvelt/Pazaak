@@ -63,5 +63,32 @@ public class SpelerRespository {
     public void slaKredietOp(Speler speler) {
         sm.slaKredietOp(speler);
     }
+    
+    public List<Kaart> geefAankoopbareKaarten(String naam){
+        List<Kaart> alleAankoopbareKaarten = sm.geefAlleAankoopbareKaarten();
+        List<Kaart> startStapel = geefStartStapel(naam);
+        int startStapelGrootte = startStapel.size();
+        if(startStapelGrootte == 10)
+            return alleAankoopbareKaarten;
+        List<Kaart> aangekochteKaarten = new ArrayList<>();
+        for(int i = 9; i<startStapelGrootte;i++) {
+            aangekochteKaarten.add(startStapel.get(i));
+        }
+        int alleAankoopbareKaartenGrootte = alleAankoopbareKaarten.size();
+        int alleAangekochteKaartenGroote = aangekochteKaarten.size();
+        for(int i = 0; i<alleAankoopbareKaartenGrootte; i++) {
+            for(int j = 0; j< alleAangekochteKaartenGroote; j++){
+                if(alleAankoopbareKaarten.get(i).equals(aangekochteKaarten.get(j))) {
+                    alleAankoopbareKaarten.remove(i);
+                    i--;
+                    alleAankoopbareKaartenGrootte--;
+                    aangekochteKaarten.remove(j);
+                    j--;
+                    alleAangekochteKaartenGroote--;
+                }
+            }
+        }
+        return alleAankoopbareKaarten;
+    }
 
 }
