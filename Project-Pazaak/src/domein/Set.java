@@ -73,7 +73,7 @@ public class Set {
 
     public List<String> geefMogelijkeActies() {
         List res = new ArrayList<>();
-        if(!bevroren[geefSpelerAanBeurtIndex()]){
+        if(!bevroren[geefSpelerAanBeurtIndex()] && !setIsKlaar()){
             res.add("FREEZE");
             res.add("ENDTURN");
         }

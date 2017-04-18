@@ -51,17 +51,6 @@ class UC6 {
             int score = dc.geefScore();
             System.out.println(r.getString("SCORE") + score);
 
-            //Getrokken kaart zorgt ervoor dat score groter is dan 20, opties moeten niet getoond worden
-            if (score > 20) {
-                printLijn();
-                break;
-            }
-//            if(score==20){
-//                printLijn();
-//                dc.eindigBeurt();
-//                continue;
-//            }
-
             int keuze = 0;
             boolean valideKeuze;
 
@@ -116,6 +105,7 @@ class UC6 {
                     //case "ENDTURN" moet niet worden bekeken want dit wordt standaard op het einde uitgevoerd
                 }
             }
+                
             
             //Einde van beurt is bereikt, beurt wordt beeindigd
             dc.eindigBeurt();
