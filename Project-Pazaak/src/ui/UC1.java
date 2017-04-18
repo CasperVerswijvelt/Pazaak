@@ -53,7 +53,7 @@ public class UC1 {
         String[] info = dc.geefSpelerInfo(naam);
         
         System.out.printf("%s: %s %n%s: %s %n%s: %s %n%s: ", r.getString("NAME"),info[0], r.getString("CREDITS"), info[1], r.getString("BIRTH"), info[2], r.getString("CARDS"));
-        formatteerStapelOpLijn(dc.geefStartStapel(naam));
+        System.out.println(formatteerStapelOpLijn(dc.geefStartStapel(naam)));;
 
     }
 
