@@ -29,7 +29,7 @@ public class UC9 {
         Scanner in = new Scanner(System.in);
         String[][] overzicht = dc.geefWedstrijdenOverzicht();
         if (overzicht.length == 0) {
-            System.out.println("NO GAMES FOUND IN DATABASE");
+            System.out.println(r.getString("NOGAMES"));
         } else {
             for (int i = 0; i < overzicht.length; i++) {
                 System.out.printf(" %d. %s [%s %s - %s %s]%n", i + 1, overzicht[i][0], overzicht[i][1], overzicht[i][2], overzicht[i][4], overzicht[i][3]);

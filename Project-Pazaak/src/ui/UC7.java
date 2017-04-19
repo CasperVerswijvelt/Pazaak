@@ -30,10 +30,10 @@ public class UC7 {
     void start() {
         Scanner in = new Scanner(System.in);
         List<String> spelers = dc.geefAlleSpelerNamen();
-        System.out.println("CHOOSEWHICHPLAYERTOBUYCARDS");
+        System.out.println(r.getString("CHOOSEWHICHPLAYERTOBUYCARDS"));
         String naam = promptSpelerUitLijst(r, spelers,r.getString("CHOICE")+": ");
         printLijn();
-        System.out.println("| " + "SHOP" + " | "+r.getString("CREDITS")+": " + dc.geefSpelerInfo(naam)[1] + " | " + " (0 TO GO BACK TO MENU)");
+        System.out.println("| " + r.getString("SHOP") + " | "+r.getString("CREDITS")+": " + dc.geefSpelerInfo(naam)[1] + " | " + r.getString("BACKTOMENU"));
         printLijn();
         String[][] nietGekochteKaarten = dc.geefNogNietGekochteKaarten(naam);
         System.out.println(formatteerStapelAlsLijst(nietGekochteKaarten, true));
@@ -51,14 +51,14 @@ public class UC7 {
                     break;
                 String[] kaartKeuze = nietGekochteKaarten[keuze-1];
                 dc.koopKaart(naam, kaartKeuze);
-                System.out.println(formatteerKaart(kaartKeuze, false) + " SUCCESFULLY BOUGHT FOR " + kaartKeuze[2] + " CREDITS");
+                System.out.println(formatteerKaart(kaartKeuze, false) + r.getString("BOUGHT") + kaartKeuze[2] + r.getString("FORCREDIT"));
                 valideKeuze = true;
             }catch(InsufficientBalanceException e) {
-                System.out.println("INSUFFICIENT BALANCE");
+                System.out.println(r.getString("INSUFFICIENTBALANCE"));
             }catch(CardDoesntExistException e) {
-                System.out.println("CARD DOES NOT EXIST IN DATABASE");
+                System.out.println(r.getString("DOESNOTEXIST"));
             }catch(PlayerDoesntExistException e) {
-                System.out.println("PLAYER DOESN'T EXIST");
+                System.out.println(r.getString("INVALIDPLAYER"));
             }catch(Exception e) {
                 System.out.println(r.getString("INVALIDCHOICE"));
             }
