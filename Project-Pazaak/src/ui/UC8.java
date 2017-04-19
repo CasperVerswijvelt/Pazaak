@@ -40,8 +40,8 @@ public class UC8 {
                 dc.slaWedstrijdOp(keuze);
                 valideKeuze = true;
 
-//            }  catch (GameAlreadyExistsException e){
-//                System.out.println(r.getString("GAMEALREADYEXISTS"));
+            }  catch (GameAlreadyExistsException e){
+                System.out.println(r.getString("GAMEALREADYEXISTS"));
             } catch (IllegalArgumentException e) {
                 System.out.println(r.getString("INVALIDCHOICE"));
             }

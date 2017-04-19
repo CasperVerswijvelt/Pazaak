@@ -97,13 +97,48 @@ public class Set {
         bevroren[geefSpelerAanBeurtIndex()] = true;
     }
 
-    public void gebruikWedstrijdKaart(Kaart kaart, char type) {
-        kaart.setType(type);
-        if (speler1AanBeurt) {
-            voegSpelbordKaartToe(spelbord1, kaart);
+    public void gebruikWedstrijdKaart(Kaart kaart, int Pwaarde ,char Ptype) {
+        List<Kaart> huidigSpelbord;
+        if (speler1AanBeurt) {        
+            huidigSpelbord = spelbord1;
         } else {
-            voegSpelbordKaartToe(spelbord2, kaart);
+            huidigSpelbord = spelbord2;
         }
+        
+        int waarde = kaart.getWaarde();
+        
+        switch(kaart.getType()){
+            case '+':case '-':
+                break;
+            case '*':
+                kaart.setType(Ptype);
+            case 'T':
+                bevriesBord();
+                break;
+            case 'D':
+                Kaart teVerdubbelenKaart = huidigSpelbord.get(huidigSpelbord.size()-2);
+                teVerdubbelenKaart.setWaarde(teVerdubbelenKaart.getWaarde());
+                break;
+            case 'W': 
+                int[] waardes;
+                if(waarde == 1)
+                    waardes =  new int[]{2,4};
+                else if(waarde == 2)
+                    waardes = new int[]{3,6};
+                else
+                    throw new IllegalArgumentException("Value "+waarde+" not allowed for this card");
+                for(Kaart element : huidigSpelbord) {
+                    if(element.getWaarde() == waardes[0] || element.getWaarde() == waardes[1]) {
+                        element.setType(element.getType()=='+'?'-':'+');
+                    }
+                }
+                break;
+            case 'C':
+                kaart.setType(Ptype);
+                kaart.setWaarde(waarde);
+                    
+        }
+        voegSpelbordKaartToe(huidigSpelbord, kaart);
     }
 
     public boolean setIsKlaar() {
@@ -146,11 +181,25 @@ public class Set {
     private int berekenScore(List<Kaart> kaarten) {
         int score = 0;
         for (Kaart element : kaarten) {
-            if (element.getType() == '+') {
-                score += element.getWaarde();
-            } else {
-                score -= element.getWaarde();
+            int waarde = element.getWaarde();
+            switch(element.getType()) {
+                case '+':
+                    score += waarde;
+                    break;
+                case '-':
+                    score -= waarde;
+                    break;
+                case 'T':
+                    score+=waarde;
+                    break;
+                case 'D': 
+                    break;
+                case 'W':
+                    break;
+                case 'C':case '*':
+                    throw new IllegalArgumentException("Invalid card on board");
             }
+            
         }
         return score;
     }

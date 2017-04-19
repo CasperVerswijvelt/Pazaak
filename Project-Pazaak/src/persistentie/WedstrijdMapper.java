@@ -69,7 +69,7 @@ public class WedstrijdMapper {
             }
 
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new GameAlreadyExistsException();
         }
     }
 

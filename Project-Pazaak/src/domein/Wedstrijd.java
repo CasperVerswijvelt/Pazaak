@@ -149,7 +149,7 @@ public class Wedstrijd {
         return wedstrijdStapels.get(index);
     }
 
-    public void gebruikWedstrijdKaart(Kaart kaart, char type) {
+    public void gebruikWedstrijdKaart(Kaart kaart,int gewensteWaarde, char gewenstType) {
         List<Kaart> wedstrijdStapel = geefWedstrijdStapel();
         for(Kaart element : wedstrijdStapel) {
             if(element.equals(kaart)) {
@@ -159,7 +159,7 @@ public class Wedstrijd {
                 
         }
 
-        huidigeSet.gebruikWedstrijdKaart(kaart, type);
+        huidigeSet.gebruikWedstrijdKaart(kaart, gewensteWaarde, gewenstType);
     }
 
     public boolean setIsKlaar() {
