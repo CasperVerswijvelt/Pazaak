@@ -98,7 +98,7 @@ public class Console {
         System.out.println("-------------------------------------------------");
     }
 
-    public static String formatteerStapelOpLijn(String[][] spelbord,  boolean toonPrijs) {
+    public static String formatteerStapelOpLijn(String[][] spelbord, boolean toonPrijs) {
         String res = "";
         for (String[] kaart : spelbord) {
             res += formatteerKaart(kaart, toonPrijs) + " ";
@@ -106,7 +106,7 @@ public class Console {
         return res;
     }
 
-    public static String formatteerStapelAlsLijst(String[][] stapel,  boolean toonPrijs) {
+    public static String formatteerStapelAlsLijst(String[][] stapel, boolean toonPrijs) {
         String res = "";
         for (int i = 0; i < stapel.length; i++) {
             res += " " + (i + 1) + ". " + formatteerKaart(stapel[i], toonPrijs);
@@ -119,15 +119,37 @@ public class Console {
 
     public static String formatteerKaart(String[] kaart, boolean toonPrijs) {
         String res = "";
-        String type = kaart[0];
-        if (type.equals("*")) {
 
-            type = "+/-";
-        }
-        res = type + kaart[1];
+        String type = kaart[0];
+        String waarde = kaart[1];
         String prijs = kaart[2];
+
+        switch (type) {
+            case "*":
+                type = "+/-";
+                break;
+            case "T":
+                type = "xT"; waarde ="";
+                break;
+            case "D":
+                waarde ="";
+                break;
+            case "C":
+                type= "1+/-2"; waarde = "";
+                break;
+            case "W":
+                if(waarde.equals("1")) 
+                    type = "2&4";
+                else
+                    type = "3&6";
+                waarde = "";
+                    
+        }
+
+        res = type + waarde;
+        
         if (!prijs.equals("0") && toonPrijs) {
-            res += "  \tPrijs = " + kaart[2];
+            res += "  \tPrijs = " + prijs;
         }
         return res;
 
@@ -158,11 +180,11 @@ public class Console {
         System.out.printf(r.getString("PLAYERSELECTED") + "%n", naam);
         return naam;
     }
-    
+
     private static void toonSpelersInLijst(List<String> lijst) {
 
         for (int i = 0; i < lijst.size(); i++) {
-            System.out.println(" "+(i+1)+". " + lijst.get(i));
+            System.out.println(" " + (i + 1) + ". " + lijst.get(i));
         }
     }
 }
