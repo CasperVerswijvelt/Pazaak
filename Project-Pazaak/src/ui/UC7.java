@@ -33,7 +33,7 @@ public class UC7 {
         System.out.println("CHOOSEWHICHPLAYERTOBUYCARDS");
         String naam = promptSpelerUitLijst(r, spelers,r.getString("CHOICE")+": ");
         printLijn();
-        System.out.println(r.getString("CREDITS")+": " + dc.geefSpelerInfo(naam)[1]);
+        System.out.println("| " + "SHOP" + " | "+r.getString("CREDITS")+": " + dc.geefSpelerInfo(naam)[1] + " | " + " (0 TO GO BACK TO MENU)");
         printLijn();
         String[][] nietGekochteKaarten = dc.geefNogNietGekochteKaarten(naam);
         System.out.println(formatteerStapelAlsLijst(nietGekochteKaarten));

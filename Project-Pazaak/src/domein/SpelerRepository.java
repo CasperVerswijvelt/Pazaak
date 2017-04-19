@@ -5,20 +5,20 @@ import java.util.*;
 import persistentie.KaartMapper;
 import persistentie.SpelerMapper;
 
-public class SpelerRespository {
+public class SpelerRepository {
     //Attributen
     private SpelerMapper sm;
     private KaartMapper km;
     
     //Constructor
-    public SpelerRespository() {
+    public SpelerRepository() {
         sm = new SpelerMapper();
         km = new KaartMapper();
     }
     
     //Methodes
     public void maakNieuweSpelerAan(String naam, int geboorteDatum) {
-        Speler speler = new Speler(naam, geboorteDatum, 0);
+        Speler speler = new Speler(naam, geboorteDatum, 0, null);
         this.voegToe(speler);
     }
 
@@ -33,7 +33,7 @@ public class SpelerRespository {
 
     public String[] geefSpelerInfo(String naam) {
         Speler speler = sm.geefSpeler(naam);
-        String info[] = new String[4];
+        String info[] = new String[3];
 
         info[0] = speler.getNaam();
         info[1] = speler.getKrediet() + "";
@@ -52,12 +52,14 @@ public class SpelerRespository {
     }
 
     public Speler geefSpeler(String naam) {
-        return sm.geefSpeler(naam);
+        Speler speler = sm.geefSpeler(naam);
+        speler.setStartStapel(km.geefStartStapel(naam));
+        return speler;
     }
 
     public List<Kaart> geefStartStapel(String naam) {
         if(bestaat(naam))
-            return sm.geefSpeler(naam).geefStartStapel();
+            return km.geefStartStapel(naam);
         else
             throw new PlayerDoesntExistException();
     }

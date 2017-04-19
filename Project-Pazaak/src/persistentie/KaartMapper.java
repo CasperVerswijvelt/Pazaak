@@ -59,7 +59,7 @@ public class KaartMapper {
         List<Kaart> kaarten = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.KaartType WHERE id NOT IN(SELECT id FROM ID222177_g37.Kaart WHERE naam = ? )");
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.KaartType WHERE id NOT IN(SELECT id FROM ID222177_g37.Kaart WHERE naam = ? ) AND prijs NOT LIKE 0");
             query.setString(1, naam);
             try (ResultSet rs = query.executeQuery()) {
                 while(rs.next()) {
@@ -131,7 +131,33 @@ public class KaartMapper {
         return kaarten;
     }
     
+    public List<Kaart> geefStartStapel(String naam) {
+        List<Kaart> kaarten = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.KaartType WHERE id IN(SELECT id FROM ID222177_g37.Kaart WHERE naam = ? ) OR prijs = 0");
+            query.setString(1, naam);
+            try (ResultSet rs = query.executeQuery()) {
+                while(rs.next()) {
+                    int waarde = rs.getInt("waarde");
+                    int prijs = rs.getInt("prijs");
+                    char type = rs.getString("type").charAt(0);
+                    
+                    kaarten.add(new Kaart(waarde,type, prijs));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return kaarten;
+    }
+    
     public void bouwKaartTypeDatabase(){
+        //KaarType in DB leegmaken
+        leegAlleKaartTypes();
+        
+        
+        //Alle aankoopbare kaarten toevoegen
         for(int i = 1; i<=6;i++){
             voegKaartTypeToe('+', i, 5);
         }
@@ -146,5 +172,46 @@ public class KaartMapper {
         voegKaartTypeToe('W', 1, 50);
         voegKaartTypeToe('W', 2, 50);
         voegKaartTypeToe('C', 1, 100);
+        
+        //StartStapel toevoegen met prijs 0
+        voegKaartTypeToe('+', 2, 0);
+        voegKaartTypeToe('+', 4, 0);
+        voegKaartTypeToe('+', 5, 0);
+        voegKaartTypeToe('+', 6, 0);
+        voegKaartTypeToe('-', 1, 0);
+        voegKaartTypeToe('-', 2, 0);
+        voegKaartTypeToe('-', 3, 0);
+        voegKaartTypeToe('-', 5, 0);
+        voegKaartTypeToe('*', 3, 0);
+        voegKaartTypeToe('*', 1, 0);
+        
+    }
+    
+    public void leegAlleAangekochteKaarten() {
+        try {
+            Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
+            PreparedStatement query = conn.prepareStatement("truncate ID222177_g37.Kaart");
+            query.executeUpdate();
+            
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    
+    public void leegAlleKaartTypes() {
+        try {
+            Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
+            PreparedStatement query = conn.prepareStatement("SET FOREIGN_KEY_CHECKS = 0");
+            query.executeUpdate();
+            query = conn.prepareStatement("truncate ID222177_g37.KaartType");
+            query.executeUpdate();
+            query = conn.prepareStatement("ALTER TABLE ID222177_g37.KaartType  AUTO_INCREMENT = 1");
+            query.executeUpdate();
+            query = conn.prepareStatement("SET FOREIGN_KEY_CHECKS = 1");
+            query.executeUpdate();
+            
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

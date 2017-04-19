@@ -31,7 +31,7 @@ public class SpelerMapper {
                     String naam2 = rs.getString("naam");
                     int geboortedatum = rs.getInt("geboortedatum");
                     int krediet = rs.getInt("krediet");
-                    speler = new Speler(naam2, geboortedatum, krediet);
+                    speler = new Speler(naam2, geboortedatum, krediet, null);
                 }
             }
         } catch (SQLException ex) {
@@ -54,24 +54,7 @@ public class SpelerMapper {
         }
     }
     
-    public List<Speler> geefAlleSpelers() {
-        List<Speler> spelers = new ArrayList<>();
-        try {
-            Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.Speler");
-            try (ResultSet rs = query.executeQuery()) {
-                while(rs.next()) {
-                    String naam = rs.getString("naam");
-                    int geboortedatum = rs.getInt("geboortedatum");
-                    int krediet = rs.getInt("krediet");
-                    spelers.add(new Speler(naam, geboortedatum, krediet));
-                }
-            }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-        return spelers;
-    }
+    
     
 
     public List<String> geefAlleSpelerNamen() {

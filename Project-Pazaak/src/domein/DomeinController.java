@@ -9,7 +9,7 @@ import java.util.*;
 public class DomeinController {
 
     //Attributen
-    private final SpelerRespository spelerRepo;
+    private final SpelerRepository spelerRepo;
     private Wedstrijd wedstrijd;
     private final List<Speler> geselecteerdeSpelers;
     private final List<Kaart> geselecteerdeKaarten;
@@ -17,7 +17,7 @@ public class DomeinController {
 
     //Constructor
     public DomeinController() {
-        this.spelerRepo = new SpelerRespository();
+        this.spelerRepo = new SpelerRepository();
         this.geselecteerdeSpelers = new ArrayList<>();
         this.geselecteerdeKaarten = new ArrayList<>();
     }

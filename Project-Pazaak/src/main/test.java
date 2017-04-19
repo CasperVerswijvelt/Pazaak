@@ -6,7 +6,7 @@
 package main;
 
 import domein.Kaart;
-import domein.SpelerRespository;
+import domein.SpelerRepository;
 import persistentie.KaartMapper;
 import persistentie.SpelerMapper;
 
@@ -20,10 +20,10 @@ public class test {
     
     public static void main(String[] args) {
 //        new KaartMapper().bouwKaartTypeDatabase();
-        SpelerRespository spelerRepo = new SpelerRespository();
-        String naam = "Matthias";
-        System.out.println(spelerRepo.geefAangekochteKaarten(naam));
+        SpelerRepository spelerRepo = new SpelerRepository();
+        String naam = "nigel";
+        System.out.println(spelerRepo.geefStartStapel(naam));
         spelerRepo.koopKaart(naam, new Kaart(6, '-', 5));
-        System.out.println(spelerRepo.geefAangekochteKaarten(naam));
+        System.out.println(spelerRepo.geefStartStapel(naam));
     }
 }

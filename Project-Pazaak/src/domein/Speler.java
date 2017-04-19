@@ -4,13 +4,13 @@ import java.util.*;
 
 public class Speler {
     //Attributen
-    private final Collection<Kaart> startStapel;
+    private List<Kaart> startStapel;
     private final String naam;
     private int krediet;
     private final int geboorteJaar;
 
     //Constructor
-    public Speler(String naam, int geboorteJaar, int krediet) {
+    public Speler(String naam, int geboorteJaar, int krediet, List<Kaart> startStapel) {
         controleerGeboorteJaar(geboorteJaar);
         controleerNaam(naam);
 
@@ -18,30 +18,12 @@ public class Speler {
         this.geboorteJaar = geboorteJaar;
         this.krediet = krediet;
 
-        startStapel = new ArrayList<>();
+        this.startStapel = startStapel;
 
-        maakStartStapel();
     }
 
     //Methodes
-    private void maakStartStapel() {
-        Kaart[] kaartenArray = new Kaart[10];
-
-        kaartenArray[0] = new Kaart(2, '+');
-        kaartenArray[1] = new Kaart(4, '+');
-        kaartenArray[2] = new Kaart(5, '+');
-        kaartenArray[3] = new Kaart(6, '+');
-        kaartenArray[4] = new Kaart(1, '-');
-        kaartenArray[5] = new Kaart(2, '-');
-        kaartenArray[6] = new Kaart(3, '-');
-        kaartenArray[7] = new Kaart(5, '-');
-        kaartenArray[8] = new Kaart(3, '*');
-        kaartenArray[9] = new Kaart(1, '*');
-        
-        // + gekochte kaarten uit databank halen
-
-        this.startStapel.addAll(Arrays.asList(kaartenArray));
-    }
+   
     @Override
     public String toString() {
         return String.format("%s, %d, %d", naam, geboorteJaar, krediet);
@@ -84,4 +66,9 @@ public class Speler {
     public int getGeboorteJaar() {
         return geboorteJaar;
     }
+
+    public void setStartStapel(List<Kaart> startStapel) {
+        this.startStapel = startStapel;
+    }
+    
 }

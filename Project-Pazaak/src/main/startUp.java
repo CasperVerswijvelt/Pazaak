@@ -1,7 +1,7 @@
 package main;
 
 import domein.DomeinController;
-import domein.SpelerRespository;
+import domein.SpelerRepository;
 import persistentie.KaartMapper;
 import ui.Console;
 
