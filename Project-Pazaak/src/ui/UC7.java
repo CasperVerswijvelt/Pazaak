@@ -51,7 +51,7 @@ public class UC7 {
                     break;
                 String[] kaartKeuze = nietGekochteKaarten[keuze-1];
                 dc.koopKaart(naam, kaartKeuze);
-                System.out.println(formatteerKaart(kaartKeuze, false) + r.getString("BOUGHT") + kaartKeuze[2] + r.getString("FORCREDIT"));
+                System.out.println(formatteerKaart(kaartKeuze, false) + " " + r.getString("BOUGHT") + kaartKeuze[2] + " " + r.getString("FORCREDIT"));
                 valideKeuze = true;
             }catch(InsufficientBalanceException e) {
                 System.out.println(r.getString("INSUFFICIENTBALANCE"));
