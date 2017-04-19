@@ -142,11 +142,7 @@ public class Set {
     }
 
     public boolean setIsKlaar() {
-        boolean bool = false;
-        if (berekenScore(spelbord1) > 20 || berekenScore(spelbord2) > 20 || spelbord1.size() > 8 || spelbord2.size() > 8 || (bevroren[0] && bevroren[1]))
-            bool = true;
-
-        return bool;
+        return berekenScore(spelbord1) > 20 || berekenScore(spelbord2) > 20 || spelbord1.size() > 8 || spelbord2.size() > 8 || (bevroren[0] && bevroren[1]);
 
     }
 

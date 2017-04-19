@@ -196,7 +196,7 @@ class UC6 {
         }
 
         dc.gebruikWedstrijdKaart(gekozenKaart, gewensteWaarde, gewenstType);
-        gekozenKaart[0] = type + "";
+        gekozenKaart[0] = gewenstType + "";
         System.out.println(formatteerKaart(gekozenKaart, false) + " " + r.getString("SELECTED"));
         System.out.println(r.getString("SCORE") + ": " + dc.geefScore());
 
