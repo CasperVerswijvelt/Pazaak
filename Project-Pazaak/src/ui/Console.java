@@ -46,17 +46,19 @@ public class Console {
             System.out.printf(" 0. %s%n"
                     + " 1. %s%n"
                     + " 2. %s%n"
-                    + " 3. %s%n",
+                    + " 3. %s%n"
+                    + " 4. %s%n",
                     r.getString("EXIT"),
                     r.getString("NEWPLAYEROPTION"),
                     r.getString("STARTGAMEOPTION"),
-                    r.getString("BUYCARDOPTION"));
+                    r.getString("BUYCARDOPTION"),
+                    r.getString("LOADGAMEOPTION"));
 
             System.out.print(r.getString("CHOICE") + ": ");
             try {
                 keuze = Integer.parseInt(in.nextLine());
 
-                if (keuze > 3 || keuze < 0) {
+                if (keuze > 4 || keuze < 0) {
                     throw new InvalidNumberException();
                 }
                 printLijn();
@@ -71,6 +73,9 @@ public class Console {
                         break;
                     case 3:
                         new UC7(dc, r).start();
+                        break;
+                    case 4:
+                        new UC9(dc, r).start();
                         break;
                     case 0:
                         System.out.println(r.getString("EXITGAME"));
@@ -93,18 +98,18 @@ public class Console {
         System.out.println("-------------------------------------------------");
     }
 
-    public static String formatteerStapelOpLijn(String[][] spelbord) {
+    public static String formatteerStapelOpLijn(String[][] spelbord,  boolean toonPrijs) {
         String res = "";
         for (String[] kaart : spelbord) {
-            res += formatteerKaart(kaart) + " ";
+            res += formatteerKaart(kaart, toonPrijs) + " ";
         }
         return res;
     }
 
-    public static String formatteerStapelAlsLijst(String[][] stapel) {
+    public static String formatteerStapelAlsLijst(String[][] stapel,  boolean toonPrijs) {
         String res = "";
         for (int i = 0; i < stapel.length; i++) {
-            res += " " + (i + 1) + ". " + formatteerKaart(stapel[i]);
+            res += " " + (i + 1) + ". " + formatteerKaart(stapel[i], toonPrijs);
             if (i != stapel.length - 1) {
                 res += "\n";
             }
@@ -112,7 +117,7 @@ public class Console {
         return res;
     }
 
-    public static String formatteerKaart(String[] kaart) {
+    public static String formatteerKaart(String[] kaart, boolean toonPrijs) {
         String res = "";
         String type = kaart[0];
         if (type.equals("*")) {
@@ -121,7 +126,7 @@ public class Console {
         }
         res = type + kaart[1];
         String prijs = kaart[2];
-        if (!prijs.equals("0")) {
+        if (!prijs.equals("0") && toonPrijs) {
             res += "  \tPrijs = " + kaart[2];
         }
         return res;

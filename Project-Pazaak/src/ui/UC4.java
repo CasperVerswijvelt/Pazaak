@@ -44,7 +44,7 @@ public class UC4 {
                 //Kaarten tonen
                 String[][] array = new String[startStapel.size()][2];
                 startStapel.toArray(array);
-                System.out.println(formatteerStapelAlsLijst(array));;
+                System.out.println(formatteerStapelAlsLijst(array, false));;
                 
                 boolean valideKeuze;
                 int keuze = 0;
@@ -68,7 +68,7 @@ public class UC4 {
                 
                 //Gekozen kaart wordt geselecteerd en getoond
                 dc.selecteerKaart(startStapel.get(keuze - 1));
-                System.out.println(formatteerKaart(startStapel.get(keuze - 1)) + " " + r.getString("SELECTED"));
+                System.out.println(formatteerKaart(startStapel.get(keuze - 1), false) + " " + r.getString("SELECTED"));
                 
                 //Gekozen kaart wordt uit mogelijke keuzes gehaald
                 startStapel.remove(keuze-1);
@@ -81,7 +81,7 @@ public class UC4 {
             
         }
         
-        UC5.start(dc, r);
+        new UC5(dc,r).start();
 
     }
 }

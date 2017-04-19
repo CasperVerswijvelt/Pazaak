@@ -6,7 +6,6 @@
 package persistentie;
 
 import domein.Kaart;
-import domein.Speler;
 import exceptions.*;
 import java.sql.Connection;
 import java.sql.DriverManager;

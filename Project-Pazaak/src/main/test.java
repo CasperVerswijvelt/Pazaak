@@ -5,8 +5,11 @@
  */
 package main;
 
+import domein.DomeinController;
 import domein.Kaart;
 import domein.SpelerRepository;
+import domein.WedstrijdRepository;
+import java.util.Arrays;
 import persistentie.KaartMapper;
 import persistentie.SpelerMapper;
 
@@ -20,10 +23,7 @@ public class test {
     
     public static void main(String[] args) {
 //        new KaartMapper().bouwKaartTypeDatabase();
-        SpelerRepository spelerRepo = new SpelerRepository();
-        String naam = "nigel";
-        System.out.println(spelerRepo.geefStartStapel(naam));
-        spelerRepo.koopKaart(naam, new Kaart(6, '-', 5));
-        System.out.println(spelerRepo.geefStartStapel(naam));
+        System.out.println(Arrays.deepToString(new DomeinController().geefWedstrijdenOverzicht()));
+        new WedstrijdRepository().laadWedstrijd("Test");
     }
 }

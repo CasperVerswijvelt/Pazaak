@@ -6,6 +6,7 @@
 package ui;
 
 import domein.DomeinController;
+import exceptions.InvalidNumberException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -41,11 +42,11 @@ class UC6 {
             //Uitgedeelde kaart tonen
             String[][] spelbord = dc.geefSpelBord();
             String[] uitgedeeldeKaart = spelbord[spelbord.length - 1];
-            System.out.printf(r.getString("GIVENCARD") + "%n", formatteerKaart(uitgedeeldeKaart));
+            System.out.printf(r.getString("GIVENCARD") + "%n", formatteerKaart(uitgedeeldeKaart, false));
 
             //Huidig pelbord tonen
             System.out.print(r.getString("CURRENTBOARD"));
-            System.out.println(formatteerStapelOpLijn(spelbord));;
+            System.out.println(formatteerStapelOpLijn(spelbord, false));;
 
             //Score tonen
             int score = dc.geefScore();
@@ -68,7 +69,7 @@ class UC6 {
                 if (acties.size() == 3) {
                     String[][] WedstrijdStapel = dc.geefWedstrijdStapel();
                     System.out.printf("    %s", r.getString("CARDS") + ": ");
-                    System.out.println(formatteerStapelOpLijn(WedstrijdStapel));
+                    System.out.println(formatteerStapelOpLijn(WedstrijdStapel, false));
                 }
 
                 //Keuze inlezen
@@ -115,7 +116,7 @@ class UC6 {
         //Setuitslag wordt getoond
         String uitslag = dc.geefSetUitslag();
         System.out.println(uitslag.equals("TIE") ? r.getString("TIE") + "!" : uitslag + " " + r.getString("WINSTHESET") + "!");
-        
+        printLijn();
         
         //SET KLAAR//
 
@@ -129,7 +130,7 @@ class UC6 {
         boolean valideKeuze;
 
         //mogelijke opties tonen
-        System.out.println(formatteerStapelAlsLijst(stapel));;
+        System.out.println(formatteerStapelAlsLijst(stapel, false));;
 
         //Keuze inlezen
         do {
@@ -171,7 +172,7 @@ class UC6 {
         }
         dc.gebruikWedstrijdKaart(gekozenKaart, type);
         gekozenKaart[0] = type + "";
-        System.out.println(formatteerKaart(gekozenKaart) + " " + r.getString("SELECTED"));
+        System.out.println(formatteerKaart(gekozenKaart, false) + " " + r.getString("SELECTED"));
         System.out.println(r.getString("SCORE") + ": " + dc.geefScore());
 
     }
