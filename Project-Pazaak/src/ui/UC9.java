@@ -6,6 +6,7 @@
 package ui;
 
 import domein.DomeinController;
+import exceptions.DatabaseException;
 import exceptions.InvalidNumberException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -27,7 +28,14 @@ public class UC9 {
 
     public void start() {
         Scanner in = new Scanner(System.in);
-        String[][] overzicht = dc.geefWedstrijdenOverzicht();
+        String[][] overzicht;
+        try{
+                overzicht = dc.geefWedstrijdenOverzicht();
+            }catch(DatabaseException e){
+                System.out.println(r.getString("DATABASEERROR"));
+                return;
+            }
+        
         if (overzicht.length == 0) {
             System.out.println(r.getString("NOGAMES"));
         } else {
@@ -50,7 +58,7 @@ public class UC9 {
                 }
             } while (!valideKeuze);
 
-            dc.laadWedstrijd(overzicht[keuze - 1][0]);
+            
             printLijn();
             new UC5(dc, r).start();
         }

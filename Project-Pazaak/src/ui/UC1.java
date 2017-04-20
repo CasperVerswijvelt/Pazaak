@@ -49,6 +49,7 @@ public class UC1 {
                 System.out.println(r.getString("NAMEREQUIREMENTS"));
             } catch(DatabaseException e) {
                 System.out.println(r.getString("DATABASEERROR"));
+                return;
             }
         //Zolang opgegeven info niet aan vereisten voldoet wordt deze opnieuw opgevraagd
         } while (opnieuw);
