@@ -6,8 +6,9 @@
 package persistentie;
 
 import domein.Kaart;
+import domein.Speler;
 import domein.Wedstrijd;
-import exceptions.GameAlreadyExistsException;
+import exceptions.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,8 +26,8 @@ import java.util.Map;
  */
 public class WedstrijdMapper {
 
-    private SpelerMapper sm;
-    private KaartMapper km;
+    private final SpelerMapper sm;
+    private final KaartMapper km;
 
     public WedstrijdMapper() {
         this.sm = new SpelerMapper();
@@ -34,7 +35,11 @@ public class WedstrijdMapper {
     }
 
     public void slaWedstrijdOp(Wedstrijd wedstrijd, String wedstrijdNaam) {
+        
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
+            
+            if(bestaatWedstrijd(wedstrijdNaam))
+                throw new GameAlreadyExistsException("ERROR SAVING GAME");
 
             //Wedstrijd
             PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.Wedstrijd (naam, spelerAanBeurt)"
@@ -69,12 +74,30 @@ public class WedstrijdMapper {
             }
 
         } catch (SQLException ex) {
-            throw new GameAlreadyExistsException();
+            throw new GameSaveDatabaseException();
+        }
+    }
+    
+    public boolean bestaatWedstrijd(String wedstrijdNaam) {
+        try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
+
+            //Wedstrijd
+            PreparedStatement query = conn.prepareStatement("SELECT naam FROM ID222177_g37.Wedstrijd WHERE naam = ?");
+            query.setString(1, wedstrijdNaam);
+            ResultSet rs = query.executeQuery();
+            
+            return rs.next();
+
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
         }
     }
 
     public Wedstrijd laadWedstrijd(String wedstrijdNaam) {
         try {
+            if(!bestaatWedstrijd(wedstrijdNaam))
+                throw new GameDoesntExistException("ERROR LOADING GAME");
+            
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
 
             HashMap<String, Integer> scoresMap = new HashMap<>();
@@ -148,7 +171,7 @@ public class WedstrijdMapper {
             return new Wedstrijd(sm.geefSpeler(keys.get(0)), sm.geefSpeler(keys.get(1)), kaartenMap.get(keys.get(0)), kaartenMap.get(keys.get(1)), beginnendeSpeler, scoresMap.get(keys.get(0)), scoresMap.get(keys.get(1)));
 
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new GameLoadDatabaseException(ex);
         }
 
     }
@@ -171,6 +194,10 @@ public class WedstrijdMapper {
             }
             
             int size = lijst.size();
+            
+            if(size%2 != 0) 
+                throw new IncorrectEntriesInDatabaseException("Not each game has exactly 2 players");
+            
             res = new String[size/2][5];
             
             for(int i = 0; i< size; i+=2) {
@@ -186,7 +213,7 @@ public class WedstrijdMapper {
                 res[i/2][4] = lijst.get(i+1)[2];
             }
         }catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new DatabaseException(ex);
         }
         return res;
     }

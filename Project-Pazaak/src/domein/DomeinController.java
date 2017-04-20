@@ -2,6 +2,8 @@ package domein;
 
 import exceptions.NoPlayersAvailableException;
 import java.util.*;
+import persistentie.KaartMapper;
+import persistentie.SpelerMapper;
 
 /**
  * @author Casper

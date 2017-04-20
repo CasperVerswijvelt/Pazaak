@@ -9,12 +9,15 @@ package exceptions;
  *
  * @author Casper
  */
-public class InsufficientBalanceException extends IllegalArgumentException{
+public class InsufficientBalanceException extends PlayerException{
     public InsufficientBalanceException(){
         super();
     }
     
     public InsufficientBalanceException(String s){
         super(s);
+    }
+    public InsufficientBalanceException(Throwable cause){
+        super(cause);
     }
 }

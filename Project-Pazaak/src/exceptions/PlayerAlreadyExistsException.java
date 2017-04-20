@@ -9,12 +9,15 @@ package exceptions;
  *
  * @author Casper
  */
-public class PlayerAlreadyExistsException extends IllegalArgumentException{
+public class PlayerAlreadyExistsException extends PlayerException{
     public PlayerAlreadyExistsException(){
         super();
     }
     
     public PlayerAlreadyExistsException(String s){
         super(s);
+    }
+    public PlayerAlreadyExistsException(Throwable cause){
+        super(cause);
     }
 }

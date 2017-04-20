@@ -22,8 +22,6 @@ public class test {
     
     
     public static void main(String[] args) {
-//        new KaartMapper().bouwKaartTypeDatabase();
-        System.out.println(Arrays.deepToString(new DomeinController().geefWedstrijdenOverzicht()));
-        new WedstrijdRepository().laadWedstrijd("Test");
+        new SpelerRepository().maakNieuweSpelerAan("Casper", 1998);
     }
 }

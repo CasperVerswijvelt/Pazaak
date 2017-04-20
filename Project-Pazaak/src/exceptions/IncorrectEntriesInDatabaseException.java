@@ -9,16 +9,16 @@ package exceptions;
  *
  * @author Casper
  */
-public class PlayerDoesntExistException extends PlayerException{
-    public PlayerDoesntExistException(){
+public class IncorrectEntriesInDatabaseException extends DatabaseException{
+    public IncorrectEntriesInDatabaseException(){
         super();
     }
     
-    public PlayerDoesntExistException(String s){
+    public IncorrectEntriesInDatabaseException(String s){
         super(s);
     }
     
-    public PlayerDoesntExistException(Throwable cause){
+    public IncorrectEntriesInDatabaseException(Throwable cause){
         super(cause);
     }
 }

@@ -6,16 +6,17 @@ import persistentie.KaartMapper;
 import persistentie.SpelerMapper;
 
 public class SpelerRepository {
+
     //Attributen
     private SpelerMapper sm;
     private KaartMapper km;
-    
+
     //Constructor
     public SpelerRepository() {
         sm = new SpelerMapper();
         km = new KaartMapper();
     }
-    
+
     //Methodes
     public void maakNieuweSpelerAan(String naam, int geboorteDatum) {
         Speler speler = new Speler(naam, geboorteDatum, 0, null);
@@ -30,7 +31,6 @@ public class SpelerRepository {
         return sm.geefAlleSpelerNamen();
     }
 
-
     public String[] geefSpelerInfo(String naam) {
         Speler speler = sm.geefSpeler(naam);
         String info[] = new String[3];
@@ -41,14 +41,11 @@ public class SpelerRepository {
 
         return info;
     }
-    
 
     private void voegToe(Speler speler) {
-        if (!bestaat(speler.getNaam())) {
-            sm.voegToe(speler);
-        } else {
-            throw new PlayerAlreadyExistsException("Naam is al in gebruik!");
-        }
+
+        sm.voegToe(speler);
+
     }
 
     public Speler geefSpeler(String naam) {
@@ -58,36 +55,37 @@ public class SpelerRepository {
     }
 
     public List<Kaart> geefStartStapel(String naam) {
-        if(bestaat(naam))
+        if (bestaat(naam)) {
             return km.geefStartStapel(naam);
-        else
+        } else {
             throw new PlayerDoesntExistException();
+        }
     }
 
     public void slaKredietOp(Speler speler) {
         sm.slaKredietOp(speler);
     }
-    
-    public List<Kaart> geefNogNietGekochteKaarten(String naam){
+
+    public List<Kaart> geefNogNietGekochteKaarten(String naam) {
         return km.geefNogNietGekochteKaarten(naam);
     }
-    
+
     public void koopKaart(String naam, Kaart inputKaart) {
         Speler speler = geefSpeler(naam);
         int prijs = inputKaart.getPrijs();
-        if(speler.getKrediet() >= prijs){
-            km.voegKaartToe(naam, inputKaart);
-            speler.setKrediet(speler.getKrediet()-prijs);
+        if (speler.getKrediet() >= prijs) {
+            km.voegStartstapelKaartToe(naam, inputKaart);
+            speler.setKrediet(speler.getKrediet() - prijs);
             slaKredietOp(speler);
-            
-        }else
+
+        } else {
             throw new InsufficientBalanceException("Insufficient balance");
-        
+        }
+
     }
+
     public List<Kaart> geefAangekochteKaarten(String naam) {
         return km.geefAangekochteKaarten(naam);
     }
-    
-    
 
 }

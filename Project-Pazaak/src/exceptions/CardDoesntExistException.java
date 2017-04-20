@@ -9,12 +9,16 @@ package exceptions;
  *
  * @author Casper
  */
-public class CardDoesntExistException extends IllegalArgumentException{
+public class CardDoesntExistException extends CardException{
     public CardDoesntExistException(){
         super();
     }
     
     public CardDoesntExistException(String s){
         super(s);
+    }
+    
+    public CardDoesntExistException(Throwable cause){
+        super(cause);
     }
 }

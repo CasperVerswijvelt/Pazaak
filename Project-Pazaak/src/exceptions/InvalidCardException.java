@@ -9,16 +9,15 @@ package exceptions;
  *
  * @author Casper
  */
-public class PlayerDoesntExistException extends PlayerException{
-    public PlayerDoesntExistException(){
+public class InvalidCardException extends CardException{
+    public InvalidCardException(){
         super();
     }
     
-    public PlayerDoesntExistException(String s){
+    public InvalidCardException(String s){
         super(s);
     }
-    
-    public PlayerDoesntExistException(Throwable cause){
+    public InvalidCardException(Throwable cause) {
         super(cause);
     }
 }

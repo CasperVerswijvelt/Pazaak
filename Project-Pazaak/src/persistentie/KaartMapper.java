@@ -75,7 +75,7 @@ public class KaartMapper {
         return kaarten;
     }
     
-    public void voegKaartToe(String naam, Kaart kaart) {
+    public void voegStartstapelKaartToe(String naam, Kaart kaart) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
             int kaartID = geefKaartId(kaart);
             PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.Kaart (naam, id) "
@@ -125,7 +125,7 @@ public class KaartMapper {
                 }
             }
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new DatabaseException(ex);
         }
         return kaarten;
     }
@@ -146,11 +146,12 @@ public class KaartMapper {
                 }
             }
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new DatabaseException(ex);
         }
         return kaarten;
     }
     
+    //Kan gebruikt worden indien er in de databse iets fout is met de KaartType tabel
     public void bouwKaartTypeDatabase(){
         //KaarType in DB leegmaken
         leegAlleKaartTypes();
@@ -171,6 +172,7 @@ public class KaartMapper {
         voegKaartTypeToe('W', 1, 50);
         voegKaartTypeToe('W', 2, 50);
         voegKaartTypeToe('C', 1, 100);
+        
         
         //StartStapel toevoegen met prijs 0
         voegKaartTypeToe('+', 2, 0);
@@ -193,11 +195,12 @@ public class KaartMapper {
             query.executeUpdate();
             
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new DatabaseException(ex);
         }
     }
     
-    public void leegAlleKaartTypes() {
+    //MAG ALLEEN AANGEROEPEN WORDEN DOOR bouwKaartTypeDatabase()
+    private void leegAlleKaartTypes() {
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
             PreparedStatement query = conn.prepareStatement("SET FOREIGN_KEY_CHECKS = 0");
