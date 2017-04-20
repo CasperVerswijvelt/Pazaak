@@ -1,5 +1,6 @@
 package domein;
 
+import exceptions.PlayerNameInvalidException;
 import java.util.*;
 
 public class Speler {
@@ -34,7 +35,7 @@ public class Speler {
     //Controle
     private void controleerNaam(String naam) {
         if (naam.length() < 3) {
-            throw new IllegalArgumentException("Naam moet minstens 3 karakters lang zijn.");
+            throw new PlayerNameInvalidException("Naam moet minstens 3 karakters lang zijn.");
         }
     }
 

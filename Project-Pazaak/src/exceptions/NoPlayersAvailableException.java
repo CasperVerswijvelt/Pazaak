@@ -9,12 +9,15 @@ package exceptions;
  *
  * @author Casper
  */
-public class NoPlayersAvailableException extends IllegalArgumentException{
+public class NoPlayersAvailableException extends PlayerException{
     public NoPlayersAvailableException(){
         super();
     }
     public NoPlayersAvailableException(String s) {
         super(s);
+    }
+    public NoPlayersAvailableException(Throwable cause) {
+        super(cause);
     }
     
 }

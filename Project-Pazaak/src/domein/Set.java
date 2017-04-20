@@ -1,5 +1,6 @@
 package domein;
 
+import exceptions.InvalidCardException;
 import java.util.*;
 
 public class Set {
@@ -44,9 +45,9 @@ public class Set {
         setStapel.remove(0);
 
         if (speler1AanBeurt) {
-            voegSpelbordKaartToe(spelbord1, kaart);
+            spelbord1.add(kaart);
         } else {
-            voegSpelbordKaartToe(spelbord2, kaart);
+            spelbord2.add(kaart);
         }
     }
 
@@ -106,28 +107,32 @@ public class Set {
         }
         
         int waarde = kaart.getWaarde();
-        
-        switch(kaart.getType()){
+        char origineelType = kaart.getType();
+        switch(origineelType){
             case '+':case '-':
+                controleerTypeGelijk(origineelType, Ptype);
                 break;
             case '*':
                 kaart.setType(Ptype);
                 break;
             case 'T':
+                controleerTypeGelijk(origineelType, Ptype);
                 bevriesBord();
                 break;
             case 'D':
+                controleerTypeGelijk(origineelType, Ptype);
                 Kaart teVerdubbelenKaart = huidigSpelbord.get(huidigSpelbord.size()-2);
                 teVerdubbelenKaart.setWaarde(teVerdubbelenKaart.getWaarde());
                 break;
             case 'W': 
+                controleerTypeGelijk(origineelType, Ptype);
                 int[] waardes;
                 if(waarde == 1)
                     waardes =  new int[]{2,4};
                 else if(waarde == 2)
                     waardes = new int[]{3,6};
                 else
-                    throw new IllegalArgumentException("Value "+waarde+" not allowed for this card");
+                    throw new InvalidCardException("Value "+waarde+" not allowed for this card");
                 for(Kaart element : huidigSpelbord) {
                     if(element.getWaarde() == waardes[0] || element.getWaarde() == waardes[1]) {
                         element.setType(element.getType()=='+'?'-':'+');
@@ -139,7 +144,7 @@ public class Set {
                 kaart.setWaarde(waarde);
                     
         }
-        voegSpelbordKaartToe(huidigSpelbord, kaart);
+        huidigSpelbord.add(kaart);
     }
 
     public boolean setIsKlaar() {
@@ -200,11 +205,10 @@ public class Set {
         }
         return score;
     }
-    private void voegSpelbordKaartToe(List<Kaart> spelbord, Kaart kaart) {
-        spelbord.add(kaart);
-        //Speler zou volgende comment code zelf moeten kiezen eigenlijk
-//        if(berekenScore(spelbord) == 20) {
-//            bevroren[geefSpelerAanBeurtIndex()] = true;
-//        }
+    
+    
+    private void controleerTypeGelijk(char type1, char type2) {
+        if( type1!=type2)
+            throw new InvalidCardException("Original cardtype and requested type doesn't match, stop cheating!");
     }
 }

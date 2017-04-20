@@ -1,5 +1,7 @@
 package domein;
 
+import exceptions.InvalidCardException;
+
 public class Kaart {
 
     //Attributen
@@ -40,13 +42,13 @@ public class Kaart {
     //Controle
     private void controleerWaarde(int waarde) {
         if (waarde < 0 || waarde > 10) {
-            throw new IllegalArgumentException("De waarde van een kaart kan minimaal 0 en maximaal 10 zijn.");
+            throw new InvalidCardException("De waarde van een kaart kan minimaal 0 en maximaal 10 zijn.");
         }
     }
 
     private void controleerType(char type) {
         if (type != '+' && type != '-' && type != '*' && type != 'T'&& type != 'D'&& type != 'W'&& type != 'C') {
-            throw new IllegalArgumentException("Het type kan '+', '-', '*', 'T', 'D', 'W', of 'C' zijn, (" + type + " ingegeven)");
+            throw new InvalidCardException("Het type kan '+', '-', '*', 'T', 'D', 'W', of 'C' zijn, (" + type + " ingegeven)");
         }
     }
 

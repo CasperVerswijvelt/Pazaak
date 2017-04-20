@@ -5,7 +5,9 @@
  */
 package persistentie;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import domein.Speler;
+import exceptions.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,7 +23,6 @@ import java.util.List;
 public class SpelerMapper {
 
     public Speler geefSpeler(String naam) {
-        Speler speler = null;
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
             PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.Speler WHERE naam = ?");
@@ -31,13 +32,13 @@ public class SpelerMapper {
                     String naam2 = rs.getString("naam");
                     int geboortedatum = rs.getInt("geboortedatum");
                     int krediet = rs.getInt("krediet");
-                    speler = new Speler(naam2, geboortedatum, krediet, null);
+                    return new Speler(naam2, geboortedatum, krediet, null);
                 }
             }
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new PlayerDoesntExistException(ex);
         }
-        return speler;
+        return null;
     }
 
     public void voegToe(Speler speler) {
@@ -48,9 +49,11 @@ public class SpelerMapper {
             query.setString(1, speler.getNaam());
             query.setInt(2, speler.getGeboorteJaar());
             query.executeUpdate();
-
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+        }catch (SQLException ex) {
+            if(ex.getMessage().toLowerCase().contains("duplicate entry"))
+                throw new PlayerAlreadyExistsException("Player already exists");
+            else
+                throw new DatabaseException(ex);
         }
     }
     
@@ -69,7 +72,7 @@ public class SpelerMapper {
                 }
             }
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new DatabaseException(ex);
         }
         return spelers;
     }
@@ -81,7 +84,7 @@ public class SpelerMapper {
             query.setString(2, speler.getNaam());
             query.executeUpdate();
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new DatabaseException(ex);
         }
     }
     

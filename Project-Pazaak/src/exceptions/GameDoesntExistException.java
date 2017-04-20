@@ -9,12 +9,12 @@ package exceptions;
  *
  * @author Casper
  */
-public class NoWinnerException extends PlayerException{
-    public NoWinnerException(){
+public class GameDoesntExistException extends IllegalArgumentException{
+    public GameDoesntExistException(){
         super();
     }
     
-    public NoWinnerException(String s){
+    public GameDoesntExistException(String s){
         super(s);
     }
 }

@@ -9,11 +9,15 @@ package exceptions;
  *
  * @author Casper
  */
-public class CardStackTooBigException extends IllegalArgumentException{
-    public CardStackTooBigException(){
+public class InvalidCardException extends CardException{
+    public InvalidCardException(){
         super();
     }
-    public CardStackTooBigException(String s){
+    
+    public InvalidCardException(String s){
         super(s);
+    }
+    public InvalidCardException(Throwable cause) {
+        super(cause);
     }
 }

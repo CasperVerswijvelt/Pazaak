@@ -9,12 +9,16 @@ package exceptions;
  *
  * @author Casper
  */
-public class CardAlreadyBoughtException extends IllegalArgumentException{
+public class CardAlreadyBoughtException extends CardException{
     public CardAlreadyBoughtException(){
         super();
     }
     
     public CardAlreadyBoughtException(String s){
         super(s);
+    }
+    
+    public CardAlreadyBoughtException(Throwable cause) {
+        super(cause);
     }
 }
