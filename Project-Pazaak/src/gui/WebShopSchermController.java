@@ -5,22 +5,13 @@
  */
 package gui;
 
+import domein.SpelerRepository;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import domein.DomeinController;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-
 
 /**
  * FXML Controller class
@@ -29,12 +20,19 @@ import javafx.stage.Stage;
  */
 public class WebShopSchermController extends GridPane {
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
     
+    
+    private SpelerRepository domeinController;
+    
+    public WebShopSchermController (SpelerRepository dc){
+        this.domeinController = dc;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("WebShopScherm.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        try{
+            loader.load();
+        }catch (IOException ex){
+            throw new RuntimeException(ex);
+        }
+    }
 }

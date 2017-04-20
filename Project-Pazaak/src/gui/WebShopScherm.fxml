@@ -31,7 +31,7 @@
             <Insets left="10.0" />
          </padding>
       </Label>
-      <Button mnemonicParsing="false" prefWidth="101.0" text="Buy this card" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <Button mnemonicParsing="false" text="Buy this card" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin>
