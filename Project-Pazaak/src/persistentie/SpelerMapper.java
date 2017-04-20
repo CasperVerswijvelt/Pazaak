@@ -5,7 +5,6 @@
  */
 package persistentie;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import domein.Speler;
 import exceptions.*;
 import java.sql.Connection;

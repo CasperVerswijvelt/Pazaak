@@ -79,7 +79,7 @@ public class Hoofdmenu extends GridPane{
         stage.setScene(scene);
     }
     
-    
+    //mathias
     private void toWebShopMenu() {
         WebShopSchermController ws = new WebShopSchermController(this, dc, r);
         Stage stage = (Stage) this.getScene().getWindow();
