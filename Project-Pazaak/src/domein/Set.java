@@ -112,6 +112,7 @@ public class Set {
                 break;
             case '*':
                 kaart.setType(Ptype);
+                break;
             case 'T':
                 bevriesBord();
                 break;
