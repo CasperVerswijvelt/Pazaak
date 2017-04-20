@@ -157,28 +157,9 @@ class UC6 {
         char gewenstType = gekozenKaart[0].charAt(0);
 
         switch (type) {
-            case '*':
-                do {
-                    System.out.print("+ " + r.getString("OR") + "-: ");
-                    try {
-                        keuze = in.nextLine().charAt(0);
-                        valideKeuze = keuze == '+' || keuze == '-';
-                        if (!valideKeuze) {
-                            throw new IllegalArgumentException();
-                        }
-                        gewenstType = (char) keuze;
-
-                    } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
-                        valideKeuze = false;
-                        System.out.println(r.getString("INVALIDCHOICE"));
-                    }
-
-                } while (!valideKeuze);
-                if(type == '*')
-                    break;
             case 'C':
                 do {
-                    System.out.print("1 " + r.getString("OR") + "2: ");
+                    System.out.print("1 " + r.getString("OR") + " 2: ");
                     try {
                         keuze = in.nextLine().charAt(0);
                         valideKeuze = keuze == '1' || keuze == '2';
@@ -193,6 +174,27 @@ class UC6 {
                     }
 
                 } while (!valideKeuze);
+                if(type == '*')
+                    break;
+            case '*':
+                do {
+                    System.out.print("+ " + r.getString("OR") + " -: ");
+                    try {
+                        keuze = in.nextLine().charAt(0);
+                        valideKeuze = keuze == '+' || keuze == '-';
+                        if (!valideKeuze) {
+                            throw new IllegalArgumentException();
+                        }
+                        gewenstType = (char) keuze;
+
+                    } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
+                        valideKeuze = false;
+                        System.out.println(r.getString("INVALIDCHOICE"));
+                    }
+
+                } while (!valideKeuze);
+                
+            
         }
 
         dc.gebruikWedstrijdKaart(gekozenKaart, gewensteWaarde, gewenstType);
