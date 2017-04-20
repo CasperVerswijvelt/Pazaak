@@ -1,11 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
-    
-</AnchorPane>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.WebShopSchermController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="505.0" minWidth="10.0" prefWidth="439.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="50.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="125.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="83.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label text="SHOP">
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <Button mnemonicParsing="false" prefWidth="101.0" text="Buy this card" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Button>
+      <Button mnemonicParsing="false" text="Buy this card" GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Button>
+      <Button mnemonicParsing="false" text="Buy this card" GridPane.columnIndex="2" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Button>
+      <Button mnemonicParsing="false" text="Buy this card" GridPane.columnIndex="2" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Button>
+      <Button mnemonicParsing="false" text="Buy this card" GridPane.columnIndex="2" GridPane.rowIndex="5">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Button>
+      <Button mnemonicParsing="false" text="Buy this card" GridPane.columnIndex="2" GridPane.rowIndex="6">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Button>
+      <Button mnemonicParsing="false" text="Buy this card" GridPane.columnIndex="2" GridPane.rowIndex="7">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Button>
+      <TextArea prefHeight="200.0" prefWidth="200.0" text="This card will add the amount of the card to your score. &#10;There are 6 differint cards: +1, +2, +3, +4, +5, +6." GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </TextArea>
+      <TextArea prefHeight="200.0" prefWidth="200.0" text="This card will take the amount of the card from your score.&#10;There are 6 differint cards: -1, -2, -3, -4, -5, -6." GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </TextArea>
+      <TextArea prefHeight="200.0" prefWidth="200.0" text="This card will add or take from the score as you chose.&#10;There are 6 differint cards: +/-1, +/-2, +/-3, +/-4, +/-5, +/-6" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </TextArea>
+      <TextArea prefHeight="200.0" prefWidth="200.0" text="This card will add 1 to the score and will freeze your score&#10;immediately. If it is a draw, you win!" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </TextArea>
+      <TextArea prefHeight="200.0" prefWidth="200.0" text="This card will double the score from the last card you got." GridPane.rowIndex="5">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </TextArea>
+      <TextArea prefHeight="200.0" prefWidth="200.0" text="This card will change the symbol of the specific numbers.&#10;There are 2 different cards: 2&amp;4, 3&amp;6" GridPane.rowIndex="6">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </TextArea>
+      <TextArea prefHeight="200.0" prefWidth="200.0" text="With this card you can chose the number and the symbol of&#10;the card that you will add/take from the score. You can&#10;Choose between: 1+/-2" GridPane.rowIndex="7">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </TextArea>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </GridPane.margin>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </GridPane.margin>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$10" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$20" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$30" GridPane.columnIndex="1" GridPane.rowIndex="5">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$50" GridPane.columnIndex="1" GridPane.rowIndex="6">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$100" GridPane.columnIndex="1" GridPane.rowIndex="7">
+         <GridPane.margin>
+            <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+         </GridPane.margin>
+      </Text>
+   </children>
+</GridPane>

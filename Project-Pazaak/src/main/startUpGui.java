@@ -7,6 +7,7 @@ package main;
 
 import GUI.Hoofdmenu;
 import GUI.TaalSelectieScherm;
+import GUI.WebShopScherm;
 import domein.DomeinController;
 import java.util.ResourceBundle;
 import javafx.application.Application;
@@ -23,6 +24,7 @@ public class startUpGui extends Application{
     public void start(Stage primaryStage){
         DomeinController dc = new DomeinController();
         TaalSelectieScherm root = new TaalSelectieScherm(dc);
+        WebShopScherm web = new WebShopScherm(dc);
         
         Scene scene = new Scene(root, 300, 275);
         primaryStage.setScene(scene);
