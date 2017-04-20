@@ -41,8 +41,8 @@ public class Kaart {
 
     //Controle
     private void controleerWaarde(int waarde) {
-        if (waarde < 0 || waarde > 10) {
-            throw new InvalidCardException("De waarde van een kaart kan minimaal 0 en maximaal 10 zijn.");
+        if (waarde < 0 || waarde > 20) {
+            throw new InvalidCardException("De waarde van een kaart kan minimaal 0 en maximaal 20 zijn.");
         }
     }
 

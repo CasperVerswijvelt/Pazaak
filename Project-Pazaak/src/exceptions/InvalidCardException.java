@@ -17,6 +17,7 @@ public class InvalidCardException extends CardException{
     public InvalidCardException(String s){
         super(s);
     }
+    
     public InvalidCardException(Throwable cause) {
         super(cause);
     }

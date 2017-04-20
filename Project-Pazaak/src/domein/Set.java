@@ -1,6 +1,6 @@
 package domein;
 
-import exceptions.InvalidCardException;
+import exceptions.*;
 import java.util.*;
 
 public class Set {
@@ -121,8 +121,8 @@ public class Set {
                 break;
             case 'D':
                 controleerTypeGelijk(origineelType, Ptype);
-                Kaart teVerdubbelenKaart = huidigSpelbord.get(huidigSpelbord.size()-2);
-                teVerdubbelenKaart.setWaarde(teVerdubbelenKaart.getWaarde());
+                Kaart teVerdubbelenKaart = huidigSpelbord.get(huidigSpelbord.size()-1);
+                teVerdubbelenKaart.setWaarde(teVerdubbelenKaart.getWaarde()*2);
                 break;
             case 'W': 
                 controleerTypeGelijk(origineelType, Ptype);

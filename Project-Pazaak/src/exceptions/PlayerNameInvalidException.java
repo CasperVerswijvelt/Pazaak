@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This code was written by Casper Verswijvelt
+ * Any unauthorized use is illegal.
+ * © Casper Verswijvelt 2016-2017
  */
 package exceptions;
 
@@ -9,7 +9,7 @@ package exceptions;
  *
  * @author Casper
  */
-public class PlayerNameInvalidException extends IllegalArgumentException{
+public class PlayerNameInvalidException extends PlayerException{
     public PlayerNameInvalidException(){
         super();
     }
