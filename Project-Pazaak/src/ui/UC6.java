@@ -174,8 +174,6 @@ class UC6 {
                     }
 
                 } while (!valideKeuze);
-                if(type == '*')
-                    break;
             case '*':
                 do {
                     System.out.print("+ " + r.getString("OR") + " -: ");
