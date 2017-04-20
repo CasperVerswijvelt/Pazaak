@@ -49,13 +49,11 @@ public class SpelerMapper {
             query.setString(1, speler.getNaam());
             query.setInt(2, speler.getGeboorteJaar());
             query.executeUpdate();
-        }catch( MySQLIntegrityConstraintViolationException ex) {
+        }catch (SQLException ex) {
             if(ex.getMessage().toLowerCase().contains("duplicate entry"))
                 throw new PlayerAlreadyExistsException("Player already exists");
             else
                 throw new DatabaseException(ex);
-        } catch (SQLException ex) {
-            throw new DatabaseException(ex);
         }
     }
     

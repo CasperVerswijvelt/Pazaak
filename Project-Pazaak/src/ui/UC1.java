@@ -8,7 +8,7 @@ package ui;
 import domein.DomeinController;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import exceptions.PlayerAlreadyExistsException;
+import exceptions.*;
 import static ui.Console.*;
 /**
  *
@@ -45,8 +45,10 @@ public class UC1 {
                 printLijn();
             } catch (PlayerAlreadyExistsException e) {
                 System.out.println(r.getString("PLAYERALREADYEXISTS"));
-            } catch(IllegalArgumentException e){
+            } catch(PlayerNameInvalidException e){
                 System.out.println(r.getString("NAMEREQUIREMENTS"));
+            } catch(DatabaseException e) {
+                System.out.println(r.getString("DATABASEERROR"));
             }
         //Zolang opgegeven info niet aan vereisten voldoet wordt deze opnieuw opgevraagd
         } while (opnieuw);
