@@ -62,6 +62,13 @@ public class Hoofdmenu extends GridPane{
                 toSpelerMenu();
             }
         });
+        
+        btnKoopKaart.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                toWebShopMenu();
+            }
+        });
     }
     private void toSpelerMenu() {
         Spelermenu sm = new Spelermenu(this, dc, r);
@@ -71,6 +78,17 @@ public class Hoofdmenu extends GridPane{
         scene = new Scene(sm,400,500);
         stage.setScene(scene);
     }
+    
+    
+    private void toWebShopMenu() {
+        WebShopSchermController ws = new WebShopSchermController(this, dc, r);
+        Stage stage = (Stage) this.getScene().getWindow();
+        
+        Scene scene;
+        scene = new Scene(ws,400,500);
+        stage.setScene(scene);
+    }
+            
 
     public void zetTerugActief(Stage stage) {
         stage.setScene(this.getScene());
