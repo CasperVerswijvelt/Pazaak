@@ -29,7 +29,13 @@ public class UC7 {
 
     void start() {
         Scanner in = new Scanner(System.in);
-        List<String> spelers = dc.geefAlleSpelerNamen();
+        List<String> spelers;
+        try{
+            spelers = dc.geefAlleSpelerNamen();
+        }catch(DatabaseException e) {
+            System.out.println(r.getString("DATABASEERROR"));
+            return;
+        }
         System.out.println(r.getString("CHOOSEWHICHPLAYERTOBUYCARDS"));
         String naam = promptSpelerUitLijst(r, spelers,r.getString("CHOICE")+": ");
         printLijn();
@@ -59,6 +65,8 @@ public class UC7 {
                 System.out.println(r.getString("DOESNOTEXIST"));
             }catch(PlayerDoesntExistException e) {
                 System.out.println(r.getString("INVALIDPLAYER"));
+            }catch(DatabaseException e){
+                System.out.println(r.getString("DATABASEERROR"));
             }catch(Exception e) {
                 System.out.println(r.getString("INVALIDCHOICE"));
             }

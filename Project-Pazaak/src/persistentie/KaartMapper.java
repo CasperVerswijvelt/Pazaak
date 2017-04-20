@@ -85,7 +85,10 @@ public class KaartMapper {
             query.executeUpdate();
 
         } catch (SQLException ex) {
-            throw new CardAlreadyBoughtException("Card already bought!");
+            if(ex.getMessage().toLowerCase().contains("duplicate entry") ){
+                throw new CardAlreadyBoughtException(ex);
+            }
+            throw new PlayerDoesntExistException(ex);
         }
     }
     
@@ -101,11 +104,12 @@ public class KaartMapper {
                     return rs.getInt("id");
 
                 }
+                throw new CardDoesntExistException("Card doesnt exist");
             }
         } catch (SQLException ex) {
-            throw new CardDoesntExistException("Card doesnt exist");
+            throw new DatabaseException(ex);
         }
-        throw new CardDoesntExistException("Card doesnt exist");
+
         
 
     }

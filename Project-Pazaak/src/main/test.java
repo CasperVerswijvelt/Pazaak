@@ -22,6 +22,6 @@ public class test {
     
     
     public static void main(String[] args) {
-        new SpelerRepository().maakNieuweSpelerAan("Casper", 1998);
+        
     }
 }

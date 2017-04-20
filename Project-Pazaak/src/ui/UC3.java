@@ -46,7 +46,12 @@ public class UC3 {
                 dc.selecteerSpeler(naam);
             }
 
-            dc.maakNieuweWedstrijd();
+            try{
+                dc.maakNieuweWedstrijd();
+            } catch(NoPlayersAvailableException e) {
+                System.out.println(r.getString("GAMECREATEERROR"));
+                return;
+            }
             new UC4().start(dc, r);
         }
 

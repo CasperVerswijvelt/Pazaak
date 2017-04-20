@@ -6,7 +6,7 @@
 package ui;
 
 import domein.DomeinController;
-import exceptions.GameAlreadyExistsException;
+import exceptions.*;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import static ui.Console.printLijn;
@@ -38,13 +38,19 @@ public class UC8 {
                     throw new IllegalArgumentException();
                 }
                 dc.slaWedstrijdOp(keuze);
+                System.out.println(r.getString("GAMESAVED"));
                 valideKeuze = true;
 
             }  catch (GameAlreadyExistsException e){
                 System.out.println(r.getString("GAMEALREADYEXISTS"));
-            } catch (IllegalArgumentException e) {
+            } catch(DatabaseException e){
+                System.out.println(r.getString("DATABASEERROR"));
+                break;
+            }catch (IllegalArgumentException e) {
                 System.out.println(r.getString("INVALIDCHOICE"));
             }
+            
+            
             
 
         } while (!valideKeuze);
