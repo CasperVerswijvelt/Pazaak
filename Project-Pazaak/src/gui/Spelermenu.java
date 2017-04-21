@@ -63,6 +63,7 @@ public class Spelermenu extends GridPane{
         btnMaakSpeler = new Button(r.getString("MAKENEWPLAYER"));
         btnCancel = new Button("terug");
         txaSpelerInfo = new TextArea();
+        txaSpelerInfo.setEditable(false);
         
         this.add(lblTitel,0,0,2,1);
         this.add(lblSpelerNaam, 0, 1);
