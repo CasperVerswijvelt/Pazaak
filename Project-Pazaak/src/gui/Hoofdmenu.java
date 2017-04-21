@@ -26,9 +26,6 @@ public class Hoofdmenu extends GridPane{
     private DomeinController dc;
     private ResourceBundle r;
     private TaalSelectieScherm parent;
-    private KaartWinkelScherm kw;
-    private Spelermenu sm;
-    private WedstrijdHoofdScherm whs;
     
     private Label lblTitel;
     private Button btnTitel;
@@ -41,10 +38,6 @@ public class Hoofdmenu extends GridPane{
         this.parent = parent;
         this.dc = dc;
         this.r= r;
-        
-        kw = new KaartWinkelScherm(this, dc, r);
-        sm = new Spelermenu(this, dc, r);
-        whs = new WedstrijdHoofdScherm(this, dc, r);
         
         
         
@@ -93,7 +86,7 @@ public class Hoofdmenu extends GridPane{
         Stage stage = (Stage) this.getScene().getWindow();
 
         Scene scene;
-        scene = new Scene(sm, 400, 235);
+        scene = new Scene(new Spelermenu(this, dc, r));
         stage.setTitle("Pazaak - Nieuwe speler");
         stage.setScene(scene);
     }
@@ -103,7 +96,7 @@ public class Hoofdmenu extends GridPane{
         stage.setResizable(false);
 
         Scene scene;
-        scene = new Scene(kw);
+        scene = new Scene(new KaartWinkelScherm(this, dc, r));
         stage.setTitle("Pazaak - Kaartwinkel");
         stage.setScene(scene);
     }
@@ -112,7 +105,7 @@ public class Hoofdmenu extends GridPane{
         Stage stage = (Stage) this.getScene().getWindow();
 
         Scene scene;
-        scene = new Scene(whs, 400, 500);
+        scene = new Scene(new WedstrijdHoofdScherm(this, dc, r));
         stage.setTitle("Pazaak - Nieuwe wedstrijd");
         stage.setScene(scene);
     }

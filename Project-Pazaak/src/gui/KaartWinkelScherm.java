@@ -238,7 +238,7 @@ public class KaartWinkelScherm extends GridPane {
 
                     lblTypes.get(index).setDisable(true);
                     btnKoop.get(index).setDisable(true);
-                    cb.setVisible(false);
+                    cb.setDisable(true);
                     txAreaOmschrijvingen.get(index).setDisable(true);
                     lblPrijzen.get(index).setDisable(true);
                 } else {
