@@ -27,6 +27,7 @@ public class Hoofdmenu extends GridPane{
     private TaalSelectieScherm parent;
     private KaartWinkel kw;
     private Spelermenu sm;
+    private WedstrijdHoofdScherm whs;
     
     private Label lblTitel;
     private Button btnTitel;
@@ -42,6 +43,8 @@ public class Hoofdmenu extends GridPane{
         
         kw = new KaartWinkel(this, dc, r);
         sm = new Spelermenu(this, dc, r);
+        whs = new WedstrijdHoofdScherm(this, dc, r);
+        
         
         
         buildGUI();
@@ -99,7 +102,6 @@ public class Hoofdmenu extends GridPane{
     }
 
     private void toWedstrijdHoofdScherm() {
-        WedstrijdHoofdScherm whs = new WedstrijdHoofdScherm(this, dc, r);
         Stage stage = (Stage) this.getScene().getWindow();
 
         Scene scene;
