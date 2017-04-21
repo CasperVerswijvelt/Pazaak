@@ -5,13 +5,16 @@
  */
 package gui;
 
+import domein.DomeinController;
 import domein.SpelerRepository;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -19,9 +22,6 @@ import javafx.scene.layout.GridPane;
  * @author Matthias
  */
 public class WebShopSchermController extends GridPane {
-
-    
-    
     private SpelerRepository domeinController;
     
     public WebShopSchermController (SpelerRepository dc){
