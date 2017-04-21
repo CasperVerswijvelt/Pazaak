@@ -20,6 +20,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -297,6 +298,13 @@ public class KaartWinkelScherm extends GridPane {
             }
             dc.koopKaart(spelerNaam, kaart);
             selecteerSpeler();
+            
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            alert.setContentText(String.format(r.getString("CARDBOUGHT"), kaart[0]+kaart[1], kaart[2]));
+            alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            alert.showAndWait();
+            
+            
         } catch (InsufficientBalanceException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(r.getString("INSUFFICIENTBALANCE"));
@@ -305,8 +313,11 @@ public class KaartWinkelScherm extends GridPane {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(r.getString("INVALIDPLAYER"));
             alert.show();
-        } catch (IllegalArgumentException e) {
-            lblError.setText("Enter a value (nog niet vertaald");
+        } catch (CardAlreadyBoughtException e) {
+            lblError.setText("Card already bought (vertaal mij)");
+        }
+        catch (IllegalArgumentException e) {
+            lblError.setText("Enter a value (nog niet vertaald)");
         }
 
     }
