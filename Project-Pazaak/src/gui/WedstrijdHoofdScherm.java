@@ -7,6 +7,7 @@ package gui;
 
 import domein.DomeinController;
 import java.util.ResourceBundle;
+import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -16,12 +17,12 @@ import javafx.scene.layout.BorderPane;
 public class WedstrijdHoofdScherm extends BorderPane{
     private DomeinController dc;
     private ResourceBundle r;
-    private Hoofdmenu hm;
+    private Parent parent;
     private SpelerSelectiePaneel ssp;
     private KaartSelectiePaneel ksp;
 
-    public WedstrijdHoofdScherm(Hoofdmenu hm,DomeinController dc, ResourceBundle r) {
-        this.hm = hm;
+    public WedstrijdHoofdScherm(Parent parent,DomeinController dc, ResourceBundle r) {
+        this.parent = parent;
         this.dc = dc;
         this.r=r;
         

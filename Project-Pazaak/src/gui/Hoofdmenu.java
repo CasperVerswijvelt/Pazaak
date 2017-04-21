@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,7 +25,7 @@ public class Hoofdmenu extends GridPane{
     
     private DomeinController dc;
     private ResourceBundle r;
-    private TaalSelectieScherm parent;
+    private Parent parent;
     private KaartWinkel kw;
     private Spelermenu sm;
     private WedstrijdHoofdScherm whs;
@@ -36,7 +37,7 @@ public class Hoofdmenu extends GridPane{
     private Button btnKoopKaart;
     private Button btnLaadWedstrijd;
     
-    public Hoofdmenu(TaalSelectieScherm parent, DomeinController dc, ResourceBundle r) {
+    public Hoofdmenu(Parent parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
         this.dc = dc;
         this.r= r;
