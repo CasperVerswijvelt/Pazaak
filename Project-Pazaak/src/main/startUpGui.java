@@ -5,6 +5,9 @@
  */
 package main;
 
+import domein.DomeinController;
+import gui.TaalSelectieScherm;
+import java.util.ResourceBundle;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -17,14 +20,17 @@ import javafx.stage.Stage;
  * @author goran
  */
 public class startUpGui extends Application {
-
+private ResourceBundle r;
+    
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/gui/TaalSelectieScherm.fxml"));
+        DomeinController dc = new DomeinController();
+        TaalSelectieScherm root = new TaalSelectieScherm(dc);
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 300, 275);
         stage.setScene(scene);
 
+        stage.setTitle("Languages");
         stage.show();
     }
 

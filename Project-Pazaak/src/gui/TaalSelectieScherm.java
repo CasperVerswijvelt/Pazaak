@@ -76,7 +76,7 @@ public class TaalSelectieScherm extends GridPane{
     }
     
     public void toMenu(){
-        Hoofdmenu hm = new Hoofdmenu(this, dc, r);
+        hm = new Hoofdmenu(this, dc, r);
         Stage stage = (Stage) this.getScene().getWindow();
         
         stage.setTitle("Pazaak");
