@@ -20,10 +20,12 @@ public class KaartWinkel extends GridPane {
     //Attributen
     private DomeinController dc;
     private ResourceBundle r;
+    private Hoofdmenu hm;
     
     List<Label> lblTabelTitels = new ArrayList<>();
     
-    public KaartWinkel(DomeinController dc, ResourceBundle r) {
+    public KaartWinkel(Hoofdmenu hm, DomeinController dc, ResourceBundle r) {
+        this.hm = hm;
         this.dc = dc;
         this.r = r;
         buildGUI();
