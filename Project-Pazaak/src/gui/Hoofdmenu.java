@@ -56,6 +56,8 @@ public class Hoofdmenu extends GridPane{
         this.setVgap(20);
         this.setHgap(10);
         
+       
+        
         lblTitel = new Label(r.getString("WELCOME"));
         this.add(lblTitel,0,0,2,1);
         //buttons
@@ -85,6 +87,7 @@ public class Hoofdmenu extends GridPane{
                 toWedstrijdHoofdScherm();
             }
         });
+        
     }
     private void toSpelerMenu() {
         Stage stage = (Stage) this.getScene().getWindow();
@@ -97,9 +100,10 @@ public class Hoofdmenu extends GridPane{
 
     private void toKaartWinkel() {
         Stage stage = (Stage) this.getScene().getWindow();
+        stage.setResizable(false);
 
         Scene scene;
-        scene = new Scene(kw, 750, 450);
+        scene = new Scene(kw);
         stage.setTitle("Pazaak - Kaartwinkel");
         stage.setScene(scene);
     }

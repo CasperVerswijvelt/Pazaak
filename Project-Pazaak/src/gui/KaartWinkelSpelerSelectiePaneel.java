@@ -7,6 +7,8 @@ package gui;
 
 import domein.DomeinController;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,7 +32,6 @@ public class KaartWinkelSpelerSelectiePaneel extends HBox{
     
     private Label lblSpelerSelectie;
     private ComboBox cbSpelerSpelectie;
-    private Button btnSelecteerSpeler;
     private Label lblGeselecteerdeSpeler;
    
 
@@ -45,19 +46,19 @@ public class KaartWinkelSpelerSelectiePaneel extends HBox{
         lblSpelerSelectie = new Label(r.getString("PLAYER"));
         ObservableList<String> lijst = FXCollections.observableArrayList(dc.geefAlleSpelerNamen());
         cbSpelerSpelectie = new ComboBox(lijst);
+        cbSpelerSpelectie.valueProperty().addListener(new ChangeListener<String>() {
+        @Override 
+        public void changed(ObservableValue ov, String t, String t1) {
+          selecteerSpeler();
+        }    
+    });
         lblGeselecteerdeSpeler = new Label();
-        btnSelecteerSpeler= new Button(r.getString("SELECT"));
-        btnSelecteerSpeler.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                selecteerButtonKlik();
-            }
-        });
         
-        this.getChildren().addAll(lblSpelerSelectie,cbSpelerSpelectie,btnSelecteerSpeler,lblGeselecteerdeSpeler);
+        this.getChildren().addAll(lblSpelerSelectie,cbSpelerSpelectie,lblGeselecteerdeSpeler);
+        this.setSpacing(20);
     }
     
-    private void selecteerButtonKlik() {
+    private void selecteerSpeler() {
         Object geselecteerd = cbSpelerSpelectie.getSelectionModel().getSelectedItem();
         if(geselecteerd == null) {
             

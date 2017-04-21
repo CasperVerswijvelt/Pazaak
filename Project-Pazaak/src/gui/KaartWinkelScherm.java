@@ -7,6 +7,7 @@ package gui;
 
 import domein.DomeinController;
 import java.util.ResourceBundle;
+import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -30,6 +31,10 @@ public class KaartWinkelScherm extends BorderPane{
         this.setTop(kwss);
         this.setCenter(kwt);
         kwt.setDisable(true);
+        
+        this.setPadding(new Insets(20,20,20,20));
+        this.kwss.setPadding(new Insets(0,0,20,0));
+        
     }
 
     void selecteerSpeler(String geselecteerd) {
