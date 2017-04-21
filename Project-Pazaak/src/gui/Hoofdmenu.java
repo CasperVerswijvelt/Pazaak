@@ -62,16 +62,31 @@ public class Hoofdmenu extends GridPane{
                 toSpelerMenu();
             }
         });
+        btnKoopKaart.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                toKaartWinkel();
+            }
+
+        });
     }
     private void toSpelerMenu() {
         Spelermenu sm = new Spelermenu(this, dc, r);
         Stage stage = (Stage) this.getScene().getWindow();
-        
+
         Scene scene;
-        scene = new Scene(sm,400,500);
+        scene = new Scene(sm, 400, 500);
         stage.setScene(scene);
     }
-            
+
+    private void toKaartWinkel() {
+        KaartWinkel kw = new KaartWinkel(this, dc, r);
+        Stage stage = (Stage) this.getScene().getWindow();
+
+        Scene scene;
+        scene = new Scene(kw, 400, 500);
+        stage.setScene(scene);
+    }
 
     public void zetTerugActief(Stage stage) {
         stage.setScene(this.getScene());
