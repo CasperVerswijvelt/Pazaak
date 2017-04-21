@@ -16,10 +16,12 @@ import javafx.scene.layout.BorderPane;
 public class WedstrijdHoofdScherm extends BorderPane{
     private DomeinController dc;
     private ResourceBundle r;
+    private Hoofdmenu hm;
     private SpelerSelectiePaneel ssp;
     private KaartSelectiePaneel ksp;
 
-    public WedstrijdHoofdScherm(DomeinController dc, ResourceBundle r) {
+    public WedstrijdHoofdScherm(Hoofdmenu hm,DomeinController dc, ResourceBundle r) {
+        this.hm = hm;
         this.dc = dc;
         this.r=r;
         

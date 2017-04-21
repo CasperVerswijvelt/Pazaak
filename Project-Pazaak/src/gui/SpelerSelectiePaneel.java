@@ -25,7 +25,7 @@ public class SpelerSelectiePaneel extends GridPane{
     }
 
     private void buildGUI() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
 }
