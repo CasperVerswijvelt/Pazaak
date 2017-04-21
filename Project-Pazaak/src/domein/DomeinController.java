@@ -225,6 +225,10 @@ public class DomeinController {
     public String[][] geefWedstrijdenOverzicht() {
         return wedstrijdRepo.geefWedstrijdenOverzicht();
     }
+    
+    public List<Integer> geefPrijzenKaarten() {
+        return spelerRepo.geefPrijzenKaarten();
+    }
 
     //Utilitys
     public String[][] geefNogNietGekochteKaarten(String naam) {

@@ -30,7 +30,7 @@ public class KaartMapper {
             query.executeUpdate();
 
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new DatabaseException(ex);
         }
     }
 
@@ -38,7 +38,7 @@ public class KaartMapper {
         List<Kaart> kaarten = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.KaartType");
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.KaartType WHERE prijs <> 0");
             try (ResultSet rs = query.executeQuery()) {
                 while(rs.next()) {
                     int waarde = rs.getInt("waarde");
@@ -49,9 +49,24 @@ public class KaartMapper {
                 }
             }
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new DatabaseException(ex);
         }
         return kaarten;
+    }
+    public List<Integer> geefPrijzenKaarten() {
+        List<Integer> prijzen = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
+            PreparedStatement query = conn.prepareStatement("SELECT DISTINCT type, prijs FROM ID222177_g37.KaartType WHERE prijs <> 0 ORDER BY id");
+            try (ResultSet rs = query.executeQuery()) {
+                while(rs.next()) {
+                    prijzen.add(rs.getInt("prijs"));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
+        }
+        return prijzen;
     }
     
     public List<Kaart> geefNogNietGekochteKaarten(String naam) {
@@ -70,7 +85,7 @@ public class KaartMapper {
                 }
             }
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new DatabaseException(ex);
         }
         return kaarten;
     }
@@ -217,7 +232,7 @@ public class KaartMapper {
             query.executeUpdate();
             
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new DatabaseException(ex);
         }
     }
 }

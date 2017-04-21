@@ -87,5 +87,8 @@ public class SpelerRepository {
     public List<Kaart> geefAangekochteKaarten(String naam) {
         return km.geefAangekochteKaarten(naam);
     }
+    public List<Integer> geefPrijzenKaarten() {
+        return km.geefPrijzenKaarten();
+    }
 
 }
