@@ -25,6 +25,8 @@ public class Hoofdmenu extends GridPane{
     private DomeinController dc;
     private ResourceBundle r;
     private TaalSelectieScherm parent;
+    private KaartWinkel kw;
+    private Spelermenu sm;
     
     private Label lblTitel;
     private Button btnTitel;
@@ -37,6 +39,11 @@ public class Hoofdmenu extends GridPane{
         this.parent = parent;
         this.dc = dc;
         this.r= r;
+        
+        kw = new KaartWinkel(this, dc, r);
+        sm = new Spelermenu(this, dc, r);
+        
+        
         buildGUI();
     }
 
@@ -71,16 +78,14 @@ public class Hoofdmenu extends GridPane{
         });
     }
     private void toSpelerMenu() {
-        Spelermenu sm = new Spelermenu(this, dc, r);
         Stage stage = (Stage) this.getScene().getWindow();
 
         Scene scene;
-        scene = new Scene(sm, 400, 500);
+        scene = new Scene(sm, 400, 235);
         stage.setScene(scene);
     }
 
     private void toKaartWinkel() {
-        KaartWinkel kw = new KaartWinkel(this, dc, r);
         Stage stage = (Stage) this.getScene().getWindow();
 
         Scene scene;
