@@ -7,8 +7,14 @@ package gui;
 
 import domein.DomeinController;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -19,11 +25,11 @@ import javafx.scene.layout.GridPane;
  *
  * @author Casper
  */
-public class KaartWinkelTabel extends GridPane {
+public class KaartWinkelTabelPaneel extends GridPane {
     //Attributen
     private DomeinController dc;
     private ResourceBundle r;
-    private Parent parent;
+    private KaartWinkelScherm parent;
     
     private List<Label> lblTabelTitels;
     private List<Label> lblTypes;
@@ -32,7 +38,7 @@ public class KaartWinkelTabel extends GridPane {
     private List<Label> lblPrijzen;
     
     
-    public KaartWinkelTabel(Parent parent, DomeinController dc, ResourceBundle r) {
+    public KaartWinkelTabelPaneel(KaartWinkelScherm parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
         this.dc = dc;
         this.r = r;
@@ -88,7 +94,7 @@ public class KaartWinkelTabel extends GridPane {
             this.add(cbWaardeSelecties.get(i), 1, i+1);
             
             TextArea omschrijving = txAreaOmschrijvingen.get(i);
-            omschrijving.setEditable(true);
+            omschrijving.setEditable(false);
             omschrijving.setPrefRowCount(2);
             omschrijving.setWrapText(true);
             this.add(omschrijving, 2, i+1);
@@ -101,6 +107,48 @@ public class KaartWinkelTabel extends GridPane {
         
         
 
+    }
+
+    void selecteerSpeler(String geselecteerd) {
+        String [][] aankoopBareKaarten = dc.geefNogNietGekochteKaarten(geselecteerd);
+        
+        if(aankoopBareKaarten.length !=0)
+            this.setDisable(false);
+        
+        for(ComboBox cb : cbWaardeSelecties) {
+            cb.getItems().clear();
+        }
+        
+        for(String[] kaart : aankoopBareKaarten) {
+            char type = kaart[0].charAt(0);
+            
+            switch(type) {
+                case '+': cbWaardeSelecties.get(0).getItems().add(kaart[1]); break;
+                case '-': cbWaardeSelecties.get(1).getItems().add(kaart[1]); break;
+                case '*': cbWaardeSelecties.get(2).getItems().add(kaart[1]); break;
+                case 'T': cbWaardeSelecties.get(3).getItems().add(kaart[1]); break;
+                case 'D': cbWaardeSelecties.get(4).getItems().add(kaart[1]); break;
+                case 'W': cbWaardeSelecties.get(5).getItems().add(kaart[1]); break;
+                case 'C': cbWaardeSelecties.get(6).getItems().add(kaart[1]); break;
+            }
+        }
+        
+        for(ComboBox cb : cbWaardeSelecties) {
+            int index = cbWaardeSelecties.indexOf(cb);
+            if(cb.getItems().isEmpty()) {
+                
+                
+                lblTypes.get(index).setDisable(true);
+                cb.setVisible(false);
+                txAreaOmschrijvingen.get(index).setDisable(true);
+                lblPrijzen.get(index).setDisable(true);
+            } else {
+                lblTypes.get(index).setDisable(false);
+                cb.setVisible(true);
+                txAreaOmschrijvingen.get(index).setDisable(false);
+                lblPrijzen.get(index).setDisable(false);
+            }
+        }
     }
     
     

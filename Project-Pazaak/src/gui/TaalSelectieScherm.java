@@ -79,10 +79,10 @@ public class TaalSelectieScherm extends GridPane{
         hm = new Hoofdmenu(this, dc, r);
         Stage stage = (Stage) this.getScene().getWindow();
         
-        stage.setTitle("Pazaak");
+        stage.setTitle("Pazaak - Menu");
         
         Scene scene;
-        scene = new Scene(hm,300,500);
+        scene = new Scene(hm,300,300);
         stage.setScene(scene);
     }
 }

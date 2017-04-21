@@ -25,8 +25,8 @@ public class Hoofdmenu extends GridPane{
     
     private DomeinController dc;
     private ResourceBundle r;
-    private Parent parent;
-    private KaartWinkel kw;
+    private TaalSelectieScherm parent;
+    private KaartWinkelScherm kw;
     private Spelermenu sm;
     private WedstrijdHoofdScherm whs;
     
@@ -37,12 +37,12 @@ public class Hoofdmenu extends GridPane{
     private Button btnKoopKaart;
     private Button btnLaadWedstrijd;
     
-    public Hoofdmenu(Parent parent, DomeinController dc, ResourceBundle r) {
+    public Hoofdmenu(TaalSelectieScherm parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
         this.dc = dc;
         this.r= r;
         
-        kw = new KaartWinkel(this, dc, r);
+        kw = new KaartWinkelScherm(this, dc, r);
         sm = new Spelermenu(this, dc, r);
         whs = new WedstrijdHoofdScherm(this, dc, r);
         
@@ -91,6 +91,7 @@ public class Hoofdmenu extends GridPane{
 
         Scene scene;
         scene = new Scene(sm, 400, 235);
+        stage.setTitle("Pazaak - Nieuwe speler");
         stage.setScene(scene);
     }
 
@@ -98,7 +99,8 @@ public class Hoofdmenu extends GridPane{
         Stage stage = (Stage) this.getScene().getWindow();
 
         Scene scene;
-        scene = new Scene(kw, 400, 500);
+        scene = new Scene(kw, 750, 450);
+        stage.setTitle("Pazaak - Kaartwinkel");
         stage.setScene(scene);
     }
 
@@ -107,10 +109,13 @@ public class Hoofdmenu extends GridPane{
 
         Scene scene;
         scene = new Scene(whs, 400, 500);
+        stage.setTitle("Pazaak - Nieuwe wedstrijd");
         stage.setScene(scene);
     }
 
     public void zetTerugActief(Stage stage) {
         stage.setScene(this.getScene());
+        stage.setTitle("Pazaak - Menu");
+        
     }
 }

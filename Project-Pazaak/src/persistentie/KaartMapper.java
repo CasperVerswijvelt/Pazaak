@@ -73,7 +73,7 @@ public class KaartMapper {
         List<Kaart> kaarten = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.KaartType WHERE id NOT IN(SELECT id FROM ID222177_g37.Kaart WHERE naam = ? ) AND prijs NOT LIKE 0");
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.KaartType WHERE id NOT IN(SELECT id FROM ID222177_g37.Kaart WHERE naam = ? ) AND prijs <> 0");
             query.setString(1, naam);
             try (ResultSet rs = query.executeQuery()) {
                 while(rs.next()) {
@@ -148,6 +148,7 @@ public class KaartMapper {
         }
         return kaarten;
     }
+    
     
     public List<Kaart> geefStartStapel(String naam) {
         List<Kaart> kaarten = new ArrayList<>();
