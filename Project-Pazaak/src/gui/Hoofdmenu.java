@@ -67,7 +67,12 @@ public class Hoofdmenu extends GridPane{
             public void handle(ActionEvent event) {
                 toKaartWinkel();
             }
-
+        });
+        btnNieuweWedstrijd.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                toWedstrijdHoofdScherm();
+            }
         });
     }
     private void toSpelerMenu() {
@@ -85,6 +90,15 @@ public class Hoofdmenu extends GridPane{
 
         Scene scene;
         scene = new Scene(kw, 400, 500);
+        stage.setScene(scene);
+    }
+
+    private void toWedstrijdHoofdScherm() {
+        WedstrijdHoofdScherm whs = new WedstrijdHoofdScherm(this, dc, r);
+        Stage stage = (Stage) this.getScene().getWindow();
+
+        Scene scene;
+        scene = new Scene(whs, 400, 500);
         stage.setScene(scene);
     }
 
