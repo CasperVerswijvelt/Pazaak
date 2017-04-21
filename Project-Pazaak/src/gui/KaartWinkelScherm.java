@@ -297,12 +297,13 @@ public class KaartWinkelScherm extends GridPane {
 
             }
             dc.koopKaart(spelerNaam, kaart);
-            selecteerSpeler();
+            
             
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.setContentText(String.format(r.getString("CARDBOUGHT"), kaart[0]+kaart[1], kaart[2]));
             alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
             alert.showAndWait();
+            selecteerSpeler();
             
             
         } catch (InsufficientBalanceException e) {
