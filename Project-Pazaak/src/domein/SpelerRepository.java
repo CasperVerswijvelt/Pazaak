@@ -24,7 +24,12 @@ public class SpelerRepository {
     }
 
     public boolean bestaat(String naam) {
-        return sm.geefSpeler(naam) != null;
+        try{
+            sm.geefSpeler(naam);
+            return true;
+        } catch(PlayerDoesntExistException e) {
+            return false;
+        }
     }
 
     public List<String> geefSpelersLijst() {
@@ -33,6 +38,7 @@ public class SpelerRepository {
 
     public String[] geefSpelerInfo(String naam) {
         Speler speler = sm.geefSpeler(naam);
+       
         String info[] = new String[3];
 
         info[0] = speler.getNaam();

@@ -35,9 +35,9 @@ public class SpelerMapper {
                 }
             }
         } catch (SQLException ex) {
-            throw new PlayerDoesntExistException(ex);
+            throw new DatabaseException(ex);
         }
-        return null;
+        throw new PlayerDoesntExistException();
     }
 
     public void voegToe(Speler speler) {
