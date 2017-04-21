@@ -123,9 +123,8 @@ public class Spelermenu extends GridPane {
             alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
             
         } catch (PlayerAlreadyExistsException e) {
-            alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(r.getString("PLAYERALREADYEXISTS"));
-            alert.setContentText(r.getString("PLAYERALREADYEXISTS"));
+            lblError.setText(r.getString("PLAYERALREADYEXISTS"));
+            return;
         } catch (DatabaseException e) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(r.getString("DATABASEERROR"));
