@@ -6,6 +6,7 @@
 package gui;
 
 import domein.DomeinController;
+import exceptions.*;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,17 +19,19 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
  *
  * @author goran
  */
-public class Spelermenu extends GridPane{
+public class Spelermenu extends GridPane {
+
     private DomeinController dc;
     private ResourceBundle r;
     private Hoofdmenu parent;
-    
+
     private Label lblTitel;
     private Label lblSpelerNaam;
     private Label lblSpelerGeboortedatum;
@@ -38,12 +41,13 @@ public class Spelermenu extends GridPane{
     private Button btnCancel;
     private Tooltip ttNaam;
     private Tooltip ttGeboortedatum;
+    private Label lblError;
 
     Spelermenu(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
         this.dc = dc;
         this.r = r;
-        
+
         buildGUI();
     }
 
@@ -51,7 +55,7 @@ public class Spelermenu extends GridPane{
         this.setPadding(new Insets(10));
         this.setVgap(20);
         this.setHgap(10);
-        
+
         lblTitel = new Label(r.getString("NEWPLAYER"));
         lblSpelerNaam = new Label(r.getString("NAME"));
         lblSpelerGeboortedatum = new Label(r.getString("BIRTH"));
@@ -63,15 +67,18 @@ public class Spelermenu extends GridPane{
         txfSpelerGeboortedatum.setTooltip(ttGeboortedatum);
         btnMaakSpeler = new Button(r.getString("MAKENEWPLAYER"));
         btnCancel = new Button(r.getString("BACK"));
-        
-        this.add(lblTitel,0,0,2,1);
+        lblError = new Label();
+        lblError.setTextFill(Color.RED);
+
+        this.add(lblTitel, 0, 0, 2, 1);
         this.add(lblSpelerNaam, 0, 1);
-        this.add(lblSpelerGeboortedatum,0,2);
-        this.add(txfSpelerNaam,1,1);
-        this.add(txfSpelerGeboortedatum,1,2);
-        this.add(btnMaakSpeler,0,3,2,1);
-        this.add(btnCancel,2,3,2,1);
-        
+        this.add(lblSpelerGeboortedatum, 0, 2);
+        this.add(txfSpelerNaam, 1, 1);
+        this.add(txfSpelerGeboortedatum, 1, 2);
+        this.add(btnMaakSpeler, 0, 3, 2, 1);
+        this.add(btnCancel, 2, 3, 2, 1);
+        this.add(lblError, 0, 4, 3,1);
+
         btnMaakSpeler.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -87,24 +94,58 @@ public class Spelermenu extends GridPane{
     }
 
     private void maakSpelerAan(ActionEvent event) {
-        String naam;
-        int geboortedatum;
         
-        naam = txfSpelerNaam.getText();
-        geboortedatum = Integer.parseInt(txfSpelerGeboortedatum.getText());
-        dc.maakNieuweSpelerAan(naam, geboortedatum);
-        String info[] = dc.geefSpelerInfo(naam);
-        Alert alert = new Alert(Alert.AlertType.NONE);
-        alert.setTitle(r.getString("NEWPLAYER"));
-        alert.setContentText(r.getString("NAME")+ ": " + info[0] + "\n" + r.getString("CREDITS")+ ": " + info [1] + "\n" + r.getString("BIRTH")+ ": " + info [2]);
-        alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        String naamVeldTekst = txfSpelerNaam.getText();
+        String geboorteVeldTekst = txfSpelerGeboortedatum.getText();
+        
+        if(naamVeldTekst.equals("") || geboorteVeldTekst.equals("")){
+            lblError.setText(r.getString("FILLINALLFIELDS"));
+            return;
+        }
+       
+        int geboortedatum;
+
+
+
+        String info[];
+        Alert alert;
+
+        try {
+            geboortedatum = Integer.parseInt(geboorteVeldTekst);
+            dc.maakNieuweSpelerAan(naamVeldTekst, geboortedatum);
+            info = dc.geefSpelerInfo(naamVeldTekst);
+            lblError.setText("");
+            txfSpelerNaam.setText("");
+            txfSpelerGeboortedatum.setText("");
+            alert = new Alert(Alert.AlertType.NONE);
+            alert.setTitle(r.getString("NEWPLAYER"));
+            alert.setContentText(r.getString("NAME") + ": " + info[0] + "\n" + r.getString("CREDITS") + ": " + info[1] + "\n" + r.getString("BIRTH") + ": " + info[2]);
+            alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            
+        } catch (PlayerAlreadyExistsException e) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(r.getString("PLAYERALREADYEXISTS"));
+            alert.setContentText(r.getString("PLAYERALREADYEXISTS"));
+        } catch (DatabaseException e) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(r.getString("DATABASEERROR"));
+            alert.setContentText(r.getString("DATABASEERROR"));
+        } catch (PlayerNameInvalidException e) {
+            lblError.setText(r.getString("NAMEREQUIREMENTS"));
+            return;
+        } catch (PlayerBirthInvalidException | NumberFormatException e) {
+            lblError.setText(r.getString("BIRTHREQUIREMENTS"));
+            return;
+        }
+        
         alert.show();
-        txfSpelerNaam.setText("");
-        txfSpelerGeboortedatum.setText("");
+
     }
 
     private void drukCancel(ActionEvent event) {
+        lblError.setText("");
         Stage stage = (Stage) this.getScene().getWindow();
         parent.zetTerugActief(stage);
+        
     }
 }

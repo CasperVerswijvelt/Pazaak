@@ -1,6 +1,6 @@
 package domein;
 
-import exceptions.PlayerNameInvalidException;
+import exceptions.*;
 import java.util.*;
 
 public class Speler {
@@ -12,8 +12,9 @@ public class Speler {
 
     //Constructor
     public Speler(String naam, int geboorteJaar, int krediet, List<Kaart> startStapel) {
-        controleerGeboorteJaar(geboorteJaar);
+        
         controleerNaam(naam);
+        controleerGeboorteJaar(geboorteJaar);
 
         this.naam = naam;
         this.geboorteJaar = geboorteJaar;
@@ -43,7 +44,7 @@ public class Speler {
         int huidigJaar = Calendar.getInstance().get(Calendar.YEAR);
         int leeftijd = huidigJaar - geboorteJaar;
         if (leeftijd > 99 || leeftijd < 6) {
-            throw new IllegalArgumentException("Speler moet minstens 6 jaar of maximum 99 jaar oud worden dit jaar.");
+            throw new PlayerBirthInvalidException("Speler moet minstens 6 jaar of maximum 99 jaar oud worden dit jaar.");
         }
     }
     
