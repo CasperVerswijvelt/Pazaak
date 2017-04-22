@@ -74,7 +74,7 @@ public class WedstrijdHoofdScherm extends GridPane {
         ksp2.setDisable(true);
         
         btnCancel = new Button(r.getString("BACK"));
-        btnSelectPlay = new Button(r.getString("SELECT")+ " " + r.getString("PLAYER"));
+        btnSelectPlay = new Button(r.getString("SELECT")+ " " + r.getString("PLAYERS"));
 
         this.add(lblSelecteerSpelers, 0, 0, 4, 1);
         this.add(lblSpeler1, 0, 1);
