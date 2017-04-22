@@ -6,6 +6,7 @@
 package gui;
 
 import domein.DomeinController;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -110,7 +111,8 @@ public class WedstrijdHoofdScherm extends GridPane {
                     ksp1.setDisable(false);
                     ksp2.setDisable(false);
                     btnSelectPlay.setText(r.getString("PLAY"));
-                }
+                } else
+                    System.out.println(Arrays.deepToString(ksp1.geefGeselecteerdeKaarten()));
             }
         
     });

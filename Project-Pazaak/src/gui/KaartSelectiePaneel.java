@@ -87,12 +87,28 @@ public class KaartSelectiePaneel extends GridPane {
         int aantal = 0;
 
         for (Node child : getChildren()) {
-            Integer row = GridPane.getRowIndex(child);
+            int row = getRowIndex(child);
             if (child instanceof Button && row == 1) {
                 aantal++;
             }
         }
         return aantal;
+    }
+    
+    public String[][] geefGeselecteerdeKaarten() {
+        List<String[]> lijst = new ArrayList<>(); 
+        for (Node child : getChildren()) {
+            int row = getRowIndex(child);
+            int col = getColumnIndex(child);
+            if (child instanceof Button && row == 1) {
+                lijst.add(startStapel[col]);
+            }
+        }
+        String[][] res = new String[lijst.size()][];
+        res = lijst.toArray(res);
+        
+        return res;
+        
     }
 
 }
