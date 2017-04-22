@@ -155,13 +155,6 @@ public class Set {
     public int geefSetUitslagIndex() {
         if(setIsKlaar()) { // Set ten einde
             
-            //Kijken of er een speler 9 kaarten heeft behaald
-            if(spelbord1.size() > 8)
-                return 0;
-            else if(spelbord2.size() > 8)
-                return 1;
-            
-            //geen 9 kaarten behaald, er wordt naar score gekeken voor uitslag
             int score1 = berekenScore(spelbord1), score2 = berekenScore(spelbord2);
             if(score1==score2) 
                 return 2;
