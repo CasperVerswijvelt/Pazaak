@@ -64,6 +64,7 @@ public class WedstrijdHoofdScherm extends GridPane {
         cbSpeler2.setMaxWidth(150);
         cbSpeler2.setMinWidth(150);
         ksp1 = new KaartSelectiePaneel(dc, this, r);
+        ksp2 = new KaartSelectiePaneel(dc, this, r);
         btnCancel = new Button(r.getString("BACK"));
 
         this.add(lblSelecteerSpelers, 0, 0, 4, 1);
@@ -72,7 +73,7 @@ public class WedstrijdHoofdScherm extends GridPane {
         this.add(lblSpeler2, 3, 1);
         this.add(cbSpeler2, 4, 1);
         this.add(ksp1, 0, 2, 2, 1);
-        this.add(ksp1, 2, 2, 2, 1);
+        this.add(ksp2, 2, 2, 2, 1);
         this.add(btnCancel, 0, 3);
 
         cbSpeler2.setDisable(true);
