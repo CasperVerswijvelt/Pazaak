@@ -145,6 +145,5 @@ public class Spelermenu extends GridPane {
         lblError.setText("");
         Stage stage = (Stage) this.getScene().getWindow();
         parent.zetTerugActief(stage);
-        
     }
 }
