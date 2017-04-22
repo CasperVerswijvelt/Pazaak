@@ -16,10 +16,10 @@ import javafx.scene.layout.GridPane;
 public class KaartSelectiePaneel extends GridPane{
     private DomeinController dc;
     private ResourceBundle r;
-    private SpelerSelectiePaneel ssp;
-    KaartSelectiePaneel(DomeinController dc, SpelerSelectiePaneel ssp, ResourceBundle r) {
+    private WedstrijdHoofdScherm parent;
+    KaartSelectiePaneel(DomeinController dc, WedstrijdHoofdScherm parent ,ResourceBundle r) {
         this.dc = dc;
-        this.ssp = ssp;
+        this.parent = parent;
         this.r = r;
         
         buildGUI();

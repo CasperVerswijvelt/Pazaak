@@ -30,7 +30,8 @@ public class WedstrijdHoofdScherm extends GridPane {
     private DomeinController dc;
     private ResourceBundle r;
     private Hoofdmenu parent;
-    private KaartSelectiePaneel ksp;
+    private KaartSelectiePaneel ksp1;
+    private KaartSelectiePaneel ksp2;
 
     private ObservableList<String> lijstSpeler1, lijstSpeler2;
 
@@ -62,6 +63,7 @@ public class WedstrijdHoofdScherm extends GridPane {
         cbSpeler2 = new ComboBox();
         cbSpeler2.setMaxWidth(150);
         cbSpeler2.setMinWidth(150);
+        ksp1 = new KaartSelectiePaneel(dc, this, r);
         btnCancel = new Button(r.getString("BACK"));
 
         this.add(lblSelecteerSpelers, 0, 0, 4, 1);
@@ -69,6 +71,8 @@ public class WedstrijdHoofdScherm extends GridPane {
         this.add(cbSpeler1, 2, 1);
         this.add(lblSpeler2, 3, 1);
         this.add(cbSpeler2, 4, 1);
+        this.add(ksp1, 0, 2, 2, 1);
+        this.add(ksp1, 2, 2, 2, 1);
         this.add(btnCancel, 0, 3);
 
         cbSpeler2.setDisable(true);
