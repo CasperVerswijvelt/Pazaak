@@ -16,7 +16,6 @@ public class Utilities {
         System.arraycopy(kaart, 0, returnKaart, 0, 3);
         if (returnKaart[0].equals("W")) {
             returnKaart[0] = "";
-            System.out.println(kaart[1]);
             returnKaart[1] = kaart[1].equals("1") ? "2&4" : "3&6";
         } else if (kaart[0].equals("C")) {
             returnKaart[0] = "x+/-y";
