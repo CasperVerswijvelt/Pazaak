@@ -17,7 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -52,6 +51,7 @@ public class KaartWinkelScherm extends GridPane {
     private Label lblKrediet;
     private Button btnCancel;
     private Label lblError;
+    private Alert DBAlert, cardBoughtAlert, insufficientBalanceException, invalidPlayerException;
 
     KaartWinkelScherm(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
 
@@ -63,19 +63,38 @@ public class KaartWinkelScherm extends GridPane {
 
     private void buildGui() {
 
-        this.setPadding(new Insets(20, 20, 20, 20));
+        setPadding(new Insets(20, 20, 20, 20));
+
+        //Alerts
+        DBAlert = new Alert(Alert.AlertType.ERROR);
+        DBAlert.setContentText(r.getString("DATABASEERROR"));
+
+        cardBoughtAlert = new Alert(Alert.AlertType.NONE);
+        cardBoughtAlert.getDialogPane().getButtonTypes().add(ButtonType.OK);
+
+        insufficientBalanceException = new Alert(Alert.AlertType.ERROR);
+        insufficientBalanceException.setContentText(r.getString("INSUFFICIENTBALANCE"));
+
+        invalidPlayerException = new Alert(Alert.AlertType.ERROR);
+        invalidPlayerException.setContentText(r.getString("INVALIDPLAYER"));
 
         //Spelerselectie
         lblSpelerSelectie = new Label(r.getString("PLAYER"));
-        ObservableList<String> lijst = FXCollections.observableArrayList(dc.geefAlleSpelerNamen());
-        cbSpelerSpelectie = new ComboBox(lijst);
-        cbSpelerSpelectie.valueProperty().addListener(new ChangeListener<String>() {
+        cbSpelerSpelectie = new ComboBox();
+        laadSpelersInComboBox(); //Spelers ophalen en in ComboBox plaatsen
+        cbSpelerSpelectie.valueProperty().addListener(new ChangeListener<String>() { //Speler wordt geslecteerd wanneer een selectie word aangeduid in combobox
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
                 selecteerSpeler();
             }
         });
+
+        //Labels
         lblKrediet = new Label();
+        lblError = new Label();
+        lblError.setTextFill(Color.RED);
+
+        //Cancel button
         btnCancel = new Button("Cancel");
         btnCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -83,18 +102,17 @@ public class KaartWinkelScherm extends GridPane {
                 drukCancel(event);
             }
         });
-        lblError = new Label();
-        lblError.setTextFill(Color.RED);
 
-        lblSpelerSelectie.setAlignment(Pos.CENTER_RIGHT);
-        this.add(lblSpelerSelectie, 0, 0);
-        this.add(cbSpelerSpelectie, 1, 0);
-        this.add(lblKrediet, 2, 0);
-        
-        this.add(btnCancel, 3, 0,2,1);
-        this.add(lblError, 2,9);
+        // spelerselectie, krediet, cancel button, en error label toevoegen aan grid
+        add(lblSpelerSelectie, 0, 0);
+        add(cbSpelerSpelectie, 1, 0);
+        add(lblKrediet, 2, 0);
 
-        //Tabel
+        add(btnCancel, 3, 0, 2, 1);
+        add(lblError, 2, 9);
+
+        ////Tabel////
+        //Tabeltitels labels
         lblTabelTitels = new ArrayList<>();
 
         lblTabelTitels.add(new Label(r.getString("TYPE")));
@@ -102,6 +120,7 @@ public class KaartWinkelScherm extends GridPane {
         lblTabelTitels.add(new Label(r.getString("DESCRIPTION")));
         lblTabelTitels.add(new Label(r.getString("PRICE")));
 
+        //Type kaarten labels
         lblTypes = new ArrayList<>();
 
         lblTypes.add(new Label("+"));
@@ -112,8 +131,10 @@ public class KaartWinkelScherm extends GridPane {
         lblTypes.add(new Label("x&y"));
         lblTypes.add(new Label("x+/-y"));
 
+        //Waardeselectie combobox
         cbWaardeSelecties = new ArrayList<>();
 
+        //Omschrijvingen textareas
         txAreaOmschrijvingen = new ArrayList<>();
 
         txAreaOmschrijvingen.add(new TextArea(r.getString("+DESCRIPTION")));
@@ -124,43 +145,61 @@ public class KaartWinkelScherm extends GridPane {
         txAreaOmschrijvingen.add(new TextArea(r.getString("WDESCRIPTION")));
         txAreaOmschrijvingen.add(new TextArea(r.getString("CDESCRIPTION")));
 
+        //prijzen labels
         lblPrijzen = new ArrayList<>();
+
+        //Koopbuttons
         btnKoop = new ArrayList<>();
 
-        List<Integer> prijzen = dc.geefPrijzenKaarten();
-
-        for (int i = 0; i < prijzen.size(); i++) {
-            lblPrijzen.add(new Label(prijzen.get(i) + ""));
+        //Lijst prijzen kaarttypes ophalen
+        List<Integer> prijzen;
+        try {
+            prijzen = dc.geefPrijzenKaarten();
+        } catch (DatabaseException e) {
+            DBAlert.show();
+            return;
         }
 
+        //Tabeltitels aan grid toevoegen
         for (int i = 0; i < lblTabelTitels.size(); i++) {
-            this.add(lblTabelTitels.get(i), i, 1);
+            add(lblTabelTitels.get(i), i, 1);
         }
 
+        //KaartTypeLabels, comboboxes, omschrijvingen, prijzenlabels, koopbuttons aan grid toevoegen
         for (int i = 0; i < lblTypes.size(); i++) {
-            this.add(lblTypes.get(i), 0, i + 2);
 
+            //Alle kaarttypelabels toevoegen aan grid
+            add(lblTypes.get(i), 0, i + 2);
+
+            //ComboBoxen initializeren, standaard disablen, en aan lijst toevoegen
             ComboBox cb = new ComboBox();
-            if (i == 3 || i == 4 || i == 6) {
-                cb.setVisible(false);
-            }
+            cb.setVisible(i != 3 && i != 4 && i != 6);
             cb.setDisable(true);
             cbWaardeSelecties.add(cb);
-            this.add(cbWaardeSelecties.get(i), 1, i + 2);
+            //Alle comboboxen toevoegen aan grid
+            add(cbWaardeSelecties.get(i), 1, i + 2);
 
+            //Elke omschrijving textarea uneditable maken
             TextArea omschrijving = txAreaOmschrijvingen.get(i);
             omschrijving.setEditable(false);
             omschrijving.setPrefRowCount(1);
             omschrijving.setWrapText(true);
-            this.add(omschrijving, 2, i + 2);
+            //Alle omschrijvingen toevoegen aan grid
+            add(omschrijving, 2, i + 2);
 
-            this.add(lblPrijzen.get(i), 3, i + 2);
+            //Alle lblprijzen de juiste waarde geven
+            lblPrijzen.add(new Label(prijzen.get(i) + ""));
+            //Alle lblprijzen toevoegen aan grid
+            add(lblPrijzen.get(i), 3, i + 2);
 
+            //Alle koopbuttons de juiste vertaalde tekst geven
             btnKoop.add(new Button(r.getString("BUY")));
-            this.add(btnKoop.get(i), 4, i + 2);
+            //Alle koopbuttons toevoegen aan grid
+            add(btnKoop.get(i), 4, i + 2);
 
-            this.setVgap(20);
-            this.setHgap(20);
+            //Grid spacing aanpassen
+            setVgap(20);
+            setHgap(20);
 
         }
         for (Button btn : btnKoop) {
@@ -179,16 +218,13 @@ public class KaartWinkelScherm extends GridPane {
     void selecteerSpeler() {
 
         Object geselecteerd = cbSpelerSpelectie.getSelectionModel().getSelectedItem();
-        if (geselecteerd == null) {
+        if (geselecteerd != null) {
 
-        } else {
-            
             String[] info;
-            try{
+            try {
                 info = dc.geefSpelerInfo(geselecteerd.toString());
-            }catch (PlayerDoesntExistException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Player does not exist in database anymore (vertaal mij)");
+            } catch (PlayerDoesntExistException e) {
+                invalidPlayerException.show();
                 return;
             }
 
@@ -205,6 +241,7 @@ public class KaartWinkelScherm extends GridPane {
             }
 
             for (String[] kaart : aankoopBareKaarten) {
+                String[] kaartLayout = Utilities.veranderNaarMooieLayout(kaart);
                 char type = kaart[0].charAt(0);
                 int index = -1;
                 switch (type) {
@@ -230,7 +267,7 @@ public class KaartWinkelScherm extends GridPane {
                         index = 6;
                         break;
                 }
-                cbWaardeSelecties.get(index).getItems().add(kaart[1]);
+                cbWaardeSelecties.get(index).getItems().add(kaartLayout[1]);
             }
 
             for (ComboBox cb : cbWaardeSelecties) {
@@ -243,6 +280,7 @@ public class KaartWinkelScherm extends GridPane {
                     txAreaOmschrijvingen.get(index).setDisable(true);
                     lblPrijzen.get(index).setDisable(true);
                 } else {
+                    cb.getSelectionModel().select(0);
                     lblTypes.get(index).setDisable(false);
                     btnKoop.get(index).setDisable(Integer.parseInt(lblPrijzen.get(index).getText()) > Integer.parseInt(info[1]));
                     cb.setVisible(index != 3 && index != 4 && index != 6);
@@ -283,51 +321,62 @@ public class KaartWinkelScherm extends GridPane {
                     kaart = new String[]{"*", geefGeselecteerdValue(index), lblPrijzen.get(index).getText()};
                     break;
                 case 3:
-                    kaart = new String[]{"T", "1", lblPrijzen.get(index).getText()};
+                    kaart = new String[]{"T", geefGeselecteerdValue(index), lblPrijzen.get(index).getText()};
                     break;
                 case 4:
-                    kaart = new String[]{"D", "0", lblPrijzen.get(index).getText()};
+                    kaart = new String[]{"D", geefGeselecteerdValue(index), lblPrijzen.get(index).getText()};
                     break;
                 case 5:
                     kaart = new String[]{"W", geefGeselecteerdValue(index), lblPrijzen.get(index).getText()};
                     break;
                 case 6:
-                    kaart = new String[]{"C", "1", lblPrijzen.get(index).getText()};
+                    kaart = new String[]{"C", geefGeselecteerdValue(index), lblPrijzen.get(index).getText()};
                     break;
 
             }
-            dc.koopKaart(spelerNaam, kaart);
-            
-            
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setContentText(String.format(r.getString("CARDBOUGHT"), kaart[0]+kaart[1], kaart[2]));
-            alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
-            alert.showAndWait();
+            String[] kaartGewoneLayout = Utilities.veranderNaarGewoonKaartFormaat(kaart);
+            dc.koopKaart(spelerNaam, kaartGewoneLayout);
+            String[] kaartMooieLayout = Utilities.veranderNaarMooieLayout(kaartGewoneLayout);
+            cardBoughtAlert.setContentText(String.format(r.getString("CARDBOUGHT"), kaartMooieLayout[0] + kaartMooieLayout[1], kaartMooieLayout[2]));
+            cardBoughtAlert.show();
             selecteerSpeler();
-            
-            
+
         } catch (InsufficientBalanceException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(r.getString("INSUFFICIENTBALANCE"));
-            alert.show();
+            insufficientBalanceException.show();
         } catch (PlayerDoesntExistException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(r.getString("INVALIDPLAYER"));
-            alert.show();
+            laadSpelersInComboBox();
+            invalidPlayerException.show();
         } catch (CardAlreadyBoughtException e) {
             lblError.setText("Card already bought (vertaal mij)");
-        }
-        catch (IllegalArgumentException e) {
-            lblError.setText("Enter a value (nog niet vertaald)");
-        }
+            selecteerSpeler();
+        } 
+//        catch (IllegalArgumentException e) {
+//            lblError.setText("Enter a value (nog niet vertaald)");
+//        }
 
     }
 
     private String geefGeselecteerdValue(int index) {
         if (cbWaardeSelecties.get(index).getSelectionModel().getSelectedIndex() == -1) {
-
             throw new IllegalArgumentException();
         }
         return cbWaardeSelecties.get(index).getSelectionModel().getSelectedItem().toString();
+    }
+
+    private void laadSpelersInComboBox() {
+        cbSpelerSpelectie.getItems().clear();
+        cbSpelerSpelectie.setValue("---");
+        ObservableList<String> lijst;
+        try {
+            lijst = FXCollections.observableArrayList(dc.geefAlleSpelerNamen());
+        } catch (DatabaseException e) {
+            DBAlert.show();
+            return;
+        }
+
+        cbSpelerSpelectie.setMaxWidth(100);
+
+        cbSpelerSpelectie.setItems(lijst);
+
     }
 }
