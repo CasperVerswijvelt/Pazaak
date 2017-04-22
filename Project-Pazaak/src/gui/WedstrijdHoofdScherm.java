@@ -100,8 +100,8 @@ public class WedstrijdHoofdScherm extends GridPane {
                 if(btnSelectPlay.getText().equals(r.getString("SELECT")+ " " + r.getString("PLAYER"))){
                     String speler1 = cbSpeler1.getSelectionModel().getSelectedItem().toString();
                     String speler2 = cbSpeler2.getSelectionModel().getSelectedItem().toString();
-                    dc.selecteerSpeler(speler1);
-                    dc.selecteerSpeler(speler2);
+                    ksp1.activeerSpeler(speler1);
+                    ksp2.activeerSpeler(speler2);
                     cbSpeler1.setDisable(true);
                     cbSpeler2.setDisable(true);
                     ksp1.setDisable(false);
