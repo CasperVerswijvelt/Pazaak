@@ -15,60 +15,57 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
  *
  * @author goran
  */
-public class Hoofdmenu extends GridPane{
-    
+public class Hoofdmenu extends VBox {
+
     private DomeinController dc;
     private ResourceBundle r;
     private TaalSelectieScherm parent;
-    
+
     private Label lblTitel;
-    private Button btnTitel;
     private Button btnNieuweSpeler;
     private Button btnNieuweWedstrijd;
     private Button btnKoopKaart;
     private Button btnLaadWedstrijd;
-    
+    private Button btnVeranderTaal;
+
     public Hoofdmenu(TaalSelectieScherm parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
         this.dc = dc;
-        this.r= r;
-        
-        
-        
+        this.r = r;
+
         buildGUI();
     }
 
     private void buildGUI() {
-        this.setPadding(new Insets(10));
-        this.setVgap(20);
-        this.setHgap(10);
-        
-       
-        
+        this.setPadding(new Insets(20,20,20,20));
+        this.setSpacing(10);
+
         lblTitel = new Label(r.getString("WELCOME"));
-        this.add(lblTitel,0,0,2,1);
+
         //buttons
         btnNieuweSpeler = new Button(r.getString("NEWPLAYEROPTION"));
         btnNieuweWedstrijd = new Button(r.getString("STARTGAMEOPTION"));
         btnKoopKaart = new Button(r.getString("BUYCARDOPTION"));
-        //toevoegen aan gridpane
-        this.add(btnNieuweSpeler,0,1);
-        this.add(btnNieuweWedstrijd,0,2);
-        this.add(btnKoopKaart,0,3);
-        
+        btnLaadWedstrijd = new Button(r.getString("LOADGAMEOPTION"));
+        btnVeranderTaal = new Button("CHANGE LANGUAGE ( VERTAAL MIJ )");
+
+        //toevoegen
+        this.getChildren().addAll(btnNieuweWedstrijd, btnNieuweSpeler, btnKoopKaart, btnLaadWedstrijd, btnVeranderTaal);
+
         btnNieuweSpeler.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 toSpelerMenu();
             }
         });
-        btnKoopKaart.setOnAction(new EventHandler<ActionEvent>(){
+        btnKoopKaart.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 toKaartWinkel();
@@ -80,8 +77,23 @@ public class Hoofdmenu extends GridPane{
                 toWedstrijdHoofdScherm();
             }
         });
-        
+        btnLaadWedstrijd.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                toLaadWedstrijdScherm();
+            }
+
+        });
+        btnVeranderTaal.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                toTaalSelectieScherm();
+            }
+
+        });
+
     }
+
     private void toSpelerMenu() {
         Stage stage = (Stage) this.getScene().getWindow();
 
@@ -110,9 +122,18 @@ public class Hoofdmenu extends GridPane{
         stage.setScene(scene);
     }
 
+    private void toLaadWedstrijdScherm() {
+
+    }
+
+    private void toTaalSelectieScherm() {
+        Stage stage = (Stage) this.getScene().getWindow();
+        parent.zetTerugActief(stage);
+    }
+
     public void zetTerugActief(Stage stage) {
         stage.setScene(this.getScene());
         stage.setTitle("Pazaak - Menu");
-        
+
     }
 }

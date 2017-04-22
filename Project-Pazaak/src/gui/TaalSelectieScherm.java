@@ -85,4 +85,9 @@ public class TaalSelectieScherm extends GridPane{
         scene = new Scene(hm,300,300);
         stage.setScene(scene);
     }
+    public void zetTerugActief(Stage stage) {
+        stage.setScene(this.getScene());
+        stage.setTitle("Pazaak - Language");
+
+    }
 }
