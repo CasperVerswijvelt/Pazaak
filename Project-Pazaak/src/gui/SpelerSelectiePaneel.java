@@ -68,7 +68,6 @@ public class SpelerSelectiePaneel extends GridPane {
         });
 
 
-                    
     }
     private void selecteerSpeler() {
         Object geselecteerd = cbSpeler1.getSelectionModel().getSelectedItem();

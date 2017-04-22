@@ -41,6 +41,7 @@ public class WedstrijdHoofdScherm extends GridPane {
     private ComboBox cbSpeler1;
     private ComboBox cbSpeler2;
     private Button btnCancel;
+    private Button btnSelectPlay;
 
     public WedstrijdHoofdScherm(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
@@ -52,29 +53,37 @@ public class WedstrijdHoofdScherm extends GridPane {
 
     private void buildGUI() {
         lijstSpeler1 = FXCollections.observableArrayList(dc.geefAlleSpelerNamen());
+        
         lblSelecteerSpelers = new Label(r.getString("CHOOSETWOPLAYERS"));
         lblSpeler1 = new Label(r.getString("PLAYER") + "1");
         lblSpeler1.setMinWidth(50);
         lblSpeler2 = new Label(r.getString("PLAYER") + "2");
         lblSpeler2.setMinWidth(50);
+        
         cbSpeler1 = new ComboBox(lijstSpeler1);
         cbSpeler1.setMaxWidth(150);
         cbSpeler1.setMinWidth(150);
         cbSpeler2 = new ComboBox();
         cbSpeler2.setMaxWidth(150);
         cbSpeler2.setMinWidth(150);
+        
         ksp1 = new KaartSelectiePaneel(dc, this, r);
         ksp2 = new KaartSelectiePaneel(dc, this, r);
+        ksp1.setDisable(true);
+        ksp2.setDisable(true);
+        
         btnCancel = new Button(r.getString("BACK"));
+        btnSelectPlay = new Button(r.getString("SELECT")+ " " + r.getString("PLAYER"));
 
         this.add(lblSelecteerSpelers, 0, 0, 4, 1);
         this.add(lblSpeler1, 0, 1);
-        this.add(cbSpeler1, 2, 1);
-        this.add(lblSpeler2, 3, 1);
-        this.add(cbSpeler2, 4, 1);
+        this.add(cbSpeler1, 1, 1);
+        this.add(lblSpeler2, 2, 1);
+        this.add(cbSpeler2, 3, 1);
         this.add(ksp1, 0, 2, 2, 1);
         this.add(ksp2, 2, 2, 2, 1);
         this.add(btnCancel, 0, 3);
+        this.add(btnSelectPlay, 3, 3);
 
         cbSpeler2.setDisable(true);
 
@@ -84,6 +93,25 @@ public class WedstrijdHoofdScherm extends GridPane {
                 selecteerSpeler();
             }
         });
+        
+        btnSelectPlay.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                if(btnSelectPlay.getText().equals(r.getString("SELECT")+ " " + r.getString("PLAYER"))){
+                    String speler1 = cbSpeler1.getSelectionModel().getSelectedItem().toString();
+                    String speler2 = cbSpeler2.getSelectionModel().getSelectedItem().toString();
+                    dc.selecteerSpeler(speler1);
+                    dc.selecteerSpeler(speler2);
+                    cbSpeler1.setDisable(true);
+                    cbSpeler2.setDisable(true);
+                    ksp1.setDisable(false);
+                    ksp2.setDisable(false);
+                    btnSelectPlay.setText(r.getString("PLAY"));
+                }
+            }
+        
+    });
+        
         btnCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
