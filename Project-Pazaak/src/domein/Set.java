@@ -142,8 +142,12 @@ public class Set {
             case 'C':
                 kaart.setType(Ptype);
                 kaart.setWaarde(waarde);
+                break;
                     
         }
+        char type = kaart.getType();
+        if(type =='C' || type == '*')
+            throw new InvalidCardException("Card 'C' or '*' must include a requested type and/or value");
         huidigSpelbord.add(kaart);
     }
 
@@ -192,7 +196,7 @@ public class Set {
                 case 'W':
                     break;
                 case 'C':case '*':
-                    throw new IllegalArgumentException("Invalid card on board");
+                    throw new InvalidCardException("Invalid card on board");
             }
             
         }

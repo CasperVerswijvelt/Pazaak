@@ -62,7 +62,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
         this.add(ap2, 1, 1);
         this.add(lblSpeler1, 0, 2);
         this.add(lblSpeler2, 1, 2);
-        
+
         this.setVgap(20);
         this.setHgap(20);
     }
@@ -140,18 +140,15 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
 
     private void setTenEinde() {
         if (dc.wedstrijdIsKlaar()) {
-            
-            
+
             String winnaar = dc.geefWinnaar();
             dc.veranderKrediet(winnaar, 5);
-            
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle(winnaar + " WINS");
-            alert.setContentText(winnaar + " WINS\n" + r.getString("NEWCREDIT") + ": " +dc.geefSpelerInfo(winnaar)[1]);
+            alert.setContentText(winnaar + " WINS\n" + r.getString("NEWCREDIT") + ": " + dc.geefSpelerInfo(winnaar)[1]);
             alert.showAndWait();
-            
-            
-            
+
             Stage stage = (Stage) this.getScene().getWindow();
             parent.zetTerugActief(stage);
         } else {
