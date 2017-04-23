@@ -82,7 +82,7 @@ public class TaalSelectieScherm extends GridPane{
         stage.setTitle("Pazaak - Menu");
         
         Scene scene;
-        scene = new Scene(hm,300,300);
+        scene = new Scene(hm);
         stage.setScene(scene);
     }
     public void zetTerugActief(Stage stage) {

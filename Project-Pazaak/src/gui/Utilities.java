@@ -5,11 +5,14 @@
  */
 package gui;
 
+import javafx.scene.control.Alert;
+
 /**
  *
  * @author Casper
  */
 public class Utilities {
+    
 
     public static String[] veranderNaarMooieLayout(String[] kaart) {
         String[] returnKaart = new String[3];

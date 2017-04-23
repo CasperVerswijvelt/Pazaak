@@ -10,9 +10,13 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -34,6 +38,7 @@ public class Hoofdmenu extends VBox {
     private Button btnKoopKaart;
     private Button btnLaadWedstrijd;
     private Button btnVeranderTaal;
+    private Button btnExit;
 
     public Hoofdmenu(TaalSelectieScherm parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
@@ -44,7 +49,7 @@ public class Hoofdmenu extends VBox {
     }
 
     private void buildGUI() {
-        this.setPadding(new Insets(20,20,20,20));
+        this.setPadding(new Insets(20, 20, 20, 20));
         this.setSpacing(10);
 
         lblTitel = new Label(r.getString("WELCOME"));
@@ -55,10 +60,21 @@ public class Hoofdmenu extends VBox {
         btnKoopKaart = new Button(r.getString("BUYCARDOPTION"));
         btnLaadWedstrijd = new Button(r.getString("LOADGAMEOPTION"));
         btnVeranderTaal = new Button("CHANGE LANGUAGE ( VERTAAL MIJ )");
+        btnExit = new Button(r.getString("EXIT"));
 
         //toevoegen
-        this.getChildren().addAll(btnNieuweWedstrijd, btnNieuweSpeler, btnKoopKaart, btnLaadWedstrijd, btnVeranderTaal);
+        this.getChildren().addAll(btnNieuweWedstrijd, btnNieuweSpeler, btnKoopKaart, btnLaadWedstrijd, btnVeranderTaal, btnExit);
 
+        //Juiste grootte geven aan buttons
+        for (Node element : getChildren()) {
+            if (element instanceof Button) {
+                ((Button) element).setMaxWidth(500);
+                ((Button) element).setMinHeight(40);
+            }
+
+        }
+
+        //Eventhandlers
         btnNieuweSpeler.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -88,6 +104,13 @@ public class Hoofdmenu extends VBox {
             @Override
             public void handle(ActionEvent event) {
                 toTaalSelectieScherm();
+            }
+
+        });
+        btnExit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                klikExit();
             }
 
         });
@@ -123,12 +146,24 @@ public class Hoofdmenu extends VBox {
     }
 
     private void toLaadWedstrijdScherm() {
+        Stage stage = (Stage) this.getScene().getWindow();
 
+        Scene scene;
+        scene = new Scene(new LaadWedstrijdScherm(this, dc, r));
+        stage.setTitle("Pazaak - Laad wedstrijd");
+        stage.setScene(scene);
     }
 
     private void toTaalSelectieScherm() {
         Stage stage = (Stage) this.getScene().getWindow();
         parent.zetTerugActief(stage);
+    }
+
+    private void klikExit() {
+        Alert alert = new Alert(Alert.AlertType.NONE, r.getString("EXITGAME"), ButtonType.OK);
+        alert.setTitle("Pazaak");
+        alert.showAndWait();
+        System.exit(0);
     }
 
     public void zetTerugActief(Stage stage) {

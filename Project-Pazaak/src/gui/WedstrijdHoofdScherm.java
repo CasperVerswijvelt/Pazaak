@@ -6,6 +6,7 @@
 package gui;
 
 import domein.DomeinController;
+import exceptions.*;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -14,11 +15,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -33,6 +33,8 @@ public class WedstrijdHoofdScherm extends GridPane {
     private Hoofdmenu parent;
     private KaartSelectiePaneel ksp1;
     private KaartSelectiePaneel ksp2;
+    private String speler1;
+    private String speler2;
 
     private ObservableList<String> lijstSpeler1, lijstSpeler2;
 
@@ -44,6 +46,10 @@ public class WedstrijdHoofdScherm extends GridPane {
     private Button btnCancel;
     private Button btnSelectPlay;
 
+    private Alert playerNotFoundAlert;
+    private Alert DBAlert;
+    private Alert noPlayersAvailableAlert;
+
     public WedstrijdHoofdScherm(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
         this.dc = dc;
@@ -54,27 +60,39 @@ public class WedstrijdHoofdScherm extends GridPane {
 
     private void buildGUI() {
         lijstSpeler1 = FXCollections.observableArrayList(dc.geefAlleSpelerNamen());
-        
+
         lblSelecteerSpelers = new Label(r.getString("CHOOSETWOPLAYERS"));
         lblSpeler1 = new Label(r.getString("PLAYER") + "1");
         lblSpeler1.setMinWidth(50);
         lblSpeler2 = new Label(r.getString("PLAYER") + "2");
         lblSpeler2.setMinWidth(50);
-        
+
         cbSpeler1 = new ComboBox(lijstSpeler1);
         cbSpeler1.setMaxWidth(150);
         cbSpeler1.setMinWidth(150);
         cbSpeler2 = new ComboBox();
         cbSpeler2.setMaxWidth(150);
         cbSpeler2.setMinWidth(150);
+
+        playerNotFoundAlert = new Alert(Alert.AlertType.ERROR);
+        playerNotFoundAlert.setTitle("Pazaak");
+        playerNotFoundAlert.setContentText("PLAYER NOT FOUND (vertaal mij)");
+
+        DBAlert = new Alert(Alert.AlertType.ERROR);
+        playerNotFoundAlert.setTitle("Pazaak");
+        DBAlert.setContentText(r.getString("DATABASEERROR"));
         
+        noPlayersAvailableAlert = new Alert(Alert.AlertType.ERROR);
+        playerNotFoundAlert.setTitle("Pazaak");
+        noPlayersAvailableAlert.setContentText(r.getString("NOTENOUGHPLAYERS"));
+
         ksp1 = new KaartSelectiePaneel(dc, this, r);
         ksp2 = new KaartSelectiePaneel(dc, this, r);
         ksp1.setDisable(true);
         ksp2.setDisable(true);
-        
+
         btnCancel = new Button(r.getString("BACK"));
-        btnSelectPlay = new Button(r.getString("SELECT")+ " " + r.getString("PLAYER"));
+        btnSelectPlay = new Button(r.getString("SELECT") + " " + r.getString("PLAYER"));
 
         this.add(lblSelecteerSpelers, 0, 0, 4, 1);
         this.add(lblSpeler1, 0, 1);
@@ -94,29 +112,19 @@ public class WedstrijdHoofdScherm extends GridPane {
                 selecteerSpeler();
             }
         });
-        
-        btnSelectPlay.setOnAction(new EventHandler<ActionEvent>(){
+
+        btnSelectPlay.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(btnSelectPlay.getText().equals(r.getString("SELECT")+ " " + r.getString("PLAYER"))){
-                    String speler1 = cbSpeler1.getSelectionModel().getSelectedItem().toString();
-                    String speler2 = cbSpeler2.getSelectionModel().getSelectedItem().toString();
-                    dc.selecteerSpeler(speler1);
-                    dc.selecteerSpeler(speler2);
-                    dc.maakNieuweWedstrijd();
-                    ksp1.activeerScherm(speler1);
-                    ksp2.activeerScherm(speler2);
-                    cbSpeler1.setDisable(true);
-                    cbSpeler2.setDisable(true);
-                    ksp1.setDisable(false);
-                    ksp2.setDisable(false);
-                    btnSelectPlay.setText(r.getString("PLAY"));
-                } else
-                    System.out.println(Arrays.deepToString(ksp1.geefGeselecteerdeKaarten()));
+                if (btnSelectPlay.getText().equals(r.getString("SELECT") + " " + r.getString("PLAYER"))) {
+                    drukSelecteerSpelers();
+                } else {
+                    drukSpeel();
+                }
             }
-        
-    });
-        
+
+        });
+
         btnCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -139,5 +147,49 @@ public class WedstrijdHoofdScherm extends GridPane {
     private void drukCancel(ActionEvent event) {
         Stage stage = (Stage) this.getScene().getWindow();
         parent.zetTerugActief(stage);
+    }
+
+    private void drukSelecteerSpelers() {
+        speler1 = cbSpeler1.getSelectionModel().getSelectedItem().toString();
+        speler2 = cbSpeler2.getSelectionModel().getSelectedItem().toString();
+
+        try {
+            dc.selecteerSpeler(speler1);
+            dc.selecteerSpeler(speler2);
+            dc.maakNieuweWedstrijd();
+        } catch (PlayerDoesntExistException e) {
+            playerNotFoundAlert.show();
+        } catch (DatabaseException e) {
+            DBAlert.show();
+        } catch (NoPlayersAvailableException e) {
+            noPlayersAvailableAlert.show();
+        }
+
+        
+        ksp1.activeerScherm(speler1);
+        ksp2.activeerScherm(speler2);
+        cbSpeler1.setDisable(true);
+        cbSpeler2.setDisable(true);
+        ksp1.setDisable(false);
+        ksp2.setDisable(false);
+        btnSelectPlay.setText(r.getString("PLAY"));
+    }
+
+    private void drukSpeel() {
+        dc.selecterSpelerWedstrijdStapel(speler1);
+        String[][] geselecteerdeKaarten1 = ksp1.geefGeselecteerdeKaarten();
+        System.out.println(Arrays.deepToString(geselecteerdeKaarten1));
+        for(String[] kaart : geselecteerdeKaarten1) {
+            dc.selecteerKaart(kaart);
+        }
+        dc.maakWedstrijdStapel();
+        
+        dc.selecterSpelerWedstrijdStapel(speler2);
+        String[][] geselecteerdeKaarten2 = ksp2.geefGeselecteerdeKaarten();
+        System.out.println(Arrays.deepToString(geselecteerdeKaarten2));
+        for(String[] kaart : geselecteerdeKaarten2) {
+            dc.selecteerKaart(kaart);
+        }
+        dc.maakWedstrijdStapel();
     }
 }
