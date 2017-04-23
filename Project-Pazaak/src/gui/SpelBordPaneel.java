@@ -7,8 +7,12 @@ package gui;
 
 import domein.DomeinController;
 import java.util.ResourceBundle;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -38,20 +42,25 @@ class SpelBordPaneel extends GridPane{
         kp = new KaartenPaneel(this, dc, r);
         lblScore = new Label("SCORE");
         lblScoreGetal = new Label("0");
+        VBox vbScore = new VBox();
+        vbScore.getChildren().addAll(lblScore,lblScoreGetal);
+        setValignment(vbScore, VPos.CENTER);
+        vbScore.setAlignment(Pos.CENTER);
+            
         
         if(this.kant == 1){
-            this.add(kp, 0, 0, 3, 3);
-            this.add(lblScore, 3, 2);
-            this.add(lblScoreGetal, 3, 3);
+            this.add(kp, 0, 0);
+            this.add(vbScore, 1, 0);
         }else{
-            this.add(kp, 3, 0, 3, 3);
-            this.add(lblScore, 0, 2);
-            this.add(lblScoreGetal, 0, 3);
+            this.add(kp, 1, 0);
+            this.add(vbScore, 0, 0);
         }
 
     }
 
-    private String berekenScore() {
-        return Integer.toString(dc.geefScore());
+    
+    public void updateSpelbord(String[][] spelbord, int score) {
+        kp.laadSpelbord(spelbord);
+        lblScoreGetal.setText(score+"");
     }
 }

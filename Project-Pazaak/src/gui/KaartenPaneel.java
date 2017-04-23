@@ -40,7 +40,6 @@ class KaartenPaneel extends GridPane {
         }
         this.setHgap(10);
         this.setVgap(10);
-        laadSpelbord(dc.geefStartStapel("Bob"));
     }
 
     public void laadSpelbord(String[][] spelbord) {
