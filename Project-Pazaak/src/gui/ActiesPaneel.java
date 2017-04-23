@@ -38,7 +38,8 @@ class ActiesPaneel extends GridPane{
         
         this.add(wsp,0,0,2,1);
         this.add(btnBevries,0,1);
-        this.add(btnBevries,1,1);
+        this.add(btnEndTurn,1,1);
+        
     }
     
 }

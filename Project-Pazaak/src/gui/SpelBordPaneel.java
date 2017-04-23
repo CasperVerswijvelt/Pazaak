@@ -37,11 +37,18 @@ class SpelBordPaneel extends GridPane{
     private void buildGUI() {
         kp = new KaartenPaneel(this, dc, r);
         lblScore = new Label("SCORE");
-        lblScoreGetal = new Label(berekenScore());
+        lblScoreGetal = new Label("0");
         
-        this.add(kp, 0, 0, 3, 3);
-        this.add(lblScore, 3, 2);
-        this.add(lblScoreGetal, 3, 3);
+        if(this.kant == 1){
+            this.add(kp, 0, 0, 3, 3);
+            this.add(lblScore, 3, 2);
+            this.add(lblScoreGetal, 3, 3);
+        }else{
+            this.add(kp, 3, 0, 3, 3);
+            this.add(lblScore, 0, 2);
+            this.add(lblScoreGetal, 0, 3);
+        }
+
     }
 
     private String berekenScore() {
