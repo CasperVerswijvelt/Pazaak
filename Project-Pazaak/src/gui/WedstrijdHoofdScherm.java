@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -191,5 +192,16 @@ public class WedstrijdHoofdScherm extends GridPane {
             dc.selecteerKaart(kaart);
         }
         dc.maakWedstrijdStapel();
+        
+        toSpeelWedstrijdScherm();
+    }
+
+    private void toSpeelWedstrijdScherm() {
+        Stage stage = (Stage) this.getScene().getWindow();
+
+        Scene scene;
+        scene = new Scene(new SpeelWedstrijdHoofdScherm(this, dc, r));
+        stage.setTitle("Pazaak");
+        stage.setScene(scene);
     }
 }
