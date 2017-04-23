@@ -38,8 +38,8 @@ public class SpeelWedstrijdHoofdScherm extends GridPane{
     private void buildGUI() {
         sbp1 = new SpelBordPaneel(this, dc, r,1);
         sbp2 = new SpelBordPaneel(this, dc, r,2);
-        ap1 = new ActiesPaneel(this, dc, r);
-        ap2 = new ActiesPaneel(this, dc, r);
+        ap1 = new ActiesPaneel(this, dc, r,0);
+        ap2 = new ActiesPaneel(this, dc, r,1);
         lblSpeler1 = new Label(dc.geefWedstrijdSpelers()[0]);
         lblSpeler2 = new Label(dc.geefWedstrijdSpelers()[1]);
         

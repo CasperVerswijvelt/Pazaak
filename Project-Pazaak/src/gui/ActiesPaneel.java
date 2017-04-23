@@ -18,23 +18,24 @@ class ActiesPaneel extends GridPane{
     private SpeelWedstrijdHoofdScherm parent;
     private DomeinController dc;
     private ResourceBundle r;
+    private int speler;
     
     private WedstrijdStapelPaneel wsp;
     private Button btnEndTurn;
     private Button btnBevries;
     
-    ActiesPaneel(SpeelWedstrijdHoofdScherm parent, DomeinController dc, ResourceBundle r) {
+    ActiesPaneel(SpeelWedstrijdHoofdScherm parent, DomeinController dc, ResourceBundle r, int speler) {
         this.parent = parent;
         this.dc = dc;
         this.r = r;
-        
+        this.speler = speler;
         buildGUI();
     }
 
     private void buildGUI() {
-        wsp = new WedstrijdStapelPaneel(this, dc, r);
-        btnEndTurn = new Button();
-        btnBevries = new Button();
+        wsp = new WedstrijdStapelPaneel(this, dc, r, speler);
+        btnEndTurn = new Button(r.getString("ENDTURN"));
+        btnBevries = new Button(r.getString("FREEZE"));
         
         this.add(wsp,0,0,2,1);
         this.add(btnBevries,0,1);
