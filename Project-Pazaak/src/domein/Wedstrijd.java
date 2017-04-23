@@ -1,6 +1,6 @@
 package domein;
 
-import exceptions.NoWinnerException;
+import exceptions.*;
 import java.util.*;
 
 public class Wedstrijd {
@@ -16,7 +16,6 @@ public class Wedstrijd {
      * @param speler1
      * @param speler2
      */
-    
     //Nieuwe wedstrijd
     public Wedstrijd(Speler speler1, Speler speler2) {
         this.aantalGewonnen = new int[2];
@@ -51,12 +50,12 @@ public class Wedstrijd {
 
         }
     }
-    
+
     //Wedstrijd uit DB
     public Wedstrijd(Speler speler1, Speler speler2, List<Kaart> wedstrijdStapel1, List<Kaart> wedstrijdStapel2, String beginnendeSpeler, int score1, int score2) {
         this.aantalGewonnen = new int[2];
         this.wedstrijdStapels = new ArrayList<>();
-        
+
         this.spelers = new ArrayList<>();
         this.eersteSpelerBegint = true;
 
@@ -66,13 +65,13 @@ public class Wedstrijd {
         this.wedstrijdStapels.add(wedstrijdStapel2);
         aantalGewonnen[0] = score1;
         aantalGewonnen[1] = score2;
-        
-        if(spelers.get(0).getNaam().equalsIgnoreCase(beginnendeSpeler)){
-            eersteSpelerBegint= true;
-        } else
-            eersteSpelerBegint=false;
-        
-        
+
+        if (spelers.get(0).getNaam().equalsIgnoreCase(beginnendeSpeler)) {
+            eersteSpelerBegint = true;
+        } else {
+            eersteSpelerBegint = false;
+        }
+
     }
 
     //Methodes
@@ -115,7 +114,6 @@ public class Wedstrijd {
     public int geefScore() {
         return huidigeSet.geefScore();
     }
-    
 
     public List<String> geefMogelijkeActies() {
         List res = huidigeSet.geefMogelijkeActies();
@@ -145,21 +143,24 @@ public class Wedstrijd {
     public List<Kaart> geefWedstrijdStapel() {
         return wedstrijdStapels.get(huidigeSet.geefSpelerAanBeurtIndex());
     }
+
     public List<Kaart> geefWedstrijdStapel(int index) {
         return wedstrijdStapels.get(index);
     }
 
-    public void gebruikWedstrijdKaart(Kaart kaart,int gewensteWaarde, char gewenstType) {
+    public void gebruikWedstrijdKaart(Kaart kaart, int gewensteWaarde, char gewenstType) {
         List<Kaart> wedstrijdStapel = geefWedstrijdStapel();
-        for(Kaart element : wedstrijdStapel) {
-            if(element.equals(kaart)) {
-                wedstrijdStapel.remove(element);
-                break;
-            }
-                
-        }
 
-        huidigeSet.gebruikWedstrijdKaart(kaart, gewensteWaarde, gewenstType);
+        for (Kaart element : wedstrijdStapel) {
+            if (element.equals(kaart)) {
+                wedstrijdStapel.remove(element);
+                huidigeSet.gebruikWedstrijdKaart(kaart, gewensteWaarde, gewenstType);
+                return;
+            }
+
+        }
+        throw new CardNotInGameDeckException();
+
     }
 
     public boolean setIsKlaar() {
@@ -167,14 +168,15 @@ public class Wedstrijd {
     }
 
     public String geefSetUitslag() {
-        int uitslag =  huidigeSet.geefSetUitslagIndex();
-        
-        switch(uitslag) {
-            case 0 : case 1:
+        int uitslag = huidigeSet.geefSetUitslagIndex();
+
+        switch (uitslag) {
+            case 0:
+            case 1:
                 return spelers.get(uitslag).getNaam();
-            case 2 :
+            case 2:
                 return "TIE";
-            default: 
+            default:
                 return null;
         }
     }
@@ -188,7 +190,7 @@ public class Wedstrijd {
                 }
             }
             return spelers.get(indexGewonnen);
-        } 
+        }
         throw new NoWinnerException();
     }
 
@@ -200,24 +202,24 @@ public class Wedstrijd {
         }
         return false;
     }
-    
+
     private void veranderBeginSpeler() {
-        this.eersteSpelerBegint = ! this.eersteSpelerBegint;
+        this.eersteSpelerBegint = !this.eersteSpelerBegint;
     }
 
     //Getters & Setters
     public List<Speler> geefSpelers() {
         return spelers;
     }
-    
+
     public int[] geefTussenstand() {
         return aantalGewonnen;
     }
 
     public void registreerAantalWins() {
         int uitslag = huidigeSet.geefSetUitslagIndex();
-        if(uitslag == 0 || uitslag ==1) {
-            aantalGewonnen[uitslag] ++;
+        if (uitslag == 0 || uitslag == 1) {
+            aantalGewonnen[uitslag]++;
         }
     }
 }

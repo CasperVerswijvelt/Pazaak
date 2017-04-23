@@ -82,7 +82,6 @@ public class Spelermenu extends GridPane {
 
         this.newPlayerAlert = new Alert(Alert.AlertType.NONE);
         this.newPlayerAlert.setTitle(r.getString("NEWPLAYER"));
-
         this.newPlayerAlert.getDialogPane().getButtonTypes().add(ButtonType.OK);
 
         this.add(lblTitel, 0, 0);
