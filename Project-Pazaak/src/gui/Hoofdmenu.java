@@ -68,10 +68,9 @@ public class Hoofdmenu extends VBox {
         //Juiste grootte geven aan buttons
         for (Node element : getChildren()) {
             if (element instanceof Button) {
-                ((Button) element).setMaxWidth(500);
+                ((Button) element).setMinWidth(500);
                 ((Button) element).setMinHeight(40);
             }
-
         }
 
         //Eventhandlers

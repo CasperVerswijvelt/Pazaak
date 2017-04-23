@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -60,6 +61,10 @@ public class WedstrijdHoofdScherm extends GridPane {
     }
 
     private void buildGUI() {
+        this.setPadding(new Insets(35,35,15,35));
+        this.setVgap(10);
+        this.setHgap(10);
+        
         lijstSpeler1 = FXCollections.observableArrayList(dc.geefAlleSpelerNamen());
 
         lblSelecteerSpelers = new Label(r.getString("CHOOSETWOPLAYERS"));

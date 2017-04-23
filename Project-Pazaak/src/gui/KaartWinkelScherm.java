@@ -16,7 +16,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -95,14 +97,14 @@ public class KaartWinkelScherm extends GridPane {
         lblError.setTextFill(Color.RED);
 
         //Cancel button
-        btnCancel = new Button("Cancel");
+        btnCancel = new Button(r.getString("BACK"));
         btnCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 drukCancel(event);
             }
         });
-
+        setHalignment(btnCancel, HPos.RIGHT);
         // spelerselectie, krediet, cancel button, en error label toevoegen aan grid
         add(lblSpelerSelectie, 0, 0);
         add(cbSpelerSpelectie, 1, 0);
