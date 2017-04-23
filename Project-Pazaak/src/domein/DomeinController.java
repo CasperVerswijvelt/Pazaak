@@ -121,6 +121,10 @@ public class DomeinController {
         geselecteerdeKaarten.clear();
         geselecteerdeSpelerWedstrijdstapel = null;
     }
+    
+    public String[][] geefWedstrijdStapel(int index) {
+        return kaartenAlsString(wedstrijd.geefWedstrijdStapel(index));
+    }
 
     public void maakNieuweSet() {
         wedstrijd.maakNieuweSet();
@@ -163,6 +167,9 @@ public class DomeinController {
     public String[][] geefWedstrijdStapel() {
         return kaartenAlsString(wedstrijd.geefWedstrijdStapel());
     }
+    
+    
+    
 
     public void gebruikWedstrijdKaart(String[] kaart,int gewensteWaarde, char gewenstType) {
         wedstrijd.gebruikWedstrijdKaart(stringAlsKaart(kaart), gewensteWaarde, gewenstType);
