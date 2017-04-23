@@ -6,6 +6,7 @@
 package ui;
 
 import domein.DomeinController;
+import exceptions.DatabaseException;
 import exceptions.NoPlayersAvailableException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,7 +33,13 @@ public class UC3 {
 
     //Methodes
     public void start() {
-        List<String> spelerLijst = dc.geefAlleSpelerNamen();
+        List<String> spelerLijst;
+        try{
+            spelerLijst = dc.geefAlleSpelerNamen();
+        } catch(DatabaseException e) {
+            System.out.println(r.getString("DATABASEERROR"));
+            return;
+        }
         int aantalSpelersBeschikbaar = spelerLijst.size();
         if (aantalSpelersBeschikbaar < 2) {
             throw new NoPlayersAvailableException(aantalSpelersBeschikbaar + "");
