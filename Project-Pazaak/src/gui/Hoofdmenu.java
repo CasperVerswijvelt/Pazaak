@@ -148,8 +148,7 @@ public class Hoofdmenu extends VBox {
     private void toLaadWedstrijdScherm() {
         Stage stage = (Stage) this.getScene().getWindow();
 
-        Scene scene;
-        scene = new Scene(new LaadWedstrijdScherm(this, dc, r));
+        Scene scene = new Scene(new LaadWedstrijdScherm(this, dc, r));
         stage.setTitle("Pazaak - Laad wedstrijd");
         stage.setScene(scene);
     }
