@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -96,6 +97,7 @@ public class LaadWedstrijdScherm extends GridPane {
     private void drukLaad(ActionEvent event) {
         try {
             dc.laadWedstrijd(wedstrijden[cbWedstrijdSelectie.getSelectionModel().getSelectedIndex()][0]);
+            toSpeelWedstrijdScherm();
         } catch (GameDoesntExistException e) {
             gameNotFoundAlert.show();
             laadWedstrijdenInComboBox();
@@ -103,6 +105,15 @@ public class LaadWedstrijdScherm extends GridPane {
             DBAlert.show();
             laadWedstrijdenInComboBox();
         }
+    }
+    
+    private void toSpeelWedstrijdScherm() {
+        Stage stage = (Stage) this.getScene().getWindow();
+
+        Scene scene;
+        scene = new Scene(new SpeelWedstrijdHoofdScherm(parent, dc, r));
+        stage.setTitle("Pazaak");
+        stage.setScene(scene);
     }
 
     private void laadWedstrijdenInComboBox() {

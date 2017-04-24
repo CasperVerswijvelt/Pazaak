@@ -6,13 +6,16 @@
 package gui;
 
 import domein.DomeinController;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -73,7 +76,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
 
         if (dc.setIsKlaar()) {
             dc.registreerAantalWins();
-            
+
             //Checken of wedstrijd ni gedaan is kejt
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
@@ -85,20 +88,32 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
             alert.setContentText(speler1 + " " + tussenstand[0] + " - " + tussenstand[1] + " " + speler2);
             alert.showAndWait();
 
-            if(setTenEinde()==false){
-            ButtonType opslaan = new ButtonType(r.getString("OPSLAAN"), ButtonBar.ButtonData.OK_DONE);
-            ButtonType doorgaan = new ButtonType(r.getString("VERDERSPELEN"), ButtonBar.ButtonData.CANCEL_CLOSE);
-            
-            Alert alert2 = new Alert(AlertType.NONE,
+            if (setTenEinde() == false) {
+                ButtonType opslaan = new ButtonType(r.getString("OPSLAAN"), ButtonBar.ButtonData.OK_DONE);
+                ButtonType doorgaan = new ButtonType(r.getString("VERDERSPELEN"), ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                Alert alert2 = new Alert(AlertType.NONE,
                         r.getString("OPSLAANOFSPEEL"),
                         opslaan,
                         doorgaan);
-            alert2.setTitle(r.getString("TITELALERT2"));
-            
-            alert2.showAndWait();
-            
+                alert2.setTitle(r.getString("TITELALERT2"));
+
+                Optional<ButtonType> result = alert2.showAndWait();
+                if (result.get() == opslaan) {
+                    TextInputDialog dialog = new TextInputDialog();
+                    dialog.setTitle("Pazaak" + " - " + r.getString("OPSLAAN"));
+                    dialog.setHeaderText(null);
+                    dialog.setContentText(r.getString("GAMENAME"));
+
+                    Optional<String> naam = dialog.showAndWait();
+                    if (naam.isPresent()) {
+                        dc.slaWedstrijdOp(naam.toString());
+                        parent.zetTerugActief((Stage) this.getScene().getWindow());
+                    }
+                }
+
             }
-           
+
         }
 
     }
@@ -140,8 +155,9 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
         dc.bevriesBord();
         dc.eindigBeurt();
         checkEindeSet();
-        if(dc.wedstrijdIsKlaar())
+        if (dc.wedstrijdIsKlaar()) {
             return;
+        }
         dc.deelKaartUit();
         verversSpelerScherm();
         checkEindeSet();
@@ -167,16 +183,16 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
 
             Stage stage = (Stage) this.getScene().getWindow();
             parent.zetTerugActief(stage);
-            
+
             return true;
-            
+
         } else {
             Stage stage = (Stage) this.getScene().getWindow();
 
             Scene scene = new Scene(new SpeelWedstrijdHoofdScherm(parent, dc, r));
             stage.setTitle("Pazaak - Playing");
             stage.setScene(scene);
-            
+
             return false;
         }
 
