@@ -7,6 +7,7 @@ package gui;
 
 import domein.DomeinController;
 import exceptions.*;
+import java.awt.Window;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -22,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -54,6 +56,8 @@ public class WedstrijdHoofdScherm extends GridPane {
     private Alert DBAlert;
     private Alert noPlayersAvailableAlert;
 
+    private WedstrijdHoofdScherm ws;
+
     public WedstrijdHoofdScherm(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
         this.dc = dc;
@@ -66,7 +70,7 @@ public class WedstrijdHoofdScherm extends GridPane {
         this.setPadding(new Insets(35, 35, 15, 35));
         this.setVgap(10);
         this.setHgap(10);
-        
+
         playerNotFoundAlert = new Alert(Alert.AlertType.ERROR);
         playerNotFoundAlert.setTitle("Pazaak");
         playerNotFoundAlert.setContentText(r.getString("PLAYERNOTFOUND"));
@@ -79,9 +83,9 @@ public class WedstrijdHoofdScherm extends GridPane {
         playerNotFoundAlert.setTitle("Pazaak");
         noPlayersAvailableAlert.setContentText(r.getString("NOTENOUGHPLAYERS"));
 
-        try{
+        try {
             lijstSpeler1 = FXCollections.observableArrayList(dc.geefAlleSpelerNamen());
-        } catch(DatabaseException e) {
+        } catch (DatabaseException e) {
             DBAlert.show();
         }
 
@@ -99,8 +103,6 @@ public class WedstrijdHoofdScherm extends GridPane {
         cbSpeler2 = new ComboBox();
         cbSpeler2.setMaxWidth(150);
         cbSpeler2.setMinWidth(150);
-
-        
 
         ksp1 = new KaartSelectiePaneel(dc, this, r);
         ksp2 = new KaartSelectiePaneel(dc, this, r);
@@ -167,14 +169,13 @@ public class WedstrijdHoofdScherm extends GridPane {
     }
 
     private void drukSelecteerSpelers() {
-
         try {
             speler1 = cbSpeler1.getSelectionModel().getSelectedItem().toString();
             speler2 = cbSpeler2.getSelectionModel().getSelectedItem().toString();
             dc.selecteerSpeler(speler1);
             dc.selecteerSpeler(speler2);
             dc.maakNieuweWedstrijd();
-        }catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             lblError.setText(r.getString("SELECTTWOPLAYERS"));
             return;
         } catch (PlayerDoesntExistException e) {
@@ -196,6 +197,8 @@ public class WedstrijdHoofdScherm extends GridPane {
         ksp2.setDisable(false);
         btnSelectPlay.setText(r.getString("PLAY"));
         lblSelecteerSpelers.setText("Kies 6 kaarten voor elke speler");
+        
+
     }
 
     private void drukSpeel() {
