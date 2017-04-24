@@ -196,7 +196,6 @@ public class WedstrijdHoofdScherm extends GridPane {
         ksp2.setDisable(false);
         btnSelectPlay.setText(r.getString("PLAY"));
         lblSelecteerSpelers.setText("Kies 6 kaarten voor elke speler");
-        this.setMinSize(USE_COMPUTED_SIZE, USE_COMPUTED_SIZE);
     }
 
     private void drukSpeel() {
