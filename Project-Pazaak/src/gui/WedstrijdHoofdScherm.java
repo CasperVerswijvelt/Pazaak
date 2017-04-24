@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -36,8 +37,7 @@ public class WedstrijdHoofdScherm extends GridPane {
     private DomeinController dc;
     private ResourceBundle r;
     private Hoofdmenu parent;
-    private KaartSelectiePaneel ksp1;
-    private KaartSelectiePaneel ksp2;
+    private KaartSelectiePaneel ksp;
     private String speler1;
     private String speler2;
 
@@ -104,10 +104,8 @@ public class WedstrijdHoofdScherm extends GridPane {
         cbSpeler2.setMaxWidth(150);
         cbSpeler2.setMinWidth(150);
 
-        ksp1 = new KaartSelectiePaneel(dc, this, r);
-        ksp2 = new KaartSelectiePaneel(dc, this, r);
-        ksp1.setDisable(true);
-        ksp2.setDisable(true);
+        ksp = new KaartSelectiePaneel(dc, this, r);
+        ksp.setVisible(false);
 
         btnCancel = new Button(r.getString("BACK"));
         btnSelectPlay = new Button(r.getString("SELECT") + " " + r.getString("PLAYER"));
@@ -117,8 +115,7 @@ public class WedstrijdHoofdScherm extends GridPane {
         this.add(cbSpeler1, 1, 1);
         this.add(lblSpeler2, 2, 1);
         this.add(cbSpeler2, 3, 1);
-        this.add(ksp1, 0, 2, 2, 1);
-        this.add(ksp2, 2, 2, 2, 1);
+        this.add(ksp, 0, 2, 4, 1);
         this.add(btnCancel, 0, 3);
         this.add(btnSelectPlay, 3, 3);
         this.add(lblError, 1, 3);
@@ -137,6 +134,8 @@ public class WedstrijdHoofdScherm extends GridPane {
             public void handle(ActionEvent event) {
                 if (btnSelectPlay.getText().equals(r.getString("SELECT") + " " + r.getString("PLAYER"))) {
                     drukSelecteerSpelers();
+                } else if (btnSelectPlay.getText().equals("NEXTPLAYER")) {
+                    volgendeSpeler();
                 } else {
                     drukSpeel();
                 }
@@ -169,12 +168,14 @@ public class WedstrijdHoofdScherm extends GridPane {
     }
 
     private void drukSelecteerSpelers() {
+        ksp.setVisible(true);
         try {
             speler1 = cbSpeler1.getSelectionModel().getSelectedItem().toString();
             speler2 = cbSpeler2.getSelectionModel().getSelectedItem().toString();
             dc.selecteerSpeler(speler1);
             dc.selecteerSpeler(speler2);
             dc.maakNieuweWedstrijd();
+            ksp.setVisible(true);
         } catch (NullPointerException e) {
             lblError.setText(r.getString("SELECTTWOPLAYERS"));
             return;
@@ -189,29 +190,18 @@ public class WedstrijdHoofdScherm extends GridPane {
             return;
         }
 
-        ksp1.activeerScherm(speler1);
-        ksp2.activeerScherm(speler2);
+        ksp.activeerScherm(speler1);
         cbSpeler1.setDisable(true);
         cbSpeler2.setDisable(true);
-        ksp1.setDisable(false);
-        ksp2.setDisable(false);
-        btnSelectPlay.setText(r.getString("PLAY"));
-        lblSelecteerSpelers.setText("Kies 6 kaarten voor elke speler");
-        
+        btnSelectPlay.setText("NEXTPLAYER");
+        lblSelecteerSpelers.setText("Kies 6 kaarten voor speler " + speler1);
 
     }
 
     private void drukSpeel() {
-        dc.selecterSpelerWedstrijdStapel(speler1);
-        String[][] geselecteerdeKaarten1 = ksp1.geefGeselecteerdeKaarten();
-        System.out.println(Arrays.deepToString(geselecteerdeKaarten1));
-        for (String[] kaart : geselecteerdeKaarten1) {
-            dc.selecteerKaart(kaart);
-        }
-        dc.maakWedstrijdStapel();
 
         dc.selecterSpelerWedstrijdStapel(speler2);
-        String[][] geselecteerdeKaarten2 = ksp2.geefGeselecteerdeKaarten();
+        String[][] geselecteerdeKaarten2 = ksp.geefGeselecteerdeKaarten();
         System.out.println(Arrays.deepToString(geselecteerdeKaarten2));
         for (String[] kaart : geselecteerdeKaarten2) {
             dc.selecteerKaart(kaart);
@@ -228,5 +218,21 @@ public class WedstrijdHoofdScherm extends GridPane {
         scene = new Scene(new SpeelWedstrijdHoofdScherm(parent, dc, r));
         stage.setTitle("Pazaak");
         stage.setScene(scene);
+    }
+
+    private void volgendeSpeler() {
+        dc.selecterSpelerWedstrijdStapel(speler1);
+        String[][] geselecteerdeKaarten1 = ksp.geefGeselecteerdeKaarten();
+        System.out.println(Arrays.deepToString(geselecteerdeKaarten1));
+        for (String[] kaart : geselecteerdeKaarten1) {
+            dc.selecteerKaart(kaart);
+        }
+        dc.maakWedstrijdStapel();
+        
+        lblSelecteerSpelers.setText("Kies 6 kaarten voor speler " + speler2);
+        
+        ksp.activeerScherm(speler2);
+        
+        btnSelectPlay.setText("PLAY");
     }
 }

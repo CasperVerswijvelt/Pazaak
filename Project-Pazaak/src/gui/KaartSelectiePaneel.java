@@ -11,17 +11,21 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  *
  * @author goran
  */
-public class KaartSelectiePaneel extends GridPane {
+public class KaartSelectiePaneel extends VBox {
 
     private DomeinController dc;
     private ResourceBundle r;
@@ -29,6 +33,8 @@ public class KaartSelectiePaneel extends GridPane {
     private String[][] startStapel;
 
     private List<Button> kaartButtons;
+    private List<HBox> kaartRijen;
+    private HBox selected;
 
     KaartSelectiePaneel(DomeinController dc, WedstrijdHoofdScherm parent, ResourceBundle r) {
         this.dc = dc;
@@ -40,11 +46,40 @@ public class KaartSelectiePaneel extends GridPane {
 
     private void buildGUI() {
         kaartButtons = new ArrayList<>();
+        kaartRijen = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            kaartRijen.add(new HBox());
+            this.getChildren().add(kaartRijen.get(i));
+            kaartRijen.get(i).setSpacing(10);
+            kaartRijen.get(i).setAlignment(Pos.CENTER);
+            
+            
+        }
+        selected = new HBox();
+        selected.setSpacing(15);
+        selected.setAlignment(Pos.CENTER);
+        this.getChildren().add(selected);
         this.setPadding(new Insets(10, 10, 10, 10));
+        
+        for(int i =0; i<6;i++) {
+            Button btn = new Button();
+            btn.setMinSize(75,120);
+            selected.getChildren().add(btn);
+        }
+        
+        setSpacing(20);
     }
 
-    void activeerScherm(String speler1) {
-        startStapel = dc.geefStartStapel(speler1);
+    void activeerScherm(String speler) {
+
+        //Alles clearen
+        kaartButtons.clear();
+        for (HBox hbox : kaartRijen) {
+            hbox.getChildren().clear();
+        }
+        selected.getChildren().clear();
+
+        startStapel = dc.geefStartStapel(speler);
 
         for (int i = 0; i < startStapel.length; i++) {
             String[] kaartLayout = Utilities.veranderNaarMooieLayout(startStapel[i]);
@@ -56,59 +91,67 @@ public class KaartSelectiePaneel extends GridPane {
                 public void handle(ActionEvent event) {
                     klikKaart(event);
                 }
-
             });
 
             kaartButtons.add(button);
-            this.add(kaartButtons.get(i), i, 0,1,2);
-            Label placeHolder = new Label();
-            placeHolder.setMinHeight(30); ///////////////////////// VERANDER DEZE WAARDE VOOR TE VERANDERE HOEVEEL DE KAART UITSCHUIFT /////////////////////////
-            this.add(placeHolder, i, 0);
-            this.setHeight(startStapel.length * 20);
+            if (kaartRijen.get(i/10).getChildren().size() >= 10) {
+   
+            }
+            kaartRijen.get(i/10).getChildren().add(kaartButtons.get(i));
+
         }
     }
 
     private void klikKaart(ActionEvent event) {
         Button button = (Button) event.getSource();
-        int kolom = getColumnIndex(button);
-        int rij = getRowIndex(button) == 0 ? 1 : 0;
 
         int aantalGeselecteerd = geefAantalGeselecteerd();
 
-        if (aantalGeselecteerd < 6 || rij == 0) { //Bestemming is rij 0 of geselecteerde kaarten is minder dan 6
-            getChildren().remove(button);
-            this.add(button, kolom, rij,1,2 );
-            
-        } else
-            System.out.println("Too many cards selected");
+        if (kaartNogNietGeselecteerd(button)) {
+            if (aantalGeselecteerd < 6) {
+                button.setMinSize(75, 120);
+                selected.getChildren().add(button);
+            }
+        } else {
+            plaatsKaartTerug(button);
+        }
     }
 
     private int geefAantalGeselecteerd() {
-        int aantal = 0;
-
-        for (Node child : getChildren()) {
-            int row = getRowIndex(child);
-            if (child instanceof Button && row == 1) {
-                aantal++;
-            }
-        }
-        return aantal;
+        return selected.getChildren().size();
     }
-    
+
     public String[][] geefGeselecteerdeKaarten() {
-        List<String[]> lijst = new ArrayList<>(); 
-        for (Node child : getChildren()) {
-            int row = getRowIndex(child);
-            int col = getColumnIndex(child);
-            if (child instanceof Button && row == 1) {
-                lijst.add(startStapel[col]);
-            }
+        List<String[]> lijst = new ArrayList<>();
+        for (Node child : selected.getChildren()) {
+            lijst.add(startStapel[kaartButtons.indexOf(child)]);
         }
         String[][] res = new String[lijst.size()][];
         res = lijst.toArray(res);
-        
+
         return res;
-        
+
+    }
+
+    private boolean kaartNogNietGeselecteerd(Button button) {
+        for (HBox hbox : kaartRijen) {
+            for (Node element : hbox.getChildren()) {
+                if (element instanceof Button && button.equals((Button) element)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void plaatsKaartTerug(Button button) {
+        for (HBox hbox : kaartRijen) {
+            if (hbox.getChildren().size() < 10) {
+                button.setMinSize(50, 80);
+                hbox.getChildren().add(button);
+                break;
+            }
+        }
     }
 
 }
