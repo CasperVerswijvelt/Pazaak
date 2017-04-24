@@ -9,6 +9,8 @@ import domein.DomeinController;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -71,7 +73,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
 
         if (dc.setIsKlaar()) {
             dc.registreerAantalWins();
-
+            
             //Checken of wedstrijd ni gedaan is kejt
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
@@ -83,9 +85,19 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
             alert.setContentText(speler1 + " " + tussenstand[0] + " - " + tussenstand[1] + " " + speler2);
             alert.showAndWait();
 
-            setTenEinde();
+            if(setTenEinde()==false){
+            ButtonType opslaan = new ButtonType(r.getString("OPSLAAN"), ButtonBar.ButtonData.OK_DONE);
+            ButtonType doorgaan = new ButtonType(r.getString("VERDERSPELEN"), ButtonBar.ButtonData.CANCEL_CLOSE);
             
-
+            Alert alert2 = new Alert(AlertType.NONE,
+                        "opslaan?",
+                        opslaan,
+                        doorgaan);
+            
+            alert2.showAndWait();
+            
+            }
+           
         }
 
     }
@@ -141,7 +153,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
         drukEndTurn();
     }
 
-    private void setTenEinde() {
+    private boolean setTenEinde() {
         if (dc.wedstrijdIsKlaar()) {
 
             String winnaar = dc.geefWinnaar();
@@ -154,12 +166,17 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
 
             Stage stage = (Stage) this.getScene().getWindow();
             parent.zetTerugActief(stage);
+            
+            return true;
+            
         } else {
             Stage stage = (Stage) this.getScene().getWindow();
 
             Scene scene = new Scene(new SpeelWedstrijdHoofdScherm(parent, dc, r));
             stage.setTitle("Pazaak - Playing");
             stage.setScene(scene);
+            
+            return false;
         }
 
     }
