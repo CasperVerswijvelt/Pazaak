@@ -69,7 +69,7 @@ public class WedstrijdHoofdScherm extends GridPane {
         
         playerNotFoundAlert = new Alert(Alert.AlertType.ERROR);
         playerNotFoundAlert.setTitle("Pazaak");
-        playerNotFoundAlert.setContentText("PLAYER NOT FOUND (vertaal mij)");
+        playerNotFoundAlert.setContentText(r.getString("PLAYERNOTFOUND"));
 
         DBAlert = new Alert(Alert.AlertType.ERROR);
         playerNotFoundAlert.setTitle("Pazaak");
