@@ -53,7 +53,7 @@ public class TaalSelectieScherm extends GridPane {
 
         for (Node element : getChildren()) {
             if (element instanceof Button) {
-                ((Button) element).setMinWidth(500);
+                ((Button) element).setMinWidth(240);
                 ((Button) element).setMinHeight(40);
             }
         }
