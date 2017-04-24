@@ -151,6 +151,11 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
 
     void drukEndTurn() {
         dc.eindigBeurt();
+        boolean setIsKlaar = dc.setIsKlaar();
+        checkEindeSet();
+        if (setIsKlaar) {
+            return;
+        }
         dc.deelKaartUit();
         verversSpelerScherm();
         checkEindeSet();
@@ -159,14 +164,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
 
     void drukBevries() {
         dc.bevriesBord();
-        dc.eindigBeurt();
-        checkEindeSet();
-        if (dc.wedstrijdIsKlaar()) {
-            return;
-        }
-        dc.deelKaartUit();
-        verversSpelerScherm();
-        checkEindeSet();
+        drukEndTurn();
 
     }
 
