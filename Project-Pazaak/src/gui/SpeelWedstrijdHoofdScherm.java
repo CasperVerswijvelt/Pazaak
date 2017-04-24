@@ -73,8 +73,11 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
     }
 
     void checkEindeSet() {
-
+        Stage stage = (Stage) this.getScene().getWindow();
         if (dc.setIsKlaar()) {
+            ap1.setDisable(true);
+            ap2.setDisable(true);
+
             dc.registreerAantalWins();
 
             //Checken of wedstrijd ni gedaan is kejt
@@ -88,7 +91,8 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
             alert.setContentText(speler1 + " " + tussenstand[0] + " - " + tussenstand[1] + " " + speler2);
             alert.showAndWait();
 
-            if (setTenEinde() == false) {
+            if (!dc.wedstrijdIsKlaar()) {
+
                 ButtonType opslaan = new ButtonType(r.getString("OPSLAAN"), ButtonBar.ButtonData.OK_DONE);
                 ButtonType doorgaan = new ButtonType(r.getString("VERDERSPELEN"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
@@ -107,12 +111,14 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
 
                     Optional<String> naam = dialog.showAndWait();
                     if (naam.isPresent()) {
-                        dc.slaWedstrijdOp(naam.toString());
-                        parent.zetTerugActief((Stage) this.getScene().getWindow());
+                        dc.slaWedstrijdOp(naam.get());
+                        parent.zetTerugActief(stage);
                     }
                 }
 
             }
+
+            setTenEinde();
 
         }
 
@@ -170,7 +176,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
         drukEndTurn();
     }
 
-    private boolean setTenEinde() {
+    private void setTenEinde() {
         if (dc.wedstrijdIsKlaar()) {
 
             String winnaar = dc.geefWinnaar();
@@ -184,8 +190,6 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
             Stage stage = (Stage) this.getScene().getWindow();
             parent.zetTerugActief(stage);
 
-            return true;
-
         } else {
             Stage stage = (Stage) this.getScene().getWindow();
 
@@ -193,7 +197,6 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
             stage.setTitle("Pazaak - Playing");
             stage.setScene(scene);
 
-            return false;
         }
 
     }
