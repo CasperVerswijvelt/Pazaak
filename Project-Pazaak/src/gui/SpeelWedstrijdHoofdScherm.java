@@ -113,12 +113,13 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
                     if (naam.isPresent()) {
                         dc.slaWedstrijdOp(naam.get());
                         parent.zetTerugActief(stage);
+                    } else {
+                        setTenEinde();
                     }
                 }
-
             }
-
-            setTenEinde();
+            
+            
 
         }
 
@@ -175,6 +176,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
     }
 
     private void setTenEinde() {
+        Stage stage = (Stage) this.getScene().getWindow();
         if (dc.wedstrijdIsKlaar()) {
 
             String winnaar = dc.geefWinnaar();
@@ -185,11 +187,9 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
             alert.setContentText(winnaar + " WINS\n" + r.getString("NEWCREDIT") + ": " + dc.geefSpelerInfo(winnaar)[1]);
             alert.showAndWait();
 
-            Stage stage = (Stage) this.getScene().getWindow();
             parent.zetTerugActief(stage);
 
         } else {
-            Stage stage = (Stage) this.getScene().getWindow();
 
             Scene scene = new Scene(new SpeelWedstrijdHoofdScherm(parent, dc, r));
             stage.setTitle("Pazaak - Playing");
