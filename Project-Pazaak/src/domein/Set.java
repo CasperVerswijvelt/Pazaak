@@ -171,7 +171,13 @@ public class Set {
 
             int score1 = berekenScore(spelbord1), score2 = berekenScore(spelbord2);
             if (score1 == score2) {
-                return 2;
+                boolean spelbord1BevatKaart = spelbordBevatTKaart(spelbord1), spelbord2BevatKaart = spelbordBevatTKaart(spelbord2);
+                if(spelbord1BevatKaart && !spelbord2BevatKaart) {
+                    return 0;
+                } else if(spelbord2BevatKaart && !spelbord1BevatKaart)
+                    return 1;
+                else     
+                    return 2;
             } else {
                 if (score1 > 20) {
                     return 1;
@@ -223,5 +229,13 @@ public class Set {
         if (type1 != type2) {
             throw new InvalidCardException("Original cardtype and requested type doesn't match, stop cheating!");
         }
+    }
+
+    private boolean spelbordBevatTKaart(List<Kaart> spelbord) {
+        Kaart TKaart = new Kaart(1, 'T', 20);
+        for(Kaart element : spelbord)
+            if(element.equals(TKaart))
+                return true;
+        return false;
     }
 }

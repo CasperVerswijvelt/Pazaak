@@ -142,6 +142,7 @@ public class DomeinController {
 
     public void deelKaartUit() {
         wedstrijd.deelKaartUit();
+        System.out.println("deelmethode aangeroepen");
     }
 
     public String[][] geefSpelBord() {
