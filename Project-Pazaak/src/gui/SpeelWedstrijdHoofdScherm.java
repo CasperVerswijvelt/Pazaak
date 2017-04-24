@@ -90,9 +90,10 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
             ButtonType doorgaan = new ButtonType(r.getString("VERDERSPELEN"), ButtonBar.ButtonData.CANCEL_CLOSE);
             
             Alert alert2 = new Alert(AlertType.NONE,
-                        "opslaan?",
+                        r.getString("OPSLAANOFSPEEL"),
                         opslaan,
                         doorgaan);
+            alert2.setTitle(r.getString("TITELALERT2"));
             
             alert2.showAndWait();
             
