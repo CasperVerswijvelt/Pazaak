@@ -15,6 +15,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -35,9 +36,12 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
     private SpelBordPaneel sbp2;
     private ActiesPaneel ap1;
     private ActiesPaneel ap2;
+    private SetTussenstandPaneel stp1;
+    private SetTussenstandPaneel stp2;
 
     private Label lblSpeler1;
     private Label lblSpeler2;
+    
 
     SpeelWedstrijdHoofdScherm(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
@@ -60,13 +64,19 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
         ap2 = new ActiesPaneel(this, dc, r, 1);
         lblSpeler1 = new Label(speler1);
         lblSpeler2 = new Label(speler2);
+//        RadioButton rb1 = new RadioButton("");
+//        RadioButton rb2 = new RadioButton("");
+        stp1 = new SetTussenstandPaneel(this, dc, r, 0);
+        stp2 = new SetTussenstandPaneel(this, dc, r, 1);
 
-        this.add(sbp1, 0, 0);
-        this.add(sbp2, 1, 0);
-        this.add(ap1, 0, 1);
-        this.add(ap2, 1, 1);
+        this.add(sbp1, 0, 0, 2, 1);
+        this.add(sbp2, 2, 0, 2, 1);
+        this.add(ap1, 0, 1, 2, 1);
+        this.add(ap2, 2, 1, 2, 1);
         this.add(lblSpeler1, 0, 2);
-        this.add(lblSpeler2, 1, 2);
+        this.add(lblSpeler2, 3, 2);
+        this.add(stp1, 1, 2);
+        this.add(stp2, 2, 2);
 
         this.setVgap(20);
         this.setHgap(20);
@@ -113,17 +123,13 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
                     if (naam.isPresent()) {
                         dc.slaWedstrijdOp(naam.get());
                         parent.zetTerugActief(stage);
-                    } else {
+                    }else{
                         setTenEinde();
-                    }
+                    } 
                 }
-                setTenEinde();
             }
-            
-            
-
+            setTenEinde();
         }
-
     }
 
     private void verversSpelerScherm() {
@@ -137,6 +143,8 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
         }
 
         verversSpelbordSpeler();
+        stp1.verversAantalWins();
+        stp2.verversAantalWins();
     }
 
     private void verversSpelbordSpeler() {
@@ -193,7 +201,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
         } else {
 
             Scene scene = new Scene(new SpeelWedstrijdHoofdScherm(parent, dc, r));
-            stage.setTitle("Pazaak - Playing");
+            stage.setTitle("Pazaak - " + r.getString("PLAYING"));
             stage.setScene(scene);
 
         }
