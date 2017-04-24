@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -47,6 +48,7 @@ public class WedstrijdHoofdScherm extends GridPane {
     private ComboBox cbSpeler2;
     private Button btnCancel;
     private Button btnSelectPlay;
+    private Label lblError;
 
     private Alert playerNotFoundAlert;
     private Alert DBAlert;
@@ -61,17 +63,35 @@ public class WedstrijdHoofdScherm extends GridPane {
     }
 
     private void buildGUI() {
-        this.setPadding(new Insets(35,35,15,35));
+        this.setPadding(new Insets(35, 35, 15, 35));
         this.setVgap(10);
         this.setHgap(10);
         
-        lijstSpeler1 = FXCollections.observableArrayList(dc.geefAlleSpelerNamen());
+        playerNotFoundAlert = new Alert(Alert.AlertType.ERROR);
+        playerNotFoundAlert.setTitle("Pazaak");
+        playerNotFoundAlert.setContentText("PLAYER NOT FOUND (vertaal mij)");
+
+        DBAlert = new Alert(Alert.AlertType.ERROR);
+        playerNotFoundAlert.setTitle("Pazaak");
+        DBAlert.setContentText(r.getString("DATABASEERROR"));
+
+        noPlayersAvailableAlert = new Alert(Alert.AlertType.ERROR);
+        playerNotFoundAlert.setTitle("Pazaak");
+        noPlayersAvailableAlert.setContentText(r.getString("NOTENOUGHPLAYERS"));
+
+        try{
+            lijstSpeler1 = FXCollections.observableArrayList(dc.geefAlleSpelerNamen());
+        } catch(DatabaseException e) {
+            DBAlert.show();
+        }
 
         lblSelecteerSpelers = new Label(r.getString("CHOOSETWOPLAYERS"));
         lblSpeler1 = new Label(r.getString("PLAYER") + "1");
         lblSpeler1.setMinWidth(50);
         lblSpeler2 = new Label(r.getString("PLAYER") + "2");
         lblSpeler2.setMinWidth(50);
+        lblError = new Label();
+        lblError.setTextFill(Color.RED);
 
         cbSpeler1 = new ComboBox(lijstSpeler1);
         cbSpeler1.setMaxWidth(150);
@@ -80,17 +100,7 @@ public class WedstrijdHoofdScherm extends GridPane {
         cbSpeler2.setMaxWidth(150);
         cbSpeler2.setMinWidth(150);
 
-        playerNotFoundAlert = new Alert(Alert.AlertType.ERROR);
-        playerNotFoundAlert.setTitle("Pazaak");
-        playerNotFoundAlert.setContentText("PLAYER NOT FOUND (vertaal mij)");
-
-        DBAlert = new Alert(Alert.AlertType.ERROR);
-        playerNotFoundAlert.setTitle("Pazaak");
-        DBAlert.setContentText(r.getString("DATABASEERROR"));
         
-        noPlayersAvailableAlert = new Alert(Alert.AlertType.ERROR);
-        playerNotFoundAlert.setTitle("Pazaak");
-        noPlayersAvailableAlert.setContentText(r.getString("NOTENOUGHPLAYERS"));
 
         ksp1 = new KaartSelectiePaneel(dc, this, r);
         ksp2 = new KaartSelectiePaneel(dc, this, r);
@@ -109,6 +119,7 @@ public class WedstrijdHoofdScherm extends GridPane {
         this.add(ksp2, 2, 2, 2, 1);
         this.add(btnCancel, 0, 3);
         this.add(btnSelectPlay, 3, 3);
+        this.add(lblError, 1, 3);
 
         cbSpeler2.setDisable(true);
 
@@ -156,22 +167,27 @@ public class WedstrijdHoofdScherm extends GridPane {
     }
 
     private void drukSelecteerSpelers() {
-        speler1 = cbSpeler1.getSelectionModel().getSelectedItem().toString();
-        speler2 = cbSpeler2.getSelectionModel().getSelectedItem().toString();
 
         try {
+            speler1 = cbSpeler1.getSelectionModel().getSelectedItem().toString();
+            speler2 = cbSpeler2.getSelectionModel().getSelectedItem().toString();
             dc.selecteerSpeler(speler1);
             dc.selecteerSpeler(speler2);
             dc.maakNieuweWedstrijd();
+        }catch(NullPointerException e) {
+            lblError.setText("SELECT 2 PLAYERS, (vertaal mij)");
+            return;
         } catch (PlayerDoesntExistException e) {
             playerNotFoundAlert.show();
+            return;
         } catch (DatabaseException e) {
             DBAlert.show();
+            return;
         } catch (NoPlayersAvailableException e) {
             noPlayersAvailableAlert.show();
+            return;
         }
 
-        
         ksp1.activeerScherm(speler1);
         ksp2.activeerScherm(speler2);
         cbSpeler1.setDisable(true);
@@ -185,19 +201,19 @@ public class WedstrijdHoofdScherm extends GridPane {
         dc.selecterSpelerWedstrijdStapel(speler1);
         String[][] geselecteerdeKaarten1 = ksp1.geefGeselecteerdeKaarten();
         System.out.println(Arrays.deepToString(geselecteerdeKaarten1));
-        for(String[] kaart : geselecteerdeKaarten1) {
+        for (String[] kaart : geselecteerdeKaarten1) {
             dc.selecteerKaart(kaart);
         }
         dc.maakWedstrijdStapel();
-        
+
         dc.selecterSpelerWedstrijdStapel(speler2);
         String[][] geselecteerdeKaarten2 = ksp2.geefGeselecteerdeKaarten();
         System.out.println(Arrays.deepToString(geselecteerdeKaarten2));
-        for(String[] kaart : geselecteerdeKaarten2) {
+        for (String[] kaart : geselecteerdeKaarten2) {
             dc.selecteerKaart(kaart);
         }
         dc.maakWedstrijdStapel();
-        
+
         toSpeelWedstrijdScherm();
     }
 
