@@ -59,7 +59,7 @@ public class Hoofdmenu extends VBox {
         btnNieuweWedstrijd = new Button(r.getString("STARTGAMEOPTION"));
         btnKoopKaart = new Button(r.getString("BUYCARDOPTION"));
         btnLaadWedstrijd = new Button(r.getString("LOADGAMEOPTION"));
-        btnVeranderTaal = new Button("CHANGE LANGUAGE ( VERTAAL MIJ )");
+        btnVeranderTaal = new Button("CHANGE LANGUAGE"+r.getString("VERTAALMIJ"));
         btnExit = new Button(r.getString("EXIT"));
 
         //toevoegen
