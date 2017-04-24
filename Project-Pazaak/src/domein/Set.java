@@ -45,9 +45,14 @@ public class Set {
         setStapel.remove(0);
 
         if (speler1AanBeurt) {
-            spelbord1.add(kaart);
+            if (!bevroren[0]) {
+                spelbord1.add(kaart);
+            }
         } else {
-            spelbord2.add(kaart);
+            if (!bevroren[1]) {
+                spelbord2.add(kaart);
+            }
+
         }
     }
 
@@ -66,15 +71,17 @@ public class Set {
             return berekenScore(spelbord2);
         }
     }
+
     public boolean isBevroren() {
-        if(bevroren[geefSpelerAanBeurtIndex()])
+        if (bevroren[geefSpelerAanBeurtIndex()]) {
             return true;
+        }
         return false;
     }
 
     public List<String> geefMogelijkeActies() {
         List res = new ArrayList<>();
-        if(!bevroren[geefSpelerAanBeurtIndex()] && !setIsKlaar()){
+        if (!bevroren[geefSpelerAanBeurtIndex()] && !setIsKlaar()) {
             res.add("FREEZE");
             res.add("ENDTURN");
         }
@@ -98,18 +105,19 @@ public class Set {
         bevroren[geefSpelerAanBeurtIndex()] = true;
     }
 
-    public void gebruikWedstrijdKaart(Kaart kaart, int Pwaarde ,char Ptype) {
+    public void gebruikWedstrijdKaart(Kaart kaart, int Pwaarde, char Ptype) {
         List<Kaart> huidigSpelbord;
-        if (speler1AanBeurt) {        
+        if (speler1AanBeurt) {
             huidigSpelbord = spelbord1;
         } else {
             huidigSpelbord = spelbord2;
         }
-        
+
         int waarde = kaart.getWaarde();
         char origineelType = kaart.getType();
-        switch(origineelType){
-            case '+':case '-':
+        switch (origineelType) {
+            case '+':
+            case '-':
                 controleerTypeGelijk(origineelType, Ptype);
                 break;
             case '*':
@@ -121,21 +129,22 @@ public class Set {
                 break;
             case 'D':
                 controleerTypeGelijk(origineelType, Ptype);
-                Kaart teVerdubbelenKaart = huidigSpelbord.get(huidigSpelbord.size()-1);
-                teVerdubbelenKaart.setWaarde(teVerdubbelenKaart.getWaarde()*2);
+                Kaart teVerdubbelenKaart = huidigSpelbord.get(huidigSpelbord.size() - 1);
+                teVerdubbelenKaart.setWaarde(teVerdubbelenKaart.getWaarde() * 2);
                 break;
-            case 'W': 
+            case 'W':
                 controleerTypeGelijk(origineelType, Ptype);
                 int[] waardes;
-                if(waarde == 1)
-                    waardes =  new int[]{2,4};
-                else if(waarde == 2)
-                    waardes = new int[]{3,6};
-                else
-                    throw new InvalidCardException("Value "+waarde+" not allowed for this card");
-                for(Kaart element : huidigSpelbord) {
-                    if(element.getWaarde() == waardes[0] || element.getWaarde() == waardes[1]) {
-                        element.setType(element.getType()=='+'?'-':'+');
+                if (waarde == 1) {
+                    waardes = new int[]{2, 4};
+                } else if (waarde == 2) {
+                    waardes = new int[]{3, 6};
+                } else {
+                    throw new InvalidCardException("Value " + waarde + " not allowed for this card");
+                }
+                for (Kaart element : huidigSpelbord) {
+                    if (element.getWaarde() == waardes[0] || element.getWaarde() == waardes[1]) {
+                        element.setType(element.getType() == '+' ? '-' : '+');
                     }
                 }
                 break;
@@ -143,11 +152,12 @@ public class Set {
                 kaart.setType(Ptype);
                 kaart.setWaarde(waarde);
                 break;
-                    
+
         }
         char type = kaart.getType();
-        if(type =='C' || type == '*')
+        if (type == 'C' || type == '*') {
             throw new InvalidCardException("Card 'C' or '*' must include a requested type and/or value");
+        }
         huidigSpelbord.add(kaart);
     }
 
@@ -157,31 +167,36 @@ public class Set {
     }
 
     public int geefSetUitslagIndex() {
-        if(setIsKlaar()) { // Set ten einde
-            
+        if (setIsKlaar()) { // Set ten einde
+
             int score1 = berekenScore(spelbord1), score2 = berekenScore(spelbord2);
-            if(score1==score2) 
+            if (score1 == score2) {
                 return 2;
-            else {
-                if(score1>20)
+            } else {
+                if (score1 > 20) {
                     return 1;
-                if(score2>20)
+                }
+                if (score2 > 20) {
                     return 0;
-                if(score1>score2)
+                }
+                if (score1 > score2) {
                     return 0;
-                else
+                } else {
                     return 1;
+                }
             }
-                  
+
         } else // Set nog niet ten einde
+        {
             return -1;
+        }
     }
 
     private int berekenScore(List<Kaart> kaarten) {
         int score = 0;
         for (Kaart element : kaarten) {
             int waarde = element.getWaarde();
-            switch(element.getType()) {
+            switch (element.getType()) {
                 case '+':
                     score += waarde;
                     break;
@@ -189,23 +204,24 @@ public class Set {
                     score -= waarde;
                     break;
                 case 'T':
-                    score+=waarde;
+                    score += waarde;
                     break;
-                case 'D': 
+                case 'D':
                     break;
                 case 'W':
                     break;
-                case 'C':case '*':
+                case 'C':
+                case '*':
                     throw new InvalidCardException("Invalid card on board");
             }
-            
+
         }
         return score;
     }
-    
-    
+
     private void controleerTypeGelijk(char type1, char type2) {
-        if( type1!=type2)
+        if (type1 != type2) {
             throw new InvalidCardException("Original cardtype and requested type doesn't match, stop cheating!");
+        }
     }
 }
