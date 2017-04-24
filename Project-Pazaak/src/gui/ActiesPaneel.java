@@ -55,15 +55,10 @@ class ActiesPaneel extends GridPane {
 
         });
 
-        if (speler == 1) {
-            this.add(wsp, 0, 0, 2, 1);
-            this.add(btnBevries, 0, 1);
-            this.add(btnEndTurn, 1, 1);
-        } else {
-            this.add(wsp, 0, 0, 2, 1);
-            this.add(btnBevries, 1, 1);
-            this.add(btnEndTurn, 0, 1);
-        }
+        this.add(wsp, 0, 0, 2, 1);
+        this.add(btnBevries, 0, 1);
+        this.add(btnEndTurn, 1, 1);
+
         setVgap(10);
         setHgap(10);
 

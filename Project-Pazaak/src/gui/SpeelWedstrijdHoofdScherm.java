@@ -84,6 +84,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
             alert.showAndWait();
 
             setTenEinde();
+            
 
         }
 
@@ -126,6 +127,8 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
         dc.bevriesBord();
         dc.eindigBeurt();
         checkEindeSet();
+        if(dc.wedstrijdIsKlaar())
+            return;
         dc.deelKaartUit();
         verversSpelerScherm();
         checkEindeSet();
