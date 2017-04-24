@@ -175,7 +175,7 @@ public class WedstrijdHoofdScherm extends GridPane {
             dc.selecteerSpeler(speler2);
             dc.maakNieuweWedstrijd();
         }catch(NullPointerException e) {
-            lblError.setText("SELECT 2 PLAYERS, (vertaal mij)");
+            lblError.setText(r.getString("SELECTTWOPLAYERS"));
             return;
         } catch (PlayerDoesntExistException e) {
             playerNotFoundAlert.show();
