@@ -156,6 +156,21 @@ public class KaartSelectiePaneel extends VBox {
         int index = kaartButtons.indexOf(button);
         button.setMinSize(50, 80);
         kaarten.add(button, index % 11, index / 11);
+        
+        List<Button> buttons = new ArrayList<>();
+        for(int i =6; i<selected.getChildren().size();i++) {
+            buttons.add((Button)selected.getChildren().get(i));
+            
+        }
+        for(int i =0; i<buttons.size();i++) {
+            selected.getChildren().remove(buttons.get(i));
+            
+        }
+        
+        for(int i =0; i<buttons.size();i++) {
+            selected.add(buttons.get(i), i, 0);
+            
+        }
     }
 
     private void selecteerKaart(Button button) {

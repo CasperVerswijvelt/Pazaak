@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -47,7 +48,6 @@ class WedstrijdStapelPaneel extends HBox {
         int aantalKaarten = wedstrijdKaarten.length;
 
         for (int i = 0; i < aantalKaarten; i++) {
-            System.out.println("test");
             String[] kaart = veranderNaarMooieLayout(wedstrijdKaarten[i]);
             btnWedstrijdKaarten.add(new Button(kaart[0] + kaart[1]));
             btnWedstrijdKaarten.get(i).setMinSize(50, 80);
@@ -73,6 +73,8 @@ class WedstrijdStapelPaneel extends HBox {
         }
         this.getChildren().addAll(btnWedstrijdKaarten);
 
+        if(speler==1)
+            setAlignment(Pos.CENTER_RIGHT);
         setSpacing(10);
     }
 
