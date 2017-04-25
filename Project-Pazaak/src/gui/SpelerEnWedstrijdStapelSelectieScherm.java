@@ -23,8 +23,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -37,7 +40,12 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
     private DomeinController dc;
     private ResourceBundle r;
     private Hoofdmenu parent;
-    private KaartSelectiePaneel ksp;
+    private KaartSelectiePaneel ksp1;
+    private KaartSelectiePaneel ksp2;
+    private TabPane tabbladPaneel;
+    private Button btnConfirmSpeler1;
+    private Button btnConfirmSpeler2;
+
     private String speler1;
     private String speler2;
 
@@ -104,8 +112,34 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
         cbSpeler2.setMaxWidth(150);
         cbSpeler2.setMinWidth(150);
 
-        ksp = new KaartSelectiePaneel(dc, this, r);
-        ksp.setVisible(false);
+        tabbladPaneel = new TabPane();
+        tabbladPaneel.setVisible(false);
+        tabbladPaneel.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
+        ksp1 = new KaartSelectiePaneel(dc, this, r);
+        ksp2 = new KaartSelectiePaneel(dc, this, r);
+        btnConfirmSpeler1 = new Button("CONFIRM");
+
+        btnConfirmSpeler1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                selecteerWedstrijdStapel(speler1);
+                btnConfirmSpeler1.setDisable(true);
+                checkBeideBevestigd();
+            }
+
+        });
+        btnConfirmSpeler2 = new Button("CONFIRM");
+        btnConfirmSpeler2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                selecteerWedstrijdStapel(speler2);
+                btnConfirmSpeler2.setDisable(true);
+                checkBeideBevestigd();
+
+            }
+
+        });
 
         btnCancel = new Button(r.getString("BACK"));
         btnSelectPlay = new Button(r.getString("SELECT") + " " + r.getString("PLAYER"));
@@ -115,7 +149,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
         this.add(cbSpeler1, 1, 1);
         this.add(lblSpeler2, 2, 1);
         this.add(cbSpeler2, 3, 1);
-        this.add(ksp, 0, 2, 4, 1);
+        this.add(tabbladPaneel, 0, 2, 4, 1);
         this.add(btnCancel, 0, 3);
         this.add(btnSelectPlay, 3, 3);
         this.add(lblError, 1, 3);
@@ -134,9 +168,9 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
             public void handle(ActionEvent event) {
                 if (btnSelectPlay.getText().equals(r.getString("SELECT") + " " + r.getString("PLAYER"))) {
                     drukSelecteerSpelers();
-                } else if (btnSelectPlay.getText().equals(r.getString("NEXTPLAYER"))) {
-                    volgendeSpeler();
+                    btnSelectPlay.setDisable(true);
                 } else {
+                    
                     drukSpeel();
                 }
             }
@@ -168,14 +202,13 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
     }
 
     private void drukSelecteerSpelers() {
-        ksp.setVisible(true);
+
         try {
             speler1 = cbSpeler1.getSelectionModel().getSelectedItem().toString();
             speler2 = cbSpeler2.getSelectionModel().getSelectedItem().toString();
             dc.selecteerSpeler(speler1);
             dc.selecteerSpeler(speler2);
             dc.maakNieuweWedstrijd();
-            ksp.setVisible(true);
         } catch (NullPointerException e) {
             lblError.setText(r.getString("SELECTTWOPLAYERS"));
             return;
@@ -190,7 +223,18 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
             return;
         }
 
-        ksp.activeerScherm(speler1);
+        ksp1.activeerScherm(speler1);
+        ksp2.activeerScherm(speler2);
+        Tab tab1 = new Tab();
+        tab1.setContent(new VBox(ksp1, btnConfirmSpeler1));
+        tab1.setText(speler1);
+        Tab tab2 = new Tab();
+        tab2.setContent(new VBox(ksp2, btnConfirmSpeler2));
+        tab2.setText(speler2);
+
+        tabbladPaneel.getTabs().addAll(tab1, tab2);
+
+        tabbladPaneel.setVisible(true);
         cbSpeler1.setDisable(true);
         cbSpeler2.setDisable(true);
         btnSelectPlay.setText(r.getString("NEXTPLAYER"));
@@ -207,7 +251,6 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
 
         }
 
-        
     }
 
     private void toSpeelWedstrijdScherm() {
@@ -219,35 +262,31 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
         stage.setScene(scene);
     }
 
-    private void volgendeSpeler() {
 
-        try {
-            selecteerWedstrijdStapel(speler1);
-            lblSelecteerSpelers.setText("Kies 6 kaarten voor speler " + speler2);
+ 
 
-            ksp.activeerScherm(speler2);
-
-            btnSelectPlay.setText(r.getString("PLAY"));
-        } catch (IllegalArgumentException e) {
-            lblError.setText("SELECT 6 CARDS");
-        }
-
-    }
 
     private void selecteerWedstrijdStapel(String speler) {
         dc.selecterSpelerWedstrijdStapel(speler);
-        String[][] geselecteerdeKaarten = ksp.geefGeselecteerdeKaarten();
 
-        
+        KaartSelectiePaneel spelerKsp = speler.equals(speler1) ? ksp1 : ksp2;
+        String[][] geselecteerdeKaarten = spelerKsp.geefGeselecteerdeKaarten();
+
         ////////////////////////////////////////////DIT UIT COMMENTS HALEN VOOR 6 KAARTEN CHECK  ///////////////////////////
 //        if (geselecteerdeKaarten.length < 6) {
 //            throw new IllegalArgumentException();
 //        }
-
         System.out.println(Arrays.deepToString(geselecteerdeKaarten));
         for (String[] kaart : geselecteerdeKaarten) {
             dc.selecteerKaart(kaart);
         }
         dc.maakWedstrijdStapel();
+    }
+
+    private void checkBeideBevestigd() {
+        System.out.println(dc.geefSpelersZonderWedstrijdStapel().size());
+        if(dc.geefSpelersZonderWedstrijdStapel().size()==0) {
+            btnSelectPlay.setDisable(false);
+        }
     }
 }

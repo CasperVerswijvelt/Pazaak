@@ -58,7 +58,7 @@ public class UC9 {
                 }
             } while (!valideKeuze);
 
-            
+            dc.laadWedstrijd(overzicht[keuze - 1][0]);
             printLijn();
             new UC5(dc, r).start();
         }
