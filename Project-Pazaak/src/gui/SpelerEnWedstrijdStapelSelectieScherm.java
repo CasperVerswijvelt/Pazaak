@@ -32,7 +32,7 @@ import javafx.stage.Stage;
  *
  * @author goran
  */
-public class WedstrijdHoofdScherm extends GridPane {
+public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
 
     private DomeinController dc;
     private ResourceBundle r;
@@ -56,9 +56,9 @@ public class WedstrijdHoofdScherm extends GridPane {
     private Alert DBAlert;
     private Alert noPlayersAvailableAlert;
 
-    private WedstrijdHoofdScherm ws;
+    private SpelerEnWedstrijdStapelSelectieScherm ws;
 
-    public WedstrijdHoofdScherm(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
+    public SpelerEnWedstrijdStapelSelectieScherm(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
         this.dc = dc;
         this.r = r;
@@ -134,7 +134,7 @@ public class WedstrijdHoofdScherm extends GridPane {
             public void handle(ActionEvent event) {
                 if (btnSelectPlay.getText().equals(r.getString("SELECT") + " " + r.getString("PLAYER"))) {
                     drukSelecteerSpelers();
-                } else if (btnSelectPlay.getText().equals(r.getString("NEXTPLAYER"))) {
+                } else if (btnSelectPlay.getText().equals("NEXTPLAYER")) {
                     volgendeSpeler();
                 } else {
                     drukSpeel();
@@ -193,46 +193,61 @@ public class WedstrijdHoofdScherm extends GridPane {
         ksp.activeerScherm(speler1);
         cbSpeler1.setDisable(true);
         cbSpeler2.setDisable(true);
-        btnSelectPlay.setText(r.getString("NEXTPLAYER"));
+        btnSelectPlay.setText("NEXTPLAYER");
         lblSelecteerSpelers.setText("Kies 6 kaarten voor speler " + speler1);
 
     }
 
     private void drukSpeel() {
 
-        dc.selecterSpelerWedstrijdStapel(speler2);
-        String[][] geselecteerdeKaarten2 = ksp.geefGeselecteerdeKaarten();
-        System.out.println(Arrays.deepToString(geselecteerdeKaarten2));
-        for (String[] kaart : geselecteerdeKaarten2) {
-            dc.selecteerKaart(kaart);
-        }
-        dc.maakWedstrijdStapel();
+        try {
+            selecteerWedstrijdStapel(speler2);
+            toSpeelWedstrijdScherm();
+        } catch (IllegalArgumentException e) {
 
-        toSpeelWedstrijdScherm();
+        }
+
+        
     }
 
     private void toSpeelWedstrijdScherm() {
         Stage stage = (Stage) this.getScene().getWindow();
 
         Scene scene;
-        scene = new Scene(new SpeelWedstrijdHoofdScherm(parent, dc, r));
+        scene = new Scene(new SetSpeelScherm(parent, dc, r));
         stage.setTitle("Pazaak");
         stage.setScene(scene);
     }
 
     private void volgendeSpeler() {
-        dc.selecterSpelerWedstrijdStapel(speler1);
-        String[][] geselecteerdeKaarten1 = ksp.geefGeselecteerdeKaarten();
-        System.out.println(Arrays.deepToString(geselecteerdeKaarten1));
-        for (String[] kaart : geselecteerdeKaarten1) {
+
+        try {
+            selecteerWedstrijdStapel(speler1);
+            lblSelecteerSpelers.setText("Kies 6 kaarten voor speler " + speler2);
+
+            ksp.activeerScherm(speler2);
+
+            btnSelectPlay.setText("PLAY");
+        } catch (IllegalArgumentException e) {
+            lblError.setText("SELECT 6 CARDS");
+        }
+
+    }
+
+    private void selecteerWedstrijdStapel(String speler) {
+        dc.selecterSpelerWedstrijdStapel(speler);
+        String[][] geselecteerdeKaarten = ksp.geefGeselecteerdeKaarten();
+
+        
+        ////////////////////////////////////////////DIT UIT COMMENTS HALEN VOOR 6 KAARTEN CHECK  ///////////////////////////
+//        if (geselecteerdeKaarten.length < 6) {
+//            throw new IllegalArgumentException();
+//        }
+
+        System.out.println(Arrays.deepToString(geselecteerdeKaarten));
+        for (String[] kaart : geselecteerdeKaarten) {
             dc.selecteerKaart(kaart);
         }
         dc.maakWedstrijdStapel();
-        
-        lblSelecteerSpelers.setText("Kies 6 kaarten voor speler " + speler2);
-        
-        ksp.activeerScherm(speler2);
-        
-        btnSelectPlay.setText(r.getString("PLAY"));
     }
 }

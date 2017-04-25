@@ -29,14 +29,14 @@ public class KaartSelectiePaneel extends VBox {
 
     private DomeinController dc;
     private ResourceBundle r;
-    private WedstrijdHoofdScherm parent;
+    private SpelerEnWedstrijdStapelSelectieScherm parent;
     private String[][] startStapel;
 
     private List<Button> kaartButtons;
     private List<HBox> kaartRijen;
     private HBox selected;
 
-    KaartSelectiePaneel(DomeinController dc, WedstrijdHoofdScherm parent, ResourceBundle r) {
+    KaartSelectiePaneel(DomeinController dc, SpelerEnWedstrijdStapelSelectieScherm parent, ResourceBundle r) {
         this.dc = dc;
         this.parent = parent;
         this.r = r;

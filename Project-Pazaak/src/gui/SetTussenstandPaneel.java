@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
  */
 public class SetTussenstandPaneel extends HBox{
 
-    private SpeelWedstrijdHoofdScherm ss;
+    private SetSpeelScherm ss;
     
     private RadioButton rb1;
     private RadioButton rb2;
@@ -29,7 +29,7 @@ public class SetTussenstandPaneel extends HBox{
     
     private int speler;
     
-    SetTussenstandPaneel(SpeelWedstrijdHoofdScherm aThis, DomeinController dc, ResourceBundle r, int speler) {
+    SetTussenstandPaneel(SetSpeelScherm aThis, DomeinController dc, ResourceBundle r, int speler) {
         rb1 = new RadioButton();
         rb2 = new RadioButton();
         rb3 = new RadioButton();

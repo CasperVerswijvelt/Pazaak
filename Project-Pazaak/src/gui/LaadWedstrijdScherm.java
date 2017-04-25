@@ -111,7 +111,7 @@ public class LaadWedstrijdScherm extends GridPane {
         Stage stage = (Stage) this.getScene().getWindow();
 
         Scene scene;
-        scene = new Scene(new SpeelWedstrijdHoofdScherm(parent, dc, r));
+        scene = new Scene(new SetSpeelScherm(parent, dc, r));
         stage.setTitle("Pazaak");
         stage.setScene(scene);
     }

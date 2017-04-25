@@ -19,7 +19,7 @@ import javafx.scene.layout.GridPane;
  */
 class ActiesPaneel extends GridPane {
 
-    private SpeelWedstrijdHoofdScherm parent;
+    private SetSpeelScherm parent;
     private DomeinController dc;
     private ResourceBundle r;
     private int speler;
@@ -28,7 +28,7 @@ class ActiesPaneel extends GridPane {
     private Button btnEndTurn;
     private Button btnBevries;
 
-    ActiesPaneel(SpeelWedstrijdHoofdScherm parent, DomeinController dc, ResourceBundle r, int speler) {
+    ActiesPaneel(SetSpeelScherm parent, DomeinController dc, ResourceBundle r, int speler) {
         this.parent = parent;
         this.dc = dc;
         this.r = r;

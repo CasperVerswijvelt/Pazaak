@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  *
  * @author goran
  */
-public class SpeelWedstrijdHoofdScherm extends GridPane {
+public class SetSpeelScherm extends GridPane {
 
     private Hoofdmenu parent;
     private DomeinController dc;
@@ -42,7 +42,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
     private Label lblSpeler1;
     private Label lblSpeler2;
 
-    SpeelWedstrijdHoofdScherm(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
+    SetSpeelScherm(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
         this.dc = dc;
         this.r = r;
@@ -243,7 +243,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
 
         } else {
 
-            Scene scene = new Scene(new SpeelWedstrijdHoofdScherm(parent, dc, r));
+            Scene scene = new Scene(new SetSpeelScherm(parent, dc, r));
             stage.setTitle("Pazaak - " + r.getString("PLAYING"));
             stage.setScene(scene);
 
