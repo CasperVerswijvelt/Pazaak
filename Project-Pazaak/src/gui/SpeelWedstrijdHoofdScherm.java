@@ -184,8 +184,7 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
             ButtonType plus = new ButtonType("+", ButtonBar.ButtonData.OK_DONE);
             ButtonType min = new ButtonType("-", ButtonBar.ButtonData.OK_DONE);
 
-            Alert alert = new Alert(AlertType.NONE, "PLUS OF MIN (VERTAAL MIJ)", plus, min);
-            alert.setContentText("+/- kaart gespeeld");
+            Alert alert = new Alert(AlertType.NONE, "-/+", plus, min);
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == plus) {
@@ -202,7 +201,6 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
             ButtonType min2 = new ButtonType("-2", ButtonBar.ButtonData.OK_DONE);
 
             Alert alert = new Alert(AlertType.NONE, "+1/+2/-1/-2", plus1, plus2, min1, min2);
-            alert.setContentText("+/- kaart gespeeld");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == plus1) {
