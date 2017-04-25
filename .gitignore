@@ -20,3 +20,5 @@ hs_err_pid*
 /dist/
 /Pazaak/build/
 /Pazaak/dist/
+/Pazaak-g37/nbproject/private/
+/Pazaak-g37/build/
