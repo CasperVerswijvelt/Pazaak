@@ -32,6 +32,7 @@ public class RegelsScherm extends AnchorPane{
 
     private void buildGUI() {
         tar = new TextArea(r.getString("REGELSTEKST"));
+        this.getChildren().add(tar);
     }
     
 }
