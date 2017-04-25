@@ -39,6 +39,7 @@ public class Hoofdmenu extends VBox {
     private Button btnLaadWedstrijd;
     private Button btnVeranderTaal;
     private Button btnExit;
+    private Button btnRegels;
 
     public Hoofdmenu(TaalSelectieScherm parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
@@ -61,9 +62,10 @@ public class Hoofdmenu extends VBox {
         btnLaadWedstrijd = new Button(r.getString("LOADGAMEOPTION"));
         btnVeranderTaal = new Button("Change language"+r.getString("VERTAALMIJ"));
         btnExit = new Button(r.getString("EXIT"));
+        btnRegels = new Button(r.getString("RULES"));
 
         //toevoegen
-        this.getChildren().addAll(btnNieuweWedstrijd, btnNieuweSpeler, btnKoopKaart, btnLaadWedstrijd, btnVeranderTaal, btnExit);
+        this.getChildren().addAll(btnNieuweWedstrijd, btnNieuweSpeler, btnKoopKaart, btnLaadWedstrijd, btnRegels, btnVeranderTaal, btnExit);
 
         //Juiste grootte geven aan buttons
         for (Node element : getChildren()) {
@@ -112,6 +114,12 @@ public class Hoofdmenu extends VBox {
                 klikExit();
             }
 
+        });
+        btnRegels.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                toRegelsScherm();
+            }
         });
 
     }
@@ -168,5 +176,14 @@ public class Hoofdmenu extends VBox {
         stage.setScene(this.getScene());
         stage.setTitle("Pazaak - Menu");
 
+    }
+    
+    public void toRegelsScherm() {
+        Stage stage = (Stage) this.getScene().getWindow();
+
+        Scene scene;
+        scene = new Scene(new RegelsScherm(this, dc, r));
+        stage.setTitle("Pazaak - " + r.getString("RULES"));
+        stage.setScene(scene);
     }
 }
