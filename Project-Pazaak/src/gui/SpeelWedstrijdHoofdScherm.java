@@ -41,7 +41,6 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
 
     private Label lblSpeler1;
     private Label lblSpeler2;
-    
 
     SpeelWedstrijdHoofdScherm(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
@@ -123,9 +122,9 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
                     if (naam.isPresent()) {
                         dc.slaWedstrijdOp(naam.get());
                         parent.zetTerugActief(stage);
-                    }else{
+                    } else {
                         setTenEinde();
-                    } 
+                    }
                 }
             }
             setTenEinde();
@@ -179,7 +178,53 @@ public class SpeelWedstrijdHoofdScherm extends GridPane {
     }
 
     void drukSpeelWedstrijdkaart(String[] kaart) {
-        dc.gebruikWedstrijdKaart(kaart, Integer.parseInt(kaart[1]), kaart[0].charAt(0));
+        int waarde = Integer.parseInt(kaart[1]);
+        char type = kaart[0].charAt(0);
+        if (type == '*') {
+            ButtonType plus = new ButtonType("+", ButtonBar.ButtonData.OK_DONE);
+            ButtonType min = new ButtonType("-", ButtonBar.ButtonData.OK_DONE);
+
+            Alert alert = new Alert(AlertType.NONE, "PLUS OF MIN (VERTAAL MIJ)", plus, min);
+            alert.setContentText("+/- kaart gespeeld");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == plus) {
+                type = '+';
+            }
+            if (result.get() == min) {
+                type = '-';
+            }
+        }
+        if (type == 'C') {
+            ButtonType plus1 = new ButtonType("+1", ButtonBar.ButtonData.OK_DONE);
+            ButtonType plus2 = new ButtonType("+2", ButtonBar.ButtonData.OK_DONE);
+            ButtonType min1 = new ButtonType("-1", ButtonBar.ButtonData.OK_DONE);
+            ButtonType min2 = new ButtonType("-2", ButtonBar.ButtonData.OK_DONE);
+
+            Alert alert = new Alert(AlertType.NONE, "+1/+2/-1/-2", plus1, plus2, min1, min2);
+            alert.setContentText("+/- kaart gespeeld");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == plus1) {
+                type = '+';
+                waarde = 1;
+            }
+
+            if (result.get() == plus2) {
+                type = '+';
+                waarde = 2;
+            }
+            if (result.get() == min1) {
+                type = '-';
+                waarde = 1;
+            }
+            if (result.get() == min2) {
+                type = '-';
+                waarde = 2;
+            }
+        }
+
+        dc.gebruikWedstrijdKaart(kaart, waarde, type);
         verversSpelerScherm();
         drukEndTurn();
     }
