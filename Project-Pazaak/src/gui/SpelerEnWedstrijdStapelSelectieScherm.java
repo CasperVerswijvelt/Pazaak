@@ -134,7 +134,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
             public void handle(ActionEvent event) {
                 if (btnSelectPlay.getText().equals(r.getString("SELECT") + " " + r.getString("PLAYER"))) {
                     drukSelecteerSpelers();
-                } else if (btnSelectPlay.getText().equals("NEXTPLAYER")) {
+                } else if (btnSelectPlay.getText().equals(r.getString("NEXTPLAYER"))) {
                     volgendeSpeler();
                 } else {
                     drukSpeel();
@@ -193,7 +193,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
         ksp.activeerScherm(speler1);
         cbSpeler1.setDisable(true);
         cbSpeler2.setDisable(true);
-        btnSelectPlay.setText("NEXTPLAYER");
+        btnSelectPlay.setText(r.getString("NEXTPLAYER"));
         lblSelecteerSpelers.setText("Kies 6 kaarten voor speler " + speler1);
 
     }
@@ -227,7 +227,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
 
             ksp.activeerScherm(speler2);
 
-            btnSelectPlay.setText("PLAY");
+            btnSelectPlay.setText(r.getString("PLAY"));
         } catch (IllegalArgumentException e) {
             lblError.setText("SELECT 6 CARDS");
         }
