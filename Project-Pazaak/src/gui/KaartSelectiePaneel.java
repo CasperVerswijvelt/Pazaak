@@ -33,8 +33,8 @@ public class KaartSelectiePaneel extends VBox {
     private String[][] startStapel;
 
     private List<Button> kaartButtons;
-    private List<HBox> kaartRijen;
-    private HBox selected;
+    private GridPane kaarten;
+    private GridPane selected;
 
     KaartSelectiePaneel(DomeinController dc, SpelerEnWedstrijdStapelSelectieScherm parent, ResourceBundle r) {
         this.dc = dc;
@@ -46,38 +46,52 @@ public class KaartSelectiePaneel extends VBox {
 
     private void buildGUI() {
         kaartButtons = new ArrayList<>();
-        kaartRijen = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            kaartRijen.add(new HBox());
-            this.getChildren().add(kaartRijen.get(i));
-            kaartRijen.get(i).setSpacing(10);
-            kaartRijen.get(i).setAlignment(Pos.CENTER);
-            
-            
-        }
-        selected = new HBox();
-        selected.setSpacing(15);
+        kaarten = new GridPane();
+        kaarten.setAlignment(Pos.CENTER);
+        selected = new GridPane();
         selected.setAlignment(Pos.CENTER);
+
+        this.getChildren().add(kaarten);
         this.getChildren().add(selected);
         this.setPadding(new Insets(10, 10, 10, 10));
-        
-        for(int i =0; i<6;i++) {
+
+        for (int i = 0; i < 33; i++) {
             Button btn = new Button();
-            btn.setMinSize(75,120);
-            selected.getChildren().add(btn);
+            btn.setMinSize(50, 80);
+            btn.setDisable(true);
+            kaarten.add(btn, i % 11, i / 11);
         }
-        
+
+        for (int i = 0; i < 6; i++) {
+            Button btn = new Button();
+            btn.setMinSize(75, 120);
+            btn.setDisable(true);
+            selected.add(btn, i, 0);
+        }
+
         setSpacing(20);
+        this.setVisible(false);
     }
 
     void activeerScherm(String speler) {
+        this.setVisible(true);
 
         //Alles clearen
         kaartButtons.clear();
-        for (HBox hbox : kaartRijen) {
-            hbox.getChildren().clear();
+        for (Node element : kaarten.getChildren()) {
+            if (element instanceof Button) {
+                if (!((Button) element).isDisable()) {
+                    kaarten.getChildren().remove((Button) element);
+                }
+            }
         }
-        selected.getChildren().clear();
+        for (Node element : selected.getChildren()) {
+            if (element instanceof Button) {
+                if (!((Button) element).isDisable()) {
+                    kaarten.getChildren().remove((Button) element);
+                }
+            }
+        }
 
         startStapel = dc.geefStartStapel(speler);
 
@@ -94,11 +108,12 @@ public class KaartSelectiePaneel extends VBox {
             });
 
             kaartButtons.add(button);
-            if (kaartRijen.get(i/10).getChildren().size() >= 10) {
-   
-            }
-            kaartRijen.get(i/10).getChildren().add(kaartButtons.get(i));
 
+        }
+
+        for (int i = 0; i < kaartButtons.size(); i++) {
+
+            kaarten.add(kaartButtons.get(i), i % 11, i / 11);
         }
     }
 
@@ -109,8 +124,7 @@ public class KaartSelectiePaneel extends VBox {
 
         if (kaartNogNietGeselecteerd(button)) {
             if (aantalGeselecteerd < 6) {
-                button.setMinSize(75, 120);
-                selected.getChildren().add(button);
+                selecteerKaart(button);
             }
         } else {
             plaatsKaartTerug(button);
@@ -118,13 +132,13 @@ public class KaartSelectiePaneel extends VBox {
     }
 
     private int geefAantalGeselecteerd() {
-        return selected.getChildren().size();
+        return selected.getChildren().size() - 6;
     }
 
     public String[][] geefGeselecteerdeKaarten() {
         List<String[]> lijst = new ArrayList<>();
-        for (Node child : selected.getChildren()) {
-            lijst.add(startStapel[kaartButtons.indexOf(child)]);
+        for (int i = 6; i<selected.getChildren().size(); i++ ) {
+            lijst.add(startStapel[kaartButtons.indexOf(selected.getChildren().get(i))]);
         }
         String[][] res = new String[lijst.size()][];
         res = lijst.toArray(res);
@@ -134,24 +148,20 @@ public class KaartSelectiePaneel extends VBox {
     }
 
     private boolean kaartNogNietGeselecteerd(Button button) {
-        for (HBox hbox : kaartRijen) {
-            for (Node element : hbox.getChildren()) {
-                if (element instanceof Button && button.equals((Button) element)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return kaarten.getChildren().contains(button);
     }
 
     private void plaatsKaartTerug(Button button) {
-        for (HBox hbox : kaartRijen) {
-            if (hbox.getChildren().size() < 10) {
-                button.setMinSize(50, 80);
-                hbox.getChildren().add(button);
-                break;
-            }
-        }
+
+        int index = kaartButtons.indexOf(button);
+        button.setMinSize(50, 80);
+        kaarten.add(button, index % 11, index / 11);
+    }
+
+    private void selecteerKaart(Button button) {
+        int aantalGeselecteerdeKaarten = selected.getChildren().size() - 6;
+        button.setMinSize(75, 120);
+        selected.add(button, aantalGeselecteerdeKaarten, 0);
     }
 
 }

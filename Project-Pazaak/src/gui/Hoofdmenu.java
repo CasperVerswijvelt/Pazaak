@@ -139,7 +139,7 @@ public class Hoofdmenu extends VBox {
         Stage stage = (Stage) this.getScene().getWindow();
 
         Scene scene;
-        scene = new Scene(new SpelerEnWedstrijdStapelSelectieScherm(this, dc, r), 700, 600);
+        scene = new Scene(new SpelerEnWedstrijdStapelSelectieScherm(this, dc, r), 700, 700);
         stage.setTitle("Pazaak - " + r.getString("NEWGAME"));
         stage.setScene(scene);
     }
