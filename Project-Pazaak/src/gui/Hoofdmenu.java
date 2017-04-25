@@ -121,7 +121,7 @@ public class Hoofdmenu extends VBox {
 
         Scene scene;
         scene = new Scene(new Spelermenu(this, dc, r));
-        stage.setTitle("Pazaak - Nieuwe speler");
+        stage.setTitle("Pazaak - " + r.getString("NEWPLAYER"));
         stage.setScene(scene);
     }
 
@@ -131,7 +131,7 @@ public class Hoofdmenu extends VBox {
 
         Scene scene;
         scene = new Scene(new KaartWinkelScherm(this, dc, r));
-        stage.setTitle("Pazaak - Kaartwinkel");
+        stage.setTitle("Pazaak - " + r.getString("SHOP"));
         stage.setScene(scene);
     }
 
@@ -140,7 +140,7 @@ public class Hoofdmenu extends VBox {
 
         Scene scene;
         scene = new Scene(new WedstrijdHoofdScherm(this, dc, r), 700, 600);
-        stage.setTitle("Pazaak - Nieuwe wedstrijd");
+        stage.setTitle("Pazaak - " + r.getString("NEWGAME"));
         stage.setScene(scene);
     }
 
@@ -148,7 +148,7 @@ public class Hoofdmenu extends VBox {
         Stage stage = (Stage) this.getScene().getWindow();
 
         Scene scene = new Scene(new LaadWedstrijdScherm(this, dc, r));
-        stage.setTitle("Pazaak - Laad wedstrijd");
+        stage.setTitle("Pazaak - " + r.getString("LOADGAMEOPTION"));
         stage.setScene(scene);
     }
 
