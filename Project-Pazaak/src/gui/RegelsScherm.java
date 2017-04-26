@@ -43,6 +43,9 @@ public class RegelsScherm extends VBox{
         
         taRegels = new TextArea(r.getString("REGELSTEKST"));
         
+        taRegels.setMinSize(1000, 650);
+        taRegels.setEditable(false);
+        
         btnCancel = new Button(r.getString("BACK"));
         btnCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
