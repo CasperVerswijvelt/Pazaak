@@ -171,7 +171,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
         btnSelectPlay.setOnAction((ActionEvent event) -> {
             if (btnSelectPlay.getText().equals(r.getString("SELECT") + " " + r.getString("PLAYER"))) {
                 drukSelecteerSpelers();
-                btnSelectPlay.setDisable(true);
+                
             } else {
 
                 drukSpeel();
@@ -221,11 +221,13 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
 
         ksp1.activeerScherm(speler1);
         ksp2.activeerScherm(speler2);
+        
         Tab tab1 = new Tab();
         VBox kaartSelectieSpeler1 = new VBox(ksp1, btnConfirmSpeler1);
         kaartSelectieSpeler1.setAlignment(Pos.CENTER);
         tab1.setContent(kaartSelectieSpeler1);
         tab1.setText(speler1);
+        
         Tab tab2 = new Tab();
         VBox kaartSelectieSpeler2 = new VBox(ksp2, btnConfirmSpeler2);
         kaartSelectieSpeler2.setAlignment(Pos.CENTER);
@@ -238,6 +240,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
         cbSpeler1.setDisable(true);
         cbSpeler2.setDisable(true);
         btnSelectPlay.setText(r.getString("PLAY"));
+        btnSelectPlay.setDisable(true);
         lblSelecteerSpelers.setText("Kies 6 kaarten voor spelers ");
 
     }
