@@ -8,6 +8,7 @@ package guiSceneBuilder;
 import domein.DomeinController;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,6 +36,7 @@ public class TaalSelectieSBController extends VBox {
 
     private DomeinController dc;
     private MooieMenuController mmc;
+    private ResourceBundle r;
 
     public TaalSelectieSBController(DomeinController dc) {
         this.dc = dc;
@@ -48,9 +50,8 @@ public class TaalSelectieSBController extends VBox {
         }
     }
 
-    @FXML
-    private void naarMenu(ActionEvent event) throws IOException{
-        mmc = new MooieMenuController(this, dc);
+    private void naarMenu(ResourceBundle r) throws IOException{
+        mmc = new MooieMenuController(this, dc, r);
         Stage stage = (Stage) this.getScene().getWindow();
 
         stage.setTitle("Pazaak - Menu");
@@ -65,6 +66,27 @@ public class TaalSelectieSBController extends VBox {
 
         Scene scene = new Scene(this);
         stage.setScene(scene);
+    }
+
+    @FXML
+    private void naarMenuEnglish(ActionEvent event) throws IOException {
+        Locale l = new Locale("en", "GB");
+        r = ResourceBundle.getBundle("language/Language", l);
+        naarMenu(r);
+    }
+
+    @FXML
+    private void naarMenuFrancais(ActionEvent event) throws IOException {
+        Locale l = new Locale("fr", "FR");
+        r = ResourceBundle.getBundle("language/Language", l);
+        naarMenu(r);
+    }
+
+    @FXML
+    private void naarMenuNederlands(ActionEvent event) throws IOException {
+        Locale l = new Locale("nl", "BE");
+        r = ResourceBundle.getBundle("language/Language", l);
+        naarMenu(r);
     }
 
 }

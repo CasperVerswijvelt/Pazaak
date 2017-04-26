@@ -49,14 +49,15 @@ public class MooieMenuController extends AnchorPane {
     /**
      * Initializes the controller class.
      */
-    public MooieMenuController(TaalSelectieSBController parent, DomeinController dc) {
+    public MooieMenuController(TaalSelectieSBController parent, DomeinController dc, ResourceBundle r) {
         this.dc = dc;
         this.parent = parent;
+        this.r = r;
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MooieMenu.fxml"));
         loader.setRoot(this);
       
-        
+        buildGUI();
         try{
           loader.load();
         }catch(IOException ex){
@@ -97,6 +98,15 @@ public class MooieMenuController extends AnchorPane {
 
     @FXML
     private void naarInstructies(ActionEvent event) {
+    }
+
+    private void buildGUI() {
+        btnMaakSpeler.setText(r.getString("NEWPLAYEROPTION"));
+        btnStartSpel.setText(r.getString("STARTGAMEOPTION"));
+        btnWinkel.setText(r.getString("BUYCARDOPTION"));
+        btnLaadScherm.setText(r.getString("LOADGAMEOPTION"));
+        btnTaal.setText("Change language"+r.getString("VERTAALMIJ"));
+        btnInstructies.setText(r.getString("RULES"));
     }
     
 }
