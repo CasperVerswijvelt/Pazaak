@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiSceneBuilder.MooieMenuController">
+   <children>
+      <Button fx:id="btnStartSpel" layoutX="189.0" layoutY="131.0" mnemonicParsing="false" onAction="#naarSpelerEnWedstrijdStapelSelectieScherm" prefHeight="81.0" prefWidth="242.0" textFill="#c60808" underline="true">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.42" specularConstant="0.0" specularExponent="40.0" surfaceScale="1.38">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Button>
+      <Button fx:id="btnLaadScherm" layoutX="230.0" layoutY="255.0" mnemonicParsing="false" onAction="#naarLaadScherm" prefHeight="48.0" prefWidth="141.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnTaal" layoutX="40.0" layoutY="348.0" mnemonicParsing="false" onAction="#naarTaalScherm" prefHeight="38.0" prefWidth="81.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnSluiten" layoutX="542.0" layoutY="21.0" mnemonicParsing="false" onAction="#sluitSpel" prefHeight="39.0" prefWidth="40.0" text="x" textFill="RED">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnMaakSpeler" layoutX="40.0" layoutY="255.0" mnemonicParsing="false" onAction="#naarSpelerMakenSchem" prefHeight="48.0" prefWidth="141.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnWinkel" layoutX="421.0" layoutY="255.0" mnemonicParsing="false" onAction="#naarWinkelScherm" prefHeight="48.0" prefWidth="141.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnInstructies" layoutX="481.0" layoutY="348.0" mnemonicParsing="false" onAction="#naarInstructies" prefHeight="38.0" prefWidth="81.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
