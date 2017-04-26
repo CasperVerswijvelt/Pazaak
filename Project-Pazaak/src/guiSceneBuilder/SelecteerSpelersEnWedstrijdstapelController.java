@@ -30,6 +30,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javax.accessibility.AccessibleRole;
 
 /**
  * FXML Controller class
@@ -92,6 +93,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         lblTitel.setText(r.getString("SELECTTWOPLAYERS"));
         lblSpeler1.setText(r.getString("PLAYER") + " 1");
         lblSpeler2.setText(r.getString("PLAYER") + " 2");
+        btnSelectPlayers.setText(r.getString("CONFIRM"));
 
         try {
             spelerLijst = dc.geefAlleSpelerNamen();
@@ -196,6 +198,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         tab2.setText(speler2);
 
         tabbladPaneel.getTabs().addAll(tab1, tab2);
+        tabbladPaneel.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         tabbladPaneel.setVisible(true);
         this.setTop(null);
