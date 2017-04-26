@@ -141,7 +141,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
                 checkBeideBevestigd();
                 tabbladPaneel.getSelectionModel().select(0);
             } catch (IllegalArgumentException e) {
-                lblError.setText("SELECT 6 CARDS");
+                lblError.setText(r.getString("SELECT6CARDS"));
             }
 
         });
