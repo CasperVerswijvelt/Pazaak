@@ -14,3 +14,22 @@
     -fx-spacing: 5px;
     -fx-background-insets: 5px
 }
+.button-StartSpel{
+    -fx-font-family: "Cambria";
+    -fx-font-size: 18px;
+    -fx-font-weight: bolder;
+    -fx-background-color: #AFAFAF;
+    -fx-border-color: gray;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-border-insets: 5px;
+    -fx-padding: 10px;
+    -fx-spacing: 5px;
+    -fx-background-insets: 5px
+}
+.button-StartSpel:hover{
+    -fx-background-color: #A0A0A0; 
+}
+.button-TaalSelectie:hover{
+    -fx-background-color: #A0A0A0; 
+}
