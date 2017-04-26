@@ -59,7 +59,7 @@ public class UC3 {
                 System.out.println(r.getString("GAMECREATEERROR"));
                 return;
             }
-            new UC4().start(dc, r);
+            new UC4().start(dc, r);//hier lus toevoegen voor iedere speler
         }
 
     }
