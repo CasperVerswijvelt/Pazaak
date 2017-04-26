@@ -26,6 +26,9 @@ public class Wedstrijd {
         this.eersteSpelerBegint = true;
 
         int gebJaarSpeler1 = speler1.getGeboorteJaar(), gebJaarSpeler2 = speler2.getGeboorteJaar();
+        
+        if(speler1.getNaam().equalsIgnoreCase(speler2.getNaam()))
+            throw new PlayersInGameAreSameException();
 
         //Speler volgens geboortejaar in goede volgorde opslaan
         if (gebJaarSpeler1 != gebJaarSpeler2) {

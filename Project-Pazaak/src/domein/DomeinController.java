@@ -102,6 +102,7 @@ public class DomeinController {
         if (geselecteerdeSpelers.size() < 2) {
             throw new NoPlayersAvailableException();
         }
+        
         this.wedstrijd = new Wedstrijd(geselecteerdeSpelers.get(0), geselecteerdeSpelers.get(1));
 
         geselecteerdeSpelers.clear();
