@@ -117,7 +117,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
 
         ksp1 = new KaartSelectiePaneel(dc, this, r);
         ksp2 = new KaartSelectiePaneel(dc, this, r);
-        btnConfirmSpeler1 = new Button("CONFIRM");
+        btnConfirmSpeler1 = new Button(r.getString("CONFIRM"));
         btnConfirmSpeler1.setMinSize(100, 30);
         btnConfirmSpeler1.setOnAction((ActionEvent event) -> {
             try {
@@ -131,7 +131,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
             }
 
         });
-        btnConfirmSpeler2 = new Button("CONFIRM");
+        btnConfirmSpeler2 = new Button(r.getString("CONFIRM"));
         btnConfirmSpeler2.setMinSize(100, 30);
         btnConfirmSpeler2.setOnAction((ActionEvent event) -> {
             try {
@@ -251,7 +251,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
             selecteerWedstrijdStapel(speler2);
             toSpeelWedstrijdScherm();
         } catch (IllegalArgumentException e) {
-            lblError.setText("SELECT 6 CARDS");
+            lblError.setText(r.getString("SELECT6CARDS"));
         }
 
     }
