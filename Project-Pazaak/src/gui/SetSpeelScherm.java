@@ -98,6 +98,8 @@ public class SetSpeelScherm extends GridPane {
 
             dc.registreerAantalWins();
 
+            verversSpelbordSpeler();
+            
             //Checken of wedstrijd ni gedaan is kejt
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
@@ -156,8 +158,7 @@ public class SetSpeelScherm extends GridPane {
         }
 
         verversSpelbordSpeler();
-        stp1.verversAantalWins();
-        stp2.verversAantalWins();
+        
     }
 
     private void verversSpelbordSpeler() {
@@ -169,6 +170,8 @@ public class SetSpeelScherm extends GridPane {
         } else {
             sbp2.updateSpelbord(spelbord, score);
         }
+        stp1.verversAantalWins();
+        stp2.verversAantalWins();
 
     }
 
