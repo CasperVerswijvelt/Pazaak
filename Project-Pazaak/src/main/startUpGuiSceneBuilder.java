@@ -32,6 +32,7 @@ public class startUpGuiSceneBuilder extends Application{
             primaryStage.setTitle("Pazaak");
             
             primaryStage.show();
+            primaryStage.setResizable(false);
         }
 
         public static void main(String args[]) {

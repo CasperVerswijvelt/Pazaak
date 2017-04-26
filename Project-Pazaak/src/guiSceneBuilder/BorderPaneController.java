@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -25,6 +26,7 @@ public class BorderPaneController extends BorderPane {
 
     private ResourceBundle r;
     private DomeinController dc;
+    private Button btnBack;
 
     /**
      * Initializes the controller class.
@@ -41,7 +43,9 @@ public class BorderPaneController extends BorderPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-
+        btnBack = new Button();
+        setBottom(btnBack);
+        btnBack.setVisible(false);
         naarTaalSelectie();
 
     }
@@ -58,6 +62,7 @@ public class BorderPaneController extends BorderPane {
         TaalSelectieSBController taalSelect = new TaalSelectieSBController(dc, this);
         this.setCenter(taalSelect);
         setAlignment(this, Pos.CENTER);
+        btnBack.setVisible(false);
 
     }
 
@@ -65,6 +70,7 @@ public class BorderPaneController extends BorderPane {
         MooieMenuController menu = new MooieMenuController(this, dc, r);
         this.setCenter(menu);
         setAlignment(menu, Pos.CENTER);
+        btnBack.setVisible(false);
 
     }
 
@@ -72,19 +78,33 @@ public class BorderPaneController extends BorderPane {
         MaakNieuweSpelerController nieuweSpeler = new MaakNieuweSpelerController(this, dc, r);
         this.setCenter(nieuweSpeler);
         setAlignment(nieuweSpeler, Pos.CENTER);
+        btnBack.setVisible(true);
     }
 
     void naarSpelerSelectie() {
         SelecteerSpelersEnWedstrijdstapelController selecteerSpeler = new SelecteerSpelersEnWedstrijdstapelController(this, dc, r);
         this.setCenter(selecteerSpeler);
         setAlignment(selecteerSpeler, Pos.CENTER);
+        btnBack.setVisible(true);
     }
 
     public void naarSpeelWedstrijdScherm() {
         SetSpeelScherm game = new SetSpeelScherm(this, dc, r);
         this.setCenter(game);
         setAlignment(this, Pos.CENTER);
-        
+        btnBack.setVisible(false);
+    }
+    public void naarKaartwinkelScherm() {
+        KaartWinkelScherm shop = new KaartWinkelScherm(this, dc, r);
+        this.setCenter(shop);
+        shop.setAlignment(Pos.CENTER);
+        btnBack.setVisible(true);
+    }
+    public void naarLaadScherm() {
+        LaadWedstrijdScherm laadWedstrijd = new LaadWedstrijdScherm(this, dc, r);
+        this.setCenter(laadWedstrijd);
+        laadWedstrijd.setAlignment(Pos.CENTER);
+        btnBack.setVisible(true);
     }
 
 }
