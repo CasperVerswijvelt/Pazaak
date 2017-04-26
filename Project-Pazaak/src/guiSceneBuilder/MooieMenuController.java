@@ -7,15 +7,12 @@ package guiSceneBuilder;
 
 import domein.DomeinController;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -23,18 +20,14 @@ import javafx.stage.Stage;
  *
  * @author Casper
  */
-public class MooieMenuController extends AnchorPane {
+public class MooieMenuController extends VBox {
 
-    @FXML
-    private AnchorPane AnchorPane;
     @FXML
     private Button btnStartSpel;
     @FXML
     private Button btnLaadScherm;
     @FXML
     private Button btnTaal;
-    @FXML
-    private Button btnSluiten;
     @FXML
     private Button btnMaakSpeler;
     @FXML
@@ -88,9 +81,6 @@ public class MooieMenuController extends AnchorPane {
         parent.naarTaalSelectie();
     }
 
-    @FXML
-    private void sluitSpel(ActionEvent event) {
-    }
 
     @FXML
     private void naarSpelerMakenSchem(ActionEvent event) {

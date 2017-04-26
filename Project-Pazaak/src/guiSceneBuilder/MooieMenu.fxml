@@ -1,41 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root id="AnchorPane" prefHeight="400.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="479.0" prefWidth="415.0" type="VBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="btnStartSpel" layoutX="189.0" layoutY="131.0" mnemonicParsing="false" onAction="#naarSpelerEnWedstrijdStapelSelectieScherm" prefHeight="81.0" prefWidth="242.0" underline="true" />
-      <Button fx:id="btnLaadScherm" layoutX="230.0" layoutY="255.0" mnemonicParsing="false" onAction="#naarLaadScherm" prefHeight="48.0" prefWidth="141.0">
+      <Button fx:id="btnStartSpel" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#naarSpelerEnWedstrijdStapelSelectieScherm" prefHeight="81.0" prefWidth="618.0" styleClass="button-TaalSelectie" stylesheets="@stylesheet.css" underline="true">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Button>
+      <Button fx:id="btnLaadScherm" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#naarLaadScherm" prefHeight="56.0" prefWidth="637.0" styleClass="button-TaalSelectie" stylesheets="@stylesheet.css">
          <font>
             <Font size="15.0" />
          </font>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
       </Button>
-      <Button fx:id="btnTaal" layoutX="40.0" layoutY="348.0" mnemonicParsing="false" onAction="#naarTaalScherm" prefHeight="38.0" prefWidth="81.0">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnSluiten" layoutX="542.0" layoutY="21.0" mnemonicParsing="false" onAction="#sluitSpel" prefHeight="39.0" prefWidth="40.0" text="x" textFill="RED">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnMaakSpeler" layoutX="40.0" layoutY="255.0" mnemonicParsing="false" onAction="#naarSpelerMakenSchem" prefHeight="48.0" prefWidth="141.0">
+      <Button fx:id="btnMaakSpeler" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#naarSpelerMakenSchem" prefHeight="56.0" prefWidth="656.0" styleClass="button-TaalSelectie" stylesheets="@stylesheet.css">
          <font>
             <Font size="16.0" />
          </font>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
       </Button>
-      <Button fx:id="btnWinkel" layoutX="421.0" layoutY="255.0" mnemonicParsing="false" onAction="#naarWinkelScherm" prefHeight="48.0" prefWidth="141.0">
+      <Button fx:id="btnWinkel" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#naarWinkelScherm" prefHeight="56.0" prefWidth="673.0" styleClass="button-TaalSelectie" stylesheets="@stylesheet.css">
          <font>
             <Font size="15.0" />
          </font>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
       </Button>
-      <Button fx:id="btnInstructies" layoutX="481.0" layoutY="348.0" mnemonicParsing="false" onAction="#naarInstructies" prefHeight="38.0" prefWidth="81.0">
+      <Button fx:id="btnTaal" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#naarTaalScherm" prefHeight="56.0" prefWidth="492.0" styleClass="button-TaalSelectie" stylesheets="@stylesheet.css">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <opaqueInsets>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </opaqueInsets>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </Button>
+      <Button fx:id="btnInstructies" mnemonicParsing="false" onAction="#naarInstructies" prefHeight="37.0" prefWidth="914.0" styleClass="button-TaalSelectie" stylesheets="@stylesheet.css">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
       </Button>
    </children>
 </fx:root>
