@@ -94,6 +94,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         lblSpeler1.setText(r.getString("PLAYER") + " 1");
         lblSpeler2.setText(r.getString("PLAYER") + " 2");
         btnSelectPlayers.setText(r.getString("CONFIRM"));
+        btnSelectPlayers.setDisable(true);
 
         try {
             spelerLijst = dc.geefAlleSpelerNamen();
@@ -111,6 +112,13 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
                 selecteerSpeler();
+                checkBeideGeselecteerd();
+            }
+        });
+        cbSpelerSelectie2.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue ov, String t, String t1) {
+                checkBeideGeselecteerd();
             }
         });
     }
@@ -204,6 +212,8 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         this.setTop(null);
 
         this.setCenter(tabbladPaneel);
+        
+        
 
     }
 
@@ -224,10 +234,20 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
 
     private void checkBeideBevestigd() {
         if (dc.geefSpelersZonderWedstrijdStapel().size() == 0) {
-            btnConfirmSpeler1.setText("PLAY");
-            btnConfirmSpeler2.setText("PLAY");
+            btnConfirmSpeler1.setText(r.getString("PLAY"));
+            btnConfirmSpeler2.setText(r.getString("PLAY"));
             btnConfirmSpeler1.setDisable(false);
             btnConfirmSpeler2.setDisable(false);
+        }
+    }
+
+    private void checkBeideGeselecteerd() {
+        Object geselecteerd1 = cbSpelerSelectie2.getSelectionModel().getSelectedItem();
+        Object geselecteerd2 = cbSpelerSelectie1.getSelectionModel().getSelectedItem();
+        if (geselecteerd1 != null && geselecteerd2 != null) {
+            btnSelectPlayers.setDisable(false);
+        } else {
+            btnSelectPlayers.setDisable(true);
         }
     }
 

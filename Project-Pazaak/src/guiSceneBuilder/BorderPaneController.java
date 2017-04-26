@@ -8,6 +8,7 @@ package guiSceneBuilder;
 import domein.DomeinController;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,7 +17,9 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -47,7 +50,7 @@ public class BorderPaneController extends BorderPane {
             throw new RuntimeException(ex);
         }
         btnBack = new Button();
-        
+
         setBottom(btnBack);
         setAlignment(btnBack, Pos.CENTER);
         btnBack.setPadding(new Insets(10));
@@ -55,6 +58,15 @@ public class BorderPaneController extends BorderPane {
         btnBack.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                if (getCenter() instanceof SetSpeelScherm) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you sure you want to go back to the menu? All progress will be lost. (nog niet vertaald)");
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() != ButtonType.OK) {
+                        return;
+                    }
+                }
                 naarMenu();
             }
 
@@ -105,8 +117,8 @@ public class BorderPaneController extends BorderPane {
     public void naarSpeelWedstrijdScherm() {
         SetSpeelScherm game = new SetSpeelScherm(this, dc, r);
         this.setCenter(game);
-        setAlignment(game, Pos.CENTER);
-        btnBack.setVisible(false);
+        game.setAlignment(Pos.CENTER);
+        btnBack.setVisible(true);
     }
 
     public void naarKaartwinkelScherm() {
