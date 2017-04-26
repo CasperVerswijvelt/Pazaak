@@ -185,7 +185,7 @@ public class Hoofdmenu extends VBox {
         //ok toch geen alert :/
         Stage stage = (Stage) this.getScene().getWindow();
 
-        Scene scene = new Scene(new RegelsScherm(this, dc, r), 800, 700);
+        Scene scene = new Scene(new RegelsScherm(this, dc, r), 800, 300);
         stage.setTitle("Pazaak - " + r.getString("RULES"));
         stage.setScene(scene);
     }
