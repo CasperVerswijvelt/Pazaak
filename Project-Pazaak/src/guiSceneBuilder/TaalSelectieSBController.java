@@ -59,5 +59,12 @@ public class TaalSelectieSBController extends VBox {
         scene = new Scene(mmc);
         stage.setScene(scene);
     }
+    
+    public void zetTerugActief() {
+        Stage stage = (Stage) this.getScene().getWindow();
+
+        Scene scene = new Scene(this);
+        stage.setScene(scene);
+    }
 
 }
