@@ -6,17 +6,16 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.Pane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="219.0" prefWidth="381.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="28.0" layoutY="27.0" text="Laad een spel" />
-      <Button layoutX="300.0" layoutY="22.0" mnemonicParsing="false" text="terug" />
-      <MenuButton layoutX="83.0" layoutY="94.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="216.0">
+      <Label fx:id="lblLaadSpel" layoutX="28.0" layoutY="27.0" />
+      <Button fx:id="btnTerug" layoutX="300.0" layoutY="22.0" mnemonicParsing="false" onAction="#toMenu" />
+      <MenuButton fx:id="cbOpgeslagenSpellen" layoutX="83.0" layoutY="94.0" mnemonicParsing="false" onAction="#selecteerSpel" prefHeight="31.0" prefWidth="216.0">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
           <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </MenuButton>
-      <Button layoutX="136.0" layoutY="155.0" mnemonicParsing="false" text="Laad een spel" />
+      <Button fx:id="btnLaadSpel" layoutX="136.0" layoutY="155.0" mnemonicParsing="false" onAction="#laadSpel" />
    </children>
 </Pane>
