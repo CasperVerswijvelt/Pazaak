@@ -44,12 +44,12 @@ public class MooieMenuController extends AnchorPane {
     
     private DomeinController dc;
     private ResourceBundle r;
-    private TaalSelectieSBController parent;
+    private BorderPaneController parent;
 
     /**
      * Initializes the controller class.
      */
-    public MooieMenuController(TaalSelectieSBController parent, DomeinController dc, ResourceBundle r) {
+    public MooieMenuController(BorderPaneController parent, DomeinController dc, ResourceBundle r) {
         this.dc = dc;
         this.parent = parent;
         this.r = r;
@@ -68,6 +68,10 @@ public class MooieMenuController extends AnchorPane {
 
     @FXML
     private void naarSpelerEnWedstrijdStapelSelectieScherm(ActionEvent event) {
+        Stage stage = (Stage) this.getScene().getWindow();
+
+
+        parent.naarSpelerSelectie();
     }
 
     @FXML
@@ -81,8 +85,7 @@ public class MooieMenuController extends AnchorPane {
 
         stage.setTitle("Pazaak - Languages");
 
-        Scene scene = new Scene(new TaalSelectieSBController(dc));
-        stage.setScene(scene);
+        parent.naarTaalSelectie();
     }
 
     @FXML
@@ -96,8 +99,7 @@ public class MooieMenuController extends AnchorPane {
 
         stage.setTitle("Pazaak - New Player");
 
-        Scene scene = new Scene(new MaakNieuweSpelerController(this,dc,r));
-        stage.setScene(scene);
+        parent.naarNieuweSpeler();
     }
 
     @FXML

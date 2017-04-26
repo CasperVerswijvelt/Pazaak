@@ -52,7 +52,7 @@ public class MaakNieuweSpelerController extends Pane {
         @FXML
     private Label lblError;
 
-    private MooieMenuController parent;
+    private BorderPaneController parent;
     private ResourceBundle r;
     private DomeinController dc;
     private Alert DBAlert;
@@ -61,7 +61,7 @@ public class MaakNieuweSpelerController extends Pane {
     private Tooltip ttGeboorteJaar;
 
 
-    public MaakNieuweSpelerController(MooieMenuController parent, DomeinController dc, ResourceBundle r) {
+    public MaakNieuweSpelerController(BorderPaneController parent, DomeinController dc, ResourceBundle r) {
         this.dc = dc;
         this.parent = parent;
         this.r = r;
@@ -80,7 +80,7 @@ public class MaakNieuweSpelerController extends Pane {
 
     @FXML
     private void naarMenu(ActionEvent event) {
-        
+        parent.naarMenu();
     }
 
     @FXML

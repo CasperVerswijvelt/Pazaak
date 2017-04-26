@@ -6,6 +6,7 @@
 package main;
 
 import domein.DomeinController;
+import guiSceneBuilder.BorderPaneController;
 import guiSceneBuilder.TaalSelectieSBController;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -22,9 +23,14 @@ public class startUpGuiSceneBuilder extends Application{
         @Override
         public void start(Stage primaryStage) throws Exception {
             DomeinController dc = new DomeinController();
-            Scene scene = new Scene(new TaalSelectieSBController(dc));
+            
+            
+            BorderPaneController parent = new BorderPaneController(dc);
+            
+            Scene scene = new Scene(parent);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Languages");
+            primaryStage.setTitle("Pazaak");
+            
             primaryStage.show();
         }
 
