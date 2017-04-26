@@ -13,15 +13,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
- * @author goran
+ * @author Casper
  */
-public class MooieMenuController  extends AnchorPane{
+public class MooieMenuController extends AnchorPane {
 
     @FXML
     private AnchorPane AnchorPane;
@@ -41,17 +43,23 @@ public class MooieMenuController  extends AnchorPane{
     private Button btnInstructies;
     
     private DomeinController dc;
-    private TaalSelectieSBController tsc;
+    private ResourceBundle r;
+    private TaalSelectieSBController parent;
 
-    public MooieMenuController(TaalSelectieSBController tsc, DomeinController dc) {
+    /**
+     * Initializes the controller class.
+     */
+    public MooieMenuController(TaalSelectieSBController parent, DomeinController dc) {
         this.dc = dc;
-        this.tsc = tsc;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("TaalSelectieSB.fxml"));
+        this.parent = parent;
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MooieMenu.fxml"));
         loader.setRoot(this);
-        loader.setController(this);
-        try {
-            loader.load();
-        } catch (IOException ex) {
+      
+        
+        try{
+          loader.load();
+        }catch(IOException ex){
             throw new RuntimeException(ex);
         }
     }
@@ -66,6 +74,13 @@ public class MooieMenuController  extends AnchorPane{
 
     @FXML
     private void naarTaalScherm(ActionEvent event) {
+
+        Stage stage = (Stage) this.getScene().getWindow();
+
+        stage.setTitle("Pazaak - Menu");
+
+        Scene scene = new Scene(new TaalSelectieSBController(dc));
+        stage.setScene(scene);
     }
 
     @FXML

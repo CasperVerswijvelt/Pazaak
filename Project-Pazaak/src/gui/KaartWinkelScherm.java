@@ -350,8 +350,7 @@ public class KaartWinkelScherm extends GridPane {
         } catch (CardAlreadyBoughtException e) {
             lblError.setText("Card already bought (vertaal mij)");
             selecteerSpeler();
-        } 
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             lblError.setText("Enter a value (nog niet vertaald)");
         }
 
