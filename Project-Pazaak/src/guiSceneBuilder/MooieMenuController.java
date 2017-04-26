@@ -61,39 +61,28 @@ public class MooieMenuController extends VBox {
 
     @FXML
     private void naarSpelerEnWedstrijdStapelSelectieScherm(ActionEvent event) {
-        Stage stage = (Stage) this.getScene().getWindow();
-
-
         parent.naarSpelerSelectie();
     }
 
     @FXML
     private void naarLaadScherm(ActionEvent event) {
+        parent.naarLaadScherm();
     }
 
     @FXML
     private void naarTaalScherm(ActionEvent event) {
-
-        Stage stage = (Stage) this.getScene().getWindow();
-
-        stage.setTitle("Pazaak - Languages");
-
         parent.naarTaalSelectie();
     }
 
 
     @FXML
     private void naarSpelerMakenSchem(ActionEvent event) {
-        
-        Stage stage = (Stage) this.getScene().getWindow();
-
-        stage.setTitle("Pazaak - New Player");
-
         parent.naarNieuweSpeler();
     }
 
     @FXML
     private void naarWinkelScherm(ActionEvent event) {
+        parent.naarKaartwinkelScherm();
     }
 
     @FXML

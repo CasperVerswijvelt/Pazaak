@@ -9,8 +9,11 @@ import domein.DomeinController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -44,8 +47,18 @@ public class BorderPaneController extends BorderPane {
             throw new RuntimeException(ex);
         }
         btnBack = new Button();
+        
         setBottom(btnBack);
-        btnBack.setVisible(false);
+        setAlignment(btnBack, Pos.CENTER);
+        btnBack.setPadding(new Insets(10));
+
+        btnBack.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                naarMenu();
+            }
+
+        });
         naarTaalSelectie();
 
     }
@@ -56,6 +69,7 @@ public class BorderPaneController extends BorderPane {
 
     public void setR(ResourceBundle r) {
         this.r = r;
+        btnBack.setText(r.getString("BACK"));
     }
 
     public void naarTaalSelectie() {
@@ -91,15 +105,17 @@ public class BorderPaneController extends BorderPane {
     public void naarSpeelWedstrijdScherm() {
         SetSpeelScherm game = new SetSpeelScherm(this, dc, r);
         this.setCenter(game);
-        setAlignment(this, Pos.CENTER);
+        setAlignment(game, Pos.CENTER);
         btnBack.setVisible(false);
     }
+
     public void naarKaartwinkelScherm() {
         KaartWinkelScherm shop = new KaartWinkelScherm(this, dc, r);
         this.setCenter(shop);
         shop.setAlignment(Pos.CENTER);
         btnBack.setVisible(true);
     }
+
     public void naarLaadScherm() {
         LaadWedstrijdScherm laadWedstrijd = new LaadWedstrijdScherm(this, dc, r);
         this.setCenter(laadWedstrijd);
