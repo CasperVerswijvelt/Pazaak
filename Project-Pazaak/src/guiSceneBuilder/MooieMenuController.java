@@ -56,13 +56,14 @@ public class MooieMenuController extends AnchorPane {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MooieMenu.fxml"));
         loader.setRoot(this);
+        loader.setController(this);
       
-        buildGUI();
         try{
           loader.load();
         }catch(IOException ex){
             throw new RuntimeException(ex);
         }
+          buildGUI();
     }
 
     @FXML
