@@ -110,7 +110,7 @@ public class WedstrijdMapper {
                 speler1 = rs.getString("speler1");
                 speler2 = rs.getString("speler2");
                 score1 = rs.getInt("score1");
-                score1 = rs.getInt("score2");
+                score2 = rs.getInt("score2");
             }
 
             //Tweede query (kaartenlijst en spelernamen)
