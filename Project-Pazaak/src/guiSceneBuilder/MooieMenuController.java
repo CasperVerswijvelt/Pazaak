@@ -79,7 +79,7 @@ public class MooieMenuController extends AnchorPane {
 
         Stage stage = (Stage) this.getScene().getWindow();
 
-        stage.setTitle("Pazaak - Menu");
+        stage.setTitle("Pazaak - Languages");
 
         Scene scene = new Scene(new TaalSelectieSBController(dc));
         stage.setScene(scene);
@@ -91,6 +91,13 @@ public class MooieMenuController extends AnchorPane {
 
     @FXML
     private void naarSpelerMakenSchem(ActionEvent event) {
+        
+        Stage stage = (Stage) this.getScene().getWindow();
+
+        stage.setTitle("Pazaak - New Player");
+
+        Scene scene = new Scene(new MaakNieuweSpelerController(this,dc,r));
+        stage.setScene(scene);
     }
 
     @FXML

@@ -5,15 +5,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="576.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="576.0" type="Pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="88.0" layoutY="145.0" text="Geboortejaar" />
-      <Label layoutX="92.0" layoutY="102.0" text="Naam" />
-      <Label layoutX="63.0" layoutY="39.0" text="Nieuwe Speler:" />
-      <TextField layoutX="217.0" layoutY="140.0" />
-      <TextField layoutX="217.0" layoutY="97.0" />
-      <Button layoutX="84.0" layoutY="199.0" mnemonicParsing="false" text="terug" />
-      <Button layoutX="343.0" layoutY="199.0" mnemonicParsing="false" text="Maak nieuwe speler" />
+      <Label fx:id="lblSpelerGeboorteJaar" layoutX="88.0" layoutY="145.0" />
+      <Label fx:id="lblSpelerNaam" layoutX="92.0" layoutY="102.0" />
+      <Label fx:id="lblTitel" layoutX="63.0" layoutY="39.0" />
+      <TextField fx:id="txfSpelerGeboorteJaar" layoutX="217.0" layoutY="140.0" />
+      <TextField fx:id="txfSpelerNaam" layoutX="217.0" layoutY="97.0" />
+      <Button fx:id="btnTerug" layoutX="84.0" layoutY="199.0" mnemonicParsing="false" onAction="#naarMenu" prefHeight="25.0" prefWidth="100.0" />
+      <Button fx:id="btnMaakSpeler" layoutX="343.0" layoutY="199.0" mnemonicParsing="false" onAction="#maakNieuweSpeler" prefHeight="25.0" prefWidth="100.0" />
+      <Label fx:id="lblError" layoutX="92.0" layoutY="173.0" prefHeight="17.0" prefWidth="351.0" />
    </children>
-</Pane>
+</fx:root>
