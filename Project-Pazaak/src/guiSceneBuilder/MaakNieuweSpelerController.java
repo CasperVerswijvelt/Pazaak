@@ -80,6 +80,9 @@ public class MaakNieuweSpelerController extends Pane {
 
     @FXML
     private void naarMenu(ActionEvent event) {
+        lblError.setText("");
+        Stage stage = (Stage) this.getScene().getWindow();
+        parent.zetTerugActief(stage);
         
     }
 

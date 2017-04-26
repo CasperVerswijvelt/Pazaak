@@ -116,5 +116,9 @@ public class MooieMenuController extends AnchorPane {
         btnTaal.setText("Change language"+r.getString("VERTAALMIJ"));
         btnInstructies.setText(r.getString("RULES"));
     }
-    
+
+    void zetTerugActief(Stage stage) {
+        stage.setScene(this.getScene());
+        stage.setTitle("Pazaak - Menu");
+    }
 }
