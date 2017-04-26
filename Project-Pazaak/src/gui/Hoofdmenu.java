@@ -179,11 +179,9 @@ public class Hoofdmenu extends VBox {
     }
     
     public void toRegelsScherm() {
-        Stage stage = (Stage) this.getScene().getWindow();
-
-        Scene scene;
-        scene = new Scene(new RegelsScherm(this, dc, r));
-        stage.setTitle("Pazaak - " + r.getString("RULES"));
-        stage.setScene(scene);
+        Alert alert = new Alert(Alert.AlertType.NONE, r.getString("REGELSTEKST"), ButtonType.OK);
+        alert.setTitle("Pazaak - " + r.getString("RULES"));
+        alert.showAndWait();
+        ///////////////////HOE SIZE VERANDEREN??????????
     }
 }
