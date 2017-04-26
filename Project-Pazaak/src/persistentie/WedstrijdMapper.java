@@ -35,29 +35,24 @@ public class WedstrijdMapper {
     }
 
     public void slaWedstrijdOp(Wedstrijd wedstrijd, String wedstrijdNaam) {
-        
+
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
-            
-            if(bestaatWedstrijd(wedstrijdNaam))
+
+            if (bestaatWedstrijd(wedstrijdNaam)) {
                 throw new GameAlreadyExistsException("ERROR SAVING GAME");
+            }
 
             //Wedstrijd
-            PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.Wedstrijd (naam, spelerAanBeurt)"
-                    + "VALUES (?, ?)");
+            PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.Wedstrijd (naam, spelerAanBeurt, speler1, speler2, score1,score2)"
+                    + "VALUES (?, ?, ?, ?, ?,?)");
             query.setString(1, wedstrijdNaam);
             query.setString(2, wedstrijd.geefSpelerAanBeurt());
+            query.setString(3, wedstrijd.geefSpelers().get(0).getNaam());
+            query.setString(4, wedstrijd.geefSpelers().get(1).getNaam());
+            query.setInt(5, wedstrijd.geefTussenstand()[0]);
+            query.setInt(6, wedstrijd.geefTussenstand()[1]);
             query.executeUpdate();
 
-            //SpelerDeelnames
-            query = conn.prepareStatement("INSERT INTO ID222177_g37.WedstrijdDeelname (score, SpelerNaam, WedstrijdNaam)"
-                    + "VALUES (?, ?, ?),(?, ?, ?)");
-            query.setInt(1, wedstrijd.geefTussenstand()[0]);
-            query.setString(2, wedstrijd.geefSpelers().get(0).getNaam());
-            query.setString(3, wedstrijdNaam);
-            query.setInt(4, wedstrijd.geefTussenstand()[1]);
-            query.setString(5, wedstrijd.geefSpelers().get(1).getNaam());
-            query.setString(6, wedstrijdNaam);
-            query.executeUpdate();
 
             //Wedstrijdkaarten
             for (int i = 0; i < 2; i++) {
@@ -74,10 +69,10 @@ public class WedstrijdMapper {
             }
 
         } catch (SQLException ex) {
-            throw new GameSaveDatabaseException();
+            throw new GameSaveDatabaseException(ex);
         }
     }
-    
+
     public boolean bestaatWedstrijd(String wedstrijdNaam) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
 
@@ -85,7 +80,7 @@ public class WedstrijdMapper {
             PreparedStatement query = conn.prepareStatement("SELECT naam FROM ID222177_g37.Wedstrijd WHERE naam = ?");
             query.setString(1, wedstrijdNaam);
             ResultSet rs = query.executeQuery();
-            
+
             return rs.next();
 
         } catch (SQLException ex) {
@@ -95,124 +90,91 @@ public class WedstrijdMapper {
 
     public Wedstrijd laadWedstrijd(String wedstrijdNaam) {
         try {
-            if(!bestaatWedstrijd(wedstrijdNaam))
+            if (!bestaatWedstrijd(wedstrijdNaam)) {
                 throw new GameDoesntExistException("ERROR LOADING GAME");
-            
+            }
+
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
 
-            HashMap<String, Integer> scoresMap = new HashMap<>();
-            HashMap<String, List<Kaart>> kaartenMap = new HashMap<>();
-            String beginnendeSpeler = "";
-            List<String> keys = new ArrayList<>();
+            String beginnendeSpeler = "", speler1 = "", speler2 = "";
+            int score1 = 0, score2 = 0;
+            List<Kaart> ws1 = new ArrayList<>(), ws2 = new ArrayList<>();
 
             //Eerste query (scores en spelernamen)
-            PreparedStatement query = conn.prepareStatement("SELECT score, SpelerNaam FROM ID222177_g37.WedstrijdDeelname WHERE WedstrijdNaam = ?");
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.Wedstrijd WHERE naam = ?");
             query.setString(1, wedstrijdNaam);
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                scoresMap.put(rs.getString("SpelerNaam"), rs.getInt("score"));
+                beginnendeSpeler = rs.getString("spelerAanBeurt");
+                speler1 = rs.getString("speler1");
+                speler2 = rs.getString("speler2");
+                score1 = rs.getInt("score1");
+                score1 = rs.getInt("score2");
             }
 
-            //Tweede query (speler eerst aan beurt)
-            query = conn.prepareStatement("SELECT spelerAanBeurt FROM ID222177_g37.Wedstrijd where naam = ?");
+            //Tweede query (kaartenlijst en spelernamen)
+            query = conn.prepareStatement("SELECT waarde, type, prijs,spelerNaam FROM ID222177_g37.WedstrijdKaart LEFT JOIN ID222177_g37.KaartType ON ID222177_g37.WedstrijdKaart.KaartTypeId = ID222177_g37.KaartType.id WHERE WedstrijdNaam = ? ");
             query.setString(1, wedstrijdNaam);
+
             rs = query.executeQuery();
 
             while (rs.next()) {
-                beginnendeSpeler = rs.getString("spelerAanBeurt");
-            }
+                String type = rs.getString("type");
+                String spelerNaam = rs.getString("spelerNaam");
+                int waarde = rs.getInt("waarde");
+                int prijs = rs.getInt("prijs");
 
-            //Derde query (kaartenlijst en spelernamen)
-            query = conn.prepareStatement("SELECT waarde, type, prijs FROM ID222177_g37.WedstrijdKaart LEFT JOIN ID222177_g37.KaartType ON ID222177_g37.WedstrijdKaart.KaartTypeId = ID222177_g37.KaartType.id WHERE SpelerNaam = ? AND WedstrijdNaam = ? ");
+                Kaart kaart = new Kaart(waarde, type.charAt(0), prijs);
 
-            Iterator it = scoresMap.entrySet().iterator();
-
-            while (it.hasNext()) {
-                Map.Entry<String, Integer> pair = (Map.Entry) it.next();
-                String spelerNaam = pair.getKey();
-                query.setString(1, spelerNaam);
-                query.setString(2, wedstrijdNaam);
-                rs = query.executeQuery();
-
-                List<Kaart> kaarten = new ArrayList<>();
-                while (rs.next()) {
-                    kaarten.add(new Kaart(rs.getInt("waarde"), rs.getString("type").charAt(0), rs.getInt("prijs")));
+                if (spelerNaam.equals(speler1)) {
+                    ws1.add(kaart);
+                } else {
+                    ws2.add(kaart);
                 }
-                kaartenMap.put(spelerNaam, kaarten);
-                keys.add(spelerNaam);
             }
 
-           
-
-            //Vierde query (wedstrijdkaarten verwijderen uit databank)
-            for (String speler : keys) {
-
-                query = conn.prepareStatement("DELETE FROM ID222177_g37.WedstrijdKaart WHERE SpelerNaam = ? AND WedstrijdNaam = ?");
-                query.setString(1, speler);
-                query.setString(2, wedstrijdNaam);
-                query.executeUpdate();
-                
-                
-
-            }
-            
-            //Vijfde query (wedstrijdDeelnames verwijderen)
-            query = conn.prepareStatement("DELETE FROM ID222177_g37.WedstrijdDeelname WHERE WedstrijdNaam = ?");
-            query.setString(1, wedstrijdNaam);
-            query.executeUpdate();
-            
-            //Zesde query (wedstrijd zelf verwijderen)
+            //Derde query (wedstrijd zelf verwijderen)
             query = conn.prepareStatement("DELETE FROM ID222177_g37.Wedstrijd WHERE naam = ?");
             query.setString(1, wedstrijdNaam);
             query.executeUpdate();
-            
-             //Wedstrijd aanmaken met gegeven gegevens
-            return new Wedstrijd(sm.geefSpeler(keys.get(0)), sm.geefSpeler(keys.get(1)), kaartenMap.get(keys.get(0)), kaartenMap.get(keys.get(1)), beginnendeSpeler, scoresMap.get(keys.get(0)), scoresMap.get(keys.get(1)));
+
+            //Wedstrijd aanmaken met gegeven gegevens
+            return new Wedstrijd(sm.geefSpeler(speler1), sm.geefSpeler(speler2), ws1, ws2, beginnendeSpeler, score1, score2);
 
         } catch (SQLException ex) {
             throw new GameLoadDatabaseException(ex);
         }
 
     }
-    
+
     public String[][] geefWedstrijdenOverzicht() {
-        List<String[]> lijst= new ArrayList<>();
-        String[][] res = new String[1][1];
+        List<String[]> lijst = new ArrayList<>();
+        String[][] res;
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
 
-            PreparedStatement query = conn.prepareStatement("SELECT WedstrijdNaam, SpelerNaam, score FROM ID222177_g37.WedstrijdDeelname LEFT JOIN ID222177_g37.Wedstrijd ON ID222177_g37.WedstrijdDeelname.WedstrijdNaam = ID222177_g37.Wedstrijd.naam  ORDER BY WedstrijdNaam");
+            PreparedStatement query = conn.prepareStatement("SELECT naam, speler1, speler2, score1, score2 FROM ID222177_g37.Wedstrijd");
             ResultSet rs = query.executeQuery();
-            
+
             while (rs.next()) {
-                String[] info = new String[3];
-                info[0] = rs.getString("WedstrijdNaam");
-                info[1] = rs.getString("SpelerNaam");
-                info[2] = rs.getInt("score")+"";
+                String[] info = new String[5];
+                info[0] = rs.getString("naam");
+                info[1] = rs.getString("speler1");
+                info[2] = rs.getInt("score1") + "";
+                info[3] = rs.getString("speler2");
+                info[4] = rs.getInt("score2") + "";
                 lijst.add(info);
             }
+
+  
+
+            res=new String[lijst.size()][];
             
-            int size = lijst.size();
-            
-            if(size%2 != 0) 
-                throw new IncorrectEntriesInDatabaseException("Not each game has exactly 2 players");
-            
-            res = new String[size/2][5];
-            
-            for(int i = 0; i< size; i+=2) {
-                //WedstrijdNaam
-                res[i/2][0] = lijst.get(i)[0];
-                
-                //Speler1
-                res[i/2][1] = lijst.get(i)[1];
-                res[i/2][2] = lijst.get(i)[2];
-                
-                //Speler2
-                res[i/2][3] = lijst.get(i+1)[1];
-                res[i/2][4] = lijst.get(i+1)[2];
+            for(int i = 0; i<lijst.size();i++) {
+                res[i] = lijst.get(i);
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
         return res;
