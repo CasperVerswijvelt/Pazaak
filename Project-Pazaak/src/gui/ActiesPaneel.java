@@ -10,14 +10,17 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  *
  * @author goran
  */
-class ActiesPaneel extends GridPane {
+class ActiesPaneel extends VBox {
 
     private SetSpeelScherm parent;
     private DomeinController dc;
@@ -39,28 +42,23 @@ class ActiesPaneel extends GridPane {
     private void buildGUI() {
         wsp = new WedstrijdStapelPaneel(this, dc, r, speler);
         btnEndTurn = new Button(r.getString("ENDTURN"));
-        btnEndTurn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drukEndTurn(event);
-            }
-
+        btnEndTurn.setOnAction((ActionEvent event) -> {
+            drukEndTurn(event);
         });
         btnBevries = new Button(r.getString("FREEZE"));
-        btnBevries.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drukBevries(event);
-            }
-
+        btnBevries.setOnAction((ActionEvent event) -> {
+            drukBevries(event);
         });
+        HBox buttons;
 
-        this.add(wsp, 0, 0, 2, 1);
-        this.add(btnBevries, 0, 1);
-        this.add(btnEndTurn, 1, 1);
-
-        setVgap(10);
-        setHgap(10);
+        if (speler == 0) {
+            buttons = new HBox(btnBevries, btnEndTurn);
+        } else {
+            buttons = new HBox(btnEndTurn, btnBevries);
+        }
+        buttons.setSpacing(10);
+        this.getChildren().addAll(wsp, buttons);
+        this.setSpacing(20);
 
     }
 
@@ -72,7 +70,7 @@ class ActiesPaneel extends GridPane {
         parent.drukBevries();
     }
 
-    void drukSpeelWedstrijdkaart(String[] kaart) {
+    public void drukSpeelWedstrijdkaart(String[] kaart) {
         parent.drukSpeelWedstrijdkaart(kaart);
     }
 

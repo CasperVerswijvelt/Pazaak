@@ -8,16 +8,18 @@ package gui;
 import domein.DomeinController;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
@@ -59,26 +61,33 @@ public class SetSpeelScherm extends GridPane {
     private void buildGUI() {
         sbp1 = new SpelBordPaneel(this, dc, r, 1);
         sbp2 = new SpelBordPaneel(this, dc, r, 2);
+
         ap1 = new ActiesPaneel(this, dc, r, 0);
         ap2 = new ActiesPaneel(this, dc, r, 1);
+
         lblSpeler1 = new Label(speler1);
         lblSpeler2 = new Label(speler2);
-//        RadioButton rb1 = new RadioButton("");
-//        RadioButton rb2 = new RadioButton("");
         stp1 = new SetTussenstandPaneel(this, dc, r, 0);
         stp2 = new SetTussenstandPaneel(this, dc, r, 1);
 
-        this.add(sbp1, 0, 0, 2, 1);
-        this.add(sbp2, 2, 0, 2, 1);
-        this.add(ap1, 0, 1, 2, 1);
-        this.add(ap2, 2, 1, 2, 1);
-        this.add(lblSpeler1, 0, 2);
-        this.add(lblSpeler2, 3, 2);
-        this.add(stp1, 1, 2);
-        this.add(stp2, 2, 2);
+        this.add(sbp1, 0, 0);
+        this.add(ap2, 1, 1);
+        this.add(sbp2, 1, 0);
+        this.add(ap1, 0, 1);
+        HBox linksOnder = new HBox(lblSpeler1, stp1);
+        linksOnder.setSpacing(20);
+        this.add(linksOnder, 0, 2);
+        HBox rechtsOnder = new HBox(stp2, lblSpeler2);
+        rechtsOnder.setSpacing(20);
+        this.add(rechtsOnder, 1, 2);
 
+        stp2.setAlignment(Pos.CENTER_RIGHT);
+        sbp2.setAlignment(Pos.CENTER_RIGHT);
+        rechtsOnder.setAlignment(Pos.CENTER_RIGHT);
+        ap2.setAlignment(Pos.CENTER_RIGHT);
         this.setVgap(20);
         this.setHgap(20);
+        this.setPadding(new Insets(30, 30, 30, 30));
     }
 
     void checkEindeSet() {
@@ -125,9 +134,14 @@ public class SetSpeelScherm extends GridPane {
                     } else {
                         setTenEinde();
                     }
+                } else {
+                    setTenEinde();
                 }
+            } else {
+
+                setTenEinde();
+
             }
-            setTenEinde();
         }
     }
 

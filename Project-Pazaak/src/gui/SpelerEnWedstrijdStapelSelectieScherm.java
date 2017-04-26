@@ -7,7 +7,6 @@ package gui;
 
 import domein.DomeinController;
 import exceptions.*;
-import java.awt.Window;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -15,7 +14,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -26,7 +24,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -75,10 +72,12 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
     }
 
     private void buildGUI() {
+        //Layout
         this.setPadding(new Insets(35, 35, 15, 35));
         this.setVgap(10);
         this.setHgap(10);
 
+        //Alerts
         playerNotFoundAlert = new Alert(Alert.AlertType.ERROR);
         playerNotFoundAlert.setTitle("Pazaak");
         playerNotFoundAlert.setContentText(r.getString("PLAYERNOTFOUND"));
@@ -119,24 +118,30 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
         ksp1 = new KaartSelectiePaneel(dc, this, r);
         ksp2 = new KaartSelectiePaneel(dc, this, r);
         btnConfirmSpeler1 = new Button("CONFIRM");
-
-        btnConfirmSpeler1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        btnConfirmSpeler1.setMinSize(100, 30);
+        btnConfirmSpeler1.setOnAction((ActionEvent event) -> {
+            try {
                 selecteerWedstrijdStapel(speler1);
                 btnConfirmSpeler1.setDisable(true);
+                ksp1.setDisable(true);
                 checkBeideBevestigd();
+                tabbladPaneel.getSelectionModel().select(1);
+            } catch (IllegalArgumentException e) {
+                lblError.setText("SELECT 6 CARDS");
             }
 
         });
         btnConfirmSpeler2 = new Button("CONFIRM");
-        btnConfirmSpeler2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        btnConfirmSpeler2.setMinSize(100, 30);
+        btnConfirmSpeler2.setOnAction((ActionEvent event) -> {
+            try {
                 selecteerWedstrijdStapel(speler2);
                 btnConfirmSpeler2.setDisable(true);
+                ksp2.setDisable(true);
                 checkBeideBevestigd();
-
+                tabbladPaneel.getSelectionModel().select(0);
+            } catch (IllegalArgumentException e) {
+                lblError.setText("SELECT 6 CARDS");
             }
 
         });
@@ -163,26 +168,17 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
             }
         });
 
-        btnSelectPlay.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (btnSelectPlay.getText().equals(r.getString("SELECT") + " " + r.getString("PLAYER"))) {
-                    drukSelecteerSpelers();
-                    btnSelectPlay.setDisable(true);
-                } else {
-                    
-                    drukSpeel();
-                }
-            }
+        btnSelectPlay.setOnAction((ActionEvent event) -> {
+            if (btnSelectPlay.getText().equals(r.getString("SELECT") + " " + r.getString("PLAYER"))) {
+                drukSelecteerSpelers();
+                btnSelectPlay.setDisable(true);
+            } else {
 
-        });
-
-        btnCancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drukCancel(event);
+                drukSpeel();
             }
         });
+
+        btnCancel.setOnAction(this::drukCancel);
 
     }
 
@@ -226,10 +222,14 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
         ksp1.activeerScherm(speler1);
         ksp2.activeerScherm(speler2);
         Tab tab1 = new Tab();
-        tab1.setContent(new VBox(ksp1, btnConfirmSpeler1));
+        VBox kaartSelectieSpeler1 = new VBox(ksp1, btnConfirmSpeler1);
+        kaartSelectieSpeler1.setAlignment(Pos.CENTER);
+        tab1.setContent(kaartSelectieSpeler1);
         tab1.setText(speler1);
         Tab tab2 = new Tab();
-        tab2.setContent(new VBox(ksp2, btnConfirmSpeler2));
+        VBox kaartSelectieSpeler2 = new VBox(ksp2, btnConfirmSpeler2);
+        kaartSelectieSpeler2.setAlignment(Pos.CENTER);
+        tab2.setContent(kaartSelectieSpeler2);
         tab2.setText(speler2);
 
         tabbladPaneel.getTabs().addAll(tab1, tab2);
@@ -237,8 +237,8 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
         tabbladPaneel.setVisible(true);
         cbSpeler1.setDisable(true);
         cbSpeler2.setDisable(true);
-        btnSelectPlay.setText(r.getString("NEXTPLAYER"));
-        lblSelecteerSpelers.setText("Kies 6 kaarten voor speler " + speler1);
+        btnSelectPlay.setText(r.getString("PLAY"));
+        lblSelecteerSpelers.setText("Kies 6 kaarten voor spelers ");
 
     }
 
@@ -248,7 +248,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
             selecteerWedstrijdStapel(speler2);
             toSpeelWedstrijdScherm();
         } catch (IllegalArgumentException e) {
-
+            lblError.setText("SELECT 6 CARDS");
         }
 
     }
@@ -262,21 +262,15 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
         stage.setScene(scene);
     }
 
-
- 
-
-
     private void selecteerWedstrijdStapel(String speler) {
         dc.selecterSpelerWedstrijdStapel(speler);
 
         KaartSelectiePaneel spelerKsp = speler.equals(speler1) ? ksp1 : ksp2;
         String[][] geselecteerdeKaarten = spelerKsp.geefGeselecteerdeKaarten();
 
-        ////////////////////////////////////////////DIT UIT COMMENTS HALEN VOOR 6 KAARTEN CHECK  ///////////////////////////
-//        if (geselecteerdeKaarten.length < 6) {
-//            throw new IllegalArgumentException();
-//        }
-        System.out.println(Arrays.deepToString(geselecteerdeKaarten));
+        if (geselecteerdeKaarten.length < 6) {
+            throw new IllegalArgumentException();
+        }
         for (String[] kaart : geselecteerdeKaarten) {
             dc.selecteerKaart(kaart);
         }
@@ -284,8 +278,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
     }
 
     private void checkBeideBevestigd() {
-        System.out.println(dc.geefSpelersZonderWedstrijdStapel().size());
-        if(dc.geefSpelersZonderWedstrijdStapel().size()==0) {
+        if (dc.geefSpelersZonderWedstrijdStapel().size() == 0) {
             btnSelectPlay.setDisable(false);
         }
     }

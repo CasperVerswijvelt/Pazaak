@@ -8,6 +8,7 @@ package gui;
 import domein.DomeinController;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -34,6 +35,7 @@ public class RegelsScherm extends AnchorPane{
 
     private void buildGUI() {
         taRegels = new TextArea(r.getString("REGELSTEKST"));
+        this.getChildren().add(taRegels);
     }
     
     private void drukCancel(ActionEvent event) {
@@ -42,8 +44,3 @@ public class RegelsScherm extends AnchorPane{
 
     }
 }
-
-
-
-
-/////////////////////////////////////NOG GEBRUIKEN??????????????? OF TOCH DIE ALERT?????????????
