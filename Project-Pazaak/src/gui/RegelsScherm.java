@@ -40,13 +40,14 @@ public class RegelsScherm extends VBox{
     }
 
     private void buildGUI() {
-//        this.setPadding(new Insets(20, 20, 20, 20));
+        this.setPadding(new Insets(20, 20, 20, 20));
 //        this.setSpacing(10);
         
         taRegels = new TextArea(r.getString("REGELSTEKST"));
         
-        taRegels.setMinSize(100, 550);
+        taRegels.setMinSize(100, 500);
         taRegels.setEditable(false);
+        taRegels.setWrapText(true);
         
 //        btnCancel = new Button(r.getString("BACK"));
 //        btnCancel.setOnAction(new EventHandler<ActionEvent>() {
