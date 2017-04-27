@@ -23,6 +23,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -52,10 +54,11 @@ public class BorderPaneController extends BorderPane {
             throw new RuntimeException(ex);
         }
         btnBack = new Button();
-
-        setBottom(btnBack);
-        setAlignment(btnBack, Pos.CENTER);
-        btnBack.setPadding(new Insets(10));
+        btnBack.setMinSize(100, 40);
+        HBox btnBackPane = new HBox(btnBack);
+        setBottom(btnBackPane);
+        btnBackPane.setAlignment(Pos.CENTER);
+        btnBackPane.setPadding(new Insets(20));
 
         btnBack.setOnAction(new EventHandler<ActionEvent>() {
             @Override

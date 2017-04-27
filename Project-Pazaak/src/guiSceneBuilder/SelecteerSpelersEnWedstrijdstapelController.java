@@ -11,7 +11,6 @@ import exceptions.DatabaseException;
 import exceptions.NoPlayersAvailableException;
 import exceptions.PlayerDoesntExistException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -21,7 +20,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -30,7 +28,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javax.accessibility.AccessibleRole;
 
 /**
  * FXML Controller class
@@ -106,7 +103,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         ObservableList<String> comboLijst = FXCollections.observableArrayList(spelerLijst);
 
         cbSpelerSelectie1.setItems(comboLijst);
-        cbSpelerSelectie1.getSelectionModel().selectFirst();
+        cbSpelerSelectie1.setValue("---");
         cbSpelerSelectie2.setDisable(true);
         cbSpelerSelectie1.valueProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -160,9 +157,9 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         ksp2 = new KaartSelectiePaneel(dc, this, r);
         ksp1.activeerScherm(speler1);
         ksp2.activeerScherm(speler2);
-        btnConfirmSpeler1 = new Button("CONFIRM");
+        btnConfirmSpeler1 = new Button(r.getString("CONFIRM"));
         btnConfirmSpeler1.setOnAction((ActionEvent event) -> {
-            if (btnConfirmSpeler1.getText().equals("CONFIRM")) {
+            if (btnConfirmSpeler1.getText().equals(r.getString("CONFIRM"))) {
                 try {
                     selecteerWedstrijdStapel(speler1);
                     btnConfirmSpeler1.setDisable(true);
@@ -176,9 +173,9 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
                 parent.naarSpeelWedstrijdScherm();
             }
         });
-        btnConfirmSpeler2 = new Button("CONFIRM");
+        btnConfirmSpeler2 = new Button(r.getString("CONFIRM"));
         btnConfirmSpeler2.setOnAction((ActionEvent event) -> {
-            if (btnConfirmSpeler2.getText().equals("CONFIRM")) {
+            if (btnConfirmSpeler2.getText().equals(r.getString("CONFIRM"))) {
                 try {
                     selecteerWedstrijdStapel(speler2);
                     btnConfirmSpeler2.setDisable(true);

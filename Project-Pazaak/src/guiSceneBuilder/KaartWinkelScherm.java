@@ -19,7 +19,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -28,7 +27,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 /**
  *
@@ -52,7 +50,6 @@ public class KaartWinkelScherm extends GridPane {
     private Label lblSpelerSelectie;
     private ComboBox cbSpelerSpelectie;
     private Label lblKrediet;
-    private Button btnCancel;
     private Label lblError;
     private Alert DBAlert, cardBoughtAlert, insufficientBalanceException, invalidPlayerException;
 
@@ -66,7 +63,6 @@ public class KaartWinkelScherm extends GridPane {
 
     private void buildGui() {
 
-        setPadding(new Insets(20, 20, 20, 20));
         
 
         //Alerts
@@ -98,21 +94,11 @@ public class KaartWinkelScherm extends GridPane {
         lblError = new Label();
         lblError.setTextFill(Color.RED);
 
-        //Cancel button
-        btnCancel = new Button(r.getString("BACK"));
-        btnCancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drukCancel(event);
-            }
-        });
-        setHalignment(btnCancel, HPos.RIGHT);
         // spelerselectie, krediet, cancel button, en error label toevoegen aan grid
         add(lblSpelerSelectie, 0, 0);
         add(cbSpelerSpelectie, 1, 0);
         add(lblKrediet, 2, 0);
 
-        add(btnCancel, 3, 0, 2, 1);
         add(lblError, 2, 9);
 
         ////Tabel////

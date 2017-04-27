@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="576.0" type="Pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="CENTER" fillWidth="false" prefHeight="300.0" prefWidth="442.0" spacing="20.0" type="VBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="lblSpelerGeboorteJaar" layoutX="88.0" layoutY="145.0" />
-      <Label fx:id="lblSpelerNaam" layoutX="92.0" layoutY="102.0" />
-      <Label fx:id="lblTitel" layoutX="63.0" layoutY="39.0" />
-      <TextField fx:id="txfSpelerGeboorteJaar" layoutX="217.0" layoutY="140.0" />
-      <TextField fx:id="txfSpelerNaam" layoutX="217.0" layoutY="97.0" />
-      <Button fx:id="btnTerug" layoutX="84.0" layoutY="199.0" mnemonicParsing="false" onAction="#naarMenu" prefHeight="25.0" prefWidth="100.0" />
-      <Button fx:id="btnMaakSpeler" layoutX="343.0" layoutY="199.0" mnemonicParsing="false" onAction="#maakNieuweSpeler" prefHeight="25.0" prefWidth="100.0" />
-      <Label fx:id="lblError" layoutX="92.0" layoutY="173.0" prefHeight="17.0" prefWidth="351.0" />
+      <Label fx:id="lblTitel" />
+      <TextField fx:id="txfSpelerNaam" alignment="CENTER" prefHeight="31.0" prefWidth="245.0" />
+      <TextField fx:id="txfSpelerGeboorteJaar" alignment="CENTER" prefHeight="31.0" prefWidth="245.0" />
+      <Button fx:id="btnMaakSpeler" mnemonicParsing="false" onAction="#maakNieuweSpeler" prefHeight="31.0" prefWidth="184.0" />
+      <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="351.0" textAlignment="CENTER" />
    </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 </fx:root>
