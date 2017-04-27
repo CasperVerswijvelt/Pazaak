@@ -21,12 +21,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -47,6 +49,10 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
     private TabPane tabbladPaneel;
     private Button btnConfirmSpeler1;
     private Button btnConfirmSpeler2;
+    
+    private Alert playerNotFoundAlert;
+    private Alert DBAlert;
+    private Alert noPlayersAvailableAlert;
 
     private String speler1;
     private String speler2;
@@ -63,6 +69,10 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
     private Label lblSpeler2;
     @FXML
     private Button btnSelectPlayers;
+    @FXML
+    private Label lblError;
+    @FXML
+    private HBox HBoxspelerSelectie;
 
     @FXML
     private void drukSelectPlayers(ActionEvent event) {
@@ -87,6 +97,19 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
     }
 
     private void buildGUI() {
+        //Alerts
+        playerNotFoundAlert = new Alert(Alert.AlertType.ERROR);
+        playerNotFoundAlert.setTitle("Pazaak");
+        playerNotFoundAlert.setContentText(r.getString("PLAYERNOTFOUND"));
+
+        DBAlert = new Alert(Alert.AlertType.ERROR);
+        playerNotFoundAlert.setTitle("Pazaak");
+        DBAlert.setContentText(r.getString("DATABASEERROR"));
+
+        noPlayersAvailableAlert = new Alert(Alert.AlertType.ERROR);
+        playerNotFoundAlert.setTitle("Pazaak");
+        noPlayersAvailableAlert.setContentText(r.getString("NOTENOUGHPLAYERS"));
+        
         lblTitel.setText(r.getString("SELECTTWOPLAYERS"));
         lblSpeler1.setText(r.getString("PLAYER") + " 1");
         lblSpeler2.setText(r.getString("PLAYER") + " 2");
@@ -140,16 +163,16 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
             dc.selecteerSpeler(speler2);
             dc.maakNieuweWedstrijd();
         } catch (NullPointerException e) {
-//            lblError.setText(r.getString("SELECTTWOPLAYERS"));
+            lblError.setText(r.getString("SELECTTWOPLAYERS"));
             return;
         } catch (PlayerDoesntExistException e) {
-//            playerNotFoundAlert.show();
+            playerNotFoundAlert.show();
             return;
         } catch (DatabaseException e) {
-//            DBAlert.show();
+            DBAlert.show();
             return;
         } catch (NoPlayersAvailableException e) {
-//            noPlayersAvailableAlert.show();
+            noPlayersAvailableAlert.show();
             return;
         }
         tabbladPaneel = new TabPane();
@@ -166,8 +189,9 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
                     ksp1.setDisable(true);
                     checkBeideBevestigd();
                     tabbladPaneel.getSelectionModel().select(1);
+                    lblError.setText(null);
                 } catch (IllegalArgumentException e) {
-//                lblError.setText("SELECT 6 CARDS");
+                lblError.setText(r.getString("SELECT6CARDS"));
                 }
             } else {
                 parent.naarSpeelWedstrijdScherm();
@@ -182,8 +206,9 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
                     ksp2.setDisable(true);
                     checkBeideBevestigd();
                     tabbladPaneel.getSelectionModel().select(0);
+                    lblError.setText(null);
                 } catch (IllegalArgumentException e) {
-//                lblError.setText(r.getString("SELECT6CARDS"));
+                lblError.setText(r.getString("SELECT6CARDS"));
                 }
             } else {
                 parent.naarSpeelWedstrijdScherm();

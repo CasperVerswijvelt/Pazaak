@@ -13,19 +13,26 @@
       <VBox alignment="CENTER" prefHeight="109.0" prefWidth="846.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="lblTitel" text="lblTitel" textAlignment="CENTER" />
-            <HBox alignment="CENTER" prefHeight="63.0" prefWidth="846.0" spacing="15.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="lblSpeler1" text="lblSpeler1" />
-                  <ComboBox fx:id="cbSpelerSelectie1" prefWidth="150.0" />
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <ComboBox fx:id="cbSpelerSelectie2" prefWidth="150.0" />
-                  <Label fx:id="lblSpeler2" text="lblSpeler2" />
+                  <HBox fx:id="HBoxspelerSelectie" alignment="CENTER" prefHeight="63.0" prefWidth="846.0" spacing="15.0">
+                     <children>
+                        <Label fx:id="lblSpeler1" text="lblSpeler1" />
+                        <ComboBox fx:id="cbSpelerSelectie1" prefWidth="150.0" />
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <ComboBox fx:id="cbSpelerSelectie2" prefWidth="150.0" />
+                        <Label fx:id="lblSpeler2" text="lblSpeler2" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
          </children>
       </VBox>
    </top>
    <center>
       <Button fx:id="btnSelectPlayers" alignment="CENTER" mnemonicParsing="false" onAction="#drukSelectPlayers" prefHeight="40.0" prefWidth="125.0" text="btnSelectPlayers" textAlignment="CENTER" BorderPane.alignment="CENTER" />
    </center>
+   <bottom>
+      <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="394.0" textAlignment="CENTER" textFill="RED" BorderPane.alignment="CENTER" />
+   </bottom>
 </fx:root>

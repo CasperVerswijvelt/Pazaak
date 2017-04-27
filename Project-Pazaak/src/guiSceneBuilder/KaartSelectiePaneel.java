@@ -51,7 +51,7 @@ public class KaartSelectiePaneel extends VBox {
 
         this.getChildren().add(kaarten);
         this.getChildren().add(selected);
-        this.setPadding(new Insets(10, 10, 10, 10));
+        this.setPadding(new Insets(0, 10, 10, 10));
 
         for (int i = 0; i < 33; i++) {
             Button btn = new Button();
