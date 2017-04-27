@@ -55,6 +55,7 @@ public class BorderPaneController extends BorderPane {
         }
         btnBack = new Button();
         btnBack.setMinSize(100, 40);
+        btnBack.setId("btnBack");
         HBox btnBackPane = new HBox(btnBack);
         setBottom(btnBackPane);
         btnBackPane.setAlignment(Pos.CENTER);

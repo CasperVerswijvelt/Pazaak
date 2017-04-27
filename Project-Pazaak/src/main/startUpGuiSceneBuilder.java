@@ -17,26 +17,29 @@ import javafx.stage.Stage;
  *
  * @author goran
  */
-public class startUpGuiSceneBuilder extends Application{
+public class startUpGuiSceneBuilder extends Application {
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        DomeinController dc = new DomeinController();
 
-        @Override
-        public void start(Stage primaryStage) throws Exception {
-            DomeinController dc = new DomeinController();
-            
-            
-            BorderPaneController parent = new BorderPaneController(dc);
-            
-            Scene scene = new Scene(parent);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Pazaak");
-            
-            primaryStage.show();
-            primaryStage.setResizable(false);
-        }
+        BorderPaneController parent = new BorderPaneController(dc);
 
-        public static void main(String args[]) {
-            launch(args);
-        
-        }
+        Scene scene = new Scene(parent);
+        scene.getStylesheets()
+                .add(getClass()
+                        .getResource("/guiSceneBuilder/stylesheet.css")
+                        .toExternalForm());
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Pazaak");
+
+        primaryStage.show();
+        primaryStage.setResizable(false);
+    }
+
+    public static void main(String args[]) {
+        launch(args);
+
+    }
 }

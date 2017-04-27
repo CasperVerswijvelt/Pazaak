@@ -1,12 +1,12 @@
 .background {
     -fx-background-color: white;
 }
-.button-TaalSelectie {
-    -fx-font-family: "Cambria";
+.button-TaalSelectie,#btnBack{
+    -fx-font-family: "Nordstrom Roman";
     -fx-font-size: 18px;
     -fx-font-weight: bolder;
     -fx-background-color: lightgray;
-    -fx-border-color: gray;
+/*    -fx-border-color: #cccccc;*/
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
     -fx-border-insets: 5px;
@@ -15,22 +15,25 @@
     -fx-background-insets: 5px
 }
 .button-StartSpel{
-    -fx-font-family: "Cambria";
+    -fx-font-family: "Nordstrom Roman";
     -fx-font-size: 18px;
     -fx-font-weight: bolder;
     -fx-background-color: #AFAFAF;
-    -fx-border-color: gray;
+/*    -fx-border-color: gray;*/
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
     -fx-border-insets: 5px;
     -fx-padding: 10px;
     -fx-spacing: 5px;
-    -fx-background-insets: 5px
+    -fx-background-insets: 5px;
 }
 .button-StartSpel:hover{
     -fx-background-color: #A0A0A0; 
 }
 .button-TaalSelectie:hover{
+    -fx-background-color: #A0A0A0; 
+}
+#btnBack:hover{
     -fx-background-color: #A0A0A0; 
 }
 .tab-pane .tab-header-area .tab-header-background {
@@ -61,7 +64,7 @@
     -fx-alignment: CENTER;
 }
 .label{
-    -fx-font-family: "Cambria";
+    -fx-font-family: "Nordstrom Roman";
     -fx-font-size: 18px;
     -fx-font-weight: bolder;
 }
