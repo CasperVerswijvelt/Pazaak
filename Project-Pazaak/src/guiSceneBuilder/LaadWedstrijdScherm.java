@@ -13,13 +13,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -55,9 +53,11 @@ public class LaadWedstrijdScherm extends VBox {
         cbWedstrijdSelectie = new ComboBox();
         
         DBAlert = new Alert(Alert.AlertType.ERROR);
+        DBAlert.setTitle("Pazaak");
         DBAlert.setContentText(r.getString("DATABASEERROR"));
         
         gameNotFoundAlert = new Alert(Alert.AlertType.ERROR);
+        gameNotFoundAlert.setTitle("Pazaak");
         gameNotFoundAlert.setContentText("GAME NOT FOUND (vertaal mij)");
         
         btnLaadSpel = new Button(r.getString("LOADGAMEOPTION"));
@@ -103,7 +103,7 @@ public class LaadWedstrijdScherm extends VBox {
             wedstrijden = dc.geefWedstrijdenOverzicht();
         } catch (DatabaseException e) {
             DBAlert.show();
-            return;
+            throw new DatabaseException(e);
         }
         
         if (wedstrijden.length == 0) {

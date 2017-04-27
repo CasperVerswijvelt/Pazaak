@@ -7,6 +7,9 @@ package guiSceneBuilder;
 
 import gui.*;
 import domein.DomeinController;
+import exceptions.DatabaseException;
+import exceptions.GameAlreadyExistsException;
+import exceptions.GameSaveDatabaseException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.geometry.HPos;
@@ -45,6 +48,8 @@ public class SetSpeelScherm extends GridPane {
     private Label lblSpeler1;
     private Label lblSpeler2;
 
+    private Alert DBAlert, gameExistsAlert;
+
     SetSpeelScherm(BorderPaneController parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
         this.dc = dc;
@@ -65,6 +70,14 @@ public class SetSpeelScherm extends GridPane {
 
         ap1 = new ActiesPaneel(this, dc, r, 0);
         ap2 = new ActiesPaneel(this, dc, r, 1);
+
+        DBAlert = new Alert(Alert.AlertType.ERROR);
+        DBAlert.setTitle("Pazaak");
+        DBAlert.setContentText(r.getString("DATABASEERROR"));
+
+        gameExistsAlert = new Alert(Alert.AlertType.ERROR);
+        gameExistsAlert.setTitle("Pazaak");
+        gameExistsAlert.setContentText(r.getString("GAMEALREADYEXISTS"));
 
         lblSpeler1 = new Label(speler1);
         lblSpeler2 = new Label(speler2);
@@ -100,7 +113,7 @@ public class SetSpeelScherm extends GridPane {
             dc.registreerAantalWins();
 
             verversSpelbordSpeler();
-            
+
             //Checken of wedstrijd ni gedaan is kejt
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
@@ -125,23 +138,38 @@ public class SetSpeelScherm extends GridPane {
 
                 Optional<ButtonType> result = alert2.showAndWait();
                 if (result.get() == opslaan) {
-                    TextInputDialog dialog = new TextInputDialog();
-                    dialog.setTitle("Pazaak" + " - " + r.getString("OPSLAAN"));
-                    dialog.setHeaderText(null);
-                    dialog.setContentText(r.getString("GAMENAME"));
 
-                    Optional<String> naam = dialog.showAndWait();
-                    if (naam.isPresent()) {
-                        dc.slaWedstrijdOp(naam.get());
-                        parent.naarMenu();
-                    } else {
-                        setTenEinde();
+                    while (true) {
+
+                        TextInputDialog dialog = new TextInputDialog();
+                        dialog.setTitle("Pazaak" + " - " + r.getString("OPSLAAN"));
+                        dialog.setHeaderText(null);
+                        dialog.setContentText(r.getString("GAMENAME"));
+
+                        Optional<String> naam = dialog.showAndWait();
+                        if (naam.isPresent()) {
+                            try {
+                                dc.slaWedstrijdOp(naam.get());
+                                parent.naarMenu();
+                            } catch (GameAlreadyExistsException e) {
+                                gameExistsAlert.showAndWait();
+                                continue;
+                            } catch (DatabaseException e) {
+                                DBAlert.showAndWait();
+                                continue;
+                            }
+
+                        } else {
+                            setTenEinde();
+                            break;
+                        }
                     }
                 } else {
                     setTenEinde();
-                }
-            } else {
 
+                }
+
+            } else {
                 setTenEinde();
 
             }
@@ -159,7 +187,7 @@ public class SetSpeelScherm extends GridPane {
         }
 
         verversSpelbordSpeler();
-        
+
     }
 
     private void verversSpelbordSpeler() {

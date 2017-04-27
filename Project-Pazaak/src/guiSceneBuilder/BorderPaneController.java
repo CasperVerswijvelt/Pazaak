@@ -5,27 +5,22 @@
  */
 package guiSceneBuilder;
 
-
 import domein.DomeinController;
+import exceptions.DatabaseException;
 import gui.RegelsScherm;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -91,6 +86,7 @@ public class BorderPaneController extends BorderPane {
     }
 
     public void naarTaalSelectie() {
+
         TaalSelectieSBController taalSelect = new TaalSelectieSBController(dc, this);
         this.setCenter(taalSelect);
         setAlignment(this, Pos.CENTER);
@@ -114,33 +110,57 @@ public class BorderPaneController extends BorderPane {
     }
 
     void naarSpelerSelectie() {
-        SelecteerSpelersEnWedstrijdstapelController selecteerSpeler = new SelecteerSpelersEnWedstrijdstapelController(this, dc, r);
-        this.setCenter(selecteerSpeler);
-        setAlignment(selecteerSpeler, Pos.CENTER);
-        btnBack.setVisible(true);
+
+        try {
+            SelecteerSpelersEnWedstrijdstapelController selecteerSpeler = new SelecteerSpelersEnWedstrijdstapelController(this, dc, r);
+            this.setCenter(selecteerSpeler);
+            setAlignment(selecteerSpeler, Pos.CENTER);
+            btnBack.setVisible(true);
+        } catch (DatabaseException e) {
+
+        }
+
     }
 
     public void naarSpeelWedstrijdScherm() {
-        SetSpeelScherm game = new SetSpeelScherm(this, dc, r);
-        this.setCenter(game);
-        game.setAlignment(Pos.CENTER);
-        btnBack.setVisible(true);
+
+        try {
+
+        } catch (DatabaseException e) {
+            SetSpeelScherm game = new SetSpeelScherm(this, dc, r);
+            this.setCenter(game);
+            game.setAlignment(Pos.CENTER);
+            btnBack.setVisible(true);
+        }
+
     }
 
     public void naarKaartwinkelScherm() {
-        KaartWinkelScherm shop = new KaartWinkelScherm(this, dc, r);
-        this.setCenter(shop);
-        shop.setAlignment(Pos.CENTER);
-        btnBack.setVisible(true);
+
+        try {
+            KaartWinkelScherm shop = new KaartWinkelScherm(this, dc, r);
+            this.setCenter(shop);
+            shop.setAlignment(Pos.CENTER);
+            btnBack.setVisible(true);
+        } catch (DatabaseException e) {
+
+        }
+
     }
 
     public void naarLaadScherm() {
-        LaadWedstrijdScherm laadWedstrijd = new LaadWedstrijdScherm(this, dc, r);
-        this.setCenter(laadWedstrijd);
-        laadWedstrijd.setAlignment(Pos.CENTER);
-        btnBack.setVisible(true);
+
+        try {
+            LaadWedstrijdScherm laadWedstrijd = new LaadWedstrijdScherm(this, dc, r);
+            this.setCenter(laadWedstrijd);
+            laadWedstrijd.setAlignment(Pos.CENTER);
+            btnBack.setVisible(true);
+        } catch (DatabaseException e) {
+
+        }
+
     }
-    
+
     public void naarInstructiesScherm() {
         RegelsScherm regelScherm = new RegelsScherm(this, dc, r);
         this.setCenter(regelScherm);

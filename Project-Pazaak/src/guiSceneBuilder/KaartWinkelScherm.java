@@ -359,7 +359,7 @@ public class KaartWinkelScherm extends GridPane {
             lijst = FXCollections.observableArrayList(dc.geefAlleSpelerNamen());
         } catch (DatabaseException e) {
             DBAlert.show();
-            return;
+            throw new DatabaseException(e);
         }
 
         cbSpelerSpelectie.setMaxWidth(100);

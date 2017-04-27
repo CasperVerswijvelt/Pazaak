@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -33,6 +34,8 @@ public class KaartSelectiePaneel extends VBox {
     private List<Button> kaartButtons;
     private GridPane kaarten;
     private GridPane selected;
+    
+
 
     KaartSelectiePaneel(DomeinController dc, SelecteerSpelersEnWedstrijdstapelController parent, ResourceBundle r) {
         this.dc = dc;
@@ -55,6 +58,7 @@ public class KaartSelectiePaneel extends VBox {
 
         for (int i = 0; i < 33; i++) {
             Button btn = new Button();
+            btn.getStyleClass().add("kaartLeeg");
             btn.setMinSize(50, 80);
             btn.setDisable(true);
             kaarten.add(btn, i % 11, i / 11);
@@ -97,6 +101,7 @@ public class KaartSelectiePaneel extends VBox {
             String[] kaartLayout = Utilities.veranderNaarMooieLayout(startStapel[i]);
 
             Button button = new Button(kaartLayout[0] + kaartLayout[1]);
+            button.getStyleClass().add("kaart");
             button.setMinSize(50, 80);
             button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override

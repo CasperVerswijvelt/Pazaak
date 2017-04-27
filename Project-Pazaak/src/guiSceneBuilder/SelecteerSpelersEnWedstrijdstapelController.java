@@ -103,7 +103,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         playerNotFoundAlert.setContentText(r.getString("PLAYERNOTFOUND"));
 
         DBAlert = new Alert(Alert.AlertType.ERROR);
-        playerNotFoundAlert.setTitle("Pazaak");
+        DBAlert.setTitle("Pazaak");
         DBAlert.setContentText(r.getString("DATABASEERROR"));
 
         noPlayersAvailableAlert = new Alert(Alert.AlertType.ERROR);
@@ -120,7 +120,10 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
             spelerLijst = dc.geefAlleSpelerNamen();
 
         } catch (DatabaseException e) {
-            return;
+            
+            DBAlert.show();
+            throw new DatabaseException(e);
+
         }
 
         ObservableList<String> comboLijst = FXCollections.observableArrayList(spelerLijst);
@@ -170,6 +173,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
             return;
         } catch (DatabaseException e) {
             DBAlert.show();
+            parent.naarMenu();
             return;
         } catch (NoPlayersAvailableException e) {
             noPlayersAvailableAlert.show();
