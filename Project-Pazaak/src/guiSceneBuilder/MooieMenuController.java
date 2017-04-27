@@ -87,6 +87,7 @@ public class MooieMenuController extends VBox {
 
     @FXML
     private void naarInstructies(ActionEvent event) {
+        parent.naarInstructiesScherm();
     }
 
     private void buildGUI() {

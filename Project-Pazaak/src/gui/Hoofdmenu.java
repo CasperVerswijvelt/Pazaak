@@ -179,10 +179,6 @@ public class Hoofdmenu extends VBox {
     }
     
     public void toRegelsScherm() {
-//        Alert alert = new Alert(Alert.AlertType.NONE, r.getString("REGELSTEKST"), ButtonType.OK);
-//        alert.setTitle("Pazaak - " + r.getString("RULES"));
-//        alert.showAndWait();
-        //ok toch geen alert :/
         Stage stage = (Stage) this.getScene().getWindow();
 
         Scene scene = new Scene(new RegelsScherm(this, dc, r), 1100, 750);

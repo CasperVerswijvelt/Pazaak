@@ -5,7 +5,9 @@
  */
 package gui;
 
+import gui.*;
 import domein.DomeinController;
+import guiSceneBuilder.BorderPaneController;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,13 +25,13 @@ import javafx.stage.Stage;
 public class RegelsScherm extends VBox{
 
     private final DomeinController dc;
-    private final Hoofdmenu parent;
+    private final BorderPaneController parent;
     private final ResourceBundle r;
     
     private TextArea taRegels;
-    private Button btnCancel;
+//    private Button btnCancel;
     
-    RegelsScherm(Hoofdmenu parent, DomeinController dc, ResourceBundle r) {
+    public RegelsScherm(BorderPaneController parent, DomeinController dc, ResourceBundle r) {
         this.dc = dc;
         this.r = r;
         this.parent = parent;
@@ -38,28 +40,28 @@ public class RegelsScherm extends VBox{
     }
 
     private void buildGUI() {
-        this.setPadding(new Insets(20, 20, 20, 20));
-        this.setSpacing(10);
+//        this.setPadding(new Insets(20, 20, 20, 20));
+//        this.setSpacing(10);
         
         taRegels = new TextArea(r.getString("REGELSTEKST"));
         
-        taRegels.setMinSize(1000, 650);
+        taRegels.setMinSize(100, 550);
         taRegels.setEditable(false);
         
-        btnCancel = new Button(r.getString("BACK"));
-        btnCancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drukCancel(event);
-            }
-        });
+//        btnCancel = new Button(r.getString("BACK"));
+//        btnCancel.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                drukCancel(event);
+//            }
+//        });
         
-        this.getChildren().addAll(taRegels, btnCancel);
+        this.getChildren().addAll(taRegels);
     }
     
-    private void drukCancel(ActionEvent event) {
-        Stage stage = (Stage) this.getScene().getWindow();
-        parent.zetTerugActief(stage);
-
-    }
+//    private void drukCancel(ActionEvent event) {
+//        Stage stage = (Stage) this.getScene().getWindow();
+//        parent.naarMenu();
+//
+//    }
 }

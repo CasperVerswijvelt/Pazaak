@@ -5,7 +5,9 @@
  */
 package guiSceneBuilder;
 
+
 import domein.DomeinController;
+import gui.RegelsScherm;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -132,6 +134,13 @@ public class BorderPaneController extends BorderPane {
         LaadWedstrijdScherm laadWedstrijd = new LaadWedstrijdScherm(this, dc, r);
         this.setCenter(laadWedstrijd);
         laadWedstrijd.setAlignment(Pos.CENTER);
+        btnBack.setVisible(true);
+    }
+    
+    public void naarInstructiesScherm() {
+        RegelsScherm regelScherm = new RegelsScherm(this, dc, r);
+        this.setCenter(regelScherm);
+        regelScherm.setAlignment(Pos.CENTER);
         btnBack.setVisible(true);
     }
 
