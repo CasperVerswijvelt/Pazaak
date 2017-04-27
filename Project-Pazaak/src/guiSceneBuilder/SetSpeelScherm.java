@@ -87,7 +87,7 @@ public class SetSpeelScherm extends GridPane {
         rechtsOnder.setAlignment(Pos.CENTER_RIGHT);
         ap2.setAlignment(Pos.CENTER_RIGHT);
         this.setVgap(20);
-        this.setHgap(20);
+        this.setHgap(50);
         this.setPadding(new Insets(30, 30, 30, 30));
     }
 
