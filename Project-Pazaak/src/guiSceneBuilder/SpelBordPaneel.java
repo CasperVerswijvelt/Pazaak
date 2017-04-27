@@ -14,13 +14,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
  *
  * @author goran
  */
-class SpelBordPaneel extends GridPane{
+class SpelBordPaneel extends HBox{
     private SetSpeelScherm parent;
     private DomeinController dc;
     private ResourceBundle r;
@@ -62,16 +63,15 @@ class SpelBordPaneel extends GridPane{
         lblScoreGetal = new Label("0");
         VBox vbScore = new VBox();
         vbScore.getChildren().addAll(lblScore,lblScoreGetal);
-        setValignment(vbScore, VPos.CENTER);
+        kp.setAlignment(Pos.CENTER);
         vbScore.setAlignment(Pos.CENTER);
+        this.setSpacing(20);
             
         
         if(this.kant == 1){
-            this.add(kp, 0, 0);
-            this.add(vbScore, 1, 0);
+            this.getChildren().addAll(kp, vbScore);
         }else{
-            this.add(kp, 1, 0);
-            this.add(vbScore, 0, 0);
+            this.getChildren().addAll(vbScore, kp);
         }
 
     }
