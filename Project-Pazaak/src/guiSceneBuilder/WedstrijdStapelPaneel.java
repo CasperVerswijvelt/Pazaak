@@ -10,12 +10,16 @@ import domein.DomeinController;
 import static gui.Utilities.veranderNaarMooieLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 
 /**
@@ -63,7 +67,7 @@ class WedstrijdStapelPaneel extends HBox {
         }
 
         if (aantalKaarten < 4) {
-            for (int i = 0; i < 4-aantalKaarten; i++) {
+            for (int i = 0; i < 4 - aantalKaarten; i++) {
                 Button button = new Button();
                 button.setMinSize(50, 80);
                 button.setDisable(true);
@@ -74,18 +78,69 @@ class WedstrijdStapelPaneel extends HBox {
         }
         this.getChildren().addAll(btnWedstrijdKaarten);
 
-        if(speler==1)
+        if (speler == 1) {
             setAlignment(Pos.CENTER_RIGHT);
+        }
         setSpacing(10);
     }
 
     private void drukSpeelWedstrijdkaart(ActionEvent event) {
-        Button source = (Button)event.getSource();
-        source.setDisable(true);
-        source.setText("");
+        Button source = (Button) event.getSource();
+
         int index = btnWedstrijdKaarten.indexOf(source);
         String[] kaart = wedstrijdKaarten[index];
 
-        parent.drukSpeelWedstrijdkaart(kaart);
+        int waarde = Integer.parseInt(kaart[1]);
+        char type = kaart[0].charAt(0);
+        if (type == '*') {
+            ButtonType plus = new ButtonType("+", ButtonBar.ButtonData.OK_DONE);
+            ButtonType min = new ButtonType("-", ButtonBar.ButtonData.OK_DONE);
+
+            Alert alert = new Alert(Alert.AlertType.NONE, "-/+", plus, min);
+            alert.setTitle("Pazaak");
+            alert.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == plus) {
+                type = '+';
+            } else if (result.get() == min) {
+                type = '-';
+            } else {
+                return;
+            }
+        }
+        if (type == 'C') {
+            ButtonType plus1 = new ButtonType("+1", ButtonBar.ButtonData.OK_DONE);
+            ButtonType plus2 = new ButtonType("+2", ButtonBar.ButtonData.OK_DONE);
+            ButtonType min1 = new ButtonType("-1", ButtonBar.ButtonData.OK_DONE);
+            ButtonType min2 = new ButtonType("-2", ButtonBar.ButtonData.OK_DONE);
+            
+
+            Alert alert = new Alert(Alert.AlertType.NONE, "+1 / +2 / -1 / -2", plus1, plus2, min1, min2);
+            alert.setTitle("Pazaak");
+            alert.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == plus1) {
+                type = '+';
+                waarde = 1;
+            } else if (result.get() == plus2) {
+                type = '+';
+                waarde = 2;
+            } else if (result.get() == min1) {
+                type = '-';
+                waarde = 1;
+            } else if (result.get() == min2) {
+                type = '-';
+                waarde = 2;
+            } else {
+                return;
+            }
+        }
+
+        source.setDisable(true);
+        source.setText("");
+
+        parent.drukSpeelWedstrijdkaart(kaart, waarde, type);
     }
 }

@@ -71,8 +71,8 @@ class ActiesPaneel extends VBox {
         parent.drukBevries();
     }
 
-    public void drukSpeelWedstrijdkaart(String[] kaart) {
-        parent.drukSpeelWedstrijdkaart(kaart);
+    public void drukSpeelWedstrijdkaart(String[] kaart, int waarde, char type) {
+        parent.drukSpeelWedstrijdkaart(kaart, waarde,type);
     }
 
 }

@@ -239,52 +239,10 @@ public class SetSpeelScherm extends GridPane {
 
     }
 
-    void drukSpeelWedstrijdkaart(String[] kaart) {
-        int waarde = Integer.parseInt(kaart[1]);
-        char type = kaart[0].charAt(0);
-        if (type == '*') {
-            ButtonType plus = new ButtonType("+", ButtonBar.ButtonData.OK_DONE);
-            ButtonType min = new ButtonType("-", ButtonBar.ButtonData.OK_DONE);
+    void drukSpeelWedstrijdkaart(String[] kaart, int gewensteWaarde, char gewensteType) {
+        
 
-            Alert alert = new Alert(AlertType.NONE, "-/+", plus, min);
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == plus) {
-                type = '+';
-            }
-            if (result.get() == min) {
-                type = '-';
-            }
-        }
-        if (type == 'C') {
-            ButtonType plus1 = new ButtonType("+1", ButtonBar.ButtonData.OK_DONE);
-            ButtonType plus2 = new ButtonType("+2", ButtonBar.ButtonData.OK_DONE);
-            ButtonType min1 = new ButtonType("-1", ButtonBar.ButtonData.OK_DONE);
-            ButtonType min2 = new ButtonType("-2", ButtonBar.ButtonData.OK_DONE);
-
-            Alert alert = new Alert(AlertType.NONE, "+1/+2/-1/-2", plus1, plus2, min1, min2);
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == plus1) {
-                type = '+';
-                waarde = 1;
-            }
-
-            if (result.get() == plus2) {
-                type = '+';
-                waarde = 2;
-            }
-            if (result.get() == min1) {
-                type = '-';
-                waarde = 1;
-            }
-            if (result.get() == min2) {
-                type = '-';
-                waarde = 2;
-            }
-        }
-
-        dc.gebruikWedstrijdKaart(kaart, waarde, type);
+        dc.gebruikWedstrijdKaart(kaart, gewensteWaarde, gewensteType);
         verversSpelerScherm();
         drukEndTurn();
     }
