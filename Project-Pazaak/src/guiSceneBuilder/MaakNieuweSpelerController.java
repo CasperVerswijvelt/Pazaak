@@ -25,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import static ui.Console.formatteerKaart;
 
 /**
  * FXML Controller class
@@ -87,11 +88,12 @@ public class MaakNieuweSpelerController extends VBox {
             geboortedatum = Integer.parseInt(geboorteVeldTekst);
             dc.maakNieuweSpelerAan(naamVeldTekst, geboortedatum);
             info = dc.geefSpelerInfo(naamVeldTekst);
+            String stapel = formatteerStapelOpLijn(dc.geefStartStapel(naamVeldTekst), false);
             lblError.setText("");
             txfSpelerNaam.setText("");
             txfSpelerGeboorteJaar.setText("");
 
-            newPlayerAlert.setContentText(r.getString("NAME") + ": " + info[0] + "\n" + r.getString("CREDITS") + ": " + info[1] + "\n" + r.getString("BIRTH") + ": " + info[2]);
+            newPlayerAlert.setContentText(r.getString("NAME") + ": " + info[0] + "\n" + r.getString("CREDITS") + ": " + info[1] + "\n" + r.getString("BIRTH") + ": " + info[2] + "\n" + r.getString("DECK") + stapel);
             newPlayerAlert.show();
 
         } catch (PlayerAlreadyExistsException e) {
@@ -141,6 +143,14 @@ public class MaakNieuweSpelerController extends VBox {
         this.newPlayerAlert = new Alert(Alert.AlertType.NONE);
         this.newPlayerAlert.setTitle(r.getString("NEWPLAYER"));
         this.newPlayerAlert.getDialogPane().getButtonTypes().add(ButtonType.OK);
+    }
+    
+    public String formatteerStapelOpLijn(String[][] spelbord, boolean toonPrijs) {
+        String res = "";
+        for (String[] kaart : spelbord) {
+            res += formatteerKaart(kaart, toonPrijs) + " ";
+        }
+        return res;
     }
 
 }
