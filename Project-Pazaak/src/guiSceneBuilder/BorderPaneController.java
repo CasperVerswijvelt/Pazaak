@@ -32,7 +32,7 @@ public class BorderPaneController extends BorderPane {
     private DomeinController dc;
     private Button btnBack;
     
-    private KaartWinkelScherm
+    private SelecteerSpelersEnWedstrijdstapelController terugKeerSchermWinkel;
 
     /**
      * Initializes the controller class.
@@ -60,6 +60,16 @@ public class BorderPaneController extends BorderPane {
         btnBack.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                if(getCenter() instanceof KaartWinkelScherm && terugKeerSchermWinkel != null) {
+                    terugNaarSpelerSelectieScherm();
+                    return;
+                }
+                
+                
+                
+                
+                
+                
                 if (getCenter() instanceof SetSpeelScherm) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setHeaderText(null);
@@ -85,6 +95,27 @@ public class BorderPaneController extends BorderPane {
         this.r = r;
         btnBack.setText(r.getString("BACK"));
     }
+
+    public void setDc(DomeinController dc) {
+        this.dc = dc;
+    }
+
+    public void setBtnBack(Button btnBack) {
+        this.btnBack = btnBack;
+    }
+
+    public void setTerugKeerSchermWinkel(SelecteerSpelersEnWedstrijdstapelController terugKeerSchermWinkel) {
+        this.terugKeerSchermWinkel = terugKeerSchermWinkel;
+    }
+
+
+
+
+    
+    
+    
+    
+    
 
     public void naarTaalSelectie() {
 
@@ -162,6 +193,13 @@ public class BorderPaneController extends BorderPane {
         this.setCenter(regelScherm);
         regelScherm.setAlignment(Pos.CENTER);
         btnBack.setVisible(true);
+    }
+    
+    private void terugNaarSpelerSelectieScherm() {
+        this.setCenter(terugKeerSchermWinkel);
+        btnBack.setVisible(true);
+        terugKeerSchermWinkel.verversKaarten();
+        terugKeerSchermWinkel = null;
     }
 
 }
