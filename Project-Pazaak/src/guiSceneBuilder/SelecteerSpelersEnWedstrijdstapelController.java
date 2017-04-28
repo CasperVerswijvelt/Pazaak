@@ -84,7 +84,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         this.parent = parent;
         this.r = r;
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("selecteerSpelersEnWedstrijdstapel.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SelecteerSpelersEnWedstrijdstapel.fxml"));
         loader.setRoot(this);
         loader.setController(this);
 
