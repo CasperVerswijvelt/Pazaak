@@ -30,22 +30,24 @@ public class UC4 {
         printLijn();
 
         //Spelers overlopen
-        for (String speler : spelers) {
+        while (dc.geefSpelersZonderWedstrijdStapel().size() != 0) {
+            spelers = dc.geefSpelersZonderWedstrijdStapel();
+
+            System.out.println(r.getString("CHOOSEPLAYERCHOOSECARDS"));
+            String speler = promptSpelerUitLijst(r, spelers, r.getString("CHOICE") + ": ");
+
             System.out.printf(r.getString("SELECTCARDSFORPLAYER") + "%n", speler);
             dc.selecterSpelerWedstrijdStapel(speler);
             List<String[]> startStapel = new ArrayList<>(Arrays.asList(dc.geefStartStapel()));
-            
 
-
-            
             //6 kaarten kiezen
             for (int k = 0; k < 6; k++) {
-                
+
                 //Kaarten tonen
                 String[][] array = new String[startStapel.size()][2];
                 startStapel.toArray(array);
                 System.out.println(formatteerStapelAlsLijst(array, false));;
-                
+
                 boolean valideKeuze;
                 int keuze = 0;
                 do {
@@ -58,30 +60,30 @@ public class UC4 {
                             throw new IllegalArgumentException();
                         }
 
-                    //Keuze niet valide
+                        //Keuze niet valide
                     } catch (IllegalArgumentException e) {
                         valideKeuze = false;
                         System.out.println(r.getString("INVALIDCHOICE"));
                     }
-                //Keuze wordt opnieuw opgevraagd zolang deze nie valide is
+                    //Keuze wordt opnieuw opgevraagd zolang deze nie valide is
                 } while (!valideKeuze);
-                
+
                 //Gekozen kaart wordt geselecteerd en getoond
                 dc.selecteerKaart(startStapel.get(keuze - 1));
                 System.out.println(formatteerKaart(startStapel.get(keuze - 1), false) + " " + r.getString("SELECTED"));
-                
+
                 //Gekozen kaart wordt uit mogelijke keuzes gehaald
-                startStapel.remove(keuze-1);
-                
+                startStapel.remove(keuze - 1);
+
             }
 
             //Wedstrdijstapel wordt gemaakt met geselecteerde kaarten
             dc.maakWedstrijdStapel();
             printLijn();
-            
+
         }
-        
-        new UC5(dc,r).start();
+
+        new UC5(dc, r).start();
 
     }
 }

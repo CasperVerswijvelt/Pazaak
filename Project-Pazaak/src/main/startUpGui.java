@@ -28,7 +28,7 @@ public class startUpGui extends Application {
         Scene scene = new Scene(parent);
         scene.getStylesheets()
                 .add(getClass()
-                        .getResource("/guiSceneBuilder/stylesheet.css")
+                        .getResource("/gui/stylesheet.css")
                         .toExternalForm());
 
         primaryStage.setScene(scene);
