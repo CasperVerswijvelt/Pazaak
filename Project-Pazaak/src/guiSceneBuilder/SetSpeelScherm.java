@@ -118,11 +118,12 @@ public class SetSpeelScherm extends GridPane {
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
             String uitslag = dc.geefSetUitslag();
-            String alertUitslag = uitslag.equals("TIE") ? r.getString("TIE") : uitslag + " WINS";
+            String alertUitslag = uitslag.equals("TIE") ? r.getString("TIE") : uitslag + r.getString("WINS");
+            
 
-            alert.setTitle("SET OVER - " + alertUitslag);
+            alert.setTitle("Pazaak");
             int[] tussenstand = dc.geefWedstrijdTussenstand();
-            alert.setContentText(speler1 + " " + tussenstand[0] + " - " + tussenstand[1] + " " + speler2);
+            alert.setContentText(alertUitslag + "\n" + speler1 + " " + tussenstand[0] + " - " + tussenstand[1] + " " + speler2);
             alert.showAndWait();
 
             if (!dc.wedstrijdIsKlaar()) {
@@ -296,8 +297,8 @@ public class SetSpeelScherm extends GridPane {
             dc.veranderKrediet(winnaar, 5);
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle(winnaar + " WINS");
-            alert.setContentText(winnaar + " WINS\n" + r.getString("NEWCREDIT") + " " + dc.geefSpelerInfo(winnaar)[1]);
+            alert.setTitle("Pazaak");
+            alert.setContentText(winnaar + r.getString("WINS") + "\n" + r.getString("NEWCREDIT") + " " + dc.geefSpelerInfo(winnaar)[1]);
             alert.showAndWait();
 
             parent.naarMenu();
