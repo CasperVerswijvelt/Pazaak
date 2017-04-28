@@ -50,12 +50,17 @@ class ActiesPaneel extends VBox {
         btnBevries.setOnAction((ActionEvent event) -> {
             drukBevries(event);
         });
+        btnBevries.getStyleClass().add("button-TaalSelectie");
+        btnEndTurn.getStyleClass().add("button-TaalSelectie");
+        
         HBox buttons;
 
         if (speler == 0) {
             buttons = new HBox(btnBevries, btnEndTurn);
+            buttons.setAlignment(Pos.CENTER_LEFT);
         } else {
             buttons = new HBox(btnEndTurn, btnBevries);
+            buttons.setAlignment(Pos.CENTER_RIGHT);
         }
         buttons.setSpacing(10);
         this.getChildren().addAll(wsp, buttons);

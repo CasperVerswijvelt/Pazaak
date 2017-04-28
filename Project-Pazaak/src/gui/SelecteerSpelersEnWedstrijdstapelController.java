@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -117,10 +118,17 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         lblSpeler2.setText(r.getString("PLAYER") + " 2");
         btnSelectPlayers.setText(r.getString("CONFIRM"));
         btnSelectPlayers.setDisable(true);
-
+        
         btnNaarShop1 = new Button(r.getString("SHOP"));
         btnNaarShop2 = new Button(r.getString("SHOP"));
-
+        
+        btnNaarShop1.getStyleClass().add("button-TaalSelectie");
+        btnNaarShop2.getStyleClass().add("button-TaalSelectie");
+        btnSelectPlayers.getStyleClass().add("button-TaalSelectie");
+        
+        btnNaarShop1.setPadding(new Insets(10));
+        btnNaarShop2.setPadding(new Insets(10));
+        
         btnNaarShop1.setOnAction((ActionEvent event) -> {
             naarKaartenWinkel();
 
@@ -236,17 +244,23 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
             }
 
         });
+        
+        btnConfirmSpeler1.getStyleClass().add("button-TaalSelectie");
+        btnConfirmSpeler1.setPadding(new Insets(10));
+        btnConfirmSpeler2.getStyleClass().add("button-TaalSelectie");
+        btnConfirmSpeler2.setPadding(new Insets(10));
+        
         Tab tab1 = new Tab();
         VBox kaartSelectieSpeler1 = new VBox(ksp1, btnConfirmSpeler1, btnNaarShop1);
         kaartSelectieSpeler1.setAlignment(Pos.CENTER);
-        kaartSelectieSpeler1.setSpacing(5);
+        kaartSelectieSpeler1.setSpacing(10);
         tab1.setContent(kaartSelectieSpeler1);
         tab1.setText(speler1);
 
         Tab tab2 = new Tab();
         VBox kaartSelectieSpeler2 = new VBox(ksp2, btnConfirmSpeler2, btnNaarShop2);
         kaartSelectieSpeler2.setAlignment(Pos.CENTER);
-        kaartSelectieSpeler2.setSpacing(5);
+        kaartSelectieSpeler2.setSpacing(10);
         tab2.setContent(kaartSelectieSpeler2);
         tab2.setText(speler2);
 
