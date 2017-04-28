@@ -64,12 +64,36 @@ public class UC5 {
                 } while (!valideKeuze);
                 if (keuze == 2) {
                     new UC8(r, dc).start();
+                    System.out.printf(" 1. %s%n"
+                            + " 2. %s%n",
+                            r.getString("CONTINUEGAME"),
+                            r.getString("GOBACK"));
+
+                    valideKeuze = false;
+                    keuze = 0;
+                    do {
+                        try {
+                            System.out.print(r.getString("CHOICE") + ": ");
+                            keuze = Integer.parseInt(in.nextLine());
+                            if (keuze < 1 || keuze > 2) {
+                                throw new InvalidNumberException();
+                            }
+                            valideKeuze = true;
+
+                        } catch (InvalidNumberException | NumberFormatException e) {
+                            System.out.println(r.getString("INVALIDCHOICE"));
+                        }
+                    } while (!valideKeuze);
+                    
+                    if(keuze==1){
+                        new UC5(dc, r).start();
+                    }
+                    
                     break;
                 }
                 printLijn();
             }
 
-            
         }
         //Spel beëindigd
 
