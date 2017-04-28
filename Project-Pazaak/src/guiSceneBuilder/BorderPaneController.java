@@ -62,7 +62,7 @@ public class BorderPaneController extends BorderPane {
                 if (getCenter() instanceof SetSpeelScherm) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setHeaderText(null);
-                    alert.setContentText("Are you sure you want to go back to the menu? All progress will be lost. (nog niet vertaald)");
+                    alert.setContentText(r.getString("TOMENU"));
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() != ButtonType.OK) {
                         return;

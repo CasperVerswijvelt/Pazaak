@@ -159,7 +159,6 @@ public class SetSpeelScherm extends GridPane {
                                 DBAlert.showAndWait();
                                 continue;
                             }
-                            System.out.println("nu zou hij moeten breaken uit de loop");
                             break;
 
                         } else {
