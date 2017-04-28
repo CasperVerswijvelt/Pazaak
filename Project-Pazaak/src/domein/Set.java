@@ -143,14 +143,14 @@ public class Set {
                     throw new InvalidCardException("Value " + waarde + " not allowed for this card");
                 }
                 for (Kaart element : huidigSpelbord) {
-                    if (element.getWaarde() == waardes[0] || element.getWaarde() == waardes[1]) {
+                    if ((element.getWaarde() == waardes[0] || element.getWaarde() == waardes[1]) && element.getType() != 'W') {
                         element.setType(element.getType() == '+' ? '-' : '+');
                     }
                 }
                 break;
             case 'C':
                 kaart.setType(Ptype);
-                kaart.setWaarde(waarde);
+                kaart.setWaarde(Pwaarde);
                 break;
 
         }
