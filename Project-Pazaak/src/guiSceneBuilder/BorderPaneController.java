@@ -123,15 +123,10 @@ public class BorderPaneController extends BorderPane {
     }
 
     public void naarSpeelWedstrijdScherm() {
-
-        try {
-
-        } catch (DatabaseException e) {
-            SetSpeelScherm game = new SetSpeelScherm(this, dc, r);
-            this.setCenter(game);
-            game.setAlignment(Pos.CENTER);
-            btnBack.setVisible(true);
-        }
+        SetSpeelScherm game = new SetSpeelScherm(this, dc, r);
+        this.setCenter(game);
+        game.setAlignment(Pos.CENTER);
+        btnBack.setVisible(true);
 
     }
 
