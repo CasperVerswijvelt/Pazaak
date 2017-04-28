@@ -38,16 +38,15 @@ public class Speler {
         
         char eerste = naam.charAt(0);
         
-        if(eerste <47 || 
+        if((eerste >47 && 
                 eerste <57 || 
-                naam.contains(".") || 
+                naam.contains(".")) || 
                 naam.contains(",") || 
                 naam.contains("?") || 
                 naam.contains("!") || 
                 naam.contains(";") || 
                 naam.contains(":") || 
-                naam.contains("†") || 
-                naam.contains("") || 
+                naam.contains("†") ||  
                 naam.contains("\"") || 
                 naam.contains("(") || 
                 naam.contains(")") || 
@@ -58,7 +57,6 @@ public class Speler {
                 naam.contains(">") || 
                 naam.contains("[") || 
                 naam.contains("]") || 
-                naam.contains("\\") || 
                 naam.contains("/"))
         throw new PlayerNameInvalidException();
         if (naam.length() < 3) 
