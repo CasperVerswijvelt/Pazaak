@@ -26,6 +26,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import static ui.Console.formatteerKaart;
+import static ui.Console.formatteerStapelOpLijn;
 
 /**
  * FXML Controller class
@@ -145,13 +146,6 @@ public class MaakNieuweSpelerController extends VBox {
         this.newPlayerAlert.getDialogPane().getButtonTypes().add(ButtonType.OK);
     }
     
-    public String formatteerStapelOpLijn(String[][] spelbord, boolean toonPrijs) {
-        String res = "";
-        for (String[] kaart : spelbord) {
-            res += formatteerKaart(kaart, toonPrijs) + " ";
-        }
-        return res;
-    }
 
 
 }

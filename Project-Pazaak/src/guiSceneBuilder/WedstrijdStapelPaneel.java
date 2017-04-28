@@ -7,7 +7,7 @@ package guiSceneBuilder;
 
 import gui.*;
 import domein.DomeinController;
-import static gui.Utilities.veranderNaarMooieLayout;
+import static guiSceneBuilder.Utilities.veranderNaarMooieLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

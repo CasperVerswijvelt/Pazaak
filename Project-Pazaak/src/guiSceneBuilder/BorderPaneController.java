@@ -65,11 +65,6 @@ public class BorderPaneController extends BorderPane {
                     return;
                 }
                 
-                
-                
-                
-                
-                
                 if (getCenter() instanceof SetSpeelScherm) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setHeaderText(null);
