@@ -171,13 +171,24 @@ public class Set {
 
             int score1 = berekenScore(spelbord1), score2 = berekenScore(spelbord2);
             if (score1 == score2) {
-                boolean spelbord1BevatKaart = spelbordBevatTKaart(spelbord1), spelbord2BevatKaart = spelbordBevatTKaart(spelbord2);
-                if(spelbord1BevatKaart && !spelbord2BevatKaart) {
+                if (spelbord1.size() > 8) {
                     return 0;
-                } else if(spelbord2BevatKaart && !spelbord1BevatKaart)
+                }
+
+                if (spelbord2.size() > 8) {
                     return 1;
-                else     
+                }
+                
+                //Kijken of er een speler een T kaart bevat
+                boolean spelbord1BevatTKaart = spelbordBevatTKaart(spelbord1), spelbord2BevatTKaart = spelbordBevatTKaart(spelbord2);
+                if (spelbord1BevatTKaart && !spelbord2BevatTKaart) {
+                    return 0;
+                } else if (spelbord2BevatTKaart && !spelbord1BevatTKaart) {
+                    return 1;
+                } else //Geen van beiden heeft T kaart  , gelijkspel
+                {
                     return 2;
+                }
             } else {
                 if (score1 > 20) {
                     return 1;
@@ -185,9 +196,18 @@ public class Set {
                 if (score2 > 20) {
                     return 0;
                 }
+
+                if (spelbord1.size() > 8) {
+                    return 0;
+                }
+
+                if (spelbord2.size() > 8) {
+                    return 0;
+                }
+
                 if (score1 > score2) {
                     return 0;
-                } else {
+                } else { //score1<score2
                     return 1;
                 }
             }
@@ -233,9 +253,11 @@ public class Set {
 
     private boolean spelbordBevatTKaart(List<Kaart> spelbord) {
         Kaart TKaart = new Kaart(1, 'T', 20);
-        for(Kaart element : spelbord)
-            if(element.equals(TKaart))
+        for (Kaart element : spelbord) {
+            if (element.equals(TKaart)) {
                 return true;
+            }
+        }
         return false;
     }
 }
