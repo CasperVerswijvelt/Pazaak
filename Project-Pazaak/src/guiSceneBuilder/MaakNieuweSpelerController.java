@@ -133,7 +133,7 @@ public class MaakNieuweSpelerController extends VBox {
         this.txfSpelerNaam.setTooltip(ttNaam);
         this.ttGeboorteJaar = new Tooltip(r.getString("BIRTHREQUIREMENTS"));
         this.txfSpelerGeboorteJaar.setTooltip(ttGeboorteJaar);
-        btnMaakSpeler.setText(r.getString("MAKENEWPLAYER"));
+        btnMaakSpeler.setText(r.getString("MAKE"));
         lblError.setTextFill(Color.RED);
 
         this.DBAlert = new Alert(Alert.AlertType.ERROR);
@@ -152,5 +152,6 @@ public class MaakNieuweSpelerController extends VBox {
         }
         return res;
     }
+
 
 }
