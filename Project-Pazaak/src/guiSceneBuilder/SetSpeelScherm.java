@@ -31,7 +31,7 @@ import javafx.stage.Stage;
  * @author goran
  */
 public class SetSpeelScherm extends GridPane {
-
+    
     private BorderPaneController parent;
     private DomeinController dc;
     private ResourceBundle r;
@@ -151,6 +151,7 @@ public class SetSpeelScherm extends GridPane {
                             try {
                                 dc.slaWedstrijdOp(naam.get());
                                 parent.naarMenu();
+                                break;
                             } catch (GameAlreadyExistsException e) {
                                 gameExistsAlert.showAndWait();
                                 continue;
