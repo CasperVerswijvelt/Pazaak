@@ -47,6 +47,8 @@ public class UC1 {
                 System.out.println(r.getString("PLAYERALREADYEXISTS"));
             } catch(PlayerNameInvalidException e){
                 System.out.println(r.getString("NAMEREQUIREMENTS"));
+            }catch(PlayerBirthInvalidException | NumberFormatException e) {
+                System.out.println(r.getString("BIRTHREQUIREMENTS"));
             } catch(DatabaseException e) {
                 System.out.println(r.getString("DATABASEERROR"));
                 return;
