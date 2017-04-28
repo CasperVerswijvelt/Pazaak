@@ -79,21 +79,28 @@ public class KaartSelectiePaneel extends VBox {
         this.setVisible(true);
 
         //Alles clearen
+        
+//        for (Node element : kaarten.getChildren()) {
+//            if (element instanceof Button) {
+//                if (!((Button) element).isDisable()) {
+//                    kaarten.getChildren().remove((Button) element);
+//                }
+//            }
+//        }
+//        for (Node element : selected.getChildren()) {
+//            if (element instanceof Button) {
+//                if (!((Button) element).isDisable()) {
+//                    kaarten.getChildren().remove((Button) element);
+//                }
+//            }
+//        }
+        
+        
+        for(Button btn : kaartButtons) {
+            selected.getChildren().remove(btn);
+            kaarten.getChildren().remove(btn);
+        }
         kaartButtons.clear();
-        for (Node element : kaarten.getChildren()) {
-            if (element instanceof Button) {
-                if (!((Button) element).isDisable()) {
-                    kaarten.getChildren().remove((Button) element);
-                }
-            }
-        }
-        for (Node element : selected.getChildren()) {
-            if (element instanceof Button) {
-                if (!((Button) element).isDisable()) {
-                    kaarten.getChildren().remove((Button) element);
-                }
-            }
-        }
 
         startStapel = dc.geefStartStapel(speler);
 

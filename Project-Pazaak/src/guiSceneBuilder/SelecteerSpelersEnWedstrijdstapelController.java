@@ -49,7 +49,9 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
     private TabPane tabbladPaneel;
     private Button btnConfirmSpeler1;
     private Button btnConfirmSpeler2;
-    
+    private Button btnNaarShop1;
+    private Button btnNaarShop2;
+
     private Alert playerNotFoundAlert;
     private Alert DBAlert;
     private Alert noPlayersAvailableAlert;
@@ -109,18 +111,31 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         noPlayersAvailableAlert = new Alert(Alert.AlertType.ERROR);
         playerNotFoundAlert.setTitle("Pazaak");
         noPlayersAvailableAlert.setContentText(r.getString("NOTENOUGHPLAYERS"));
-        
+
         lblTitel.setText(r.getString("SELECTTWOPLAYERS"));
         lblSpeler1.setText(r.getString("PLAYER") + " 1");
         lblSpeler2.setText(r.getString("PLAYER") + " 2");
         btnSelectPlayers.setText(r.getString("CONFIRM"));
         btnSelectPlayers.setDisable(true);
 
+        btnNaarShop1 = new Button(r.getString("SHOP"));
+        btnNaarShop2 = new Button(r.getString("SHOP"));
+
+        btnNaarShop1.setOnAction((ActionEvent event) -> {
+            naarKaartenWinkel();
+
+        });
+
+        btnNaarShop2.setOnAction((ActionEvent event) -> {
+            naarKaartenWinkel();
+
+        });
+
         try {
             spelerLijst = dc.geefAlleSpelerNamen();
 
         } catch (DatabaseException e) {
-            
+
             DBAlert.show();
             throw new DatabaseException(e);
 
@@ -194,8 +209,9 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
                     checkBeideBevestigd();
                     tabbladPaneel.getSelectionModel().select(1);
                     lblError.setText(null);
+                    btnNaarShop1.setVisible(false);
                 } catch (IllegalArgumentException e) {
-                lblError.setText(r.getString("SELECT6CARDS"));
+                    lblError.setText(r.getString("SELECT6CARDS"));
                 }
             } else {
                 parent.naarSpeelWedstrijdScherm();
@@ -211,8 +227,9 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
                     checkBeideBevestigd();
                     tabbladPaneel.getSelectionModel().select(0);
                     lblError.setText(null);
+                    btnNaarShop2.setVisible(false);
                 } catch (IllegalArgumentException e) {
-                lblError.setText(r.getString("SELECT6CARDS"));
+                    lblError.setText(r.getString("SELECT6CARDS"));
                 }
             } else {
                 parent.naarSpeelWedstrijdScherm();
@@ -220,14 +237,16 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
 
         });
         Tab tab1 = new Tab();
-        VBox kaartSelectieSpeler1 = new VBox(ksp1, btnConfirmSpeler1);
+        VBox kaartSelectieSpeler1 = new VBox(ksp1, btnConfirmSpeler1, btnNaarShop1);
         kaartSelectieSpeler1.setAlignment(Pos.CENTER);
+        kaartSelectieSpeler1.setSpacing(5);
         tab1.setContent(kaartSelectieSpeler1);
         tab1.setText(speler1);
 
         Tab tab2 = new Tab();
-        VBox kaartSelectieSpeler2 = new VBox(ksp2, btnConfirmSpeler2);
+        VBox kaartSelectieSpeler2 = new VBox(ksp2, btnConfirmSpeler2, btnNaarShop2);
         kaartSelectieSpeler2.setAlignment(Pos.CENTER);
+        kaartSelectieSpeler2.setSpacing(5);
         tab2.setContent(kaartSelectieSpeler2);
         tab2.setText(speler2);
 
@@ -238,8 +257,6 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         this.setTop(null);
 
         this.setCenter(tabbladPaneel);
-        
-        
 
     }
 
@@ -275,6 +292,19 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         } else {
             btnSelectPlayers.setDisable(true);
         }
+    }
+
+    private void naarKaartenWinkel() {
+        parent.setTerugKeerSchermWinkel(this);
+        parent.naarKaartwinkelScherm();
+    }
+    
+    public void verversKaarten() {
+        if(!ksp1.isDisabled())
+            ksp1.activeerScherm(speler1);
+        if(!ksp2.isDisabled())
+            ksp2.activeerScherm(speler2);
+        
     }
 
 }
