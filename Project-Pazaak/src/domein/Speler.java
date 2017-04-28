@@ -35,7 +35,7 @@ public class Speler {
     
     //Controle
     private void controleerNaam(String naam) {
-        if (naam.length() < 3) {
+        if (naam == null || naam =="" || naam.length() < 3) {
             throw new PlayerNameInvalidException("Naam moet minstens 3 karakters lang zijn.");
         }
     }
