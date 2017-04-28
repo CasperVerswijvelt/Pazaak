@@ -116,7 +116,7 @@ public class KaartWinkelScherm extends GridPane {
         lblTypes.add(new Label("T"));
         lblTypes.add(new Label("D"));
         lblTypes.add(new Label("x&y"));
-        lblTypes.add(new Label("x+/-y"));
+        lblTypes.add(new Label("1+/-2"));
 
         //Waardeselectie combobox
         cbWaardeSelecties = new ArrayList<>();
