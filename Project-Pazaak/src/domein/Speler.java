@@ -4,6 +4,7 @@ import exceptions.*;
 import java.util.*;
 
 public class Speler {
+
     //Attributen
     private List<Kaart> startStapel;
     private final String naam;
@@ -12,7 +13,7 @@ public class Speler {
 
     //Constructor
     public Speler(String naam, int geboorteJaar, int krediet, List<Kaart> startStapel) {
-        
+
         controleerNaam(naam);
         controleerGeboorteJaar(geboorteJaar);
 
@@ -25,19 +26,45 @@ public class Speler {
     }
 
     //Methodes
-   
     @Override
     public String toString() {
         return String.format("%s, %d, %d", naam, geboorteJaar, krediet);
     }
 
-    
-    
     //Controle
     private void controleerNaam(String naam) {
-        if (naam == null || naam =="" || naam.length() < 3) {
+        if(naam == null || naam.equals(""))
+            throw new PlayerNameInvalidException("Leeg");
+        
+        char eerste = naam.charAt(0);
+        
+        if(eerste <47 || 
+                eerste <57 || 
+                naam.contains(".") || 
+                naam.contains(",") || 
+                naam.contains("?") || 
+                naam.contains("!") || 
+                naam.contains(";") || 
+                naam.contains(":") || 
+                naam.contains("†") || 
+                naam.contains("") || 
+                naam.contains("\"") || 
+                naam.contains("(") || 
+                naam.contains(")") || 
+                naam.contains(" ") || 
+                naam.contains("}") || 
+                naam.contains("{") || 
+                naam.contains("<") || 
+                naam.contains(">") || 
+                naam.contains("[") || 
+                naam.contains("]") || 
+                naam.contains("\\") || 
+                naam.contains("/"))
+        throw new PlayerNameInvalidException();
+        if (naam.length() < 3) 
             throw new PlayerNameInvalidException("Naam moet minstens 3 karakters lang zijn.");
-        }
+        
+        
     }
 
     private void controleerGeboorteJaar(int geboorteJaar) {
@@ -47,10 +74,10 @@ public class Speler {
             throw new PlayerBirthInvalidException("Speler moet minstens 6 jaar of maximum 99 jaar oud worden dit jaar.");
         }
     }
-    
+
     //Getters & Settesr
     public List<Kaart> geefStartStapel() {
-        return (List)startStapel;
+        return (List) startStapel;
     }
 
     public String getNaam() {
@@ -72,5 +99,5 @@ public class Speler {
     public void setStartStapel(List<Kaart> startStapel) {
         this.startStapel = startStapel;
     }
-    
+
 }
