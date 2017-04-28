@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -36,6 +37,7 @@ public class LaadWedstrijdScherm extends VBox {
     private Label lblTitel;
     private ComboBox cbWedstrijdSelectie;
     private Button btnLaadSpel;
+    private Label lblError;
     
     private Alert DBAlert;
     private Alert gameNotFoundAlert;
@@ -50,6 +52,8 @@ public class LaadWedstrijdScherm extends VBox {
     
     private void buildGUI() {
         lblTitel = new Label(r.getString("LOADGAMEOPTION"));
+        lblError = new Label();
+        lblError.setTextFill(Color.RED);
         cbWedstrijdSelectie = new ComboBox();
         
         DBAlert = new Alert(Alert.AlertType.ERROR);
@@ -58,7 +62,7 @@ public class LaadWedstrijdScherm extends VBox {
         
         gameNotFoundAlert = new Alert(Alert.AlertType.ERROR);
         gameNotFoundAlert.setTitle("Pazaak");
-        gameNotFoundAlert.setContentText("GAME NOT FOUND (vertaal mij)");
+        gameNotFoundAlert.setContentText(r.getString("GAMENOTFOUND"));
         
         btnLaadSpel = new Button(r.getString("LOADGAMEOPTION"));
         btnLaadSpel.setOnAction(new EventHandler<ActionEvent>() {
@@ -74,6 +78,8 @@ public class LaadWedstrijdScherm extends VBox {
         this.getChildren().add(lblTitel);
         this.getChildren().add(cbWedstrijdSelectie);
         this.getChildren().add(btnLaadSpel);
+        this.getChildren().add(lblError);
+        
         
         this.setSpacing(20);
         setPadding(new Insets(20, 20, 20, 20));
@@ -89,6 +95,8 @@ public class LaadWedstrijdScherm extends VBox {
         } catch (DatabaseException e) {
             DBAlert.show();
             laadWedstrijdenInComboBox();
+        } catch(ArrayIndexOutOfBoundsException e){
+            lblError.setText(r.getString("LOADERROR"));
         }
     }
     

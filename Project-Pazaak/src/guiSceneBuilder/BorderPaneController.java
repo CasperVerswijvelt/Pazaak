@@ -7,7 +7,6 @@ package guiSceneBuilder;
 
 import domein.DomeinController;
 import exceptions.DatabaseException;
-import gui.RegelsScherm;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.ResourceBundle;

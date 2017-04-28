@@ -179,10 +179,10 @@ public class Hoofdmenu extends VBox {
     }
     
     public void toRegelsScherm() {
-//        Stage stage = (Stage) this.getScene().getWindow();
-//
-////        Scene scene = new Scene(new RegelsScherm(this, dc, r), 1100, 750);
-//        stage.setTitle("Pazaak - " + r.getString("RULES"));
-//        stage.setScene(scene);
+        Stage stage = (Stage) this.getScene().getWindow();
+
+        Scene scene = new Scene(new RegelsScherm(this, dc, r), 1100, 750);
+        stage.setTitle("Pazaak - " + r.getString("RULES"));
+        stage.setScene(scene);
     }
 }

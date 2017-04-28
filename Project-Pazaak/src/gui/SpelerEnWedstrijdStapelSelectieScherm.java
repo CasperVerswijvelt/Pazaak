@@ -127,7 +127,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
                 checkBeideBevestigd();
                 tabbladPaneel.getSelectionModel().select(1);
             } catch (IllegalArgumentException e) {
-                lblError.setText("SELECT 6 CARDS");
+                lblError.setText(r.getString("SELECT6CARDS"));
             }
 
         });
@@ -241,7 +241,7 @@ public class SpelerEnWedstrijdStapelSelectieScherm extends GridPane {
         cbSpeler2.setDisable(true);
         btnSelectPlay.setText(r.getString("PLAY"));
         btnSelectPlay.setDisable(true);
-        lblSelecteerSpelers.setText("Kies 6 kaarten voor spelers ");
+        lblSelecteerSpelers.setText("SELECT6CARDS");
 
     }
 

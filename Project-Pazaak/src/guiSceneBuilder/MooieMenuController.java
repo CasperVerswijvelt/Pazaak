@@ -11,7 +11,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -38,6 +40,8 @@ public class MooieMenuController extends VBox {
     private DomeinController dc;
     private ResourceBundle r;
     private BorderPaneController parent;
+    @FXML
+    private Button btnExit;
 
     /**
      * Initializes the controller class.
@@ -97,10 +101,19 @@ public class MooieMenuController extends VBox {
         btnLaadScherm.setText(r.getString("LOADGAMEOPTION"));
         btnTaal.setText("Change language"+r.getString("VERTAALMIJ"));
         btnInstructies.setText(r.getString("RULES"));
+        btnExit.setText(r.getString("EXIT"));
     }
 
     void zetTerugActief(Stage stage) {
         stage.setScene(this.getScene());
         stage.setTitle("Pazaak - Menu");
+    }
+
+    @FXML
+    private void sluitSpelAf(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.NONE, r.getString("EXITGAME"), ButtonType.OK);
+        alert.setTitle("Pazaak");
+        alert.showAndWait();
+        System.exit(0);
     }
 }
