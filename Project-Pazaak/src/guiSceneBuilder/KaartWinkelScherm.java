@@ -18,11 +18,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -224,6 +221,8 @@ public class KaartWinkelScherm extends GridPane {
 
             if (aankoopBareKaarten.length != 0) {
                 this.setDisable(false);
+            }else{
+                lblError.setText(r.getString("NOLIFE"));
             }
 
             for (ComboBox cb : cbWaardeSelecties) {
@@ -293,7 +292,7 @@ public class KaartWinkelScherm extends GridPane {
         try {
             if (cbSpelerSpelectie.getSelectionModel().getSelectedIndex() == -1) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Select a player (vertaal mij)");
+                alert.setContentText(r.getString("SELECTAPLAYER"));
                 alert.show();
                 return;
             }
@@ -345,10 +344,10 @@ public class KaartWinkelScherm extends GridPane {
             laadSpelersInComboBox();
             invalidPlayerException.show();
         } catch (CardAlreadyBoughtException e) {
-            lblError.setText("Card already bought (vertaal mij)");
+            lblError.setText(r.getString("CARDALREADYBOUGHT"));
             selecteerSpeler();
         } catch (IllegalArgumentException e) {
-            lblError.setText("Enter a value (nog niet vertaald)");
+            lblError.setText(r.getString("ENTERAVALUE"));
         }
 
     }

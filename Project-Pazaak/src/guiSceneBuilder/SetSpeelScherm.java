@@ -150,7 +150,7 @@ public class SetSpeelScherm extends GridPane {
                         if (naam.isPresent()) {
                             try {
                                 dc.slaWedstrijdOp(naam.get());
-                                parent.naarMenu();
+                                
 
                             } catch (GameAlreadyExistsException e) {
                                 gameExistsAlert.showAndWait();
@@ -159,6 +159,19 @@ public class SetSpeelScherm extends GridPane {
                                 DBAlert.showAndWait();
                                 continue;
                             }
+                            
+                            Alert alertVerderSpelen = new Alert(Alert.AlertType.CONFIRMATION);
+                            alertVerderSpelen.setTitle(r.getString("CONTINUE"));
+                            alertVerderSpelen.setHeaderText(null);
+                            alertVerderSpelen.setContentText(r.getString("DOORGAAN"));
+                            
+                            Optional<ButtonType> resultaat = alertVerderSpelen.showAndWait();
+                            if (resultaat.get() != ButtonType.OK){
+                                parent.naarMenu();
+                            }else{
+                                setTenEinde();
+                            }
+                            
                             break;
 
                         } else {
@@ -284,7 +297,7 @@ public class SetSpeelScherm extends GridPane {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle(winnaar + " WINS");
-            alert.setContentText(winnaar + " WINS\n" + r.getString("NEWCREDIT") + ": " + dc.geefSpelerInfo(winnaar)[1]);
+            alert.setContentText(winnaar + " WINS\n" + r.getString("NEWCREDIT") + " " + dc.geefSpelerInfo(winnaar)[1]);
             alert.showAndWait();
 
             parent.naarMenu();

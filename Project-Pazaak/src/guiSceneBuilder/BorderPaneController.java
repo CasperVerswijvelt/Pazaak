@@ -31,8 +31,6 @@ public class BorderPaneController extends BorderPane {
     private ResourceBundle r;
     private DomeinController dc;
     private Button btnBack;
-    
-    private KaartWinkelScherm
 
     /**
      * Initializes the controller class.

@@ -103,6 +103,8 @@ public class KaartSelectiePaneel extends VBox {
             Button button = new Button(kaartLayout[0] + kaartLayout[1]);
             button.getStyleClass().add("kaart");
             button.setMinSize(50, 80);
+            button.setMaxSize(50, 80);
+            button.setPadding(new Insets(0));
             button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
