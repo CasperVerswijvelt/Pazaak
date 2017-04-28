@@ -10,6 +10,7 @@ import domein.DomeinController;
 import exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,6 +22,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -62,8 +64,6 @@ public class KaartWinkelScherm extends GridPane {
     }
 
     private void buildGui() {
-
-        
 
         //Alerts
         DBAlert = new Alert(Alert.AlertType.ERROR);
@@ -324,11 +324,20 @@ public class KaartWinkelScherm extends GridPane {
 
             }
             String[] kaartGewoneLayout = Utilities.veranderNaarGewoonKaartFormaat(kaart);
-            dc.koopKaart(spelerNaam, kaartGewoneLayout);
-            String[] kaartMooieLayout = Utilities.veranderNaarMooieLayout(kaartGewoneLayout);
-            cardBoughtAlert.setContentText(String.format(r.getString("CARDBOUGHT"), kaartMooieLayout[0] + kaartMooieLayout[1], kaartMooieLayout[2]));
-            cardBoughtAlert.show();
-            selecteerSpeler();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText(r.getString("ZEKER"));
+            alert.setHeaderText(null);
+            alert.setTitle(r.getString("BUYCARDOPTION"));
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                dc.koopKaart(spelerNaam, kaartGewoneLayout);
+                String[] kaartMooieLayout = Utilities.veranderNaarMooieLayout(kaartGewoneLayout);
+                cardBoughtAlert.setContentText(String.format(r.getString("CARDBOUGHT"), kaartMooieLayout[0] + kaartMooieLayout[1], kaartMooieLayout[2]));
+                cardBoughtAlert.show();
+                selecteerSpeler();
+            }
 
         } catch (InsufficientBalanceException e) {
             insufficientBalanceException.show();
