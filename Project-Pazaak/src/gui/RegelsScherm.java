@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package guiSceneBuilder;
+package gui;
 
 import domein.DomeinController;
 import java.util.ResourceBundle;

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package guiSceneBuilder;
+package gui;
 
 import gui.*;
 import domein.DomeinController;
-import static guiSceneBuilder.Utilities.veranderNaarMooieLayout;
+import static gui.Utilities.veranderNaarMooieLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

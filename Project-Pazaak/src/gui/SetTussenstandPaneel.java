@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package guiSceneBuilder;
+package gui;
 
 import gui.*;
 import static com.sun.javafx.robot.impl.FXRobotHelper.getChildren;

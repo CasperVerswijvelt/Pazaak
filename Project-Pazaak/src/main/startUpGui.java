@@ -6,8 +6,8 @@
 package main;
 
 import domein.DomeinController;
-import guiSceneBuilder.BorderPaneController;
-import guiSceneBuilder.TaalSelectieSBController;
+import gui.BorderPaneController;
+import gui.TaalSelectieSBController;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
