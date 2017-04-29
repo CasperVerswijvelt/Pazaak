@@ -2,6 +2,7 @@ package domein;
 
 import exceptions.NoPlayersAvailableException;
 import java.util.*;
+import javafx.scene.control.TextField;
 import persistentie.KaartMapper;
 import persistentie.SpelerMapper;
 
@@ -19,7 +20,6 @@ public class DomeinController {
     private Speler geselecteerdeSpelerWedstrijdstapel;
 
     //Constructor
-
     /**
      *
      */
@@ -31,9 +31,10 @@ public class DomeinController {
     }
 
     //Methodes
-
     /**
-     *Makes a new player with the given parameters and saves it to the database, if it doesn't exist already and all requirements are met.
+     * Makes a new player with the given parameters and saves it to the
+     * database, if it doesn't exist already and all requirements are met.
+     *
      * @param naam
      * @param geboorteJaar
      */
@@ -42,7 +43,8 @@ public class DomeinController {
     }
 
     /**
-     *Checks if a player with given name exists in the database
+     * Checks if a player with given name exists in the database
+     *
      * @param naam
      * @return
      */
@@ -51,7 +53,9 @@ public class DomeinController {
     }
 
     /**
-     *Gives the name, credit, year of birth of given playername, if it exists in the database
+     * Gives the name, credit, year of birth of given playername, if it exists
+     * in the database
+     *
      * @param naam
      * @return
      */
@@ -60,7 +64,8 @@ public class DomeinController {
     }
 
     /**
-     *Gives a list of playernames that are saved in the database
+     * Gives a list of playernames that are saved in the database
+     *
      * @return
      */
     public List<String> geefAlleSpelerNamen() {
@@ -68,7 +73,9 @@ public class DomeinController {
     }
 
     /**
-     *Selects a player for a new game, note: you must select 2 players to create a game
+     * Selects a player for a new game, note: you must select 2 players to
+     * create a game
+     *
      * @param naam
      */
     public void selecteerSpeler(String naam) {
@@ -82,7 +89,9 @@ public class DomeinController {
     }
 
     /**
-     *Gives a list of players that were selected with selecteerSpeler(String naam), note: will only give last 2 selected players
+     * Gives a list of players that were selected with selecteerSpeler(String
+     * naam), note: will only give last 2 selected players
+     *
      * @return
      */
     public List<String> geefGeselecteerdeSpelers() {
@@ -96,20 +105,22 @@ public class DomeinController {
     }
 
     /**
-     *Makes a new game with selected players, if 2 players are selected
+     * Makes a new game with selected players, if 2 players are selected
      */
     public void maakNieuweWedstrijd() {
         if (geselecteerdeSpelers.size() < 2) {
             throw new NoPlayersAvailableException();
         }
-        
+
         this.wedstrijd = new Wedstrijd(geselecteerdeSpelers.get(0), geselecteerdeSpelers.get(1));
 
         geselecteerdeSpelers.clear();
     }
 
     /**
-     *Gives the start deck of the player that was selected to make a new game deck
+     * Gives the start deck of the player that was selected to make a new game
+     * deck
+     *
      * @return
      */
     public String[][] geefStartStapel() {
@@ -118,7 +129,8 @@ public class DomeinController {
     }
 
     /**
-     *Gives the start deck of the player in the parameter, if the player exists
+     * Gives the start deck of the player in the parameter, if the player exists
+     *
      * @param naam
      * @return
      */
@@ -127,7 +139,8 @@ public class DomeinController {
     }
 
     /**
-     *Gives the amount of players that are saved in the database
+     * Gives the amount of players that are saved in the database
+     *
      * @return
      */
     public int geefAantalSpelers() {
@@ -135,7 +148,9 @@ public class DomeinController {
     }
 
     /**
-     *Gives the players from the current game that have not yet created a game deck
+     * Gives the players from the current game that have not yet created a game
+     * deck
+     *
      * @return
      */
     public List<String> geefSpelersZonderWedstrijdStapel() {
@@ -150,16 +165,18 @@ public class DomeinController {
     }
 
     /**
-     *Select a player for which to create a game deck
+     * Select a player for which to create a game deck
+     *
      * @param naam
      */
     public void selecterSpelerWedstrijdStapel(String naam) {
         this.geselecteerdeSpelerWedstrijdstapel = wedstrijd.geefSpeler(naam);
     }
 
-
     /**
-     * Possible doesn't work, gives card from start deck of the selected player to make a game deck, that have not yet been selected
+     * Possible doesn't work, gives card from start deck of the selected player
+     * to make a game deck, that have not yet been selected
+     *
      * @return
      */
     public String[][] geefNietGeselecteerdeKaarten() {
@@ -175,6 +192,7 @@ public class DomeinController {
 
     /**
      * Select a card for the current selected player to create a game deck for
+     *
      * @param kaart
      */
     public void selecteerKaart(String[] kaart) {
@@ -182,16 +200,19 @@ public class DomeinController {
     }
 
     /**
-     *Creates the game deck for the current selected player to create a game deck for, with the selected cards
+     * Creates the game deck for the current selected player to create a game
+     * deck for, with the selected cards
      */
     public void maakWedstrijdStapel() {
         wedstrijd.maakWedstrijdstapel(geselecteerdeKaarten, geselecteerdeSpelerWedstrijdstapel);
         geselecteerdeKaarten.clear();
         geselecteerdeSpelerWedstrijdstapel = null;
     }
-    
+
     /**
-     *Gives the game deck of the first (index =0) or second (index = 1) player in the game
+     * Gives the game deck of the first (index =0) or second (index = 1) player
+     * in the game
+     *
      * @param index
      * @return
      */
@@ -200,14 +221,15 @@ public class DomeinController {
     }
 
     /**
-     *Creates a new set for the current game
+     * Creates a new set for the current game
      */
     public void maakNieuweSet() {
         wedstrijd.maakNieuweSet();
     }
 
     /**
-     *Gives the name of the player who's currently at turn in the current set
+     * Gives the name of the player who's currently at turn in the current set
+     *
      * @return
      */
     public String geefSpelerAanBeurt() {
@@ -215,7 +237,10 @@ public class DomeinController {
     }
 
     /**
-     *Changes the credit of the player with given name and saves it into the database, note: you can only change a players credit if he is participating in the current game
+     * Changes the credit of the player with given name and saves it into the
+     * database, note: you can only change a players credit if he is
+     * participating in the current game
+     *
      * @param naam
      * @param aantal
      */
@@ -226,14 +251,15 @@ public class DomeinController {
     }
 
     /**
-     *Deals a card from the set deck to the player at turn
+     * Deals a card from the set deck to the player at turn
      */
     public void deelKaartUit() {
         wedstrijd.deelKaartUit();
     }
 
     /**
-     *Gives the gameboard of the player who is currently at turn in the set
+     * Gives the gameboard of the player who is currently at turn in the set
+     *
      * @return
      */
     public String[][] geefSpelBord() {
@@ -241,7 +267,8 @@ public class DomeinController {
     }
 
     /**
-     *Gives the score of the player who is currently at turn in the set 
+     * Gives the score of the player who is currently at turn in the set
+     *
      * @return
      */
     public int geefScore() {
@@ -249,7 +276,9 @@ public class DomeinController {
     }
 
     /**
-     *Gives the possible game actions of the player currently at turn in the set
+     * Gives the possible game actions of the player currently at turn in the
+     * set
+     *
      * @return
      */
     public List<String> geefMogelijkeActies() {
@@ -257,39 +286,44 @@ public class DomeinController {
     }
 
     /**
-     *Ends the turn of the player currently at turn in the set
+     * Ends the turn of the player currently at turn in the set
      */
     public void eindigBeurt() {
         wedstrijd.eindigBeurt();
     }
 
     /**
-     *Freezes the board of the player currently at turn in the set
+     * Freezes the board of the player currently at turn in the set
      */
     public void bevriesBord() {
         wedstrijd.bevriesBord();
     }
 
     /**
-     *Gives the current game deck of the player currently at turn in the set
+     * Gives the current game deck of the player currently at turn in the set
+     *
      * @return
      */
     public String[][] geefWedstrijdStapel() {
         return kaartenAlsString(wedstrijd.geefWedstrijdStapel());
     }
-    
+
     /**
-     * Uses a card of the game deck for the player currently at turn in the set. Method requires the array of strings of the original card, and if the card is +/- or 1+/-2 the requested type and/or value
+     * Uses a card of the game deck for the player currently at turn in the set.
+     * Method requires the array of strings of the original card, and if the
+     * card is +/- or 1+/-2 the requested type and/or value
+     *
      * @param kaart
      * @param gewensteWaarde
      * @param gewenstType
      */
-    public void gebruikWedstrijdKaart(String[] kaart,int gewensteWaarde, char gewenstType) {
+    public void gebruikWedstrijdKaart(String[] kaart, int gewensteWaarde, char gewenstType) {
         wedstrijd.gebruikWedstrijdKaart(stringAlsKaart(kaart), gewensteWaarde, gewenstType);
     }
 
     /**
-     *Checks if the set is done
+     * Checks if the set is done
+     *
      * @return
      */
     public boolean setIsKlaar() {
@@ -297,7 +331,8 @@ public class DomeinController {
     }
 
     /**
-     *Gives the winner (if not tie) of the current set
+     * Gives the winner (if not tie) of the current set
+     *
      * @return
      */
     public String geefSetUitslag() {
@@ -305,7 +340,8 @@ public class DomeinController {
     }
 
     /**
-     *Gives the winner of the game, if there is a winner
+     * Gives the winner of the game, if there is a winner
+     *
      * @return
      */
     public String geefWinnaar() {
@@ -313,17 +349,17 @@ public class DomeinController {
     }
 
     /**
-     *Checks if the game is over (a player has 3 wins)
+     * Checks if the game is over (a player has 3 wins)
+     *
      * @return
      */
     public boolean wedstrijdIsKlaar() {
         return wedstrijd.isKlaar();
     }
 
-    
-
     /**
-     *Returns the players participating in the current game
+     * Returns the players participating in the current game
+     *
      * @return
      */
     public String[] geefWedstrijdSpelers() {
@@ -337,7 +373,8 @@ public class DomeinController {
     }
 
     /**
-     *Gives the amount of wins each player in the current game hast
+     * Gives the amount of wins each player in the current game hast
+     *
      * @return
      */
     public int[] geefWedstrijdTussenstand() {
@@ -345,14 +382,17 @@ public class DomeinController {
     }
 
     /**
-     *Checks if the set is won and if yes, highers the amount of wins for that player in the game
+     * Checks if the set is won and if yes, highers the amount of wins for that
+     * player in the game
      */
     public void registreerAantalWins() {
         wedstrijd.registreerAantalWins();
     }
 
     /**
-     *Buys given card for the player with given name, if the player exists, has enough balance, and has not already bought the card
+     * Buys given card for the player with given name, if the player exists, has
+     * enough balance, and has not already bought the card
+     *
      * @param naam
      * @param kaart
      */
@@ -361,15 +401,18 @@ public class DomeinController {
     }
 
     /**
-     *Saves the current game in the database with given name
+     * Saves the current game in the database with given name
+     *
      * @param naam
      */
     public void slaWedstrijdOp(String naam) {
-       wedstrijdRepo.slaWedstrijdOp(wedstrijd, naam);
+        wedstrijdRepo.slaWedstrijdOp(wedstrijd, naam);
     }
 
     /**
-     *Loads the game with given name (if exists) and removes it from the database
+     * Loads the game with given name (if exists) and removes it from the
+     * database
+     *
      * @param naam
      */
     public void laadWedstrijd(String naam) {
@@ -377,33 +420,37 @@ public class DomeinController {
     }
 
     /**
-     *Gives a list of all games saved in the database, with participating players and their score
+     * Gives a list of all games saved in the database, with participating
+     * players and their score
+     *
      * @return
      */
     public String[][] geefWedstrijdenOverzicht() {
         return wedstrijdRepo.geefWedstrijdenOverzicht();
     }
-    
+
     /**
-     *Returns the prices of the card types in the databse
+     * Returns the prices of the card types in the databse
+     *
      * @return
      */
     public List<Integer> geefPrijzenKaarten() {
         return spelerRepo.geefPrijzenKaarten();
     }
 
-
     /**
-     *Gives the cards that a player has not yet bought
+     * Gives the cards that a player has not yet bought
+     *
      * @param naam
      * @return
      */
     public String[][] geefNogNietGekochteKaarten(String naam) {
         return kaartenAlsString(spelerRepo.geefNogNietGekochteKaarten(naam));
     }
-    
+
     /**
-     *Gives the cards that a player has already bought
+     * Gives the cards that a player has already bought
+     *
      * @param naam
      * @return
      */
@@ -411,12 +458,11 @@ public class DomeinController {
         return kaartenAlsString(spelerRepo.geefAangekochteKaarten(naam));
     }
 
-    
     //Utilities
-
     private Kaart stringAlsKaart(String[] kaart) {
         return new Kaart(Integer.parseInt(kaart[1]), kaart[0].charAt(0), Integer.parseInt(kaart[2]));
     }
+
     private String[][] kaartenAlsString(List<Kaart> kaarten) {
         String[][] res = new String[kaarten.size()][3];
 
@@ -427,7 +473,21 @@ public class DomeinController {
         }
         return res;
     }
+
+    public void veranderSpeler(String geselecteerdeSpeler, String nieuweNaam, int nieuweGebDat, int nieuwKrediet) {
+        spelerRepo.veranderSpeler(geselecteerdeSpeler, nieuweNaam, nieuweGebDat, nieuwKrediet);
+    }
     
-    
+    public boolean valideerAdmin(String user, String password) {
+        return spelerRepo.valideerAdmin(user, password);
+    }
+
+    public void verwijderSpeler(String naam) {
+        spelerRepo.verwijderSpeler(naam);
+    }
+
+    public void verwijderWedstrijd(String wedstrijd) {
+        wedstrijdRepo.verwijderWedstrijd(wedstrijd);
+    }
 
 }

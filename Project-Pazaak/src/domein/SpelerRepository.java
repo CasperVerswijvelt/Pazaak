@@ -97,6 +97,19 @@ public class SpelerRepository {
     public List<Integer> geefPrijzenKaarten() {
         return km.geefPrijzenKaarten();
     }
+
+    void veranderSpeler(String geselecteerdeSpeler, String nieuweNaam, int nieuweGebDat, int nieuwKrediet) {
+        Speler speler = new Speler(nieuweNaam,nieuweGebDat, 0, null);
+        sm.veranderSpeler(geselecteerdeSpeler, nieuweNaam, nieuweGebDat, nieuwKrediet);
+    }
+    
+    public boolean valideerAdmin(String user, String password) {
+        return sm.valideerAdmin(user, password);
+    }
+
+    void verwijderSpeler(String naam) {
+        sm.verwijderSpeler(naam);
+    }
     
 
 }

@@ -8,16 +8,22 @@ package gui;
 import domein.DomeinController;
 import exceptions.DatabaseException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -31,8 +37,12 @@ public class BorderPaneController extends BorderPane {
     private ResourceBundle r;
     private DomeinController dc;
     private Button btnBack;
-    
+
     private SelecteerSpelersEnWedstrijdstapelController terugKeerSchermWinkel;
+    private List<KeyCode> ingedrukteToetsen;
+
+    @FXML
+    private ImageView img;
 
     /**
      * Initializes the controller class.
@@ -49,6 +59,7 @@ public class BorderPaneController extends BorderPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+        ingedrukteToetsen = new ArrayList<KeyCode>();
         btnBack = new Button();
         btnBack.setMinSize(100, 40);
         btnBack.setId("btnBack");
@@ -60,11 +71,11 @@ public class BorderPaneController extends BorderPane {
         btnBack.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(getCenter() instanceof KaartWinkelScherm && terugKeerSchermWinkel != null) {
+                if (getCenter() instanceof KaartWinkelScherm && terugKeerSchermWinkel != null) {
                     terugNaarSpelerSelectieScherm();
                     return;
                 }
-                
+
                 if (getCenter() instanceof SetSpeelScherm) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setHeaderText(null);
@@ -79,6 +90,19 @@ public class BorderPaneController extends BorderPane {
 
         });
         naarTaalSelectie();
+        setOnKeyPressed((event) -> {
+            if (getCenter() instanceof MooieMenuController) {
+                ingedrukteToetsen.add(event.getCode());
+                if (ingedrukteToetsen.size() > 3) {
+                    ingedrukteToetsen.remove(1);
+                }
+
+                if (ingedrukteToetsen.size() == 3 && ingedrukteToetsen.get(0) == KeyCode.MULTIPLY && ingedrukteToetsen.get(1) == KeyCode.NUMPAD8 && ingedrukteToetsen.get(2) == KeyCode.P) {
+                    naarAdminValidate();
+                }
+            }
+
+        });
 
     }
 
@@ -102,15 +126,6 @@ public class BorderPaneController extends BorderPane {
     public void setTerugKeerSchermWinkel(SelecteerSpelersEnWedstrijdstapelController terugKeerSchermWinkel) {
         this.terugKeerSchermWinkel = terugKeerSchermWinkel;
     }
-
-
-
-
-    
-    
-    
-    
-    
 
     public void naarTaalSelectie() {
 
@@ -189,12 +204,26 @@ public class BorderPaneController extends BorderPane {
         regelScherm.setAlignment(Pos.CENTER);
         btnBack.setVisible(true);
     }
-    
+
     private void terugNaarSpelerSelectieScherm() {
         this.setCenter(terugKeerSchermWinkel);
         btnBack.setVisible(true);
         terugKeerSchermWinkel.verversKaarten();
         terugKeerSchermWinkel = null;
+    }
+
+    public void naarAdminPaneel() {
+        AdminPanelController adminPanel = new AdminPanelController(this, dc, r);
+        this.setCenter(adminPanel);
+        adminPanel.setAlignment(Pos.CENTER);
+        btnBack.setVisible(true);
+    }
+
+    public void naarAdminValidate() {
+        AdminValidatie adminValidatie = new AdminValidatie(this, dc, r);
+        this.setCenter(adminValidatie);
+        adminValidatie.setAlignment(Pos.CENTER);
+        btnBack.setVisible(true);
     }
 
 }

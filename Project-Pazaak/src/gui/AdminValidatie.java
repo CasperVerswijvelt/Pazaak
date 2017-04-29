@@ -1,0 +1,87 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gui;
+
+import domein.DomeinController;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+
+/**
+ *
+ * @author Casper
+ */
+public class AdminValidatie extends VBox {
+
+    private final BorderPaneController parent;
+    private final DomeinController dc;
+    private final ResourceBundle r;
+
+    private TextField user;
+    private PasswordField password;
+    private Button btnSubmit;
+    private Label lblError;
+
+    public AdminValidatie(BorderPaneController parent, DomeinController dc, ResourceBundle r) {
+        this.dc = dc;
+        this.r = r;
+        this.parent = parent;
+
+        buildGui();
+    }
+
+    private void buildGui() {
+        user = new TextField();
+        user.setPromptText("User");
+        user.setAlignment(Pos.CENTER);
+        password = new PasswordField();
+        password.setPromptText("Password");
+        password.setAlignment(Pos.CENTER);
+        btnSubmit = new Button("Validate");
+        lblError = new Label();
+        lblError.setTextFill(Color.RED);
+
+        btnSubmit.setOnAction((ActionEvent event) -> {
+            valideer();
+        });
+        password.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER) {
+                    valideer();
+                }
+            }
+
+        });
+
+        this.getChildren().addAll(user, password, btnSubmit, lblError);
+        this.setSpacing(20);
+        this.setMaxSize(300, 300);
+
+    }
+
+    private void valideer() {
+        try {
+            if (dc.valideerAdmin(user.getText(), password.getText())) {
+                parent.naarAdminPaneel();
+            } else {
+                lblError.setText("Invalid credentials");
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+}

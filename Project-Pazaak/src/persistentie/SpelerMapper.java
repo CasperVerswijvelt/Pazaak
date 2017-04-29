@@ -7,6 +7,7 @@ package persistentie;
 
 import domein.Speler;
 import exceptions.*;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -86,6 +88,69 @@ public class SpelerMapper {
             throw new DatabaseException(ex);
         }
     }
+
+    public void veranderSpeler(String geselecteerdeSpeler, String nieuweNaam, int nieuweGebDat, int nieuwKrediet) {
+        try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
+            PreparedStatement query = conn.prepareStatement("UPDATE ID222177_g37.Speler SET `naam`=?, `geboortedatum`=?, `krediet`=? WHERE `naam`=?");
+            query.setString(1, nieuweNaam);
+            query.setInt(2,nieuweGebDat);
+            query.setInt(3, nieuwKrediet);
+            query.setString(4, geselecteerdeSpeler);
+            query.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
+        }
+    }
+    
+    
+    
+    public boolean valideerAdmin(String user, String password) {
+        try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
+            PreparedStatement query = conn.prepareStatement("SELECT pass FROM ID222177_g37.admin WHERE user = ?");
+            query.setString(1, user);
+            
+            try (ResultSet rs = query.executeQuery()) {
+                while(rs.next()) {
+                    String hash = rs.getString("pass");
+                    return hash.equals(getHash(password.getBytes(), "SHA-512"));
+                        
+                }
+            }
+
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
+        }
+        return false;
+        
+    }
+    
+    
+    public String getHash(byte[] inputBytes, String algorithm) {
+        String hashValue="";
+        try{
+            MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
+            messageDigest.update(inputBytes);
+            byte[] digestedBytes = messageDigest.digest();
+            hashValue = DatatypeConverter.printHexBinary(digestedBytes).toLowerCase();
+        }catch(Exception e) {
+            
+        }
+        return hashValue;
+    }
+
+    public void verwijderSpeler(String naam) {
+        try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
+            PreparedStatement query = conn.prepareStatement("DELETE FROM ID222177_g37.Speler WHERE NAAM = ?");
+            query.setString(1, naam);
+            query.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
+        }
+    }
+    
+    
+    
+    
     
     
     

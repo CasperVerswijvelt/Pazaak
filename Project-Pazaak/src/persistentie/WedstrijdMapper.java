@@ -26,6 +26,8 @@ import java.util.Map;
  */
 public class WedstrijdMapper {
 
+    
+
     private final SpelerMapper sm;
     private final KaartMapper km;
 
@@ -178,6 +180,16 @@ public class WedstrijdMapper {
             throw new DatabaseException(ex);
         }
         return res;
+    }
+    
+    public void verwijderWedstrijd(String wedstrijd) {
+        try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
+            PreparedStatement query = conn.prepareStatement("DELETE FROM ID222177_g37.Wedstrijd WHERE NAAM = ?");
+            query.setString(1, wedstrijd);
+            query.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
+        }
     }
 
 }

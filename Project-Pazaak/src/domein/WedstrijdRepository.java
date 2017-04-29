@@ -31,6 +31,10 @@ public class WedstrijdRepository {
     public String[][] geefWedstrijdenOverzicht() {
         return wm.geefWedstrijdenOverzicht();
     }
+
+    void verwijderWedstrijd(String wedstrijd) {
+        wm.verwijderWedstrijd(wedstrijd);
+    }
     
     
 }

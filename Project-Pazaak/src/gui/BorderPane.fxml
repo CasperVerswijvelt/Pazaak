@@ -9,7 +9,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="background" stylesheets="@stylesheet.css" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="106.0" fitWidth="402.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="img" fitHeight="106.0" fitWidth="402.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Pazaak.png" />
                </image>
