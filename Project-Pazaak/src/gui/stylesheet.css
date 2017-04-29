@@ -74,3 +74,9 @@
 .kaarten{
     fx-background-image:url("kaartv2.jpg");
 }
+.wedstrijdkaartenachterkant{
+    -fx-background-image:url("wedstrijdkaartenachterkant.jpg");
+}
+.kaartenachterkantReset{
+    -fx-background-image:none;
+}

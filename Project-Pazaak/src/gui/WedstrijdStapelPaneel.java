@@ -20,6 +20,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 
 /**
@@ -56,6 +62,14 @@ class WedstrijdStapelPaneel extends HBox {
             String[] kaart = veranderNaarMooieLayout(wedstrijdKaarten[i]);
             btnWedstrijdKaarten.add(new Button(kaart[0] + kaart[1]));
             btnWedstrijdKaarten.get(i).setMinSize(50, 80);
+            BackgroundImage backgroundImage;
+            if (this.speler == 0) {
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartv2blauw.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            } else {
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartv2rood.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            }
+            Background background = new Background(backgroundImage);
+            btnWedstrijdKaarten.get(i).setBackground(background);
 
             btnWedstrijdKaarten.get(i).setOnAction(new EventHandler<ActionEvent>() {
                 @Override

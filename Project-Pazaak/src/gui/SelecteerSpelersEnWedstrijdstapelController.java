@@ -57,8 +57,8 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
     private Alert DBAlert;
     private Alert noPlayersAvailableAlert;
 
-    private String speler1;
-    private String speler2;
+    protected String speler1;
+    protected String speler2;
 
     @FXML
     private Label lblTitel;
