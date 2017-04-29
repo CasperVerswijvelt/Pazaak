@@ -68,3 +68,9 @@
     -fx-font-size: 18px;
     -fx-font-weight: bolder;
 }
+.kaartenachterkant{
+    -fx-background-image:url("rsz_kaartachterkant.jpg");
+}
+.kaarten{
+    fx-background-image:url("kaartv2.jpg");
+}

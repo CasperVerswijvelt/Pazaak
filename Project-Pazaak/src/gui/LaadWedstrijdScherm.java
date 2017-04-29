@@ -70,9 +70,9 @@ public class LaadWedstrijdScherm extends VBox {
             public void handle(ActionEvent event) {
                 drukLaad(event);
             }
-            
+           
         });
-        
+        btnLaadSpel.getStyleClass().add("button-TaalSelectie");
         laadWedstrijdenInComboBox();
         
         this.getChildren().add(lblTitel);
