@@ -110,6 +110,10 @@ public class SpelerRepository {
     void verwijderSpeler(String naam) {
         sm.verwijderSpeler(naam);
     }
+
+    void maakNieuweAdmin(String bestaandeAdminNaam, String bestaandeAdminPass, String nieuweAdminNaam, String nieuweAdminPass) {
+        sm.maakNieuweAdmin(bestaandeAdminNaam, bestaandeAdminPass, nieuweAdminNaam, nieuweAdminPass);
+    }
     
 
 }

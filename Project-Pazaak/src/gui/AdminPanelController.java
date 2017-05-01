@@ -6,23 +6,32 @@
 package gui;
 
 import domein.DomeinController;
-import exceptions.DatabaseException;
+import exceptions.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 
 /**
  * FXML Controller class
@@ -34,6 +43,10 @@ public class AdminPanelController extends GridPane {
     private final BorderPaneController parent;
     private final DomeinController dc;
     private final ResourceBundle r;
+
+    private List spelerLijst;
+    private String[][] wedstrijdList;
+
     @FXML
     private ComboBox<String> cbSpelerSelectie;
     @FXML
@@ -50,9 +63,20 @@ public class AdminPanelController extends GridPane {
     private TextField txfSpelerGeboortedatum;
     @FXML
     private TextField txfKrediet;
-
-    private List spelerLijst;
-    private String[][] wedstrijdList;
+    @FXML
+    private Label lblPlayerOptionsTitle;
+    @FXML
+    private Label lblGameOptions;
+    @FXML
+    private Label lblNewAdmin;
+    @FXML
+    private TextField txfNewAdminUsername;
+    @FXML
+    private PasswordField txfNewAdminPassword;
+    @FXML
+    private Button btnCreateNewAdmin;
+    @FXML
+    private Label lblError;
 
     /**
      * Initializes the controller class.
@@ -92,35 +116,6 @@ public class AdminPanelController extends GridPane {
                 selecteerSpeler();
             }
 
-        });
-
-        btnSaveSpeler.setOnAction((ActionEvent event) -> {
-            try {
-                dc.veranderSpeler(geselecteerdeSpeler(), txfSpelerNaam.getText(), Integer.parseInt(txfSpelerGeboortedatum.getText()), Integer.parseInt(txfKrediet.getText()));
-                laadSpelersInComboBox();
-                selecteerSpeler();
-            } catch (Exception e) {
-
-            }
-        });
-
-        btnDeletePlayer.setOnAction((ActionEvent event) -> {
-            try {
-                dc.verwijderSpeler(geselecteerdeSpeler());
-                laadSpelersInComboBox();
-                selecteerSpeler();
-            } catch (Exception e) {
-
-            }
-        });
-
-        btnDeleteGame.setOnAction((ActionEvent event) -> {
-            try {
-                dc.verwijderWedstrijd(geselecteerdeWedstrijd());
-                laadGamesInComboBox();
-            } catch (Exception e) {
-
-            }
         });
 
     }
@@ -188,5 +183,129 @@ public class AdminPanelController extends GridPane {
             throw new IllegalArgumentException();
         }
         return wedstrijdList[cbSelecteerGame.getSelectionModel().getSelectedIndex()][0];
+    }
+
+    @FXML
+    private void btnSavePlayerClicked(ActionEvent event) {
+        try {
+            dc.veranderSpeler(geselecteerdeSpeler(), txfSpelerNaam.getText(), Integer.parseInt(txfSpelerGeboortedatum.getText()), Integer.parseInt(txfKrediet.getText()));
+            selecteerSpeler();
+            lblError.setText(null);
+        } catch (DatabaseException e) {
+            if (e.getMessage().contains("Duplicate entry")) {
+                lblError.setText(r.getString("PLAYERALREADYEXISTS"));
+                selecteerSpeler();
+            } else {
+                lblError.setText(r.getString("DATABASEERROR"));
+            }
+        }
+        
+        laadSpelersInComboBox();
+    }
+
+    @FXML
+    private void btnDeletePlayerClicked(ActionEvent event) {
+        try {
+            dc.verwijderSpeler(geselecteerdeSpeler());
+            selecteerSpeler();
+            lblError.setText(null);
+        } catch (Exception e) {
+            lblError.setText(r.getString("DATABASEERROR"));
+        }
+
+        laadSpelersInComboBox();
+    }
+
+    @FXML
+    private void btnDeleteGameClicked(ActionEvent event) {
+        try {
+            dc.verwijderWedstrijd(geselecteerdeWedstrijd());
+            lblError.setText(null);
+        } catch (DatabaseException e) {
+            lblError.setText(r.getString("DATABASEERROR"));
+        }
+
+        laadGamesInComboBox();
+    }
+
+    @FXML
+    private void btnCreateNewAdminClicked(ActionEvent event) {
+
+        if (txfNewAdminPassword.getText() != null && txfNewAdminUsername.getText() != null && !txfNewAdminPassword.getText().trim().isEmpty() && !txfNewAdminUsername.getText().trim().isEmpty()) {
+            // Create the custom dialog.
+            Dialog<Pair<String, String>> dialog = new Dialog<>();
+            dialog.setTitle("Login Dialog");
+            dialog.setHeaderText("Validate yourself using an already existing admin user");
+
+            // Set the icon (must be included in the project).
+            ImageView img = new ImageView(this.getClass().getResource("lock.png").toString());
+            img.setFitWidth(100);
+            img.setFitHeight(100);
+            dialog.setGraphic(img);
+
+            // Set the button types.
+            ButtonType loginButtonType = new ButtonType("Validate", ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+
+            // Create the username and password labels and fields.
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+            grid.setPadding(new Insets(20, 150, 10, 10));
+
+            TextField username = new TextField();
+            username.setPromptText("Username");
+            PasswordField password = new PasswordField();
+            password.setPromptText("Password");
+
+            grid.add(new Label("Username:"), 0, 0);
+            grid.add(username, 1, 0);
+            grid.add(new Label("Password:"), 0, 1);
+            grid.add(password, 1, 1);
+
+            // Enable/Disable login button depending on whether a username was entered.
+            Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
+            loginButton.setDisable(true);
+
+            // Do some validation (using the Java 8 lambda syntax).
+            username.textProperty().addListener((observable, oldValue, newValue) -> {
+                loginButton.setDisable(newValue.trim().isEmpty());
+            });
+
+            dialog.getDialogPane().setContent(grid);
+
+            // Request focus on the username field by default.
+            Platform.runLater(() -> username.requestFocus());
+
+            // Convert the result to a username-password-pair when the login button is clicked.
+            dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == loginButtonType) {
+                    return new Pair<>(username.getText(), password.getText());
+                }
+                return null;
+            });
+
+            Optional<Pair<String, String>> result = dialog.showAndWait();
+
+            result.ifPresent(usernamePassword -> {
+                Boolean validated = dc.valideerAdmin(usernamePassword.getKey(), usernamePassword.getValue());
+
+                try {
+                    dc.maakNieuweAdmin(usernamePassword.getKey(), usernamePassword.getValue(), txfNewAdminUsername.getText(), txfNewAdminPassword.getText());
+                    txfNewAdminPassword.clear();
+                    txfNewAdminUsername.clear();
+                    lblError.setText(null);
+                } catch (InvalidAdminCredentialsException e) {
+                    lblError.setText("Invalid credentials");
+                } catch (DatabaseException e) {
+                    if (e.getMessage().contains("Duplicate entry")) {
+                        lblError.setText("An admin with that name already exists");
+                    } else {
+                        lblError.setText(r.getString("DATABASEERROR"));
+                    }
+                }
+            });
+        }
+
     }
 }

@@ -29,8 +29,9 @@ public class AdminValidatie extends VBox {
     private final DomeinController dc;
     private final ResourceBundle r;
 
-    private TextField user;
-    private PasswordField password;
+    private Label lblTitel;
+    private TextField txfUser;
+    private PasswordField txfPassword;
     private Button btnSubmit;
     private Label lblError;
 
@@ -43,12 +44,13 @@ public class AdminValidatie extends VBox {
     }
 
     private void buildGui() {
-        user = new TextField();
-        user.setPromptText("User");
-        user.setAlignment(Pos.CENTER);
-        password = new PasswordField();
-        password.setPromptText("Password");
-        password.setAlignment(Pos.CENTER);
+        lblTitel = new Label("Admin panel validation");
+        txfUser = new TextField();
+        txfUser.setPromptText("User");
+        txfUser.setAlignment(Pos.CENTER);
+        txfPassword = new PasswordField();
+        txfPassword.setPromptText("Password");
+        txfPassword.setAlignment(Pos.CENTER);
         btnSubmit = new Button("Validate");
         lblError = new Label();
         lblError.setTextFill(Color.RED);
@@ -56,7 +58,7 @@ public class AdminValidatie extends VBox {
         btnSubmit.setOnAction((ActionEvent event) -> {
             valideer();
         });
-        password.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        txfPassword.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -66,21 +68,23 @@ public class AdminValidatie extends VBox {
 
         });
 
-        this.getChildren().addAll(user, password, btnSubmit, lblError);
+        this.getChildren().addAll(lblTitel,txfUser, txfPassword, btnSubmit, lblError);
         this.setSpacing(20);
         this.setMaxSize(300, 300);
+        txfUser.requestFocus();
+        txfUser.requestFocus();
 
     }
 
     private void valideer() {
         try {
-            if (dc.valideerAdmin(user.getText(), password.getText())) {
+            if (dc.valideerAdmin(txfUser.getText(), txfPassword.getText())) {
                 parent.naarAdminPaneel();
             } else {
                 lblError.setText("Invalid credentials");
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

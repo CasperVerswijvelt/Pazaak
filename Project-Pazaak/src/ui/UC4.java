@@ -46,7 +46,8 @@ public class UC4 {
                 //Kaarten tonen
                 String[][] array = new String[startStapel.size()][2];
                 startStapel.toArray(array);
-                System.out.println(formatteerStapelAlsLijst(array, false));;
+                System.out.println(formatteerStapelAlsLijst(array, false));
+                System.out.println(" " + (startStapel.size()+1) + ". "+r.getString("BUYCARDOPTION"));
 
                 boolean valideKeuze;
                 int keuze = 0;
@@ -55,7 +56,7 @@ public class UC4 {
                     try {
                         //Keuze inlezen en valideren
                         keuze = Integer.parseInt(in.nextLine());
-                        valideKeuze = keuze <= startStapel.size() && keuze > 0;
+                        valideKeuze = keuze <= startStapel.size() + 1 && keuze > 0;
                         if (!valideKeuze) {
                             throw new IllegalArgumentException();
                         }
@@ -69,11 +70,22 @@ public class UC4 {
                 } while (!valideKeuze);
 
                 //Gekozen kaart wordt geselecteerd en getoond
-                dc.selecteerKaart(startStapel.get(keuze - 1));
-                System.out.println(formatteerKaart(startStapel.get(keuze - 1), false) + " " + r.getString("SELECTED"));
+                if (keuze == startStapel.size() + 1) {
+                    new UC7(dc, r).start();
+                    printLijn();
+                    System.out.printf(r.getString("SELECTCARDSFORPLAYER") + "%n", speler);
+                    printLijn();
+                    k--;
+                } else {
+                    dc.selecteerKaart(startStapel.get(keuze - 1));
+                    System.out.println(formatteerKaart(startStapel.get(keuze - 1), false) + " " + r.getString("SELECTED"));
+                    //Gekozen kaart wordt uit mogelijke keuzes gehaald
+                    startStapel.remove(keuze - 1);
+                }
+                
 
-                //Gekozen kaart wordt uit mogelijke keuzes gehaald
-                startStapel.remove(keuze - 1);
+                
+                
 
             }
 

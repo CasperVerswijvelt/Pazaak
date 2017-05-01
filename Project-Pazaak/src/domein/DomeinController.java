@@ -477,7 +477,7 @@ public class DomeinController {
     public void veranderSpeler(String geselecteerdeSpeler, String nieuweNaam, int nieuweGebDat, int nieuwKrediet) {
         spelerRepo.veranderSpeler(geselecteerdeSpeler, nieuweNaam, nieuweGebDat, nieuwKrediet);
     }
-    
+
     public boolean valideerAdmin(String user, String password) {
         return spelerRepo.valideerAdmin(user, password);
     }
@@ -488,6 +488,10 @@ public class DomeinController {
 
     public void verwijderWedstrijd(String wedstrijd) {
         wedstrijdRepo.verwijderWedstrijd(wedstrijd);
+    }
+
+    public void maakNieuweAdmin(String bestaandeAdminNaam, String bestaandeAdminPass, String nieuweAdminNaam, String nieuweAdminPass) {
+        spelerRepo.maakNieuweAdmin(bestaandeAdminNaam, bestaandeAdminPass, nieuweAdminNaam, nieuweAdminPass);
     }
 
 }

@@ -50,16 +50,14 @@ public class SpelerMapper {
             query.setString(1, speler.getNaam());
             query.setInt(2, speler.getGeboorteJaar());
             query.executeUpdate();
-        }catch (SQLException ex) {
-            if(ex.getMessage().toLowerCase().contains("duplicate entry"))
+        } catch (SQLException ex) {
+            if (ex.getMessage().toLowerCase().contains("duplicate entry")) {
                 throw new PlayerAlreadyExistsException("Player already exists");
-            else
+            } else {
                 throw new DatabaseException(ex);
+            }
         }
     }
-    
-    
-    
 
     public List<String> geefAlleSpelerNamen() {
         List<String> spelers = new ArrayList<>();
@@ -67,7 +65,7 @@ public class SpelerMapper {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
             PreparedStatement query = conn.prepareStatement("SELECT naam FROM ID222177_g37.Speler");
             try (ResultSet rs = query.executeQuery()) {
-                while(rs.next()) {
+                while (rs.next()) {
                     String naam = rs.getString("naam");
                     spelers.add(naam);
                 }
@@ -77,7 +75,7 @@ public class SpelerMapper {
         }
         return spelers;
     }
-    
+
     public void slaKredietOp(Speler speler) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
             PreparedStatement query = conn.prepareStatement("UPDATE ID222177_g37.Speler SET krediet = ? WHERE naam = ?");
@@ -93,7 +91,7 @@ public class SpelerMapper {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
             PreparedStatement query = conn.prepareStatement("UPDATE ID222177_g37.Speler SET `naam`=?, `geboortedatum`=?, `krediet`=? WHERE `naam`=?");
             query.setString(1, nieuweNaam);
-            query.setInt(2,nieuweGebDat);
+            query.setInt(2, nieuweGebDat);
             query.setInt(3, nieuwKrediet);
             query.setString(4, geselecteerdeSpeler);
             query.executeUpdate();
@@ -101,19 +99,17 @@ public class SpelerMapper {
             throw new DatabaseException(ex);
         }
     }
-    
-    
-    
+
     public boolean valideerAdmin(String user, String password) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
             PreparedStatement query = conn.prepareStatement("SELECT pass FROM ID222177_g37.admin WHERE user = ?");
             query.setString(1, user);
-            
+
             try (ResultSet rs = query.executeQuery()) {
-                while(rs.next()) {
+                while (rs.next()) {
                     String hash = rs.getString("pass");
                     return hash.equals(getHash(password.getBytes(), "SHA-512"));
-                        
+
                 }
             }
 
@@ -121,19 +117,18 @@ public class SpelerMapper {
             throw new DatabaseException(ex);
         }
         return false;
-        
+
     }
-    
-    
+
     public String getHash(byte[] inputBytes, String algorithm) {
-        String hashValue="";
-        try{
+        String hashValue = "";
+        try {
             MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
             messageDigest.update(inputBytes);
             byte[] digestedBytes = messageDigest.digest();
             hashValue = DatatypeConverter.printHexBinary(digestedBytes).toLowerCase();
-        }catch(Exception e) {
-            
+        } catch (Exception e) {
+
         }
         return hashValue;
     }
@@ -147,11 +142,19 @@ public class SpelerMapper {
             throw new DatabaseException(ex);
         }
     }
-    
-    
-    
-    
-    
-    
-    
+
+    public void maakNieuweAdmin(String bestaandeAdminNaam, String bestaandeAdminUser, String nieuweAdminNaam, String nieuweAdminPass) {
+        if (valideerAdmin(bestaandeAdminNaam, bestaandeAdminUser)) {
+            try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
+                PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.admin (user, pass) VALUES (?,?)");
+                query.setString(1, nieuweAdminNaam);
+                query.setString(2, getHash(nieuweAdminPass.getBytes(), "SHA-512"));
+                query.executeUpdate();
+            } catch (SQLException ex) {
+                throw new DatabaseException(ex);
+            }
+        } else
+            throw new InvalidAdminCredentialsException();
+    }
+
 }
