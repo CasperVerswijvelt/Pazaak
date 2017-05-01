@@ -94,7 +94,7 @@ public class BorderPaneController extends BorderPane {
             if (getCenter() instanceof MooieMenuController) {
                 ingedrukteToetsen.add(event.getCode());
                 if (ingedrukteToetsen.size() > 3) {
-                    ingedrukteToetsen.remove(1);
+                    ingedrukteToetsen.remove(0);
                 }
 
                 if (ingedrukteToetsen.size() == 3 && ingedrukteToetsen.get(0) == KeyCode.MULTIPLY && ingedrukteToetsen.get(1) == KeyCode.NUMPAD8 && ingedrukteToetsen.get(2) == KeyCode.P) {
