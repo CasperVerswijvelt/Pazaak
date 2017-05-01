@@ -220,6 +220,7 @@ public class KaartWinkelScherm extends GridPane {
             String[][] aankoopBareKaarten = dc.geefNogNietGekochteKaarten(geselecteerd.toString());
 
             if (aankoopBareKaarten.length != 0) {
+                lblError.setText(null);
                 this.setDisable(false);
             }else{
                 lblError.setText(r.getString("NOLIFE"));
