@@ -46,6 +46,8 @@ public class AdminPanelController extends GridPane {
 
     private List spelerLijst;
     private String[][] wedstrijdList;
+    private String[][] gekochteKaarten;
+    private String[][] nietGekochteKaarten;
 
     @FXML
     private ComboBox<String> cbSpelerSelectie;
@@ -77,6 +79,14 @@ public class AdminPanelController extends GridPane {
     private Button btnCreateNewAdmin;
     @FXML
     private Label lblError;
+    @FXML
+    private ComboBox<String> cbRemoveCard;
+    @FXML
+    private ComboBox<String> cbGiveCard;
+    @FXML
+    private Button btnRemoveCard;
+    @FXML
+    private Button btnGiveCard;
 
     /**
      * Initializes the controller class.
@@ -152,6 +162,35 @@ public class AdminPanelController extends GridPane {
         ObservableList<String> comboLijst = FXCollections.observableArrayList(wedstrijdenStrings);
 
         cbSelecteerGame.setItems(comboLijst);
+        cbSelecteerGame.getSelectionModel().selectFirst();
+    }
+
+    public void laadKaartenInComboBoxen() {
+        try {
+            gekochteKaarten = dc.geefAangekochteKaarten(geselecteerdeSpeler());
+            nietGekochteKaarten = dc.geefNogNietGekochteKaarten(geselecteerdeSpeler());
+        } catch (DatabaseException e) {
+        }
+        
+        String[] gekochteKaartenStrings = new String[gekochteKaarten.length];
+        for (int i = 0; i < gekochteKaartenStrings.length; i++) {
+            String[] kaart = Utilities.veranderNaarMooieLayout(gekochteKaarten[i]);
+            gekochteKaartenStrings[i] = kaart[0] + kaart [1];
+        }
+        ObservableList<String> comboLijstGekocht = FXCollections.observableArrayList(gekochteKaartenStrings);
+        cbRemoveCard.setItems(comboLijstGekocht);
+        cbRemoveCard.getSelectionModel().selectFirst();
+        
+        String[] nietGekochteKaartenStrings = new String[nietGekochteKaarten.length];
+        for (int i = 0; i < nietGekochteKaartenStrings.length; i++) {
+            String[] kaart = Utilities.veranderNaarMooieLayout(nietGekochteKaarten[i]);
+            nietGekochteKaartenStrings[i] = kaart[0] + kaart [1];
+        }
+        ObservableList<String> comboLijstNietGekocht = FXCollections.observableArrayList(nietGekochteKaartenStrings);
+        cbGiveCard.setItems(comboLijstNietGekocht);
+        cbGiveCard.getSelectionModel().selectFirst();
+        
+
     }
 
     private void selecteerSpeler() {
@@ -161,7 +200,11 @@ public class AdminPanelController extends GridPane {
             txfSpelerNaam.setText(info[0]);
             txfKrediet.setText(info[1]);
             txfSpelerGeboortedatum.setText(info[2]);
-        } catch (Exception e) {
+            
+            laadKaartenInComboBoxen();
+        } catch (DatabaseException e) {
+            lblError.setText(r.getString("DATABASEERROR"));
+        }catch (Exception e) {
 
         }
     }
@@ -178,7 +221,7 @@ public class AdminPanelController extends GridPane {
     }
 
     private String geselecteerdeWedstrijd() {
-        if (cbSpelerSelectie.getSelectionModel().getSelectedItem() == null) {
+        if (cbSelecteerGame.getSelectionModel().getSelectedIndex() == -1) {
 
             throw new IllegalArgumentException();
         }
@@ -200,8 +243,8 @@ public class AdminPanelController extends GridPane {
             }
         } catch (NumberFormatException e) {
             lblError.setText("Number too large!");
-        }
-        
+        } 
+
         laadSpelersInComboBox();
     }
 
@@ -225,6 +268,8 @@ public class AdminPanelController extends GridPane {
             lblError.setText(null);
         } catch (DatabaseException e) {
             lblError.setText(r.getString("DATABASEERROR"));
+        } catch(IllegalArgumentException e) {
+            lblError.setText("Select a game");
         }
 
         laadGamesInComboBox();
@@ -236,7 +281,7 @@ public class AdminPanelController extends GridPane {
         if (txfNewAdminPassword.getText() != null && txfNewAdminUsername.getText() != null && !txfNewAdminPassword.getText().trim().isEmpty() && !txfNewAdminUsername.getText().trim().isEmpty()) {
             // Create the custom dialog.
             Dialog<Pair<String, String>> dialog = new Dialog<>();
-            dialog.setTitle("Login Dialog");
+            dialog.setTitle("Pazaak");
             dialog.setHeaderText("Validate yourself using an already existing admin user");
 
             // Set the icon (must be included in the project).
@@ -307,7 +352,35 @@ public class AdminPanelController extends GridPane {
                     }
                 }
             });
-        }
+        } else
+            lblError.setText(r.getString("FILLINALLFIELDS"));
 
+    }
+
+    @FXML
+    private void btnRemoveCardClicked(ActionEvent event) {
+        try{
+            dc.neemStartstapelkaartWeg(geselecteerdeSpeler(), gekochteKaarten[cbRemoveCard.getSelectionModel().getSelectedIndex()]);
+            laadKaartenInComboBoxen();
+            lblError.setText(null);
+        } catch (DatabaseException e) {
+            lblError.setText(r.getString("DATABASEERROR"));
+        }catch(Exception e) {
+            
+        }
+    }
+
+    @FXML
+    private void btnGiveCardClicked(ActionEvent event) {
+        
+        try{
+            dc.voegStartstapelkaartToe(geselecteerdeSpeler(), nietGekochteKaarten[cbGiveCard.getSelectionModel().getSelectedIndex()]);
+            laadKaartenInComboBoxen();
+            lblError.setText(null);
+        }catch (DatabaseException e) {
+            lblError.setText(r.getString("DATABASEERROR"));
+        }catch(Exception e) {
+            
+        }
     }
 }

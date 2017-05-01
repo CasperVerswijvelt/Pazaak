@@ -10,42 +10,51 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="397.0" prefWidth="600.0" type="GridPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="600.0" type="GridPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="20.0" minHeight="0.0" prefHeight="5.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="160.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="160.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="160.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="160.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ComboBox fx:id="cbSpelerSelectie" prefWidth="242.0" GridPane.rowIndex="1" />
+      <ComboBox fx:id="cbSpelerSelectie" prefWidth="242.0" promptText="Select a player" GridPane.rowIndex="1" />
       <Button fx:id="btnSaveSpeler" mnemonicParsing="false" onAction="#btnSavePlayerClicked" prefWidth="242.0" text="Save" GridPane.rowIndex="2" />
       <Button fx:id="btnDeletePlayer" mnemonicParsing="false" onAction="#btnDeletePlayerClicked" prefWidth="242.0" text="Delete" GridPane.rowIndex="3" />
       <TextField fx:id="txfSpelerNaam" prefWidth="242.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <TextField fx:id="txfSpelerGeboortedatum" prefWidth="242.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Separator prefHeight="0.0" prefWidth="1000.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
-      <ComboBox fx:id="cbSelecteerGame" prefWidth="242.0" GridPane.rowIndex="6" />
-      <Button fx:id="btnDeleteGame" mnemonicParsing="false" onAction="#btnDeleteGameClicked" prefWidth="242.0" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <Separator prefHeight="0.0" prefWidth="1000.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="7" />
+      <ComboBox fx:id="cbSelecteerGame" prefWidth="242.0" promptText="Select a game" GridPane.rowIndex="9" />
+      <Button fx:id="btnDeleteGame" mnemonicParsing="false" onAction="#btnDeleteGameClicked" prefWidth="242.0" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="9" />
       <TextField fx:id="txfKrediet" prefWidth="242.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <Label fx:id="lblPlayerOptionsTitle" text="Player options" GridPane.columnSpan="2147483647" />
-      <Separator prefHeight="0.0" prefWidth="1000.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="7" />
-      <Label fx:id="lblGameOptions" text="Game options" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
-      <Label fx:id="lblNewAdmin" text="New admin user" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
-      <TextField fx:id="txfNewAdminUsername" prefHeight="25.0" prefWidth="242.0" promptText="Unique Admin Username" GridPane.rowIndex="9" />
-      <PasswordField fx:id="txfNewAdminPassword" prefWidth="242.0" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-      <Button fx:id="btnCreateNewAdmin" mnemonicParsing="false" onAction="#btnCreateNewAdminClicked" prefHeight="25.0" prefWidth="193.0" text="Create new admin" GridPane.columnSpan="2147483647" GridPane.rowIndex="10" />
-      <Label fx:id="lblError" textFill="RED" GridPane.columnSpan="2147483647" GridPane.rowIndex="11" />
+      <Separator prefHeight="0.0" prefWidth="1000.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="10" />
+      <Label fx:id="lblGameOptions" text="Game options" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
+      <Label fx:id="lblNewAdmin" text="New admin user" GridPane.columnSpan="2147483647" GridPane.rowIndex="11" />
+      <TextField fx:id="txfNewAdminUsername" prefHeight="25.0" prefWidth="242.0" promptText="Unique Admin Username" GridPane.rowIndex="12" />
+      <PasswordField fx:id="txfNewAdminPassword" prefWidth="242.0" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+      <Button fx:id="btnCreateNewAdmin" mnemonicParsing="false" onAction="#btnCreateNewAdminClicked" prefHeight="25.0" prefWidth="193.0" text="Create new admin" GridPane.columnSpan="2147483647" GridPane.rowIndex="13" />
+      <Label fx:id="lblError" textFill="RED" GridPane.columnSpan="2147483647" GridPane.rowIndex="14" />
+      <Label text="Remove card" GridPane.rowIndex="4" />
+      <Label text="Give card" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <ComboBox fx:id="cbRemoveCard" prefWidth="242.0" promptText="Select a card" GridPane.rowIndex="5" />
+      <ComboBox fx:id="cbGiveCard" prefWidth="242.0" promptText="Select a card" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <Button fx:id="btnRemoveCard" mnemonicParsing="false" onAction="#btnRemoveCardClicked" prefWidth="242.0" text="Remove" GridPane.rowIndex="6" />
+      <Button fx:id="btnGiveCard" mnemonicParsing="false" onAction="#btnGiveCardClicked" prefWidth="242.0" text="Give" GridPane.columnIndex="1" GridPane.rowIndex="6" />
    </children>
 </fx:root>

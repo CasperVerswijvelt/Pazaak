@@ -30,6 +30,7 @@ public class KaartMapper {
             query.setInt(3, prijs);
             query.executeUpdate();
 
+            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -49,9 +50,11 @@ public class KaartMapper {
                     kaarten.add(new Kaart(waarde, type, prijs));
                 }
             }
+            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
+        
         return kaarten;
     }
 
@@ -65,6 +68,7 @@ public class KaartMapper {
                     prijzen.add(rs.getInt("prijs"));
                 }
             }
+            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -86,6 +90,7 @@ public class KaartMapper {
                     kaarten.add(new Kaart(waarde, type, prijs));
                 }
             }
+            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -101,11 +106,13 @@ public class KaartMapper {
             query.setInt(2, kaartID);
             query.executeUpdate();
 
+            query.close();
         } catch (SQLException ex) {
             if (ex.getMessage().toLowerCase().contains("duplicate entry")) {
                 throw new CardAlreadyBoughtException(ex);
             }
-            throw new PlayerDoesntExistException(ex);
+            throw new DatabaseException(ex);
+            
         }
     }
 
@@ -121,8 +128,10 @@ public class KaartMapper {
                     return rs.getInt("id");
 
                 }
+                query.close();
                 throw new CardDoesntExistException("Card doesnt exist");
             }
+            
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -144,6 +153,7 @@ public class KaartMapper {
                     kaarten.add(new Kaart(waarde, type, prijs));
                 }
             }
+            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -165,6 +175,7 @@ public class KaartMapper {
                     kaarten.add(new Kaart(waarde, type, prijs));
                 }
             }
+            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -192,7 +203,7 @@ public class KaartMapper {
         voegKaartTypeToe('W', 2, 50);
         voegKaartTypeToe('C', 1, 100);
 
-        //StartStapel toevoegen met prijs 0
+        //StartStapel toevoegen met prijs 0 - startStapel
         voegKaartTypeToe('+', 2, 0);
         voegKaartTypeToe('+', 4, 0);
         voegKaartTypeToe('+', 5, 0);
@@ -229,7 +240,23 @@ public class KaartMapper {
             query.executeUpdate();
             query = conn.prepareStatement("SET FOREIGN_KEY_CHECKS = 1");
             query.executeUpdate();
+            
+            query.close();
 
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex);
+        }
+    }
+
+    public void neemStartstapelkaartWeg(String naam, Kaart kaart) {
+        try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
+            int kaartID = geefKaartId(kaart);
+            PreparedStatement query = conn.prepareStatement("DELETE FROM ID222177_g37.Kaart WHERE naam = ? AND id = ?");
+            query.setString(1, naam);
+            query.setInt(2, kaartID);
+            query.executeUpdate();
+            
+            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }

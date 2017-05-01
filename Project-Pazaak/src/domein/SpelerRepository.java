@@ -114,6 +114,14 @@ public class SpelerRepository {
     void maakNieuweAdmin(String bestaandeAdminNaam, String bestaandeAdminPass, String nieuweAdminNaam, String nieuweAdminPass) {
         sm.maakNieuweAdmin(bestaandeAdminNaam, bestaandeAdminPass, nieuweAdminNaam, nieuweAdminPass);
     }
+
+    void voegStartstapelkaartToe(String naam, Kaart kaart) {
+        km.voegStartstapelKaartToe(naam, kaart);
+    }
+
+    void neemStartstapelkaartWeg(String naam, Kaart kaart) {
+        km.neemStartstapelkaartWeg(naam, kaart);
+    }
     
 
 }

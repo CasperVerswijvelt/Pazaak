@@ -70,6 +70,7 @@ public class WedstrijdMapper {
 
             }
 
+            query.close();
         } catch (SQLException ex) {
             throw new GameSaveDatabaseException(ex);
         }
@@ -82,6 +83,8 @@ public class WedstrijdMapper {
             PreparedStatement query = conn.prepareStatement("SELECT naam FROM ID222177_g37.Wedstrijd WHERE naam = ?");
             query.setString(1, wedstrijdNaam);
             ResultSet rs = query.executeQuery();
+            
+            query.close();
 
             return rs.next();
 
@@ -140,6 +143,9 @@ public class WedstrijdMapper {
             query = conn.prepareStatement("DELETE FROM ID222177_g37.Wedstrijd WHERE naam = ?");
             query.setString(1, wedstrijdNaam);
             query.executeUpdate();
+            
+            
+            query.close();
 
             //Wedstrijd aanmaken met gegeven gegevens
             return new Wedstrijd(sm.geefSpeler(speler1), sm.geefSpeler(speler2), ws1, ws2, beginnendeSpeler, score1, score2);
@@ -176,6 +182,8 @@ public class WedstrijdMapper {
             for(int i = 0; i<lijst.size();i++) {
                 res[i] = lijst.get(i);
             }
+            
+            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -187,6 +195,8 @@ public class WedstrijdMapper {
             PreparedStatement query = conn.prepareStatement("DELETE FROM ID222177_g37.Wedstrijd WHERE NAAM = ?");
             query.setString(1, wedstrijd);
             query.executeUpdate();
+            
+            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }

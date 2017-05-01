@@ -114,6 +114,7 @@ public class SpelerMapper {
 
                 }
             }
+            query.close();
 
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
@@ -148,6 +149,8 @@ public class SpelerMapper {
             PreparedStatement query = conn.prepareStatement("DELETE FROM ID222177_g37.Speler WHERE NAAM = ?");
             query.setString(1, naam);
             query.executeUpdate();
+            
+            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -164,6 +167,8 @@ public class SpelerMapper {
                 query.setString(2, hash);
                 query.setString(3, salt);
                 query.executeUpdate();
+                
+                query.close();
             } catch (SQLException ex) {
                 throw new DatabaseException(ex);
             }

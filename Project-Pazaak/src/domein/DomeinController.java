@@ -494,4 +494,12 @@ public class DomeinController {
         spelerRepo.maakNieuweAdmin(bestaandeAdminNaam, bestaandeAdminPass, nieuweAdminNaam, nieuweAdminPass);
     }
 
+    public void voegStartstapelkaartToe(String naam, String[] kaart) {
+        spelerRepo.voegStartstapelkaartToe(naam, stringAlsKaart(kaart));
+    }
+
+    public void neemStartstapelkaartWeg(String naam, String[] kaart) {
+        spelerRepo.neemStartstapelkaartWeg(naam, stringAlsKaart(kaart));
+    }
+
 }
