@@ -64,15 +64,19 @@ public class KaartWinkelScherm extends GridPane {
 
         //Alerts
         DBAlert = new Alert(Alert.AlertType.ERROR);
+        DBAlert.setTitle("Pazaak");
         DBAlert.setContentText(r.getString("DATABASEERROR"));
 
         cardBoughtAlert = new Alert(Alert.AlertType.NONE);
+        cardBoughtAlert.setTitle("Pazaak");
         cardBoughtAlert.getDialogPane().getButtonTypes().add(ButtonType.OK);
 
         insufficientBalanceException = new Alert(Alert.AlertType.ERROR);
+        insufficientBalanceException.setTitle("Pazaak");
         insufficientBalanceException.setContentText(r.getString("INSUFFICIENTBALANCE"));
 
         invalidPlayerException = new Alert(Alert.AlertType.ERROR);
+        invalidPlayerException.setTitle("Pazaak");
         invalidPlayerException.setContentText(r.getString("INVALIDPLAYER"));
 
         //Spelerselectie
@@ -326,6 +330,7 @@ public class KaartWinkelScherm extends GridPane {
             String[] kaartGewoneLayout = Utilities.veranderNaarGewoonKaartFormaat(kaart);
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Pazaak");
             alert.setContentText(r.getString("ZEKER"));
             alert.setHeaderText(null);
             alert.setTitle(r.getString("BUYCARDOPTION"));
@@ -339,7 +344,9 @@ public class KaartWinkelScherm extends GridPane {
                 selecteerSpeler();
             }
 
-        } catch (InsufficientBalanceException e) {
+        } catch (DatabaseException e) {
+            DBAlert.show();
+        }catch (InsufficientBalanceException e) {
             insufficientBalanceException.show();
         } catch (PlayerDoesntExistException e) {
             laadSpelersInComboBox();

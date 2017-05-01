@@ -8,6 +8,7 @@ package persistentie;
 import domein.Speler;
 import exceptions.*;
 import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -102,13 +103,14 @@ public class SpelerMapper {
 
     public boolean valideerAdmin(String user, String password) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
-            PreparedStatement query = conn.prepareStatement("SELECT pass FROM ID222177_g37.admin WHERE user = ?");
+            PreparedStatement query = conn.prepareStatement("SELECT pass, salt FROM ID222177_g37.admin WHERE user = ?");
             query.setString(1, user);
 
             try (ResultSet rs = query.executeQuery()) {
                 while (rs.next()) {
                     String hash = rs.getString("pass");
-                    return hash.equals(getHash(password.getBytes(), "SHA-512"));
+                    String salt = rs.getString("salt");
+                    return hash.equals(getHash(password + salt, "SHA-512"));
 
                 }
             }
@@ -120,9 +122,10 @@ public class SpelerMapper {
 
     }
 
-    public String getHash(byte[] inputBytes, String algorithm) {
+    public String getHash(String toHash, String algorithm) {
         String hashValue = "";
         try {
+            byte[] inputBytes = toHash.getBytes();
             MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
             messageDigest.update(inputBytes);
             byte[] digestedBytes = messageDigest.digest();
@@ -131,6 +134,13 @@ public class SpelerMapper {
 
         }
         return hashValue;
+    }
+
+    public String generateSalt() {
+        SecureRandom random = new SecureRandom();
+        byte bytes[] = new byte[20];
+        random.nextBytes(bytes);
+        return DatatypeConverter.printHexBinary(bytes).toLowerCase();
     }
 
     public void verwijderSpeler(String naam) {
@@ -146,15 +156,20 @@ public class SpelerMapper {
     public void maakNieuweAdmin(String bestaandeAdminNaam, String bestaandeAdminUser, String nieuweAdminNaam, String nieuweAdminPass) {
         if (valideerAdmin(bestaandeAdminNaam, bestaandeAdminUser)) {
             try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
-                PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.admin (user, pass) VALUES (?,?)");
+                PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.admin (user, pass, salt) VALUES (?,?,?)");
+                String salt = generateSalt();
+                String hash = getHash(nieuweAdminPass + salt, "SHA-512");
+
                 query.setString(1, nieuweAdminNaam);
-                query.setString(2, getHash(nieuweAdminPass.getBytes(), "SHA-512"));
+                query.setString(2, hash);
+                query.setString(3, salt);
                 query.executeUpdate();
             } catch (SQLException ex) {
                 throw new DatabaseException(ex);
             }
-        } else
+        } else {
             throw new InvalidAdminCredentialsException();
+        }
     }
 
 }

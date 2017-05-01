@@ -174,7 +174,7 @@ public class AdminPanelController extends GridPane {
             txfSpelerGeboortedatum.clear();
             throw new IllegalArgumentException();
         }
-        return cbSpelerSelectie.getSelectionModel().getSelectedItem().toString();
+        return cbSpelerSelectie.getSelectionModel().getSelectedItem();
     }
 
     private String geselecteerdeWedstrijd() {
@@ -198,6 +198,8 @@ public class AdminPanelController extends GridPane {
             } else {
                 lblError.setText(r.getString("DATABASEERROR"));
             }
+        } catch (NumberFormatException e) {
+            lblError.setText("Number too large!");
         }
         
         laadSpelersInComboBox();
