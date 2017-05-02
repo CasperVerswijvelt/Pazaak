@@ -74,3 +74,8 @@
 .wedstrijdkaartenachterkant{
     -fx-background-image:url("kaartAchterkant-groot.png");
 }
+.combo-box{
+    -fx-font-family: "Nordstrom Roman";
+    -fx-font-size: 18px;
+    -fx-background-color: lightgray;
+}

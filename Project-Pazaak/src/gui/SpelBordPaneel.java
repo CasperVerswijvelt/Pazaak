@@ -95,10 +95,10 @@ class SpelBordPaneel extends HBox {
             button.setText(kaart[0] + kaart[1]);
             BackgroundImage backgroundImage;
             if (kant == 1) {
-                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartv2blauw.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantBlauw-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
             } else {
-                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartv2rood.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantRood-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
             }
 
