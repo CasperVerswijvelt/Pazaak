@@ -120,7 +120,11 @@ public class SpelerRepository {
      * @return
      */
     public List<Kaart> geefNogNietGekochteKaarten(String naam) {
-        return km.geefNogNietGekochteKaarten(naam);
+        if (bestaat(naam)) {
+            return km.geefNogNietGekochteKaarten(naam);
+        } else {
+            throw new PlayerDoesntExistException();
+        }
     }
 
     /**
