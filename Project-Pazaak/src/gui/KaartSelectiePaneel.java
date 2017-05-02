@@ -52,8 +52,12 @@ public class KaartSelectiePaneel extends VBox {
         kaartButtons = new ArrayList<>();
         kaarten = new GridPane();
         kaarten.setAlignment(Pos.CENTER);
+        kaarten.setVgap(3);
+        kaarten.setHgap(3);
         selected = new GridPane();
         selected.setAlignment(Pos.CENTER);
+        selected.setVgap(3);
+        selected.setHgap(3);
 
         this.getChildren().add(kaarten);
         this.getChildren().add(selected);
@@ -83,23 +87,6 @@ public class KaartSelectiePaneel extends VBox {
         this.setVisible(true);
 
         //Alles clearen
-        
-//        for (Node element : kaarten.getChildren()) {
-//            if (element instanceof Button) {
-//                if (!((Button) element).isDisable()) {
-//                    kaarten.getChildren().remove((Button) element);
-//                }
-//            }
-//        }
-//        for (Node element : selected.getChildren()) {
-//            if (element instanceof Button) {
-//                if (!((Button) element).isDisable()) {
-//                    kaarten.getChildren().remove((Button) element);
-//                }
-//            }
-//        }
-        
-        
         for(Button btn : kaartButtons) {
             selected.getChildren().remove(btn);
             kaarten.getChildren().remove(btn);
@@ -110,13 +97,15 @@ public class KaartSelectiePaneel extends VBox {
 
         for (int i = 0; i < startStapel.length; i++) {
             String[] kaartLayout = Utilities.veranderNaarMooieLayout(startStapel[i]);
-
+            
+//            kaarten.getChildren().get(i).getStyleClass().clear();
+            
             Button button = new Button(kaartLayout[0] + kaartLayout[1]);
             BackgroundImage backgroundImage;
             if (speler.equals(parent.speler1)) {
-                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartv2blauw.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantBlauw-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             } else {
-                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartv2rood.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantRood-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             }
             Background background = new Background(backgroundImage);
             button.setBackground(background);
@@ -149,9 +138,10 @@ public class KaartSelectiePaneel extends VBox {
         if (kaartNogNietGeselecteerd(button)) {
             if (aantalGeselecteerd < 6) {
                 selecteerKaart(button, speler);
+                
             }
         } else {
-            plaatsKaartTerug(button);
+            plaatsKaartTerug(button , speler);
         }
     }
 
@@ -175,8 +165,15 @@ public class KaartSelectiePaneel extends VBox {
         return kaarten.getChildren().contains(button);
     }
 
-    private void plaatsKaartTerug(Button button) {
-
+    private void plaatsKaartTerug(Button button, String speler) {
+        BackgroundImage backgroundImage;
+            if (speler.equals(parent.speler1)) {
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantBlauw-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            } else {
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantRood-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            }
+            Background background = new Background(backgroundImage);
+            button.setBackground(background);
         int index = kaartButtons.indexOf(button);
         button.setMinSize(50, 80);
         kaarten.add(button, index % 11, index / 11);
@@ -201,14 +198,20 @@ public class KaartSelectiePaneel extends VBox {
         int aantalGeselecteerdeKaarten = selected.getChildren().size() - 6;
           BackgroundImage backgroundImage;
             if (speler.equals(parent.speler1)) {
-                backgroundImage = new BackgroundImage(new Image(getClass().getResource("rsz_kaartv2blauw.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantBlauw-groot.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             } else {
-                backgroundImage = new BackgroundImage(new Image(getClass().getResource("rsz_kaartv2rood.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantRood-groot.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             }
             Background background = new Background(backgroundImage);
             button.setBackground(background);
+            
         button.setMinSize(75, 120);
         selected.add(button, aantalGeselecteerdeKaarten, 0);
     }
 
+    void disable() {
+        for(int i = 0;i<6;i++) {
+            selected.getChildren().get(i).getStyleClass().clear();
+        }
+    }
 }
