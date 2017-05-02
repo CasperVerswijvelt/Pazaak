@@ -64,9 +64,9 @@ class WedstrijdStapelPaneel extends HBox {
             btnWedstrijdKaarten.get(i).setMinSize(50, 80);
             BackgroundImage backgroundImage;
             if (this.speler == 0) {
-                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartv2blauw.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantBlauw-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             } else {
-                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartv2rood.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantRood-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             }
             Background background = new Background(backgroundImage);
             btnWedstrijdKaarten.get(i).setBackground(background);
@@ -83,6 +83,7 @@ class WedstrijdStapelPaneel extends HBox {
         if (aantalKaarten < 4) {
             for (int i = 0; i < 4 - aantalKaarten; i++) {
                 Button button = new Button();
+                button.getStyleClass().add("kaartenachterkant");
                 button.setMinSize(50, 80);
                 button.setDisable(true);
                 btnWedstrijdKaarten.add(button);
@@ -100,7 +101,7 @@ class WedstrijdStapelPaneel extends HBox {
 
     private void drukSpeelWedstrijdkaart(ActionEvent event) {
         Button source = (Button) event.getSource();
-
+        
         int index = btnWedstrijdKaarten.indexOf(source);
         String[] kaart = wedstrijdKaarten[index];
 
@@ -151,10 +152,10 @@ class WedstrijdStapelPaneel extends HBox {
                 return;
             }
         }
-
+        source.getStyleClass().add("kaartenachterkant");
         source.setDisable(true);
         source.setText("");
-
+        
         parent.drukSpeelWedstrijdkaart(kaart, waarde, type);
     }
 }
