@@ -110,7 +110,9 @@ public class KaartSelectiePaneel extends VBox {
 
         for (int i = 0; i < startStapel.length; i++) {
             String[] kaartLayout = Utilities.veranderNaarMooieLayout(startStapel[i]);
-
+            
+            kaarten.getChildren().get(i).getStyleClass().clear();
+            
             Button button = new Button(kaartLayout[0] + kaartLayout[1]);
             BackgroundImage backgroundImage;
             if (speler.equals(parent.speler1)) {
@@ -214,8 +216,14 @@ public class KaartSelectiePaneel extends VBox {
             }
             Background background = new Background(backgroundImage);
             button.setBackground(background);
+            
         button.setMinSize(75, 120);
         selected.add(button, aantalGeselecteerdeKaarten, 0);
     }
 
+    void disable() {
+        for(int i = 0;i<6;i++) {
+            selected.getChildren().get(i).getStyleClass().clear();
+        }
+    }
 }
