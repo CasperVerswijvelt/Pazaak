@@ -94,6 +94,7 @@ public class LaadWedstrijdScherm extends VBox {
             laadWedstrijdenInComboBox();
         } catch (DatabaseException e) {
             DBAlert.show();
+            e.printStackTrace();
             laadWedstrijdenInComboBox();
         } catch(ArrayIndexOutOfBoundsException e){
             lblError.setText(r.getString("LOADERROR"));
