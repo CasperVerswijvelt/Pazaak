@@ -26,8 +26,6 @@ import java.util.Map;
  */
 public class WedstrijdMapper {
 
-    
-
     private final SpelerMapper sm;
     private final KaartMapper km;
 
@@ -54,7 +52,6 @@ public class WedstrijdMapper {
             query.setInt(5, wedstrijd.geefTussenstand()[0]);
             query.setInt(6, wedstrijd.geefTussenstand()[1]);
             query.executeUpdate();
-
 
             //Wedstrijdkaarten
             for (int i = 0; i < 2; i++) {
@@ -83,10 +80,10 @@ public class WedstrijdMapper {
             PreparedStatement query = conn.prepareStatement("SELECT naam FROM ID222177_g37.Wedstrijd WHERE naam = ?");
             query.setString(1, wedstrijdNaam);
             ResultSet rs = query.executeQuery();
-            
-            query.close();
 
-            return rs.next();
+            boolean bestaat = rs.next();
+            query.close();
+            return bestaat;
 
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
@@ -143,8 +140,7 @@ public class WedstrijdMapper {
             query = conn.prepareStatement("DELETE FROM ID222177_g37.Wedstrijd WHERE naam = ?");
             query.setString(1, wedstrijdNaam);
             query.executeUpdate();
-            
-            
+
             query.close();
 
             //Wedstrijd aanmaken met gegeven gegevens
@@ -175,27 +171,25 @@ public class WedstrijdMapper {
                 lijst.add(info);
             }
 
-  
+            res = new String[lijst.size()][];
 
-            res=new String[lijst.size()][];
-            
-            for(int i = 0; i<lijst.size();i++) {
+            for (int i = 0; i < lijst.size(); i++) {
                 res[i] = lijst.get(i);
             }
-            
+
             query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
         return res;
     }
-    
+
     public void verwijderWedstrijd(String wedstrijd) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
             PreparedStatement query = conn.prepareStatement("DELETE FROM ID222177_g37.Wedstrijd WHERE NAAM = ?");
             query.setString(1, wedstrijd);
             query.executeUpdate();
-            
+
             query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
