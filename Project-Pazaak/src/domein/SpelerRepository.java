@@ -5,6 +5,10 @@ import java.util.*;
 import persistentie.KaartMapper;
 import persistentie.SpelerMapper;
 
+/**
+ * Class that connects to the PlayerMapper
+ * @author goran
+ */
 public class SpelerRepository {
 
     //Attributen
@@ -12,17 +16,32 @@ public class SpelerRepository {
     private KaartMapper km;
 
     //Constructor
+
+    /**
+     * creates a repository object
+     */
     public SpelerRepository() {
         sm = new SpelerMapper();
         km = new KaartMapper();
     }
 
     //Methodes
+
+    /**
+     * creates a new player
+     * @param naam
+     * @param geboorteDatum
+     */
     public void maakNieuweSpelerAan(String naam, int geboorteDatum) {
         Speler speler = new Speler(naam, geboorteDatum, 0, null);
         this.voegToe(speler);
     }
 
+    /**
+     * checks if a player already exists
+     * @param naam
+     * @return
+     */
     public boolean bestaat(String naam) {
         try{
             sm.geefSpeler(naam);
@@ -32,10 +51,19 @@ public class SpelerRepository {
         }
     }
 
+    /**
+     * return all the players in the database
+     * @return
+     */
     public List<String> geefSpelersLijst() {
         return sm.geefAlleSpelerNamen();
     }
 
+    /**
+     * retuns name , year of birth and the credits of a player
+     * @param naam
+     * @return
+     */
     public String[] geefSpelerInfo(String naam) {
         Speler speler = sm.geefSpeler(naam);
        
@@ -54,12 +82,22 @@ public class SpelerRepository {
 
     }
 
+    /**
+     * returns a player object
+     * @param naam
+     * @return
+     */
     public Speler geefSpeler(String naam) {
         Speler speler = sm.geefSpeler(naam);
         speler.setStartStapel(km.geefStartStapel(naam));
         return speler;
     }
 
+    /**
+     * return all the cards a player has
+     * @param naam
+     * @return
+     */
     public List<Kaart> geefStartStapel(String naam) {
         if (bestaat(naam)) {
             return km.geefStartStapel(naam);
@@ -68,14 +106,28 @@ public class SpelerRepository {
         }
     }
 
+    /**
+     * saves the credits
+     * @param speler
+     */
     public void slaKredietOp(Speler speler) {
         sm.slaKredietOp(speler);
     }
 
+    /**
+     * returns all cards the player hasn't bought
+     * @param naam
+     * @return
+     */
     public List<Kaart> geefNogNietGekochteKaarten(String naam) {
         return km.geefNogNietGekochteKaarten(naam);
     }
 
+    /**
+     * adds card to owned cards and changes the credits of a player
+     * @param naam
+     * @param inputKaart
+     */
     public void koopKaart(String naam, Kaart inputKaart) {
         Speler speler = geefSpeler(naam);
         int prijs = inputKaart.getPrijs();
@@ -90,10 +142,19 @@ public class SpelerRepository {
 
     }
 
+    /**
+     * returns al bought cards
+     * @param naam
+     * @return
+     */
     public List<Kaart> geefAangekochteKaarten(String naam) {
         return km.geefAangekochteKaarten(naam);
     }
     
+    /**
+     * returns the prices of the cards
+     * @return
+     */
     public List<Integer> geefPrijzenKaarten() {
         return km.geefPrijzenKaarten();
     }
@@ -103,6 +164,12 @@ public class SpelerRepository {
         sm.veranderSpeler(geselecteerdeSpeler, nieuweNaam, nieuweGebDat, nieuwKrediet);
     }
     
+    /**
+     * method to to validate the admin login
+     * @param user
+     * @param password
+     * @return
+     */
     public boolean valideerAdmin(String user, String password) {
         return sm.valideerAdmin(user, password);
     }

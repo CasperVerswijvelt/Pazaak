@@ -78,5 +78,5 @@ public class TaalSelectieSBController extends VBox {
         r = ResourceBundle.getBundle("language/Language", l);
         naarMenu(r);
     }
-
-}
+    
+  }

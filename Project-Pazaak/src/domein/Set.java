@@ -3,6 +3,10 @@ package domein;
 import exceptions.*;
 import java.util.*;
 
+/**
+ * Class with al methods used in a set
+ * @author goran
+ */
 public class Set {
 
     //Attributen
@@ -12,6 +16,10 @@ public class Set {
     private boolean speler1AanBeurt;
     private final boolean bevroren[];
 
+    /**
+     * Constructor that lets you create a set
+     * @param eersteSpelerBegint
+     */
     public Set(boolean eersteSpelerBegint) {
         bevroren = new boolean[2];
         speler1AanBeurt = eersteSpelerBegint;
@@ -36,10 +44,17 @@ public class Set {
         Collections.shuffle(setStapel);
     }
 
+    /**
+     * method that returns an int that indicates which players turn it is
+     * @return
+     */
     public int geefSpelerAanBeurtIndex() {
         return speler1AanBeurt ? 0 : 1;
     }
 
+    /**
+     * method that draws a card
+     */
     public void deelKaartUit() {
         Kaart kaart = setStapel.get(0);
         setStapel.remove(0);
@@ -56,6 +71,10 @@ public class Set {
         }
     }
 
+    /**
+     * method that return the gameboard
+     * @return
+     */
     public List<Kaart> geefSpelBord() {
         if (speler1AanBeurt) {
             return spelbord1;
@@ -64,6 +83,10 @@ public class Set {
         }
     }
 
+    /**
+     * method that return the score
+     * @return
+     */
     public int geefScore() {
         if (speler1AanBeurt) {
             return berekenScore(spelbord1);
@@ -72,6 +95,10 @@ public class Set {
         }
     }
 
+    /**
+     * method that checks if a gameboard is frozen or not
+     * @return
+     */
     public boolean isBevroren() {
         if (bevroren[geefSpelerAanBeurtIndex()]) {
             return true;
@@ -79,6 +106,10 @@ public class Set {
         return false;
     }
 
+    /**
+     * method that return the possible actions
+     * @return
+     */
     public List<String> geefMogelijkeActies() {
         List res = new ArrayList<>();
         if (!bevroren[geefSpelerAanBeurtIndex()] && !setIsKlaar()) {
@@ -89,6 +120,9 @@ public class Set {
         return res;
     }
 
+    /**
+     * method that ends the turn
+     */
     public void eindigBeurt() {
         if (speler1AanBeurt) {
             if (!bevroren[1]) {
@@ -101,10 +135,19 @@ public class Set {
         }
     }
 
+    /**
+     * method to freeze the gameboard for a player
+     */
     public void bevriesBord() {
         bevroren[geefSpelerAanBeurtIndex()] = true;
     }
 
+    /**
+     * method to use a game card
+     * @param kaart
+     * @param Pwaarde
+     * @param Ptype
+     */
     public void gebruikWedstrijdKaart(Kaart kaart, int Pwaarde, char Ptype) {
         List<Kaart> huidigSpelbord;
         if (speler1AanBeurt) {
@@ -161,11 +204,19 @@ public class Set {
         huidigSpelbord.add(kaart);
     }
 
+    /**
+     * method that checks if a set has ended
+     * @return
+     */
     public boolean setIsKlaar() {
         return berekenScore(spelbord1) > 20 || berekenScore(spelbord2) > 20 || spelbord1.size() > 8 || spelbord2.size() > 8 || (bevroren[0] && bevroren[1]);
 
     }
 
+    /**
+     * method that returns the the index of the player who has won
+     * @return
+     */
     public int geefSetUitslagIndex() {
         if (setIsKlaar()) { // Set ten einde
 
