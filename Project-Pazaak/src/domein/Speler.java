@@ -3,6 +3,10 @@ package domein;
 import exceptions.*;
 import java.util.*;
 
+/**
+ * Class with all methods used on Player objects
+ * @author goran
+ */
 public class Speler {
 
     //Attributen
@@ -12,6 +16,14 @@ public class Speler {
     private final int geboorteJaar;
 
     //Constructor
+
+    /**
+     * Constructor to make a Player object
+     * @param naam
+     * @param geboorteJaar
+     * @param krediet
+     * @param startStapel
+     */
     public Speler(String naam, int geboorteJaar, int krediet, List<Kaart> startStapel) {
 
         controleerNaam(naam);
@@ -74,26 +86,51 @@ public class Speler {
     }
 
     //Getters & Settesr
+
+    /**
+     * method that return the cards a player has
+     * @return
+     */
     public List<Kaart> geefStartStapel() {
         return (List) startStapel;
     }
 
+    /**
+     * method to get the name of a player
+     * @return
+     */
     public String getNaam() {
         return naam;
     }
 
+    /**
+     * method to get the credits of a player
+     * @return
+     */
     public int getKrediet() {
         return krediet;
     }
 
+    /**
+     * method to set a players credits
+     * @param krediet
+     */
     public void setKrediet(int krediet) {
         this.krediet = krediet;
     }
 
+    /**
+     * method to get the year of birth of a player
+     * @return
+     */
     public int getGeboorteJaar() {
         return geboorteJaar;
     }
 
+    /**
+     * method to set the cards a player has
+     * @param startStapel
+     */
     public void setStartStapel(List<Kaart> startStapel) {
         this.startStapel = startStapel;
     }

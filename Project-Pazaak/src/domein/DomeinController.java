@@ -458,6 +458,71 @@ public class DomeinController {
         return kaartenAlsString(spelerRepo.geefAangekochteKaarten(naam));
     }
 
+    /**
+     *
+     * @param geselecteerdeSpeler
+     * @param nieuweNaam
+     * @param nieuweGebDat
+     * @param nieuwKrediet
+     */
+    public void veranderSpeler(String geselecteerdeSpeler, String nieuweNaam, int nieuweGebDat, int nieuwKrediet) {
+        spelerRepo.veranderSpeler(geselecteerdeSpeler, nieuweNaam, nieuweGebDat, nieuwKrediet);
+    }
+
+    /**
+     *
+     * @param user
+     * @param password
+     * @return
+     */
+    public boolean valideerAdmin(String user, String password) {
+        return spelerRepo.valideerAdmin(user, password);
+    }
+
+    /**
+     * method that lets you delete a player
+     * @param naam
+     */
+    public void verwijderSpeler(String naam) {
+        spelerRepo.verwijderSpeler(naam);
+    }
+
+    /**
+     * method that lets you delete a game
+     * @param wedstrijd
+     */
+    public void verwijderWedstrijd(String wedstrijd) {
+        wedstrijdRepo.verwijderWedstrijd(wedstrijd);
+    }
+
+    /**
+     * method to make a new admin
+     * @param bestaandeAdminNaam
+     * @param bestaandeAdminPass
+     * @param nieuweAdminNaam
+     * @param nieuweAdminPass
+     */
+    public void maakNieuweAdmin(String bestaandeAdminNaam, String bestaandeAdminPass, String nieuweAdminNaam, String nieuweAdminPass) {
+        spelerRepo.maakNieuweAdmin(bestaandeAdminNaam, bestaandeAdminPass, nieuweAdminNaam, nieuweAdminPass);
+    }
+
+    /**
+     * method to gift a card to a certain player
+     * @param naam
+     * @param kaart
+     */
+    public void voegStartstapelkaartToe(String naam, String[] kaart) {
+        spelerRepo.voegStartstapelkaartToe(naam, stringAlsKaart(kaart));
+    }
+
+    /**
+     * method to delete a person 's card
+     * @param naam
+     * @param kaart
+     */
+    public void neemStartstapelkaartWeg(String naam, String[] kaart) {
+        spelerRepo.neemStartstapelkaartWeg(naam, stringAlsKaart(kaart));
+    }
     //Utilities
     private Kaart stringAlsKaart(String[] kaart) {
         return new Kaart(Integer.parseInt(kaart[1]), kaart[0].charAt(0), Integer.parseInt(kaart[2]));
@@ -473,33 +538,4 @@ public class DomeinController {
         }
         return res;
     }
-
-    public void veranderSpeler(String geselecteerdeSpeler, String nieuweNaam, int nieuweGebDat, int nieuwKrediet) {
-        spelerRepo.veranderSpeler(geselecteerdeSpeler, nieuweNaam, nieuweGebDat, nieuwKrediet);
-    }
-
-    public boolean valideerAdmin(String user, String password) {
-        return spelerRepo.valideerAdmin(user, password);
-    }
-
-    public void verwijderSpeler(String naam) {
-        spelerRepo.verwijderSpeler(naam);
-    }
-
-    public void verwijderWedstrijd(String wedstrijd) {
-        wedstrijdRepo.verwijderWedstrijd(wedstrijd);
-    }
-
-    public void maakNieuweAdmin(String bestaandeAdminNaam, String bestaandeAdminPass, String nieuweAdminNaam, String nieuweAdminPass) {
-        spelerRepo.maakNieuweAdmin(bestaandeAdminNaam, bestaandeAdminPass, nieuweAdminNaam, nieuweAdminPass);
-    }
-
-    public void voegStartstapelkaartToe(String naam, String[] kaart) {
-        spelerRepo.voegStartstapelkaartToe(naam, stringAlsKaart(kaart));
-    }
-
-    public void neemStartstapelkaartWeg(String naam, String[] kaart) {
-        spelerRepo.neemStartstapelkaartWeg(naam, stringAlsKaart(kaart));
-    }
-
 }
