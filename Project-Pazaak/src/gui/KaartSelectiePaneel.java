@@ -151,7 +151,7 @@ public class KaartSelectiePaneel extends VBox {
                 selecteerKaart(button, speler);
             }
         } else {
-            plaatsKaartTerug(button);
+            plaatsKaartTerug(button , speler);
         }
     }
 
@@ -175,8 +175,15 @@ public class KaartSelectiePaneel extends VBox {
         return kaarten.getChildren().contains(button);
     }
 
-    private void plaatsKaartTerug(Button button) {
-
+    private void plaatsKaartTerug(Button button, String speler) {
+        BackgroundImage backgroundImage;
+            if (speler.equals(parent.speler1)) {
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartv2blauw.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            } else {
+                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartv2rood.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            }
+            Background background = new Background(backgroundImage);
+            button.setBackground(background);
         int index = kaartButtons.indexOf(button);
         button.setMinSize(50, 80);
         kaarten.add(button, index % 11, index / 11);

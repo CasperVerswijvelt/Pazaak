@@ -72,11 +72,8 @@
     -fx-background-image:url("rsz_kaartachterkant.jpg");
 }
 .kaarten{
-    fx-background-image:url("kaartv2.jpg");
+    -fx-background-image:url("kaartv2.jpg");
 }
 .wedstrijdkaartenachterkant{
     -fx-background-image:url("wedstrijdkaartenachterkant.jpg");
-}
-.kaartenachterkantReset{
-    -fx-background-image:none;
 }
