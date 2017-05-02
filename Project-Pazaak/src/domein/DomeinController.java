@@ -12,7 +12,7 @@ import persistentie.SpelerMapper;
 public class DomeinController {
 
     //Attributen
-    private final SpelerRepository spelerRepo;
+    private final SpelerEnKaartRepository spelerRepo;
     private final WedstrijdRepository wedstrijdRepo;
     private Wedstrijd wedstrijd;
     private final List<Speler> geselecteerdeSpelers;
@@ -24,7 +24,7 @@ public class DomeinController {
      *
      */
     public DomeinController() {
-        this.spelerRepo = new SpelerRepository();
+        this.spelerRepo = new SpelerEnKaartRepository();
         this.wedstrijdRepo = new WedstrijdRepository();
         this.geselecteerdeSpelers = new ArrayList<>();
         this.geselecteerdeKaarten = new ArrayList<>();

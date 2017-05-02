@@ -9,7 +9,7 @@ import persistentie.SpelerMapper;
  * Class that connects to the PlayerMapper
  * @author goran
  */
-public class SpelerRepository {
+public class SpelerEnKaartRepository {
 
     //Attributen
     private SpelerMapper sm;
@@ -20,7 +20,7 @@ public class SpelerRepository {
     /**
      * creates a repository object
      */
-    public SpelerRepository() {
+    public SpelerEnKaartRepository() {
         sm = new SpelerMapper();
         km = new KaartMapper();
     }
