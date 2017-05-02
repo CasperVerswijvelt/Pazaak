@@ -69,11 +69,8 @@
     -fx-font-weight: bolder;
 }
 .kaartenachterkant{
-    -fx-background-image:url("rsz_kaartachterkant.jpg");
-}
-.kaarten{
-    -fx-background-image:url("kaartv2.jpg");
+    -fx-background-image:url("kaartAchterkant-klein.png");
 }
 .wedstrijdkaartenachterkant{
-    -fx-background-image:url("wedstrijdkaartenachterkant.jpg");
+    -fx-background-image:url("kaartAchterkant-groot.png");
 }

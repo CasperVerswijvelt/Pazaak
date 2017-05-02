@@ -214,6 +214,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
                     selecteerWedstrijdStapel(speler1);
                     btnConfirmSpeler1.setDisable(true);
                     ksp1.setDisable(true);
+                    ksp1.disable();
                     checkBeideBevestigd();
                     tabbladPaneel.getSelectionModel().select(1);
                     lblError.setText(null);
@@ -232,6 +233,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
                     selecteerWedstrijdStapel(speler2);
                     btnConfirmSpeler2.setDisable(true);
                     ksp2.setDisable(true);
+                    ksp2.disable();
                     checkBeideBevestigd();
                     tabbladPaneel.getSelectionModel().select(0);
                     lblError.setText(null);
