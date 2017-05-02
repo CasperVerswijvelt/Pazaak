@@ -3,6 +3,10 @@ package domein;
 import exceptions.*;
 import java.util.*;
 
+/**
+ *
+ * @author Casper
+ */
 public class Wedstrijd {
 
     private List<Speler> spelers;
@@ -12,7 +16,7 @@ public class Wedstrijd {
     private boolean eersteSpelerBegint;
 
     /**
-     *
+     *Initializes a new game with give players
      * @param speler1
      * @param speler2
      */
@@ -55,6 +59,17 @@ public class Wedstrijd {
     }
 
     //Wedstrijd uit DB
+
+    /**
+     *Initializes a game that was aved in the database, with given information
+     * @param speler1
+     * @param speler2
+     * @param wedstrijdStapel1
+     * @param wedstrijdStapel2
+     * @param beginnendeSpeler
+     * @param score1
+     * @param score2
+     */
     public Wedstrijd(Speler speler1, Speler speler2, List<Kaart> wedstrijdStapel1, List<Kaart> wedstrijdStapel2, String beginnendeSpeler, int score1, int score2) {
         this.aantalGewonnen = new int[2];
         this.wedstrijdStapels = new ArrayList<>();
@@ -78,6 +93,11 @@ public class Wedstrijd {
     }
 
     //Methodes
+
+    /**
+     *Returns the players that have not yet created a game deck
+     * @return
+     */
     public List<Speler> geefSpelersZonderWedstrijdStapel() {
         List list = new ArrayList<Speler>();
 
@@ -89,6 +109,11 @@ public class Wedstrijd {
         return list;
     }
 
+    /**
+     *Sets the given list of cards for the given player in the game
+     * @param kaarten
+     * @param speler
+     */
     public void maakWedstrijdstapel(List<Kaart> kaarten, Speler speler) {
         while (kaarten.size() > 4) {
             kaarten.remove(kaarten.get((int) (Math.random() * kaarten.size())));
@@ -97,27 +122,49 @@ public class Wedstrijd {
         this.wedstrijdStapels.set(spelers.indexOf(speler), kaartenKopie);
     }
 
+    /**
+     *Starts a new set for the game
+     */
     public void maakNieuweSet() {
         this.huidigeSet = new Set(eersteSpelerBegint);
         veranderBeginSpeler();
     }
 
+    /**
+     *Returns the player at turn
+     * @return
+     */
     public String geefSpelerAanBeurt() {
         return spelers.get(huidigeSet.geefSpelerAanBeurtIndex()).getNaam();
     }
 
+    /**
+     *Gives out a card from the set deck to the player at turn
+     */
     public void deelKaartUit() {
         huidigeSet.deelKaartUit();
     }
 
+    /**
+     *Returns the game board of the player currently at turn
+     * @return
+     */
     public List<Kaart> geefSpelBord() {
         return huidigeSet.geefSpelBord();
     }
 
+    /**
+     * Returns the score of the player currently at turn
+     * @return
+     */
     public int geefScore() {
         return huidigeSet.geefScore();
     }
 
+    /**
+     *Gives the playing possibilities for the player at turn
+     * @return
+     */
     public List<String> geefMogelijkeActies() {
         List res = huidigeSet.geefMogelijkeActies();
         if (!wedstrijdStapels.get(huidigeSet.geefSpelerAanBeurtIndex()).isEmpty() && !res.isEmpty()) {
@@ -126,14 +173,25 @@ public class Wedstrijd {
         return res;
     }
 
+    /**
+     *End turn for player currently at turn
+     */
     public void eindigBeurt() {
         huidigeSet.eindigBeurt();
     }
 
+    /**
+     *Freezes the gameboard of the player at turn
+     */
     public void bevriesBord() {
         huidigeSet.bevriesBord();
     }
 
+    /**
+     *Returns the player object of the given playername, if it is participating in the game
+     * @param naam
+     * @return
+     */
     public Speler geefSpeler(String naam) {
         for (Speler element : spelers) {
             if (element.getNaam().toLowerCase().equals(naam.toLowerCase())) {
@@ -143,14 +201,29 @@ public class Wedstrijd {
         return null;
     }
 
+    /**
+     *Returns the game deck of the player at turn in the game
+     * @return
+     */
     public List<Kaart> geefWedstrijdStapel() {
         return wedstrijdStapels.get(huidigeSet.geefSpelerAanBeurtIndex());
     }
 
+    /**
+     *Returns the game deck for the player at given index
+     * @param index
+     * @return
+     */
     public List<Kaart> geefWedstrijdStapel(int index) {
         return wedstrijdStapels.get(index);
     }
 
+    /**
+     *uses given gamecard from side deck, if it is on your sidedeck
+     * @param kaart
+     * @param gewensteWaarde
+     * @param gewenstType
+     */
     public void gebruikWedstrijdKaart(Kaart kaart, int gewensteWaarde, char gewenstType) {
         List<Kaart> wedstrijdStapel = geefWedstrijdStapel();
 
@@ -166,10 +239,18 @@ public class Wedstrijd {
 
     }
 
+    /**
+     *returns if the set is over
+     * @return
+     */
     public boolean setIsKlaar() {
         return huidigeSet.setIsKlaar();
     }
 
+    /**
+     *Returns the outcome of the set, a playername or TIE, or null if set is not done
+     * @return
+     */
     public String geefSetUitslag() {
         int uitslag = huidigeSet.geefSetUitslagIndex();
 
@@ -184,6 +265,10 @@ public class Wedstrijd {
         }
     }
 
+    /**
+     *Returns the winner of the game
+     * @return
+     */
     public Speler geefWinnaar() {
         if (isKlaar()) {
             int indexGewonnen = -1;
@@ -197,6 +282,10 @@ public class Wedstrijd {
         throw new NoWinnerException();
     }
 
+    /**
+     *Returns if the game is over
+     * @return
+     */
     public boolean isKlaar() {
         for (int i = 0; i < 2; i++) {
             if (aantalGewonnen[i] > 2) {
@@ -211,14 +300,26 @@ public class Wedstrijd {
     }
 
     //Getters & Setters
+
+    /**
+     *Returns players participating in the game
+     * @return
+     */
     public List<Speler> geefSpelers() {
         return spelers;
     }
 
+    /**
+     *Returns the amount of wins for each player in the game
+     * @return
+     */
     public int[] geefTussenstand() {
         return aantalGewonnen;
     }
 
+    /**
+     *Register a win for the winning setplayer, if there is a winner
+     */
     public void registreerAantalWins() {
         int uitslag = huidigeSet.geefSetUitslagIndex();
         if (uitslag == 0 || uitslag == 1) {
