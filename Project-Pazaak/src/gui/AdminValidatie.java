@@ -6,10 +6,12 @@
 package gui;
 
 import domein.DomeinController;
+import exceptions.DatabaseException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -68,7 +70,7 @@ public class AdminValidatie extends VBox {
 
         });
 
-        this.getChildren().addAll(lblTitel,txfUser, txfPassword, btnSubmit, lblError);
+        this.getChildren().addAll(lblTitel, txfUser, txfPassword, btnSubmit, lblError);
         this.setSpacing(20);
         this.setMaxSize(300, 300);
         txfUser.requestFocus();
@@ -83,8 +85,10 @@ public class AdminValidatie extends VBox {
             } else {
                 lblError.setText("Invalid credentials");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (DatabaseException e) {
+            Alert DBAlert = new Alert(Alert.AlertType.ERROR);
+            DBAlert.setTitle("Pazaak");
+            DBAlert.setContentText(r.getString("DATABASEERROR"));
         }
     }
 

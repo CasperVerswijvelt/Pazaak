@@ -50,8 +50,8 @@
       <PasswordField fx:id="txfNewAdminPassword" prefWidth="242.0" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="12" />
       <Button fx:id="btnCreateNewAdmin" mnemonicParsing="false" onAction="#btnCreateNewAdminClicked" prefHeight="25.0" prefWidth="193.0" text="Create new admin" GridPane.columnSpan="2147483647" GridPane.rowIndex="13" />
       <Label fx:id="lblError" textFill="RED" GridPane.columnSpan="2147483647" GridPane.rowIndex="14" />
-      <Label text="Remove card" GridPane.rowIndex="4" />
-      <Label text="Give card" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label fx:id="lblRemoveCard" text="Remove card" GridPane.rowIndex="4" />
+      <Label fx:id="lblGiveCard" text="Give card" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <ComboBox fx:id="cbRemoveCard" prefWidth="242.0" promptText="Select a card" GridPane.rowIndex="5" />
       <ComboBox fx:id="cbGiveCard" prefWidth="242.0" promptText="Select a card" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <Button fx:id="btnRemoveCard" mnemonicParsing="false" onAction="#btnRemoveCardClicked" prefWidth="242.0" text="Remove" GridPane.rowIndex="6" />

@@ -5,17 +5,13 @@
  */
 package gui;
 
-import gui.*;
 import domein.DomeinController;
 import exceptions.DatabaseException;
 import exceptions.GameAlreadyExistsException;
-import exceptions.GameSaveDatabaseException;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar;
@@ -257,7 +253,7 @@ public class SetSpeelScherm extends GridPane {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Pazaak");
-            alert.setContentText(winnaar + r.getString("WINS") + "\n" + r.getString("NEWCREDIT") + " " + dc.geefSpelerInfo(winnaar)[1]);
+            alert.setContentText(winnaar + " "+r.getString("WINS") + "\n" + r.getString("NEWCREDIT") + " " + dc.geefSpelerInfo(winnaar)[1]);
             alert.showAndWait();
 
             parent.naarMenu();
