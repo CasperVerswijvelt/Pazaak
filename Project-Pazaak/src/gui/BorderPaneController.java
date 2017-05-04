@@ -23,7 +23,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -37,6 +36,7 @@ public class BorderPaneController extends BorderPane {
     private ResourceBundle r;
     private DomeinController dc;
     private Button btnBack;
+    private Thread muziekThread;
 
     private SelecteerSpelersEnWedstrijdstapelController terugKeerSchermWinkel;
     private List<KeyCode> ingedrukteToetsen;
@@ -103,24 +103,14 @@ public class BorderPaneController extends BorderPane {
             }
 
         });
+        
+        
 
-    }
-
-    public ResourceBundle getR() {
-        return r;
     }
 
     public void setR(ResourceBundle r) {
         this.r = r;
         btnBack.setText(r.getString("BACK"));
-    }
-
-    public void setDc(DomeinController dc) {
-        this.dc = dc;
-    }
-
-    public void setBtnBack(Button btnBack) {
-        this.btnBack = btnBack;
     }
 
     public void setTerugKeerSchermWinkel(SelecteerSpelersEnWedstrijdstapelController terugKeerSchermWinkel) {
