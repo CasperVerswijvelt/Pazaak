@@ -20,59 +20,66 @@ public class UC7 {
 
     private DomeinController dc;
     private ResourceBundle r;
-    
+
     public UC7(DomeinController dc, ResourceBundle r) {
         this.dc = dc;
-        this.r =r;
+        this.r = r;
     }
 
+    public void start() {
+        start(null);
+    }
 
-    void start() {
+    public void start(String naam) {
         Scanner in = new Scanner(System.in);
-        List<String> spelers;
-        try{
-            spelers = dc.geefAlleSpelerNamen();
-        }catch(DatabaseException e) {
-            System.out.println(r.getString("DATABASEERROR"));
-            return;
+
+        if (naam == null) {
+            List<String> spelers;
+            try {
+                spelers = dc.geefAlleSpelerNamen();
+            } catch (DatabaseException e) {
+                System.out.println(r.getString("DATABASEERROR"));
+                return;
+            }
+            System.out.println(r.getString("CHOOSEWHICHPLAYERTOBUYCARDS"));
+            naam = promptSpelerUitLijst(r, spelers, r.getString("CHOICE") + ": ");
         }
-        System.out.println(r.getString("CHOOSEWHICHPLAYERTOBUYCARDS"));
-        String naam = promptSpelerUitLijst(r, spelers,r.getString("CHOICE")+": ");
+
         printLijn();
-        System.out.println("| " + r.getString("SHOP") + " | "+r.getString("CREDITS")+": " + dc.geefSpelerInfo(naam)[1] + " | " + r.getString("BACKTOMENU"));
+        System.out.println("| " + r.getString("SHOP") + " | " + r.getString("CREDITS") + ": " + dc.geefSpelerInfo(naam)[1] + " | " + r.getString("BACKTOMENU"));
         printLijn();
         String[][] nietGekochteKaarten = dc.geefNogNietGekochteKaarten(naam);
         System.out.println(formatteerStapelAlsLijst(nietGekochteKaarten, true));
-        
+
         boolean valideKeuze = false;
         int keuze = 0;
-        do{
-            try{
-                System.out.print(r.getString("CHOICE")+": ");
+        do {
+            try {
+                System.out.print(r.getString("CHOICE") + ": ");
                 keuze = Integer.parseInt(in.nextLine());
-                if(keuze>nietGekochteKaarten.length || keuze <0){
+                if (keuze > nietGekochteKaarten.length || keuze < 0) {
                     throw new InvalidNumberException();
                 }
-                if(keuze == 0)
+                if (keuze == 0) {
                     break;
-                String[] kaartKeuze = nietGekochteKaarten[keuze-1];
+                }
+                String[] kaartKeuze = nietGekochteKaarten[keuze - 1];
                 dc.koopKaart(naam, kaartKeuze);
                 System.out.println(formatteerKaart(kaartKeuze, false) + " " + r.getString("BOUGHT") + kaartKeuze[2] + " " + r.getString("FORCREDIT"));
                 valideKeuze = true;
-            }catch(InsufficientBalanceException e) {
+            } catch (InsufficientBalanceException e) {
                 System.out.println(r.getString("INSUFFICIENTBALANCE"));
-            }catch(CardDoesntExistException e) {
+            } catch (CardDoesntExistException e) {
                 System.out.println(r.getString("DOESNOTEXIST"));
-            }catch(PlayerDoesntExistException e) {
+            } catch (PlayerDoesntExistException e) {
                 System.out.println(r.getString("INVALIDPLAYER"));
-            }catch(DatabaseException e){
+            } catch (DatabaseException e) {
                 System.out.println(r.getString("DATABASEERROR"));
-            }catch(Exception e) {
+            } catch (Exception e) {
                 System.out.println(r.getString("INVALIDCHOICE"));
             }
-            
-            
-        }while(!valideKeuze);
+
+        } while (!valideKeuze);
     }
-    
+
 }

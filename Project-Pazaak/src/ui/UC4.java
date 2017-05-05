@@ -35,8 +35,9 @@ public class UC4 {
 
             System.out.println(r.getString("CHOOSEPLAYERCHOOSECARDS"));
             String speler = promptSpelerUitLijst(r, spelers, r.getString("CHOICE") + ": ");
-
+            printLijn();
             System.out.printf(r.getString("SELECTCARDSFORPLAYER") + "%n", speler);
+            printLijn();
             dc.selecterSpelerWedstrijdStapel(speler);
             List<String[]> startStapel = new ArrayList<>(Arrays.asList(dc.geefStartStapel()));
 
@@ -47,7 +48,7 @@ public class UC4 {
                 String[][] array = new String[startStapel.size()][2];
                 startStapel.toArray(array);
                 System.out.println(formatteerStapelAlsLijst(array, false));
-                System.out.println(" " + (startStapel.size()+1) + ". "+r.getString("BUYCARDOPTION"));
+                System.out.println(" " + (startStapel.size() + 1) + ". " + r.getString("BUYCARDOPTION"));
 
                 boolean valideKeuze;
                 int keuze = 0;
@@ -71,7 +72,7 @@ public class UC4 {
 
                 //Gekozen kaart wordt geselecteerd en getoond
                 if (keuze == startStapel.size() + 1) {
-                    new UC7(dc, r).start();
+                    new UC7(dc, r).start(speler);
                     printLijn();
                     System.out.printf(r.getString("SELECTCARDSFORPLAYER") + "%n", speler);
                     printLijn();
@@ -82,10 +83,6 @@ public class UC4 {
                     //Gekozen kaart wordt uit mogelijke keuzes gehaald
                     startStapel.remove(keuze - 1);
                 }
-                
-
-                
-                
 
             }
 
