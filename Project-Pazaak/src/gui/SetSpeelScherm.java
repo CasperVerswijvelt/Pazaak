@@ -132,7 +132,7 @@ public class SetSpeelScherm extends GridPane {
                         r.getString("OPSLAANOFSPEEL"),
                         opslaan,
                         doorgaan);
-                alert2.setTitle(r.getString("TITELALERT2"));
+                alert2.setTitle("Pazaak");
 
                 Optional<ButtonType> result = alert2.showAndWait();
                 if (result.get() == opslaan) {
@@ -159,7 +159,7 @@ public class SetSpeelScherm extends GridPane {
                             }
                             
                             Alert alertVerderSpelen = new Alert(Alert.AlertType.CONFIRMATION);
-                            alertVerderSpelen.setTitle(r.getString("CONTINUE"));
+                            alertVerderSpelen.setTitle("Pazaak");
                             alertVerderSpelen.setHeaderText(null);
                             alertVerderSpelen.setContentText(r.getString("DOORGAAN"));
                             

@@ -21,11 +21,11 @@
       </HBox>
    </top>
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER_LEFT" onMouseEntered="#volumeHoverBegin" onMouseExited="#volumeHoverEind" prefHeight="60.0" prefWidth="203.0" spacing="15.0">
                <children>
-                  <Button fx:id="btnToggleMuziek" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" />
+                  <Button fx:id="btnToggleMuziek" alignment="BOTTOM_LEFT" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" />
                   <Slider fx:id="volumeSlider" blockIncrement="1.0" prefWidth="340.0" value="100.0" visible="false" />
                </children>
             </HBox>
@@ -36,7 +36,7 @@
             </HBox>
          </children>
          <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </padding>
       </HBox>
    </bottom>
