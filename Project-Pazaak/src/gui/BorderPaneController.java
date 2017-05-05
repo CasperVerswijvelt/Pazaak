@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -36,6 +37,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 
 /**
  * FXML Controller class
@@ -79,7 +81,7 @@ public class BorderPaneController extends BorderPane {
         btnBack.setId("btnBack");
 
         btnToggleMuziek = new Button();
-        btnToggleMuziek.setMinSize(50, 50);
+        btnToggleMuziek.setMinSize(40, 40);
 
         Node space = new HBox();
         HBox.setHgrow(space, Priority.ALWAYS);
@@ -142,8 +144,9 @@ public class BorderPaneController extends BorderPane {
 
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
-        toggleMuziek();
+        
+        btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-mute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        
 
         naarTaalSelectie();
 
@@ -259,10 +262,13 @@ public class BorderPaneController extends BorderPane {
     }
 
     private void toggleMuziek() {
-        boolean muted = !mediaPlayer.isMute();
-        mediaPlayer.setMute(muted);
+        boolean playing = mediaPlayer.getStatus().equals(Status.PLAYING);
+        if(playing)
+            mediaPlayer.pause();
+        else
+            mediaPlayer.play();
 
-        if (muted) {
+        if (playing) {
             btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-mute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         } else {
             btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-unmute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
