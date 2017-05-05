@@ -13,28 +13,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
@@ -48,16 +48,18 @@ public class BorderPaneController extends BorderPane {
 
     private ResourceBundle r;
     private DomeinController dc;
-    private Button btnBack;
-    private Button btnToggleMuziek;
-
     private SelecteerSpelersEnWedstrijdstapelController terugKeerSchermWinkel;
     private List<KeyCode> ingedrukteToetsen;
-
     private MediaPlayer mediaPlayer;
 
     @FXML
+    private Button btnBack;
+    @FXML
+    private Button btnToggleMuziek;
+    @FXML
     private ImageView img;
+    @FXML
+    private Slider volumeSlider;
 
     /**
      * Initializes the controller class.
@@ -74,24 +76,10 @@ public class BorderPaneController extends BorderPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        ingedrukteToetsen = new ArrayList<KeyCode>();
-
-        btnBack = new Button();
-        btnBack.setMinSize(100, 40);
+        
         btnBack.setId("btnBack");
-
-        btnToggleMuziek = new Button();
-        btnToggleMuziek.setMinSize(40, 40);
-
-        Node space = new HBox();
-        HBox.setHgrow(space, Priority.ALWAYS);
-
-        HBox bottom = new HBox(btnToggleMuziek, space, btnBack);
-
-        setBottom(bottom);
-        bottom.setAlignment(Pos.CENTER);
-        bottom.setPadding(new Insets(20));
-
+        
+        ingedrukteToetsen = new ArrayList<KeyCode>();
         setOnKeyPressed((event) -> {
             if (getCenter() instanceof MooieMenuController) {
                 ingedrukteToetsen.add(event.getCode());
@@ -135,23 +123,25 @@ public class BorderPaneController extends BorderPane {
             }
 
         });
+        volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            mediaPlayer.setVolume((double) new_val / 100);
+        });
 
+        //Muziek
         Media sound = null;
         try {
             sound = new Media(getClass().getResource("aerobic.wav").toURI().toString());
         } catch (URISyntaxException ex) {
         }
-
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        
         btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-mute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        
 
+        
+        //Naar beginscherm applicatie
         naarTaalSelectie();
 
     }
-
 
     public void setR(ResourceBundle r) {
         this.r = r;
@@ -263,16 +253,27 @@ public class BorderPaneController extends BorderPane {
 
     private void toggleMuziek() {
         boolean playing = mediaPlayer.getStatus().equals(Status.PLAYING);
-        if(playing)
+        if (playing) {
             mediaPlayer.pause();
-        else
+        } else {
             mediaPlayer.play();
+        }
 
         if (playing) {
             btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-mute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         } else {
             btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-unmute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         }
+    }
+
+    @FXML
+    private void volumeHoverEind(MouseEvent event) {
+        volumeSlider.setVisible(false);
+    }
+
+    @FXML
+    private void volumeHoverBegin(MouseEvent event) {
+        volumeSlider.setVisible(true);
     }
 
 }
