@@ -115,7 +115,7 @@ public class SetSpeelScherm extends GridPane {
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
             String uitslag = dc.geefSetUitslag();
-            String alertUitslag = uitslag.equals("TIE") ? r.getString("TIE") : uitslag + r.getString("WINS");
+            String alertUitslag = uitslag.equals("TIE") ? r.getString("TIE") : uitslag +" "+ r.getString("WINS");
             
 
             alert.setTitle("Pazaak");
@@ -253,7 +253,7 @@ public class SetSpeelScherm extends GridPane {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Pazaak");
-            alert.setContentText(winnaar + " "+r.getString("WINS") + "\n" + r.getString("NEWCREDIT") + " " + dc.geefSpelerInfo(winnaar)[1]);
+            alert.setContentText(winnaar + " " +r.getString("WINS") + "\n" + r.getString("NEWCREDIT") + " " + dc.geefSpelerInfo(winnaar)[1]);
             alert.showAndWait();
 
             parent.naarMenu();

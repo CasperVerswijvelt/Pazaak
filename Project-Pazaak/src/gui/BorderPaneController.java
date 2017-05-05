@@ -8,6 +8,7 @@ package gui;
 import domein.DomeinController;
 import exceptions.DatabaseException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,13 +19,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 /**
  * FXML Controller class
@@ -36,10 +47,12 @@ public class BorderPaneController extends BorderPane {
     private ResourceBundle r;
     private DomeinController dc;
     private Button btnBack;
-    private Thread muziekThread;
+    private Button btnToggleMuziek;
 
     private SelecteerSpelersEnWedstrijdstapelController terugKeerSchermWinkel;
     private List<KeyCode> ingedrukteToetsen;
+
+    private MediaPlayer mediaPlayer;
 
     @FXML
     private ImageView img;
@@ -60,13 +73,36 @@ public class BorderPaneController extends BorderPane {
             throw new RuntimeException(ex);
         }
         ingedrukteToetsen = new ArrayList<KeyCode>();
+
         btnBack = new Button();
         btnBack.setMinSize(100, 40);
         btnBack.setId("btnBack");
-        HBox btnBackPane = new HBox(btnBack);
-        setBottom(btnBackPane);
-        btnBackPane.setAlignment(Pos.CENTER);
-        btnBackPane.setPadding(new Insets(20));
+
+        btnToggleMuziek = new Button();
+        btnToggleMuziek.setMinSize(50, 50);
+
+        Node space = new HBox();
+        HBox.setHgrow(space, Priority.ALWAYS);
+
+        HBox bottom = new HBox(btnToggleMuziek, space, btnBack);
+
+        setBottom(bottom);
+        bottom.setAlignment(Pos.CENTER);
+        bottom.setPadding(new Insets(20));
+
+        setOnKeyPressed((event) -> {
+            if (getCenter() instanceof MooieMenuController) {
+                ingedrukteToetsen.add(event.getCode());
+                if (ingedrukteToetsen.size() > 3) {
+                    ingedrukteToetsen.remove(0);
+                }
+
+                if (ingedrukteToetsen.size() == 3 && ingedrukteToetsen.get(0) == KeyCode.MULTIPLY && ingedrukteToetsen.get(1) == KeyCode.NUMPAD8 && ingedrukteToetsen.get(2) == KeyCode.P) {
+                    naarAdminValidate();
+                }
+            }
+
+        });
 
         btnBack.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -89,24 +125,30 @@ public class BorderPaneController extends BorderPane {
             }
 
         });
-        naarTaalSelectie();
-        setOnKeyPressed((event) -> {
-            if (getCenter() instanceof MooieMenuController) {
-                ingedrukteToetsen.add(event.getCode());
-                if (ingedrukteToetsen.size() > 3) {
-                    ingedrukteToetsen.remove(0);
-                }
 
-                if (ingedrukteToetsen.size() == 3 && ingedrukteToetsen.get(0) == KeyCode.MULTIPLY && ingedrukteToetsen.get(1) == KeyCode.NUMPAD8 && ingedrukteToetsen.get(2) == KeyCode.P) {
-                    naarAdminValidate();
-                }
+        btnToggleMuziek.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                toggleMuziek();
             }
 
         });
-        
-        
+
+        Media sound = null;
+        try {
+            sound = new Media(getClass().getResource("aerobic.wav").toURI().toString());
+        } catch (URISyntaxException ex) {
+        }
+
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
+        toggleMuziek();
+
+        naarTaalSelectie();
 
     }
+
 
     public void setR(ResourceBundle r) {
         this.r = r;
@@ -214,6 +256,17 @@ public class BorderPaneController extends BorderPane {
         this.setCenter(adminValidatie);
         adminValidatie.setAlignment(Pos.CENTER);
         btnBack.setVisible(true);
+    }
+
+    private void toggleMuziek() {
+        boolean muted = !mediaPlayer.isMute();
+        mediaPlayer.setMute(muted);
+
+        if (muted) {
+            btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-mute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        } else {
+            btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-unmute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        }
     }
 
 }
