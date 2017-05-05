@@ -130,12 +130,12 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         btnNaarShop2.setPadding(new Insets(10));
         
         btnNaarShop1.setOnAction((ActionEvent event) -> {
-            naarKaartenWinkel();
+            naarKaartenWinkel(speler1);
 
         });
 
         btnNaarShop2.setOnAction((ActionEvent event) -> {
-            naarKaartenWinkel();
+            naarKaartenWinkel(speler2);
 
         });
 
@@ -310,9 +310,9 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         }
     }
 
-    private void naarKaartenWinkel() {
+    private void naarKaartenWinkel(String speler) {
         parent.setTerugKeerSchermWinkel(this);
-        parent.naarKaartwinkelScherm();
+        parent.naarKaartwinkelScherm(speler);
     }
     
     public void verversKaarten() {

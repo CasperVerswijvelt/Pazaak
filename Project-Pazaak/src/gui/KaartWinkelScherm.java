@@ -383,4 +383,9 @@ public class KaartWinkelScherm extends GridPane {
         cbSpelerSpelectie.setItems(lijst);
 
     }
+
+    void selecteerSpeler(String speler) {
+        cbSpelerSpelectie.setValue(speler);
+        selecteerSpeler();
+    }
 }

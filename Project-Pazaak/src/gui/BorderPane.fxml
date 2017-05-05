@@ -29,14 +29,14 @@
                   <Slider fx:id="volumeSlider" blockIncrement="1.0" prefWidth="340.0" value="100.0" visible="false" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="53.0" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="267.0" HBox.hgrow="ALWAYS">
                <children>
                   <Button fx:id="btnBack" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" />
                </children>
             </HBox>
          </children>
          <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            <Insets bottom="8.0" left="18.0" right="14.0" />
          </padding>
       </HBox>
    </bottom>

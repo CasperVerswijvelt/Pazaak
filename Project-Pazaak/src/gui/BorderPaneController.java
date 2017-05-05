@@ -76,9 +76,9 @@ public class BorderPaneController extends BorderPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        
+
         btnBack.setId("btnBack");
-        
+
         ingedrukteToetsen = new ArrayList<KeyCode>();
         setOnKeyPressed((event) -> {
             if (getCenter() instanceof MooieMenuController) {
@@ -137,7 +137,6 @@ public class BorderPaneController extends BorderPane {
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-mute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
-        
         //Naar beginscherm applicatie
         naarTaalSelectie();
 
@@ -199,15 +198,25 @@ public class BorderPaneController extends BorderPane {
 
     public void naarKaartwinkelScherm() {
 
+        naarKaartwinkelScherm(null);
+
+    }
+
+    public void naarKaartwinkelScherm(String speler) {
         try {
             KaartWinkelScherm shop = new KaartWinkelScherm(this, dc, r);
             this.setCenter(shop);
             shop.setAlignment(Pos.CENTER);
             btnBack.setVisible(true);
+            
+            if(speler!= null)
+                shop.selecteerSpeler(speler);
         } catch (DatabaseException e) {
 
         }
-
+        
+        
+            
     }
 
     public void naarLaadScherm() {

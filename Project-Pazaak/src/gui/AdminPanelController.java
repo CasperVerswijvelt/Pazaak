@@ -263,6 +263,8 @@ public class AdminPanelController extends GridPane {
             }
         } catch (NumberFormatException e) {
             lblError.setText(r.getString("NUMBERTOOLARGE"));
+        } catch(IllegalArgumentException e) {
+            
         }
 
         laadSpelersInComboBox();
