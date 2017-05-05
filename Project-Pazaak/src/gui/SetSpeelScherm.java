@@ -253,6 +253,7 @@ public class SetSpeelScherm extends GridPane {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Pazaak");
+            alert.setHeaderText(r.getString("GAMEOVER"));
             alert.setContentText(winnaar + " " +r.getString("WINS") + "\n" + r.getString("NEWCREDIT") + " " + dc.geefSpelerInfo(winnaar)[1]);
             alert.showAndWait();
 
