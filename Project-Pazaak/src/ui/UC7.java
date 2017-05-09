@@ -49,7 +49,10 @@ public class UC7 {
         System.out.println("| " + r.getString("SHOP") + " | " + r.getString("CREDITS") + ": " + dc.geefSpelerInfo(naam)[1] + " | " + r.getString("BACKTOMENU"));
         printLijn();
         String[][] nietGekochteKaarten = dc.geefNogNietGekochteKaarten(naam);
-        System.out.println(formatteerStapelAlsLijst(nietGekochteKaarten, true));
+        if(nietGekochteKaarten.length == 0) 
+            System.out.println(r.getString("NOLIFE"));
+        else
+            System.out.println(formatteerStapelAlsLijst(nietGekochteKaarten, true));
 
         boolean valideKeuze = false;
         int keuze = 0;

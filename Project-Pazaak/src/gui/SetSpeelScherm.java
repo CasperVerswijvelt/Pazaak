@@ -145,7 +145,10 @@ public class SetSpeelScherm extends GridPane {
                         dialog.setContentText(r.getString("GAMENAME"));
 
                         Optional<String> naam = dialog.showAndWait();
+                       
                         if (naam.isPresent()) {
+                            if(naam.get().isEmpty())
+                                continue;
                             try {
                                 dc.slaWedstrijdOp(naam.get());
                                 
