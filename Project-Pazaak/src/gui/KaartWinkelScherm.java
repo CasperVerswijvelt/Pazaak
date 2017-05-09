@@ -183,7 +183,9 @@ public class KaartWinkelScherm extends GridPane {
             add(lblPrijzen.get(i), 3, i + 2);
 
             //Alle koopbuttons de juiste vertaalde tekst geven
-            btnKoop.add(new Button(r.getString("BUY")));
+            Button button = new Button(r.getString("BUY"));
+            button.getStyleClass().add("button-TaalSelectie");
+            btnKoop.add(button);
             //Alle koopbuttons toevoegen aan grid
             add(btnKoop.get(i), 4, i + 2);
 
