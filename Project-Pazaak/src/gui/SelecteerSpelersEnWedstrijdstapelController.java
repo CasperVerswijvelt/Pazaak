@@ -183,8 +183,8 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
     private void drukSelecteerSpelers() {
 
         try {
-            speler1 = cbSpelerSelectie1.getSelectionModel().getSelectedItem().toString();
-            speler2 = cbSpelerSelectie2.getSelectionModel().getSelectedItem().toString();
+            speler1 = cbSpelerSelectie1.getSelectionModel().getSelectedItem();
+            speler2 = cbSpelerSelectie2.getSelectionModel().getSelectedItem();
             dc.selecteerSpeler(speler1);
             dc.selecteerSpeler(speler2);
             dc.maakNieuweWedstrijd();
@@ -292,7 +292,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
     }
 
     private void checkBeideBevestigd() {
-        if (dc.geefSpelersZonderWedstrijdStapel().size() == 0) {
+        if (dc.geefSpelersZonderWedstrijdStapel().isEmpty()) {
             btnConfirmSpeler1.setText(r.getString("PLAY"));
             btnConfirmSpeler2.setText(r.getString("PLAY"));
             btnConfirmSpeler1.setDisable(false);

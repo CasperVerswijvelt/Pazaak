@@ -22,7 +22,6 @@ public class RegelsScherm extends VBox{
     private final ResourceBundle r;
     
     private TextArea taRegels;
-//    private Button btnCancel;
     
     public RegelsScherm(BorderPaneController parent, DomeinController dc, ResourceBundle r) {
         this.dc = dc;
@@ -34,7 +33,6 @@ public class RegelsScherm extends VBox{
 
     private void buildGUI() {
         this.setPadding(new Insets(20, 20, 20, 20));
-//        this.setSpacing(10);
         
         taRegels = new TextArea(r.getString("REGELSTEKST"));
         
@@ -42,20 +40,8 @@ public class RegelsScherm extends VBox{
         taRegels.setEditable(false);
         taRegels.setWrapText(true);
         
-//        btnCancel = new Button(r.getString("BACK"));
-//        btnCancel.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                drukCancel(event);
-//            }
-//        });
         
         this.getChildren().addAll(taRegels);
     }
-    
-//    private void drukCancel(ActionEvent event) {
-//        Stage stage = (Stage) this.getScene().getWindow();
-//        parent.naarMenu();
-//
-//    }
+   
 }

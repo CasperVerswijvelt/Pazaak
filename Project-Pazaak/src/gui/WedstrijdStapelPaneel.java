@@ -5,8 +5,8 @@
  */
 package gui;
 
-import gui.*;
 import domein.DomeinController;
+import static gui.Utilities.maakTextPassendInButton;
 import static gui.Utilities.veranderNaarMooieLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -34,13 +33,13 @@ import javafx.scene.layout.HBox;
  */
 class WedstrijdStapelPaneel extends HBox {
 
-    private ActiesPaneel parent;
-    private DomeinController dc;
-    private ResourceBundle r;
-    private int speler;
+    private final ActiesPaneel parent;
+    private final DomeinController dc;
+    private final ResourceBundle r;
+    private final int speler;
     private String[][] wedstrijdKaarten;
 
-    private List<Button> btnWedstrijdKaarten;
+    private final List<Button> btnWedstrijdKaarten;
 
     WedstrijdStapelPaneel(ActiesPaneel parent, DomeinController dc, ResourceBundle r, int speler) {
         this.parent = parent;
@@ -60,8 +59,10 @@ class WedstrijdStapelPaneel extends HBox {
 
         for (int i = 0; i < aantalKaarten; i++) {
             String[] kaart = veranderNaarMooieLayout(wedstrijdKaarten[i]);
-            btnWedstrijdKaarten.add(new Button(kaart[0] + kaart[1]));
-            btnWedstrijdKaarten.get(i).setMinSize(50, 80);
+            Button button = new Button(kaart[0] + kaart[1]);
+            maakTextPassendInButton(button);
+            
+            button.setMinSize(50, 80);
             BackgroundImage backgroundImage;
             if (this.speler == 0) {
                 backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantBlauw-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -69,15 +70,12 @@ class WedstrijdStapelPaneel extends HBox {
                 backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantRood-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             }
             Background background = new Background(backgroundImage);
-            btnWedstrijdKaarten.get(i).setBackground(background);
+            button.setBackground(background);
 
-            btnWedstrijdKaarten.get(i).setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    drukSpeelWedstrijdkaart(event);
-                }
-
+            button.setOnAction((ActionEvent event) -> {
+                drukSpeelWedstrijdkaart(event);
             });
+            btnWedstrijdKaarten.add(button);
         }
 
         if (aantalKaarten < 4) {

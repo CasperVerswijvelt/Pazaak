@@ -60,14 +60,10 @@ public class AdminValidatie extends VBox {
         btnSubmit.setOnAction((ActionEvent event) -> {
             valideer();
         });
-        txfPassword.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER) {
-                    valideer();
-                }
+        txfPassword.setOnKeyPressed((KeyEvent keyEvent) -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                valideer();
             }
-
         });
 
         this.getChildren().addAll(lblTitel, txfUser, txfPassword, btnSubmit, lblError);

@@ -23,10 +23,10 @@ import javafx.scene.layout.VBox;
  */
 class ActiesPaneel extends VBox {
 
-    private SetSpeelScherm parent;
-    private DomeinController dc;
-    private ResourceBundle r;
-    private int speler;
+    private final SetSpeelScherm parent;
+    private final DomeinController dc;
+    private final ResourceBundle r;
+    private final int speler;
 
     private WedstrijdStapelPaneel wsp;
     private Button btnEndTurn;

@@ -25,7 +25,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import static ui.Console.formatteerKaart;
 import static ui.Console.formatteerStapelOpLijn;
 
 /**
@@ -121,13 +120,9 @@ public class MaakNieuweSpelerController extends VBox {
         txfSpelerNaam.setPromptText(r.getString("NAME"));
         txfSpelerGeboorteJaar.setPromptText(r.getString("BIRTH"));
 
-        txfSpelerGeboorteJaar.textProperty().addListener(new ChangeListener<String>() {
-
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    txfSpelerGeboorteJaar.setText(newValue.replaceAll("[^\\d]", ""));
-                }
+        txfSpelerGeboorteJaar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txfSpelerGeboorteJaar.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
         this.ttNaam = new Tooltip(r.getString("NAMEREQUIREMENTS"));

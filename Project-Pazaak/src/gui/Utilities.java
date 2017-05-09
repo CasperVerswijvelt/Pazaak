@@ -6,6 +6,7 @@
 package gui;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Utilities {
             returnKaart[0] = "";
             returnKaart[1] = kaart[1].equals("1") ? "2&4" : "3&6";
         } else if (kaart[0].equals("C")) {
-            returnKaart[0] = "x+/-y";
+            returnKaart[0] = "1+/-2";
             returnKaart[1] = "";
         } else if (kaart[0].equals("T")) {
             returnKaart[1] = "";
@@ -39,7 +40,7 @@ public class Utilities {
         if (returnKaart[1].contains("&")) {
             returnKaart[0] = "W";
             returnKaart[1] = "2&4".equals(kaart[1])?"1":"2";
-        } else if (kaart[0].equals("x+/-y") || kaart[0].equals("C")) {
+        } else if (kaart[0].equals("1+/-2") || kaart[0].equals("C")) {
             returnKaart[0] = "C";
             returnKaart[1] = "1";
         } else if (kaart[0].equals("T")) {
@@ -50,6 +51,19 @@ public class Utilities {
             returnKaart[0] = "*";
         }
         return returnKaart;
+    }
+    
+    public static void maakTextPassendInButton(Button button) {
+
+        if (button.getText().length() >= 5) {
+            button.setStyle("-fx-font-size: 10px;");
+        } else if (button.getText().length() >= 4) {
+            button.setStyle("-fx-font-size: 11px;");
+        } else if (button.getText().length() >= 3) {
+            button.setStyle("-fx-font-size: 13px;");
+        } else {
+            button.setStyle("-fx-font-size: 14px;");
+        }
     }
     
     

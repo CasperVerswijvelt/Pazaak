@@ -28,11 +28,11 @@ import javafx.stage.Stage;
  */
 public class SetSpeelScherm extends GridPane {
 
-    private BorderPaneController parent;
-    private DomeinController dc;
-    private ResourceBundle r;
-    private String speler1;
-    private String speler2;
+    private final BorderPaneController parent;
+    private final DomeinController dc;
+    private final ResourceBundle r;
+    private final String speler1;
+    private final String speler2;
 
     private SpelBordPaneel sbp1;
     private SpelBordPaneel sbp2;

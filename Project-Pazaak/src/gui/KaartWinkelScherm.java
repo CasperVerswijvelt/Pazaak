@@ -5,7 +5,6 @@
  */
 package gui;
 
-import gui.*;
 import domein.DomeinController;
 import exceptions.*;
 import java.util.ArrayList;
@@ -33,11 +32,11 @@ import javafx.scene.paint.Color;
  */
 public class KaartWinkelScherm extends GridPane {
 
-    private BorderPaneController parent;
+    private final BorderPaneController parent;
 
     //Attributen
-    private DomeinController dc;
-    private ResourceBundle r;
+    private final DomeinController dc;
+    private final ResourceBundle r;
 
     private List<Label> lblTabelTitels;
     private List<Label> lblTypes;
@@ -195,12 +194,8 @@ public class KaartWinkelScherm extends GridPane {
         }
         for (Button btn : btnKoop) {
             btn.setDisable(true);
-            btn.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    drukKoop(btnKoop.indexOf(btn));
-                }
-
+            btn.setOnAction((ActionEvent event) -> {
+                drukKoop(btnKoop.indexOf(btn));
             });
         }
 

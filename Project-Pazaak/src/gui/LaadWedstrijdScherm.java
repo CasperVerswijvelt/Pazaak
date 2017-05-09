@@ -65,12 +65,8 @@ public class LaadWedstrijdScherm extends VBox {
         gameNotFoundAlert.setContentText(r.getString("GAMENOTFOUND"));
         
         btnLaadSpel = new Button(r.getString("LOADGAMEOPTION"));
-        btnLaadSpel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                drukLaad(event);
-            }
-           
+        btnLaadSpel.setOnAction((ActionEvent event) -> {
+            drukLaad(event);
         });
         btnLaadSpel.getStyleClass().add("button-TaalSelectie");
         laadWedstrijdenInComboBox();
@@ -94,7 +90,6 @@ public class LaadWedstrijdScherm extends VBox {
             laadWedstrijdenInComboBox();
         } catch (DatabaseException e) {
             DBAlert.show();
-            e.printStackTrace();
             laadWedstrijdenInComboBox();
         } catch(ArrayIndexOutOfBoundsException e){
             lblError.setText(r.getString("LOADERROR"));

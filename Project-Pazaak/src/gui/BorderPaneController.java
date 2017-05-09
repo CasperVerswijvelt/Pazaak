@@ -13,13 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -79,7 +77,7 @@ public class BorderPaneController extends BorderPane {
 
         btnBack.setId("btnBack");
 
-        ingedrukteToetsen = new ArrayList<KeyCode>();
+        ingedrukteToetsen = new ArrayList<>();
         setOnKeyPressed((event) -> {
             if (getCenter() instanceof MooieMenuController) {
                 ingedrukteToetsen.add(event.getCode());
@@ -94,34 +92,26 @@ public class BorderPaneController extends BorderPane {
 
         });
 
-        btnBack.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (getCenter() instanceof KaartWinkelScherm && terugKeerSchermWinkel != null) {
-                    terugNaarSpelerSelectieScherm();
+        btnBack.setOnAction((ActionEvent event) -> {
+            if (getCenter() instanceof KaartWinkelScherm && terugKeerSchermWinkel != null) {
+                terugNaarSpelerSelectieScherm();
+                return;
+            }
+            
+            if (getCenter() instanceof SetSpeelScherm) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText(null);
+                alert.setContentText(r.getString("TOMENU"));
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() != ButtonType.OK) {
                     return;
                 }
-
-                if (getCenter() instanceof SetSpeelScherm) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setHeaderText(null);
-                    alert.setContentText(r.getString("TOMENU"));
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() != ButtonType.OK) {
-                        return;
-                    }
-                }
-                naarMenu();
             }
-
+            naarMenu();
         });
 
-        btnToggleMuziek.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                toggleMuziek();
-            }
-
+        btnToggleMuziek.setOnAction((ActionEvent event) -> {
+            toggleMuziek();
         });
         volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             mediaPlayer.setVolume((double) new_val / 100);

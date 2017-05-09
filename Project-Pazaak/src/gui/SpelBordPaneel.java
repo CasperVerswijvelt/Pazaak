@@ -6,6 +6,7 @@
 package gui;
 
 import domein.DomeinController;
+import static gui.Utilities.maakTextPassendInButton;
 import java.util.ResourceBundle;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -24,13 +25,12 @@ import javafx.scene.layout.VBox;
  *
  * @author goran
  */
-class SpelBordPaneel extends HBox {
+ public class SpelBordPaneel extends HBox {
 
-    private SetSpeelScherm parent;
-    private DomeinController dc;
-    private ResourceBundle r;
-    private int kant;
-    private int score;
+    private final SetSpeelScherm parent;
+    private final DomeinController dc;
+    private final ResourceBundle r;
+    private final int kant;
 
     private GridPane kp;
     private Label lblScore;
@@ -87,12 +87,12 @@ class SpelBordPaneel extends HBox {
     private void laadSpelbord(String[][] spelbord) {
         int rij = 0;
         int kolom = 0;
-        for (int i = 0; i < spelbord.length; i++) {
-
+        for (String[] spelbord1 : spelbord) {
             Button button = new Button();
             button.setMinSize(50, 80);
-            String[] kaart = Utilities.veranderNaarMooieLayout(spelbord[i]);
+            String[] kaart = Utilities.veranderNaarMooieLayout(spelbord1);
             button.setText(kaart[0] + kaart[1]);
+            maakTextPassendInButton(button);
             BackgroundImage backgroundImage;
             if (kant == 1) {
                 backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantBlauw-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -101,9 +101,7 @@ class SpelBordPaneel extends HBox {
                 backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantRood-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
             }
-
             Background background = new Background(backgroundImage);
-
             button.setBackground(background);
             kp.add(button, kolom, rij);
             kolom++;
@@ -113,7 +111,6 @@ class SpelBordPaneel extends HBox {
                 }
                 kolom = 0;
             }
-
         }
     }
 }

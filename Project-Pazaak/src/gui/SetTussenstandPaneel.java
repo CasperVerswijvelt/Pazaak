@@ -5,14 +5,10 @@
  */
 package gui;
 
-import gui.*;
-import static com.sun.javafx.robot.impl.FXRobotHelper.getChildren;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import domein.DomeinController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.HBox;
 
@@ -24,13 +20,13 @@ public class SetTussenstandPaneel extends HBox {
 
     private SetSpeelScherm ss;
 
-    private List<RadioButton> buttons;
+    private final List<RadioButton> buttons;
 
     private String speler1;
     private String speler2;
-    private DomeinController dc;
+    private final DomeinController dc;
 
-    private int speler;
+    private final int speler;
 
     SetTussenstandPaneel(SetSpeelScherm aThis, DomeinController dc, ResourceBundle r, int speler) {
         buttons = new ArrayList<>();
