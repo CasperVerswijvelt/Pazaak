@@ -7,6 +7,7 @@ import persistentie.KaartMapper;
 import persistentie.SpelerMapper;
 
 /**
+ * DomeinController, class that user interface addresses
  * @author Casper
  */
 public class DomeinController {

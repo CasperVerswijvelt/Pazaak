@@ -4,7 +4,7 @@ import exceptions.*;
 import java.util.*;
 
 /**
- *
+ *Game class, contains 2 players , their gamedeck and their amount of wins in that game
  * @author Casper
  */
 public class Wedstrijd {

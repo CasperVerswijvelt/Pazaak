@@ -178,19 +178,40 @@ public class SpelerEnKaartRepository {
         return sm.valideerAdmin(user, password);
     }
 
-    void verwijderSpeler(String naam) {
+    /**
+     *Removes player with specified name from the database, if it exists
+     * @param naam
+     */
+    public void verwijderSpeler(String naam) {
         sm.verwijderSpeler(naam);
     }
 
-    void maakNieuweAdmin(String bestaandeAdminNaam, String bestaandeAdminPass, String nieuweAdminNaam, String nieuweAdminPass) {
+    /**
+     *Create a new admin user with specified credentials, requires credentials of existing admin user
+     * @param bestaandeAdminNaam 
+     * @param bestaandeAdminPass
+     * @param nieuweAdminNaam
+     * @param nieuweAdminPass
+     */
+    public void maakNieuweAdmin(String bestaandeAdminNaam, String bestaandeAdminPass, String nieuweAdminNaam, String nieuweAdminPass) {
         sm.maakNieuweAdmin(bestaandeAdminNaam, bestaandeAdminPass, nieuweAdminNaam, nieuweAdminPass);
     }
 
-    void voegStartstapelkaartToe(String naam, Kaart kaart) {
+    /**
+     *Adds specified card to specified player's starting deck
+     * @param naam
+     * @param kaart
+     */
+    public void voegStartstapelkaartToe(String naam, Kaart kaart) {
         km.voegStartstapelKaartToe(naam, kaart);
     }
 
-    void neemStartstapelkaartWeg(String naam, Kaart kaart) {
+    /**
+     *Takes specified card from specified player's starting deck
+     * @param naam
+     * @param kaart
+     */
+    public void neemStartstapelkaartWeg(String naam, Kaart kaart) {
         km.neemStartstapelkaartWeg(naam, kaart);
     }
     
