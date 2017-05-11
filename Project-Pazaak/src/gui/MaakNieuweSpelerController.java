@@ -25,7 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import static ui.Console.formatteerStapelOpLijn;
+import static cui.Console.formatteerStapelOpLijn;
 
 /**
  * FXML Controller class

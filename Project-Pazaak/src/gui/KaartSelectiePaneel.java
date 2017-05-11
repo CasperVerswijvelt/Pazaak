@@ -100,7 +100,7 @@ public class KaartSelectiePaneel extends VBox {
 
             String kleur = speler.equals(parent.getSpeler1()) ? "Blauw" : "Rood";
 
-            Background background = new Background(new BackgroundImage(new Image(getClass().getResource("kaartVoorkant" + kleur + "-klein.png").toExternalForm()),
+            Background background = new Background(new BackgroundImage(new Image(getClass().getResource("/img/kaartVoorkant" + kleur + "-klein.png").toExternalForm()),
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT,
@@ -160,7 +160,7 @@ public class KaartSelectiePaneel extends VBox {
     private void plaatsKaartTerug(Button button, String speler) {
         String kleur = speler.equals(parent.getSpeler1()) ? "Blauw" : "Rood";
 
-        Background background = new Background(new BackgroundImage(new Image(getClass().getResource("kaartVoorkant" + kleur + "-klein.png").toExternalForm()),
+        Background background = new Background(new BackgroundImage(new Image(getClass().getResource("/img/kaartVoorkant" + kleur + "-klein.png").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
@@ -191,7 +191,7 @@ public class KaartSelectiePaneel extends VBox {
         int aantalGeselecteerdeKaarten = selected.getChildren().size() - 6;
         String kleur = speler.equals(parent.getSpeler1()) ? "Blauw" : "Rood";
             
-            Background background = new Background(new BackgroundImage(new Image(getClass().getResource("kaartVoorkant" + kleur + "-groot.png").toExternalForm()),
+            Background background = new Background(new BackgroundImage(new Image(getClass().getResource("/img/kaartVoorkant" + kleur + "-groot.png").toExternalForm()),
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT,

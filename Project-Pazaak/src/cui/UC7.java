@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package cui;
 
 import domein.DomeinController;
 import exceptions.*;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import static ui.Console.*;
+import static cui.Console.*;
 
 /**
  *

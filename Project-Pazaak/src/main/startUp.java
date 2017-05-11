@@ -3,7 +3,7 @@ package main;
 import domein.DomeinController;
 import domein.SpelerEnKaartRepository;
 import persistentie.KaartMapper;
-import ui.Console;
+import cui.Console;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package cui;
 
 import domein.DomeinController;
 import exceptions.InvalidNumberException;
 import exceptions.NoWinnerException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import static ui.Console.printLijn;
+import static cui.Console.printLijn;
 
 /**
  *
@@ -31,7 +31,7 @@ public class UC5 {
         Scanner in = new Scanner(System.in);
         //Zolang de wedstrijd nog niet klaar is, wordt een nieuwe set gespeeld
         while (!dc.wedstrijdIsKlaar()) {
-            new UC6().start(dc, r);
+            new UC6(dc, r).start();
             dc.registreerAantalWins();
 
             String[] spelers = dc.geefWedstrijdSpelers();
@@ -62,6 +62,8 @@ public class UC5 {
                         System.out.println(r.getString("INVALIDCHOICE"));
                     }
                 } while (!valideKeuze);
+                
+                
                 if (keuze == 2) {
                     new UC8(r, dc).start();
                     System.out.printf(" 1. %s%n"
@@ -85,11 +87,11 @@ public class UC5 {
                         }
                     } while (!valideKeuze);
                     
-                    if(keuze==1){
-                        new UC5(dc, r).start();
+                    if(keuze==2){
+                        break;
                     }
                     
-                    break;
+                    
                 }
                 printLijn();
             }

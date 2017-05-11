@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package cui;
 
 import domein.DomeinController;
-import exceptions.InvalidNumberException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import static ui.Console.*;
+import static cui.Console.*;
 
 /**
  *
@@ -22,10 +21,13 @@ class UC6 {
     private DomeinController dc;
     private Scanner in;
 
-    public void start(DomeinController dc, ResourceBundle r) {
+    public UC6(DomeinController dc, ResourceBundle r) {
         this.in = new Scanner(System.in);
         this.r = r;
         this.dc = dc;
+    }
+
+    public void start() {
 
         dc.maakNieuweSet();
         System.out.println(r.getString("NEWSETBEGINS"));
@@ -35,6 +37,7 @@ class UC6 {
         do {
 
             System.out.printf(r.getString("TURN") + " ...%n", dc.geefSpelerAanBeurt());
+            printLijn();
 
             //Kaart uitdelen
             dc.deelKaartUit();
@@ -166,7 +169,7 @@ class UC6 {
                         if (!valideKeuze) {
                             throw new IllegalArgumentException();
                         }
-                        gewensteWaarde = Integer.parseInt(keuze+"");
+                        gewensteWaarde = Integer.parseInt(keuze + "");
 
                     } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
                         valideKeuze = false;
@@ -191,8 +194,7 @@ class UC6 {
                     }
 
                 } while (!valideKeuze);
-                
-            
+
         }
 
         dc.gebruikWedstrijdKaart(gekozenKaart, gewensteWaarde, gewenstType);

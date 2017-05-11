@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package cui;
 
 import domein.DomeinController;
 import exceptions.*;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import static ui.Console.printLijn;
+import static cui.Console.printLijn;
 
 /**
  *
@@ -33,12 +33,14 @@ public class UC8 {
         do {
             try {
                 System.out.print(r.getString("NAME") + ": ");
-                keuze = in.nextLine();
-                if (keuze == null || keuze.equals("")) {
+                keuze = in.nextLine().trim();
+                if (keuze == null || keuze.isEmpty()) {
                     throw new IllegalArgumentException();
                 }
                 dc.slaWedstrijdOp(keuze);
+                printLijn();
                 System.out.println(r.getString("GAMESAVED"));
+                printLijn();
                 valideKeuze = true;
 
             }  catch (GameAlreadyExistsException e){
@@ -50,9 +52,6 @@ public class UC8 {
                 System.out.println(r.getString("INVALIDCHOICE"));
             }
             
-            
-            
-
         } while (!valideKeuze);
     }
 }

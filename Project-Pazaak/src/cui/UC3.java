@@ -3,7 +3,7 @@
  * Any unauthorized use is illegal.
  * © Casper Verswijvelt 2016-2017
  */
-package ui;
+package cui;
 
 import domein.DomeinController;
 import exceptions.DatabaseException;
@@ -11,7 +11,7 @@ import exceptions.NoPlayersAvailableException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import static ui.Console.*;
+import static cui.Console.*;
 
 /**
  *

@@ -99,7 +99,7 @@ public class SpelBordPaneel extends HBox {
             maakTextPassendInButton(button);
             
             String kleur = kant==1?"Blauw":"Rood";   
-            BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkant" + kleur + "-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource("/img/kaartVoorkant" + kleur + "-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
             Background background = new Background(backgroundImage);
             button.setBackground(background);

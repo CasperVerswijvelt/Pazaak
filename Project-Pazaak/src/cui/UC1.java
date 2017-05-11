@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package cui;
 
 import domein.DomeinController;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import exceptions.*;
-import static ui.Console.*;
+import static cui.Console.*;
 /**
  *
  * @author Bruno
@@ -28,29 +28,47 @@ public class UC1 {
         Scanner input = new Scanner(System.in);
         
         String naam="";
-        int gebJaar;
         
+        System.out.println(r.getString("NEWPLAYEROPTION"));
+        printLijn();
         boolean opnieuw = true;
         do {
             try {
                 System.out.print(r.getString("NEWPLAYERNAME"));
-                naam = input.nextLine();
+                naam = input.nextLine().trim();
 
                 System.out.print(r.getString("NEWPLAYERYEAR"));
-                gebJaar = Integer.parseInt(input.nextLine());
+                String gebJaarInput = input.nextLine().trim();
+                
+                if(naam.isEmpty() || gebJaarInput.isEmpty())
+                    throw new IllegalArgumentException();
+                
+                
+                int gebJaar = Integer.parseInt(gebJaarInput);
 
                 dc.maakNieuweSpelerAan(naam, gebJaar);
                 opnieuw = false;
                 System.out.println(r.getString("PLAYERADDED"));
                 printLijn();
             } catch (PlayerAlreadyExistsException e) {
+                printLijn();
                 System.out.println(r.getString("PLAYERALREADYEXISTS"));
+                return;
             } catch(PlayerNameInvalidException e){
+                printLijn();
                 System.out.println(r.getString("NAMEREQUIREMENTS"));
+                return;
             }catch(PlayerBirthInvalidException | NumberFormatException e) {
+                printLijn();
                 System.out.println(r.getString("BIRTHREQUIREMENTS"));
+                return;
             } catch(DatabaseException e) {
+                printLijn();
                 System.out.println(r.getString("DATABASEERROR"));
+                return;
+            } catch(IllegalArgumentException e) {
+                printLijn();
+                System.out.println(r.getString("FILLINALLFIELDS"));
                 return;
             }
         //Zolang opgegeven info niet aan vereisten voldoet wordt deze opnieuw opgevraagd

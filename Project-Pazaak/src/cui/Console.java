@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package cui;
 
 import domein.DomeinController;
 import exceptions.InvalidNumberException;
@@ -32,8 +32,7 @@ public class Console {
         UC2 uc2 = new UC2();
         uc2.start();
         r = uc2.getResourceBundle();
-        printLijn();
-        System.out.println(r.getString("WELCOME"));
+
         gameMenu();
 
     }
@@ -42,6 +41,8 @@ public class Console {
         boolean opnieuw = true;
         do {
             int keuze;
+            printLijn();
+            System.out.println(r.getString("WELCOME"));
             printLijn();
             System.out.printf(" 0. %s%n"
                     + " 1. %s%n"
@@ -129,25 +130,28 @@ public class Console {
                 type = "+/-";
                 break;
             case "T":
-                type = "xT"; waarde ="";
+                type = "xT";
+                waarde = "";
                 break;
             case "D":
-                waarde ="";
+                waarde = "";
                 break;
             case "C":
-                type= "1+/-2"; waarde = "";
+                type = "1+/-2";
+                waarde = "";
                 break;
             case "W":
-                if(waarde.equals("1")) 
+                if (waarde.equals("1")) {
                     type = "2&4";
-                else
+                } else {
                     type = "3&6";
+                }
                 waarde = "";
-                    
+
         }
 
         res = type + waarde;
-        
+
         if (!prijs.equals("0") && toonPrijs) {
             res += "  \tPrijs = " + prijs;
         }

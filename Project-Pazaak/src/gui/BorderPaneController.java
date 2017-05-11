@@ -119,12 +119,12 @@ public class BorderPaneController extends BorderPane {
         //Muziek
         Media sound = null;
         try {
-            sound = new Media(getClass().getResource("aerobic.wav").toURI().toString());
+            sound = new Media(getClass().getResource("/sound/Aerobic Championship Theme.wav").toURI().toString());
         } catch (URISyntaxException ex) {
         }
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-mute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/img/sound-mute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
         //Naar beginscherm applicatie
         naarTaalSelectie();
@@ -258,9 +258,9 @@ public class BorderPaneController extends BorderPane {
         }
 
         if (playing) {
-            btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-mute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+            btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/img/sound-mute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         } else {
-            btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("sound-unmute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+            btnToggleMuziek.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/img/sound-unmute.png").toExternalForm()), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         }
     }
 

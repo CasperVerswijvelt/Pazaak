@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package cui;
 
 import domein.DomeinController;
 import exceptions.DatabaseException;
 import exceptions.InvalidNumberException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import static ui.Console.printLijn;
+import static cui.Console.printLijn;
 
 /**
  *
@@ -29,13 +29,15 @@ public class UC9 {
     public void start() {
         Scanner in = new Scanner(System.in);
         String[][] overzicht;
-        try{
-                overzicht = dc.geefWedstrijdenOverzicht();
-            }catch(DatabaseException e){
-                System.out.println(r.getString("DATABASEERROR"));
-                return;
-            }
-        
+        try {
+            overzicht = dc.geefWedstrijdenOverzicht();
+        } catch (DatabaseException e) {
+            System.out.println(r.getString("DATABASEERROR"));
+            return;
+        }
+        System.out.println(r.getString("LOADGAMEOPTION") + " | " + r.getString("BACKTOMENU"));
+        printLijn();
+
         if (overzicht.length == 0) {
             System.out.println(r.getString("NOGAMES"));
         } else {
@@ -49,7 +51,7 @@ public class UC9 {
                     System.out.print(r.getString("CHOICE") + ": ");
                     keuze = Integer.parseInt(in.nextLine());
 
-                    if (keuze < 1 || keuze > overzicht.length) {
+                    if (keuze < 0 || keuze > overzicht.length) {
                         throw new InvalidNumberException();
                     }
                     valideKeuze = true;
@@ -57,6 +59,10 @@ public class UC9 {
                     System.out.println(r.getString("INVALIDCHOICE"));
                 }
             } while (!valideKeuze);
+
+            if (keuze == 0) {
+                return;
+            }
 
             dc.laadWedstrijd(overzicht[keuze - 1][0]);
             printLijn();

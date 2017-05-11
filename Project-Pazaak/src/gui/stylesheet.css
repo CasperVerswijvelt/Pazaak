@@ -69,10 +69,10 @@
     -fx-font-weight: bolder;
 }
 .kaartenachterkant{
-    -fx-background-image:url("kaartAchterkant-klein.png");
+    -fx-background-image:url("/img/kaartAchterkant-klein.png");
 }
 .wedstrijdkaartenachterkant{
-    -fx-background-image:url("kaartAchterkant-groot.png");
+    -fx-background-image:url("/img/kaartAchterkant-groot.png");
 }
 .combo-box{
     -fx-font-family: "Nordstrom Roman";
