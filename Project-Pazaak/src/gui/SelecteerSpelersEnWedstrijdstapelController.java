@@ -173,7 +173,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         Object geselecteerd = cbSpelerSelectie1.getSelectionModel().getSelectedItem();
         if (geselecteerd != null) {
             ObservableList<String> comboLijst = FXCollections.observableArrayList(spelerLijst);
-            comboLijst = FXCollections.observableArrayList(dc.geefAlleSpelerNamen());
+            comboLijst = FXCollections.observableArrayList(spelerLijst);
             comboLijst.remove(geselecteerd.toString());
             cbSpelerSelectie2.setItems(comboLijst);
             cbSpelerSelectie2.setDisable(false);
