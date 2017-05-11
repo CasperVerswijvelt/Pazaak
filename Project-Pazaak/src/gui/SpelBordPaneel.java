@@ -79,7 +79,7 @@ public class SpelBordPaneel extends HBox {
 
     }
 
-    public void updateSpelbord(String[][] spelbord, int score) {
+    public void verversSpelbord(String[][] spelbord, int score) {
         laadSpelbord(spelbord);
         lblScoreGetal.setText(score + "");
     }

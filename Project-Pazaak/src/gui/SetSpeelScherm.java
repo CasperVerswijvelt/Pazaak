@@ -209,11 +209,10 @@ public class SetSpeelScherm extends GridPane {
         String spelerAanBeurt = dc.geefSpelerAanBeurt();
         String[][] spelbord = dc.geefSpelBord();
         int score = dc.geefScore();
-        if (spelerAanBeurt.equals(speler1)) {
-            sbp1.updateSpelbord(spelbord, score);
-        } else {
-            sbp2.updateSpelbord(spelbord, score);
-        }
+        if (spelerAanBeurt.equals(speler1)) 
+            sbp1.verversSpelbord(spelbord, score);
+        else 
+            sbp2.verversSpelbord(spelbord, score);
         stp1.verversAantalWins();
         stp2.verversAantalWins();
 
@@ -223,9 +222,8 @@ public class SetSpeelScherm extends GridPane {
         dc.eindigBeurt();
         boolean setIsKlaar = dc.setIsKlaar();
         checkEindeSet();
-        if (setIsKlaar) {
+        if (setIsKlaar) 
             return;
-        }
         dc.deelKaartUit();
         verversSpelerScherm();
         checkEindeSet();
@@ -247,7 +245,6 @@ public class SetSpeelScherm extends GridPane {
     }
 
     private void setTenEinde() {
-        Stage stage = (Stage) this.getScene().getWindow();
         if (dc.wedstrijdIsKlaar()) {
 
             String winnaar = dc.geefWinnaar();
@@ -262,7 +259,6 @@ public class SetSpeelScherm extends GridPane {
             parent.naarMenu();
 
         } else {
-
             parent.naarSpeelWedstrijdScherm();
 
         }

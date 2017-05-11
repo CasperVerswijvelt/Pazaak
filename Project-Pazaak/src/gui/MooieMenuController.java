@@ -7,6 +7,7 @@ package gui;
 
 import domein.DomeinController;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -113,7 +114,8 @@ public class MooieMenuController extends VBox {
     private void sluitSpelAf(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.NONE, r.getString("EXITGAME"), ButtonType.OK);
         alert.setTitle("Pazaak");
-        alert.showAndWait();
-        System.exit(0);
+        Optional<ButtonType>  res = alert.showAndWait();
+        if(res.isPresent())
+            System.exit(0);
     }
 }
