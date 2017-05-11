@@ -140,19 +140,18 @@ public class SetSpeelScherm extends GridPane {
                     while (true) {
 
                         TextInputDialog dialog = new TextInputDialog();
-                        dialog.setTitle("Pazaak" + " - " + r.getString("OPSLAAN"));
+                        dialog.setTitle("Pazaak");
                         dialog.setHeaderText(null);
                         dialog.setContentText(r.getString("GAMENAME"));
 
-                        Optional<String> naam = dialog.showAndWait();
+                        Optional<String> invoer = dialog.showAndWait();
                        
-                        if (naam.isPresent()) {
-                            if(naam.get().isEmpty())
+                        if (invoer.isPresent()) {
+                            String naam = invoer.get().trim();
+                            if(naam.isEmpty())
                                 continue;
                             try {
-                                dc.slaWedstrijdOp(naam.get());
-                                
-
+                                dc.slaWedstrijdOp(naam);
                             } catch (GameAlreadyExistsException e) {
                                 gameExistsAlert.showAndWait();
                                 continue;

@@ -22,8 +22,6 @@ public class SetTussenstandPaneel extends HBox {
 
     private final List<RadioButton> buttons;
 
-    private String speler1;
-    private String speler2;
     private final DomeinController dc;
 
     private final int speler;

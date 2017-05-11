@@ -395,7 +395,6 @@ public class AdminPanelController extends GridPane {
 
     @FXML
     private void btnGiveCardClicked(ActionEvent event) {
-
         try {
             dc.voegStartstapelkaartToe(geselecteerdeSpeler(), nietGekochteKaarten[cbGiveCard.getSelectionModel().getSelectedIndex()]);
             laadKaartenInComboBoxen();

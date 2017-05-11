@@ -109,7 +109,7 @@ class WedstrijdStapelPaneel extends HBox {
             ButtonType plus = new ButtonType("+", ButtonBar.ButtonData.OK_DONE);
             ButtonType min = new ButtonType("-", ButtonBar.ButtonData.OK_DONE);
 
-            Alert alert = new Alert(Alert.AlertType.NONE, "-/+", plus, min);
+            Alert alert = new Alert(Alert.AlertType.NONE, "-/+ ?", plus, min);
             alert.setTitle("Pazaak");
             alert.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
 

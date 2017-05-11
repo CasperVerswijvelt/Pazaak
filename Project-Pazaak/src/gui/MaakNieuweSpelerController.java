@@ -121,10 +121,14 @@ public class MaakNieuweSpelerController extends VBox {
         txfSpelerGeboorteJaar.setPromptText(r.getString("BIRTH"));
 
         txfSpelerGeboorteJaar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txfSpelerGeboorteJaar.setText(newValue.replaceAll("[^\\d]", ""));
-            }
+            newValue = newValue.replaceAll("[^\\d]", "");
+            newValue = newValue.length() > 4 ? newValue.substring(0, 4) : newValue;
+            txfSpelerGeboorteJaar.setText(newValue);
         });
+        txfSpelerNaam.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            txfSpelerNaam.setText(newValue.replaceAll("\\p{Punct}|\\s", ""));
+        });
+
         this.ttNaam = new Tooltip(r.getString("NAMEREQUIREMENTS"));
         this.txfSpelerNaam.setTooltip(ttNaam);
         this.ttGeboorteJaar = new Tooltip(r.getString("BIRTHREQUIREMENTS"));
@@ -140,7 +144,5 @@ public class MaakNieuweSpelerController extends VBox {
         this.newPlayerAlert.setTitle(r.getString("NEWPLAYER"));
         this.newPlayerAlert.getDialogPane().getButtonTypes().add(ButtonType.OK);
     }
-    
-
 
 }

@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
  *
  * @author goran
  */
- public class SpelBordPaneel extends HBox {
+public class SpelBordPaneel extends HBox {
 
     private final SetSpeelScherm parent;
     private final DomeinController dc;
@@ -85,31 +85,28 @@ import javafx.scene.layout.VBox;
     }
 
     private void laadSpelbord(String[][] spelbord) {
-        int rij = 0;
-        int kolom = 0;
-        for (String[] spelbord1 : spelbord) {
+
+        
+        for(int i = 10; i<kp.getChildren().size(); i++) 
+            kp.getChildren().remove(i);
+        
+        int kaartTeller=0;
+        for (String[] kaartString : spelbord) {
             Button button = new Button();
             button.setMinSize(50, 80);
-            String[] kaart = Utilities.veranderNaarMooieLayout(spelbord1);
+            String[] kaart = Utilities.veranderNaarMooieLayout(kaartString);
             button.setText(kaart[0] + kaart[1]);
             maakTextPassendInButton(button);
-            BackgroundImage backgroundImage;
-            if (kant == 1) {
-                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantBlauw-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            
+            String kleur = kant==1?"Blauw":"Rood";   
+            BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkant" + kleur + "-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
-            } else {
-                backgroundImage = new BackgroundImage(new Image(getClass().getResource("kaartVoorkantRood-klein.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-
-            }
             Background background = new Background(backgroundImage);
             button.setBackground(background);
-            kp.add(button, kolom, rij);
-            kolom++;
-            if (kolom > 2) {
-                if (++rij > 2) {
-                    return;
-                }
-                kolom = 0;
+            kp.add(button, kaartTeller%3, kaartTeller/3);
+            
+            if (++kaartTeller > 9) {
+                return;
             }
         }
     }

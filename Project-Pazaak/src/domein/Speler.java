@@ -51,25 +51,9 @@ public class Speler {
         char eerste = naam.charAt(0);
         
         if((eerste >47 && 
-                eerste <57 || 
-                naam.contains(".")) || 
-                naam.contains(",") || 
-                naam.contains("?") || 
-                naam.contains("!") || 
-                naam.contains(";") || 
-                naam.contains(":") || 
-                naam.contains("†") ||  
-                naam.contains("\"") || 
-                naam.contains("(") || 
-                naam.contains(")") || 
+                eerste <57 )|| 
                 naam.contains(" ") || 
-                naam.contains("}") || 
-                naam.contains("{") || 
-                naam.contains("<") || 
-                naam.contains(">") || 
-                naam.contains("[") || 
-                naam.contains("]") || 
-                naam.contains("/"))
+                naam.matches("(?s).*\\p{Punct}.*"))
         throw new PlayerNameInvalidException();
         if (naam.length() < 3) 
             throw new PlayerNameInvalidException("Naam moet minstens 3 karakters lang zijn.");

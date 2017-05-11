@@ -57,8 +57,8 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
     private Alert DBAlert;
     private Alert noPlayersAvailableAlert;
 
-    protected String speler1;
-    protected String speler2;
+    private String speler1;
+    private String speler2;
 
     @FXML
     private Label lblTitel;
@@ -322,5 +322,15 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
             ksp2.activeerScherm(speler2);
         
     }
+
+    public String getSpeler1() {
+        return speler1;
+    }
+
+    public String getSpeler2() {
+        return speler2;
+    }
+    
+    
 
 }

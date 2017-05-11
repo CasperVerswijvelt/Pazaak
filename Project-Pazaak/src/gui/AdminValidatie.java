@@ -9,7 +9,6 @@ import domein.DomeinController;
 import exceptions.DatabaseException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -48,12 +47,12 @@ public class AdminValidatie extends VBox {
     private void buildGui() {
         lblTitel = new Label("Admin panel validation");
         txfUser = new TextField();
-        txfUser.setPromptText("User");
+        txfUser.setPromptText(r.getString("NEWADMINUSERNAME"));
         txfUser.setAlignment(Pos.CENTER);
         txfPassword = new PasswordField();
-        txfPassword.setPromptText("Password");
+        txfPassword.setPromptText(r.getString("NEWADMINPASSWORD"));
         txfPassword.setAlignment(Pos.CENTER);
-        btnSubmit = new Button("Validate");
+        btnSubmit = new Button(r.getString("VALIDATE"));
         lblError = new Label();
         lblError.setTextFill(Color.RED);
 
@@ -79,7 +78,7 @@ public class AdminValidatie extends VBox {
             if (dc.valideerAdmin(txfUser.getText(), txfPassword.getText())) {
                 parent.naarAdminPaneel();
             } else {
-                lblError.setText("Invalid credentials");
+                lblError.setText(r.getString("INVALIDCREDENTIALS"));
             }
         } catch (DatabaseException e) {
             Alert DBAlert = new Alert(Alert.AlertType.ERROR);

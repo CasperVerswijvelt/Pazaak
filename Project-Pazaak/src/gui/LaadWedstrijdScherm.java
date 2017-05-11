@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -20,7 +19,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 /**
  *
@@ -126,12 +124,6 @@ public class LaadWedstrijdScherm extends VBox {
         
         ObservableList<String> lijst = FXCollections.observableArrayList(wedstrijdenStrings);
         cbWedstrijdSelectie.setItems(lijst);
-    }
-    
-    private void drukCancel(ActionEvent event) {
-        Stage stage = (Stage) this.getScene().getWindow();
-        parent.naarMenu();
-        
-    }
-    
+        cbWedstrijdSelectie.getSelectionModel().selectFirst();
+    }  
 }
