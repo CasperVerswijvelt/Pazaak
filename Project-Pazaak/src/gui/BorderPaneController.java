@@ -216,7 +216,6 @@ public class BorderPaneController extends BorderPane {
             laadWedstrijd.setAlignment(Pos.CENTER);
             btnBack.setVisible(true);
         } catch (DatabaseException e) {
-
         }
 
     }

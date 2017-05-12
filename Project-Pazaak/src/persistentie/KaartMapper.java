@@ -23,7 +23,7 @@ public class KaartMapper {
 
     public void voegKaartTypeToe(char type, int waarde, int prijs) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
-            PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.KaartType (type, waarde, prijs)"
+            PreparedStatement query = conn.prepareStatement("INSERT INTO " + Connectie.DBNAAM + ".KaartType (type, waarde, prijs)"
                     + "VALUES (?, ?, ?)");
             query.setString(1, type + "");
             query.setInt(2, waarde);
@@ -40,8 +40,7 @@ public class KaartMapper {
         List<Kaart> kaarten = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.KaartType WHERE prijs <> 0");
-            try (ResultSet rs = query.executeQuery()) {
+            try (PreparedStatement query = conn.prepareStatement("SELECT * FROM " + Connectie.DBNAAM + ".KaartType WHERE prijs <> 0");ResultSet rs = query.executeQuery()) {
                 while (rs.next()) {
                     int waarde = rs.getInt("waarde");
                     int prijs = rs.getInt("prijs");
@@ -50,11 +49,10 @@ public class KaartMapper {
                     kaarten.add(new Kaart(waarde, type, prijs));
                 }
             }
-            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
-        
+
         return kaarten;
     }
 
@@ -62,13 +60,11 @@ public class KaartMapper {
         List<Integer> prijzen = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT DISTINCT type, prijs FROM ID222177_g37.KaartType WHERE prijs <> 0 ORDER BY id");
-            try (ResultSet rs = query.executeQuery()) {
+            try (PreparedStatement query = conn.prepareStatement("SELECT DISTINCT type, prijs FROM " + Connectie.DBNAAM + ".KaartType WHERE prijs <> 0 ORDER BY id");ResultSet rs = query.executeQuery()) {
                 while (rs.next()) {
                     prijzen.add(rs.getInt("prijs"));
                 }
             }
-            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -79,18 +75,18 @@ public class KaartMapper {
         List<Kaart> kaarten = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.KaartType WHERE id NOT IN(SELECT id FROM ID222177_g37.Kaart WHERE naam = ? ) AND prijs <> 0");
-            query.setString(1, naam);
-            try (ResultSet rs = query.executeQuery()) {
-                while (rs.next()) {
-                    int waarde = rs.getInt("waarde");
-                    int prijs = rs.getInt("prijs");
-                    char type = rs.getString("type").charAt(0);
-
-                    kaarten.add(new Kaart(waarde, type, prijs));
+            try (PreparedStatement query = conn.prepareStatement("SELECT * FROM " + Connectie.DBNAAM + ".KaartType WHERE id NOT IN(SELECT id FROM " + Connectie.DBNAAM + ".Kaart WHERE naam = ? ) AND prijs <> 0")) {
+                query.setString(1, naam);
+                try (ResultSet rs = query.executeQuery()) {
+                    while (rs.next()) {
+                        int waarde = rs.getInt("waarde");
+                        int prijs = rs.getInt("prijs");
+                        char type = rs.getString("type").charAt(0);
+                        
+                        kaarten.add(new Kaart(waarde, type, prijs));
+                    }
                 }
             }
-            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -100,26 +96,25 @@ public class KaartMapper {
     public void voegStartstapelKaartToe(String naam, Kaart kaart) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
             int kaartID = geefKaartId(kaart);
-            PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.Kaart (naam, id) "
-                    + "VALUES (?, ?)");
-            query.setString(1, naam);
-            query.setInt(2, kaartID);
-            query.executeUpdate();
-
-            query.close();
+            try (PreparedStatement query = conn.prepareStatement("INSERT INTO " + Connectie.DBNAAM + ".Kaart (naam, id) "
+                    + "VALUES (?, ?)")) {
+                query.setString(1, naam);
+                query.setInt(2, kaartID);
+                query.executeUpdate();
+            }
         } catch (SQLException ex) {
             if (ex.getMessage().toLowerCase().contains("duplicate entry")) {
                 throw new CardAlreadyBoughtException(ex);
             }
             throw new DatabaseException(ex);
-            
+
         }
     }
 
     public int geefKaartId(Kaart kaart) {
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT id FROM ID222177_g37.KaartType WHERE type = ? AND waarde = ? AND prijs = ?");
+            PreparedStatement query = conn.prepareStatement("SELECT id FROM " + Connectie.DBNAAM + ".KaartType WHERE type = ? AND waarde = ? AND prijs = ?");
             query.setString(1, kaart.getType() + "");
             query.setInt(2, kaart.getWaarde());
             query.setInt(3, kaart.getPrijs());
@@ -131,7 +126,7 @@ public class KaartMapper {
                 query.close();
                 throw new CardDoesntExistException("Card doesnt exist");
             }
-            
+
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -142,18 +137,18 @@ public class KaartMapper {
         List<Kaart> kaarten = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.KaartType WHERE id IN(SELECT id FROM ID222177_g37.Kaart WHERE naam = ? )");
-            query.setString(1, naam);
-            try (ResultSet rs = query.executeQuery()) {
-                while (rs.next()) {
-                    int waarde = rs.getInt("waarde");
-                    int prijs = rs.getInt("prijs");
-                    char type = rs.getString("type").charAt(0);
-
-                    kaarten.add(new Kaart(waarde, type, prijs));
+            try (PreparedStatement query = conn.prepareStatement("SELECT * FROM " + Connectie.DBNAAM + ".KaartType WHERE id IN(SELECT id FROM " + Connectie.DBNAAM + ".Kaart WHERE naam = ? )")) {
+                query.setString(1, naam);
+                try (ResultSet rs = query.executeQuery()) {
+                    while (rs.next()) {
+                        int waarde = rs.getInt("waarde");
+                        int prijs = rs.getInt("prijs");
+                        char type = rs.getString("type").charAt(0);
+                        
+                        kaarten.add(new Kaart(waarde, type, prijs));
+                    }
                 }
             }
-            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -164,18 +159,18 @@ public class KaartMapper {
         List<Kaart> kaarten = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.KaartType WHERE id IN(SELECT id FROM ID222177_g37.Kaart WHERE naam = ? ) OR prijs = 0");
-            query.setString(1, naam);
-            try (ResultSet rs = query.executeQuery()) {
-                while (rs.next()) {
-                    int waarde = rs.getInt("waarde");
-                    int prijs = rs.getInt("prijs");
-                    char type = rs.getString("type").charAt(0);
-
-                    kaarten.add(new Kaart(waarde, type, prijs));
+            try (PreparedStatement query = conn.prepareStatement("SELECT * FROM " + Connectie.DBNAAM + ".KaartType WHERE id IN(SELECT id FROM " + Connectie.DBNAAM + ".Kaart WHERE naam = ? ) OR prijs = 0")) {
+                query.setString(1, naam);
+                try (ResultSet rs = query.executeQuery()) {
+                    while (rs.next()) {
+                        int waarde = rs.getInt("waarde");
+                        int prijs = rs.getInt("prijs");
+                        char type = rs.getString("type").charAt(0);
+                        
+                        kaarten.add(new Kaart(waarde, type, prijs));
+                    }
                 }
             }
-            query.close();
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }
@@ -220,7 +215,7 @@ public class KaartMapper {
     public void leegAlleAangekochteKaarten() {
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("truncate ID222177_g37.Kaart");
+            PreparedStatement query = conn.prepareStatement("truncate " + Connectie.DBNAAM + ".Kaart");
             query.executeUpdate();
 
         } catch (SQLException ex) {
@@ -234,13 +229,13 @@ public class KaartMapper {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
             PreparedStatement query = conn.prepareStatement("SET FOREIGN_KEY_CHECKS = 0");
             query.executeUpdate();
-            query = conn.prepareStatement("truncate ID222177_g37.KaartType");
+            query = conn.prepareStatement("truncate " + Connectie.DBNAAM + ".KaartType");
             query.executeUpdate();
-            query = conn.prepareStatement("ALTER TABLE ID222177_g37.KaartType  AUTO_INCREMENT = 1");
+            query = conn.prepareStatement("ALTER TABLE " + Connectie.DBNAAM + ".KaartType  AUTO_INCREMENT = 1");
             query.executeUpdate();
             query = conn.prepareStatement("SET FOREIGN_KEY_CHECKS = 1");
             query.executeUpdate();
-            
+
             query.close();
 
         } catch (SQLException ex) {
@@ -251,12 +246,11 @@ public class KaartMapper {
     public void neemStartstapelkaartWeg(String naam, Kaart kaart) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
             int kaartID = geefKaartId(kaart);
-            PreparedStatement query = conn.prepareStatement("DELETE FROM ID222177_g37.Kaart WHERE naam = ? AND id = ?");
-            query.setString(1, naam);
-            query.setInt(2, kaartID);
-            query.executeUpdate();
-            
-            query.close();
+            try (PreparedStatement query = conn.prepareStatement("DELETE FROM " + Connectie.DBNAAM + ".Kaart WHERE naam = ? AND id = ?")) {
+                query.setString(1, naam);
+                query.setInt(2, kaartID);
+                query.executeUpdate();
+            }
         } catch (SQLException ex) {
             throw new DatabaseException(ex);
         }

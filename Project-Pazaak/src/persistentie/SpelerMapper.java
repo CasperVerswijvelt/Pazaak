@@ -27,7 +27,7 @@ public class SpelerMapper {
     public Speler geefSpeler(String naam) {
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.Speler WHERE naam = ?");
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM " + Connectie.DBNAAM + ".Speler WHERE naam = ?");
             query.setString(1, naam);
             try (ResultSet rs = query.executeQuery()) {
                 if (rs.next()) {
@@ -46,7 +46,7 @@ public class SpelerMapper {
     public void voegToe(Speler speler) {
 
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
-            PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.Speler (naam, geboortedatum)"
+            PreparedStatement query = conn.prepareStatement("INSERT INTO " + Connectie.DBNAAM + ".Speler (naam, geboortedatum)"
                     + "VALUES (?, ?)");
             query.setString(1, speler.getNaam());
             query.setInt(2, speler.getGeboorteJaar());
@@ -64,7 +64,7 @@ public class SpelerMapper {
         List<String> spelers = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
-            PreparedStatement query = conn.prepareStatement("SELECT naam FROM ID222177_g37.Speler");
+            PreparedStatement query = conn.prepareStatement("SELECT naam FROM " + Connectie.DBNAAM + ".Speler");
             try (ResultSet rs = query.executeQuery()) {
                 while (rs.next()) {
                     String naam = rs.getString("naam");
@@ -79,7 +79,7 @@ public class SpelerMapper {
 
     public void slaKredietOp(Speler speler) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
-            PreparedStatement query = conn.prepareStatement("UPDATE ID222177_g37.Speler SET krediet = ? WHERE naam = ?");
+            PreparedStatement query = conn.prepareStatement("UPDATE " + Connectie.DBNAAM + ".Speler SET krediet = ? WHERE naam = ?");
             query.setInt(1, speler.getKrediet());
             query.setString(2, speler.getNaam());
             query.executeUpdate();
@@ -90,7 +90,7 @@ public class SpelerMapper {
 
     public void veranderSpeler(String geselecteerdeSpeler, String nieuweNaam, int nieuweGebDat, int nieuwKrediet) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
-            PreparedStatement query = conn.prepareStatement("UPDATE ID222177_g37.Speler SET `naam`=?, `geboortedatum`=?, `krediet`=? WHERE `naam`=?");
+            PreparedStatement query = conn.prepareStatement("UPDATE " + Connectie.DBNAAM + ".Speler SET `naam`=?, `geboortedatum`=?, `krediet`=? WHERE `naam`=?");
             query.setString(1, nieuweNaam);
             query.setInt(2, nieuweGebDat);
             query.setInt(3, nieuwKrediet);
@@ -103,7 +103,7 @@ public class SpelerMapper {
 
     public boolean valideerAdmin(String user, String password) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
-            PreparedStatement query = conn.prepareStatement("SELECT pass, salt FROM ID222177_g37.admin WHERE user = ?");
+            PreparedStatement query = conn.prepareStatement("SELECT pass, salt FROM " + Connectie.DBNAAM + ".admin WHERE user = ?");
             query.setString(1, user);
 
             try (ResultSet rs = query.executeQuery()) {
@@ -146,7 +146,7 @@ public class SpelerMapper {
 
     public void verwijderSpeler(String naam) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
-            PreparedStatement query = conn.prepareStatement("DELETE FROM ID222177_g37.Speler WHERE NAAM = ?");
+            PreparedStatement query = conn.prepareStatement("DELETE FROM " + Connectie.DBNAAM + ".Speler WHERE NAAM = ?");
             query.setString(1, naam);
             query.executeUpdate();
             
@@ -159,7 +159,7 @@ public class SpelerMapper {
     public void maakNieuweAdmin(String bestaandeAdminNaam, String bestaandeAdminUser, String nieuweAdminNaam, String nieuweAdminPass) {
         if (valideerAdmin(bestaandeAdminNaam, bestaandeAdminUser)) {
             try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
-                PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.admin (user, pass, salt) VALUES (?,?,?)");
+                PreparedStatement query = conn.prepareStatement("INSERT INTO " + Connectie.DBNAAM + ".admin (user, pass, salt) VALUES (?,?,?)");
                 String salt = generateSalt();
                 String hash = getHash(nieuweAdminPass + salt, "SHA-512");
 

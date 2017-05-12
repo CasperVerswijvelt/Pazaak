@@ -6,7 +6,6 @@
 package persistentie;
 
 import domein.Kaart;
-import domein.Speler;
 import domein.Wedstrijd;
 import exceptions.*;
 import java.sql.Connection;
@@ -15,10 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -43,7 +39,7 @@ public class WedstrijdMapper {
             }
 
             //Wedstrijd
-            PreparedStatement query = conn.prepareStatement("INSERT INTO ID222177_g37.Wedstrijd (naam, spelerAanBeurt, speler1, speler2, score1,score2)"
+            PreparedStatement query = conn.prepareStatement("INSERT INTO " + Connectie.DBNAAM + ".Wedstrijd (naam, spelerAanBeurt, speler1, speler2, score1,score2)"
                     + "VALUES (?, ?, ?, ?, ?,?)");
             query.setString(1, wedstrijdNaam);
             query.setString(2, wedstrijd.geefSpelerAanBeurt());
@@ -57,7 +53,7 @@ public class WedstrijdMapper {
             for (int i = 0; i < 2; i++) {
                 List<Kaart> wedstrijdStapel = wedstrijd.geefWedstrijdStapel(i);
                 for (int j = 0; j < wedstrijdStapel.size(); j++) {
-                    query = conn.prepareStatement("INSERT INTO ID222177_g37.WedstrijdKaart (KaartTypeId, SpelerNaam, WedstrijdNaam)"
+                    query = conn.prepareStatement("INSERT INTO " + Connectie.DBNAAM + ".WedstrijdKaart (KaartTypeId, SpelerNaam, WedstrijdNaam)"
                             + "VALUES (?, ?, ?)");
                     query.setInt(1, km.geefKaartId(wedstrijdStapel.get(j)));
                     query.setString(2, wedstrijd.geefSpelers().get(i).getNaam());
@@ -77,7 +73,7 @@ public class WedstrijdMapper {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
 
             //Wedstrijd
-            PreparedStatement query = conn.prepareStatement("SELECT naam FROM ID222177_g37.Wedstrijd WHERE naam = ?");
+            PreparedStatement query = conn.prepareStatement("SELECT naam FROM " + Connectie.DBNAAM + ".Wedstrijd WHERE naam = ?");
             query.setString(1, wedstrijdNaam);
             ResultSet rs = query.executeQuery();
 
@@ -103,7 +99,7 @@ public class WedstrijdMapper {
             List<Kaart> ws1 = new ArrayList<>(), ws2 = new ArrayList<>();
 
             //Eerste query (scores en spelernamen)
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM ID222177_g37.Wedstrijd WHERE naam = ?");
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM " + Connectie.DBNAAM + ".Wedstrijd WHERE naam = ?");
             query.setString(1, wedstrijdNaam);
             ResultSet rs = query.executeQuery();
 
@@ -116,7 +112,7 @@ public class WedstrijdMapper {
             }
 
             //Tweede query (kaartenlijst en spelernamen)
-            query = conn.prepareStatement("SELECT waarde, type, prijs,spelerNaam FROM ID222177_g37.WedstrijdKaart LEFT JOIN ID222177_g37.KaartType ON ID222177_g37.WedstrijdKaart.KaartTypeId = ID222177_g37.KaartType.id WHERE WedstrijdNaam = ? ");
+            query = conn.prepareStatement("SELECT waarde, type, prijs,spelerNaam FROM " + Connectie.DBNAAM + ".WedstrijdKaart LEFT JOIN " + Connectie.DBNAAM + ".KaartType ON " + Connectie.DBNAAM + ".WedstrijdKaart.KaartTypeId = " + Connectie.DBNAAM + ".KaartType.id WHERE WedstrijdNaam = ? ");
             query.setString(1, wedstrijdNaam);
 
             rs = query.executeQuery();
@@ -137,7 +133,7 @@ public class WedstrijdMapper {
             }
 
             //Derde query (wedstrijd zelf verwijderen)
-            query = conn.prepareStatement("DELETE FROM ID222177_g37.Wedstrijd WHERE naam = ?");
+            query = conn.prepareStatement("DELETE FROM " + Connectie.DBNAAM + ".Wedstrijd WHERE naam = ?");
             query.setString(1, wedstrijdNaam);
             query.executeUpdate();
 
@@ -158,7 +154,7 @@ public class WedstrijdMapper {
         try {
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
 
-            PreparedStatement query = conn.prepareStatement("SELECT naam, speler1, speler2, score1, score2 FROM ID222177_g37.Wedstrijd");
+            PreparedStatement query = conn.prepareStatement("SELECT naam, speler1, speler2, score1, score2 FROM " + Connectie.DBNAAM + ".Wedstrijd");
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
@@ -186,7 +182,7 @@ public class WedstrijdMapper {
 
     public void verwijderWedstrijd(String wedstrijd) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL)) {
-            PreparedStatement query = conn.prepareStatement("DELETE FROM ID222177_g37.Wedstrijd WHERE NAAM = ?");
+            PreparedStatement query = conn.prepareStatement("DELETE FROM " + Connectie.DBNAAM + ".Wedstrijd WHERE NAAM = ?");
             query.setString(1, wedstrijd);
             query.executeUpdate();
 
