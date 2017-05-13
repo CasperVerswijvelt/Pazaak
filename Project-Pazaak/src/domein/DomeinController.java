@@ -101,6 +101,15 @@ public class DomeinController {
 
         return lijst;
     }
+    
+    /**
+     * Gives a list of cards that were selected with selecteerKaart
+     *
+     * @return
+     */
+    public int geefAantalGeselecteerdeKaarten() {
+        return geselecteerdeKaarten.size();
+    }
 
     /**
      * Makes a new game with selected players, if 2 players are selected

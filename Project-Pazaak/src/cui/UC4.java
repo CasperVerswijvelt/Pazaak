@@ -42,7 +42,7 @@ public class UC4 {
             List<String[]> startStapel = new ArrayList<>(Arrays.asList(dc.geefStartStapel()));
 
             //6 kaarten kiezen
-            for (int k = 0; k < 6; k++) {
+            while(dc.geefAantalGeselecteerdeKaarten()<6) {
 
                 //Kaarten tonen
                 String[][] array = new String[startStapel.size()][2];
@@ -76,7 +76,6 @@ public class UC4 {
                     printLijn();
                     System.out.printf(r.getString("SELECTCARDSFORPLAYER") + "%n", speler);
                     printLijn();
-                    k--;
                 } else {
                     dc.selecteerKaart(startStapel.get(keuze - 1));
                     System.out.println(formatteerKaart(startStapel.get(keuze - 1), false) + " " + r.getString("SELECTED"));
