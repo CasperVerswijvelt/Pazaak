@@ -96,7 +96,7 @@ public class Set {
     }
 
     /**
-     * method that checks if a gameboard is frozen or not
+     * method that checks if a gameboard is frozen or not for player at turn
      * @return
      */
     public boolean isBevroren() {

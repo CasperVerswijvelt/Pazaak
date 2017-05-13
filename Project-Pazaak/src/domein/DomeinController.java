@@ -2,9 +2,6 @@ package domein;
 
 import exceptions.NoPlayersAvailableException;
 import java.util.*;
-import javafx.scene.control.TextField;
-import persistentie.KaartMapper;
-import persistentie.SpelerMapper;
 
 /**
  * DomeinController, class that user interface addresses

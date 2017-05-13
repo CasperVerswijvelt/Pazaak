@@ -130,13 +130,13 @@ public class SpelerEnKaartRepository {
     /**
      * adds card to owned cards and changes the credits of a player
      * @param naam
-     * @param inputKaart
+     * @param kaart
      */
-    public void koopKaart(String naam, Kaart inputKaart) {
+    public void koopKaart(String naam, Kaart kaart) {
         Speler speler = geefSpeler(naam);
-        int prijs = inputKaart.getPrijs();
+        int prijs = kaart.getPrijs();
         if (speler.getKrediet() >= prijs) {
-            km.voegStartstapelKaartToe(naam, inputKaart);
+            km.voegStartstapelKaartToe(naam, kaart);
             speler.setKrediet(speler.getKrediet() - prijs);
             slaKredietOp(speler);
 
@@ -163,9 +163,16 @@ public class SpelerEnKaartRepository {
         return km.geefPrijzenKaarten();
     }
 
-    void veranderSpeler(String geselecteerdeSpeler, String nieuweNaam, int nieuweGebDat, int nieuwKrediet) {
+    /**
+     *Changes the information of given player in the database, all saved games and bought cards remain connected to the player if name is changed.
+     * @param spelerNaam
+     * @param nieuweNaam
+     * @param nieuweGebDat
+     * @param nieuwKrediet
+     */
+    public void veranderSpeler(String spelerNaam, String nieuweNaam, int nieuweGebDat, int nieuwKrediet) {
         Speler speler = new Speler(nieuweNaam,nieuweGebDat, 0, null);
-        sm.veranderSpeler(geselecteerdeSpeler, nieuweNaam, nieuweGebDat, nieuwKrediet);
+        sm.veranderSpeler(spelerNaam, nieuweNaam, nieuweGebDat, nieuwKrediet);
     }
     
     /**

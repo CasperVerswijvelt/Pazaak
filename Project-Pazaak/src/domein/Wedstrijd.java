@@ -4,7 +4,9 @@ import exceptions.*;
 import java.util.*;
 
 /**
- *Game class, contains 2 players , their gamedeck and their amount of wins in that game
+ * Game class, contains 2 players , their gamedeck and their amount of wins in
+ * that game
+ *
  * @author Casper
  */
 public class Wedstrijd {
@@ -16,7 +18,8 @@ public class Wedstrijd {
     private boolean eersteSpelerBegint;
 
     /**
-     *Initializes a new game with give players
+     * Initializes a new game with give players
+     *
      * @param speler1
      * @param speler2
      */
@@ -30,9 +33,10 @@ public class Wedstrijd {
         this.eersteSpelerBegint = true;
 
         int gebJaarSpeler1 = speler1.getGeboorteJaar(), gebJaarSpeler2 = speler2.getGeboorteJaar();
-        
-        if(speler1.getNaam().equalsIgnoreCase(speler2.getNaam()))
+
+        if (speler1.getNaam().equalsIgnoreCase(speler2.getNaam())) {
             throw new PlayersInGameAreSameException();
+        }
 
         //Speler volgens geboortejaar in goede volgorde opslaan
         if (gebJaarSpeler1 != gebJaarSpeler2) {
@@ -59,9 +63,9 @@ public class Wedstrijd {
     }
 
     //Wedstrijd uit DB
-
     /**
-     *Initializes a game that was aved in the database, with given information
+     * Initializes a game that was saved in the database, with given information
+     *
      * @param speler1
      * @param speler2
      * @param wedstrijdStapel1
@@ -93,9 +97,9 @@ public class Wedstrijd {
     }
 
     //Methodes
-
     /**
-     *Returns the players that have not yet created a game deck
+     * Returns the players that have not yet created a game deck
+     *
      * @return
      */
     public List<Speler> geefSpelersZonderWedstrijdStapel() {
@@ -110,7 +114,8 @@ public class Wedstrijd {
     }
 
     /**
-     *Sets the given list of cards for the given player in the game
+     * Sets the given list of cards for the given player in the game
+     *
      * @param kaarten
      * @param speler
      */
@@ -123,7 +128,7 @@ public class Wedstrijd {
     }
 
     /**
-     *Starts a new set for the game
+     * Starts a new set for the game
      */
     public void maakNieuweSet() {
         this.huidigeSet = new Set(eersteSpelerBegint);
@@ -131,7 +136,8 @@ public class Wedstrijd {
     }
 
     /**
-     *Returns the player at turn
+     * Returns the player at turn
+     *
      * @return
      */
     public String geefSpelerAanBeurt() {
@@ -139,14 +145,15 @@ public class Wedstrijd {
     }
 
     /**
-     *Gives out a card from the set deck to the player at turn
+     * Gives out a card from the set deck to the player at turn
      */
     public void deelKaartUit() {
         huidigeSet.deelKaartUit();
     }
 
     /**
-     *Returns the game board of the player currently at turn
+     * Returns the game board of the player currently at turn
+     *
      * @return
      */
     public List<Kaart> geefSpelBord() {
@@ -155,6 +162,7 @@ public class Wedstrijd {
 
     /**
      * Returns the score of the player currently at turn
+     *
      * @return
      */
     public int geefScore() {
@@ -162,7 +170,8 @@ public class Wedstrijd {
     }
 
     /**
-     *Gives the playing possibilities for the player at turn
+     * Gives the playing possibilities for the player at turn
+     *
      * @return
      */
     public List<String> geefMogelijkeActies() {
@@ -174,21 +183,23 @@ public class Wedstrijd {
     }
 
     /**
-     *End turn for player currently at turn
+     * End turn for player currently at turn
      */
     public void eindigBeurt() {
         huidigeSet.eindigBeurt();
     }
 
     /**
-     *Freezes the gameboard of the player at turn
+     * Freezes the gameboard of the player at turn
      */
     public void bevriesBord() {
         huidigeSet.bevriesBord();
     }
 
     /**
-     *Returns the player object of the given playername, if it is participating in the game
+     * Returns the player object of the given playername, if it is participating
+     * in the game
+     *
      * @param naam
      * @return
      */
@@ -202,7 +213,8 @@ public class Wedstrijd {
     }
 
     /**
-     *Returns the game deck of the player at turn in the game
+     * Returns the game deck of the player at turn in the game
+     *
      * @return
      */
     public List<Kaart> geefWedstrijdStapel() {
@@ -210,7 +222,8 @@ public class Wedstrijd {
     }
 
     /**
-     *Returns the game deck for the player at given index
+     * Returns the game deck for the player at given index
+     *
      * @param index
      * @return
      */
@@ -219,7 +232,8 @@ public class Wedstrijd {
     }
 
     /**
-     *uses given gamecard from side deck, if it is on your sidedeck
+     * uses given gamecard from side deck, if it is on your sidedeck
+     *
      * @param kaart
      * @param gewensteWaarde
      * @param gewenstType
@@ -240,7 +254,8 @@ public class Wedstrijd {
     }
 
     /**
-     *returns if the set is over
+     * returns if the set is over
+     *
      * @return
      */
     public boolean setIsKlaar() {
@@ -248,7 +263,9 @@ public class Wedstrijd {
     }
 
     /**
-     *Returns the outcome of the set, a playername or TIE, or null if set is not done
+     * Returns the outcome of the set, a playername or TIE, or null if set is
+     * not done
+     *
      * @return
      */
     public String geefSetUitslag() {
@@ -266,7 +283,8 @@ public class Wedstrijd {
     }
 
     /**
-     *Returns the winner of the game
+     * Returns the winner of the game
+     *
      * @return
      */
     public Speler geefWinnaar() {
@@ -283,7 +301,8 @@ public class Wedstrijd {
     }
 
     /**
-     *Returns if the game is over
+     * Returns if the game is over
+     *
      * @return
      */
     public boolean isKlaar() {
@@ -295,30 +314,8 @@ public class Wedstrijd {
         return false;
     }
 
-    private void veranderBeginSpeler() {
-        this.eersteSpelerBegint = !this.eersteSpelerBegint;
-    }
-
-    //Getters & Setters
-
     /**
-     *Returns players participating in the game
-     * @return
-     */
-    public List<Speler> geefSpelers() {
-        return spelers;
-    }
-
-    /**
-     *Returns the amount of wins for each player in the game
-     * @return
-     */
-    public int[] geefTussenstand() {
-        return aantalGewonnen;
-    }
-
-    /**
-     *Register a win for the winning setplayer, if there is a winner
+     * Register a win for the winning setplayer, if there is a winner
      */
     public void registreerAantalWins() {
         int uitslag = huidigeSet.geefSetUitslagIndex();
@@ -326,4 +323,28 @@ public class Wedstrijd {
             aantalGewonnen[uitslag]++;
         }
     }
+
+    private void veranderBeginSpeler() {
+        this.eersteSpelerBegint = !this.eersteSpelerBegint;
+    }
+
+    //Getters & Setters
+    /**
+     * Returns players participating in the game
+     *
+     * @return
+     */
+    public List<Speler> geefSpelers() {
+        return spelers;
+    }
+
+    /**
+     * Returns the amount of wins for each player in the game
+     *
+     * @return
+     */
+    public int[] geefTussenstand() {
+        return aantalGewonnen;
+    }
+
 }
