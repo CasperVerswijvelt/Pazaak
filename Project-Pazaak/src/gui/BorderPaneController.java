@@ -78,7 +78,7 @@ public class BorderPaneController extends BorderPane {
 
         ingedrukteToetsen = new ArrayList<>();
         setOnKeyPressed((event) -> {
-            if (getCenter() instanceof MooieMenuController) {
+            if (getCenter() instanceof MenuController) {
                 ingedrukteToetsen.add(event.getCode());
                 if (ingedrukteToetsen.size() > 3) {
                     ingedrukteToetsen.remove(0);
@@ -129,7 +129,7 @@ public class BorderPaneController extends BorderPane {
     }
 
     public void naarMenu() {
-        MooieMenuController menu = new MooieMenuController(this, dc, r);
+        MenuController menu = new MenuController(this, dc, r);
         this.setCenter(menu);
         setAlignment(menu, Pos.CENTER);
         btnBack.setVisible(false);

@@ -16,6 +16,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -23,7 +25,7 @@ import javafx.stage.Stage;
  *
  * @author Casper
  */
-public class MooieMenuController extends VBox {
+public class MenuController extends VBox {
 
     @FXML
     private Button btnStartSpel;
@@ -37,7 +39,7 @@ public class MooieMenuController extends VBox {
     private Button btnWinkel;
     @FXML
     private Button btnInstructies;
-    
+
     private DomeinController dc;
     private ResourceBundle r;
     private BorderPaneController parent;
@@ -47,21 +49,21 @@ public class MooieMenuController extends VBox {
     /**
      * Initializes the controller class.
      */
-    public MooieMenuController(BorderPaneController parent, DomeinController dc, ResourceBundle r) {
+    public MenuController(BorderPaneController parent, DomeinController dc, ResourceBundle r) {
         this.dc = dc;
         this.parent = parent;
         this.r = r;
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MooieMenu.fxml"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Menu.fxml"));
         loader.setRoot(this);
         loader.setController(this);
-      
-        try{
-          loader.load();
-        }catch(IOException ex){
+
+        try {
+            loader.load();
+        } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-          buildGUI();
+        buildGUI();
     }
 
     @FXML
@@ -78,7 +80,6 @@ public class MooieMenuController extends VBox {
     private void naarTaalScherm(ActionEvent event) {
         parent.naarTaalSelectie();
     }
-
 
     @FXML
     private void naarSpelerMakenSchem(ActionEvent event) {
@@ -100,7 +101,7 @@ public class MooieMenuController extends VBox {
         btnStartSpel.setText(r.getString("STARTGAMEOPTION"));
         btnWinkel.setText(r.getString("BUYCARDOPTION"));
         btnLaadScherm.setText(r.getString("LOADGAMEOPTION"));
-        btnTaal.setText("Change language"+r.getString("VERTAALMIJ"));
+        btnTaal.setText("Change language" + r.getString("VERTAALMIJ"));
         btnInstructies.setText(r.getString("RULES"));
         btnExit.setText(r.getString("EXIT"));
     }
@@ -114,8 +115,9 @@ public class MooieMenuController extends VBox {
     private void sluitSpelAf(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.NONE, r.getString("EXITGAME"), ButtonType.OK);
         alert.setTitle("Pazaak");
-        Optional<ButtonType>  res = alert.showAndWait();
-        if(res.isPresent())
+        Optional<ButtonType> res = alert.showAndWait();
+        if (res.isPresent()) {
             System.exit(0);
+        }
     }
 }

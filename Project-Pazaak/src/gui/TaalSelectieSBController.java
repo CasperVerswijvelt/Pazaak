@@ -30,7 +30,7 @@ public class TaalSelectieSBController extends VBox {
     private Button btnNederlands;
 
     private DomeinController dc;
-    private MooieMenuController mmc;
+    private MenuController mmc;
     private ResourceBundle r;
     private BorderPaneController parent;
 
