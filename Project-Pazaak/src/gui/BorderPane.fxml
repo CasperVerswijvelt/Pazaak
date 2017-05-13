@@ -25,13 +25,13 @@
          <children>
             <HBox alignment="CENTER_LEFT" onMouseEntered="#volumeHoverBegin" onMouseExited="#volumeHoverEind" prefHeight="60.0" prefWidth="203.0" spacing="15.0">
                <children>
-                  <Button fx:id="btnToggleMuziek" alignment="BOTTOM_LEFT" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" />
+                  <Button fx:id="btnToggleMuziek" alignment="BOTTOM_LEFT" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#btnToggleMuziekIngedrukt" />
                   <Slider fx:id="volumeSlider" blockIncrement="1.0" prefWidth="340.0" value="100.0" visible="false" />
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="267.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="btnBack" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" />
+                  <Button fx:id="btnBack" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" onAction="#btnBackIngedrukt" />
                </children>
             </HBox>
          </children>

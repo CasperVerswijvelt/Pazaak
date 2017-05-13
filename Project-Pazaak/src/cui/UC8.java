@@ -29,17 +29,17 @@ public class UC8 {
         Scanner in = new Scanner(System.in);
         printLijn();
         boolean valideKeuze = false;
-        String keuze;
+        String naam;
         do {
             try {
                 System.out.print(r.getString("NAME") + ": ");
-                keuze = in.nextLine().trim();
-                if (keuze == null || keuze.isEmpty()) {
+                naam = in.nextLine().trim();
+                if (naam == null || naam.isEmpty()) {
                     throw new IllegalArgumentException();
                 }
-                dc.slaWedstrijdOp(keuze);
+                dc.slaWedstrijdOp(naam);
                 printLijn();
-                System.out.println(r.getString("GAMESAVED"));
+                System.out.println(String.format(r.getString("GAMESAVED"), naam));
                 printLijn();
                 valideKeuze = true;
 

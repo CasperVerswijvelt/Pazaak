@@ -15,8 +15,8 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -33,7 +33,7 @@ public class LaadWedstrijdScherm extends VBox {
     private String[][] wedstrijden;
     
     private Label lblTitel;
-    private ComboBox cbWedstrijdSelectie;
+    private ListView lvWedstrijdSelectie;
     private Button btnLaadSpel;
     private Label lblError;
     
@@ -52,7 +52,12 @@ public class LaadWedstrijdScherm extends VBox {
         lblTitel = new Label(r.getString("LOADGAMEOPTION"));
         lblError = new Label();
         lblError.setTextFill(Color.RED);
-        cbWedstrijdSelectie = new ComboBox();
+        lvWedstrijdSelectie = new ListView();
+        lvWedstrijdSelectie.setMaxWidth(700);
+        lvWedstrijdSelectie.setPrefSize(300, 300);
+        
+        lvWedstrijdSelectie.setPlaceholder(new Label(r.getString("NOGAMES")));
+        lvWedstrijdSelectie.getStyleClass().add("laadSpel");
         
         DBAlert = new Alert(Alert.AlertType.ERROR);
         DBAlert.setTitle("Pazaak");
@@ -70,7 +75,7 @@ public class LaadWedstrijdScherm extends VBox {
         laadWedstrijdenInComboBox();
         
         this.getChildren().add(lblTitel);
-        this.getChildren().add(cbWedstrijdSelectie);
+        this.getChildren().add(lvWedstrijdSelectie);
         this.getChildren().add(btnLaadSpel);
         this.getChildren().add(lblError);
         
@@ -81,7 +86,7 @@ public class LaadWedstrijdScherm extends VBox {
     
     private void drukLaad(ActionEvent event) {
         try {
-            dc.laadWedstrijd(wedstrijden[cbWedstrijdSelectie.getSelectionModel().getSelectedIndex()][0]);
+            dc.laadWedstrijd(wedstrijden[lvWedstrijdSelectie.getSelectionModel().getSelectedIndex()][0]);
             toSpeelWedstrijdScherm();
         } catch (GameDoesntExistException e) {
             gameNotFoundAlert.show();
@@ -99,7 +104,7 @@ public class LaadWedstrijdScherm extends VBox {
     }
     
     private void laadWedstrijdenInComboBox() {
-        cbWedstrijdSelectie.getItems().clear();
+        lvWedstrijdSelectie.getItems().clear();
         
         try {
             wedstrijden = dc.geefWedstrijdenOverzicht();
@@ -109,12 +114,12 @@ public class LaadWedstrijdScherm extends VBox {
         }
         
         if (wedstrijden.length == 0) {
-            cbWedstrijdSelectie.getSelectionModel().select(r.getString("NOGAMES"));
-            cbWedstrijdSelectie.setDisable(true);
+            
+            lvWedstrijdSelectie.setDisable(true);
             btnLaadSpel.setDisable(true);
             return;
         }
-        cbWedstrijdSelectie.setDisable(false);
+        lvWedstrijdSelectie.setDisable(false);
         btnLaadSpel.setDisable(false);
         
         String[] wedstrijdenStrings = new String[wedstrijden.length];
@@ -123,7 +128,6 @@ public class LaadWedstrijdScherm extends VBox {
         }
         
         ObservableList<String> lijst = FXCollections.observableArrayList(wedstrijdenStrings);
-        cbWedstrijdSelectie.setItems(lijst);
-        cbWedstrijdSelectie.getSelectionModel().selectFirst();
+        lvWedstrijdSelectie.setItems(lijst);
     }  
 }

@@ -112,15 +112,15 @@ public class SetSpeelScherm extends GridPane {
             verversSpelbordSpeler();
 
             //Checken of wedstrijd ni gedaan is kejt
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             String uitslag = dc.geefSetUitslag();
             String alertUitslag = uitslag.equals("TIE") ? r.getString("TIE") : uitslag +" "+ r.getString("WINS");
             
 
             alert.setTitle("Pazaak");
             int[] tussenstand = dc.geefWedstrijdTussenstand();
-            alert.setContentText(alertUitslag + "\n" + speler1 + " " + tussenstand[0] + " - " + tussenstand[1] + " " + speler2);
+            alert.setHeaderText(alertUitslag);
+            alert.setContentText(speler1 + " " + tussenstand[0] + " - " + tussenstand[1] + " " + speler2);
             alert.showAndWait();
 
             if (!dc.wedstrijdIsKlaar()) {
@@ -162,30 +162,30 @@ public class SetSpeelScherm extends GridPane {
                             
                             Alert alertVerderSpelen = new Alert(Alert.AlertType.CONFIRMATION);
                             alertVerderSpelen.setTitle("Pazaak");
-                            alertVerderSpelen.setHeaderText(null);
+                            alertVerderSpelen.setHeaderText(String.format(r.getString("GAMESAVED"), naam));
                             alertVerderSpelen.setContentText(r.getString("DOORGAAN"));
                             
                             Optional<ButtonType> resultaat = alertVerderSpelen.showAndWait();
                             if (resultaat.get() != ButtonType.OK){
                                 parent.naarMenu();
                             }else{
-                                setTenEinde();
+                                setEindeAfhandelen();
                             }
                             
                             break;
 
                         } else {
-                            setTenEinde();
+                            setEindeAfhandelen();
                             break;
                         }
                     }
                 } else {
-                    setTenEinde();
+                    setEindeAfhandelen();
 
                 }
 
             } else {
-                setTenEinde();
+                setEindeAfhandelen();
 
             }
         }
@@ -244,7 +244,7 @@ public class SetSpeelScherm extends GridPane {
         drukEndTurn();
     }
 
-    private void setTenEinde() {
+    private void setEindeAfhandelen() {
         if (dc.wedstrijdIsKlaar()) {
 
             String winnaar = dc.geefWinnaar();

@@ -91,27 +91,6 @@ public class BorderPaneController extends BorderPane {
 
         });
 
-        btnBack.setOnAction((ActionEvent event) -> {
-            if (getCenter() instanceof KaartWinkelScherm && terugKeerSchermWinkel != null) {
-                terugNaarSpelerSelectieScherm();
-                return;
-            }
-            
-            if (getCenter() instanceof SetSpeelScherm) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setHeaderText(null);
-                alert.setContentText(r.getString("TOMENU"));
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() != ButtonType.OK) {
-                    return;
-                }
-            }
-            naarMenu();
-        });
-
-        btnToggleMuziek.setOnAction((ActionEvent event) -> {
-            toggleMuziek();
-        });
         volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             mediaPlayer.setVolume((double) new_val / 100);
         });
@@ -197,15 +176,14 @@ public class BorderPaneController extends BorderPane {
             this.setCenter(shop);
             shop.setAlignment(Pos.CENTER);
             btnBack.setVisible(true);
-            
-            if(speler!= null)
+
+            if (speler != null) {
                 shop.selecteerSpeler(speler);
+            }
         } catch (DatabaseException e) {
 
         }
-        
-        
-            
+
     }
 
     public void naarLaadScherm() {
@@ -271,6 +249,30 @@ public class BorderPaneController extends BorderPane {
     @FXML
     private void volumeHoverBegin(MouseEvent event) {
         volumeSlider.setVisible(true);
+    }
+
+    @FXML
+    private void btnToggleMuziekIngedrukt(ActionEvent event) {
+        toggleMuziek();
+    }
+
+    @FXML
+    private void btnBackIngedrukt(ActionEvent event) {
+        if (getCenter() instanceof KaartWinkelScherm && terugKeerSchermWinkel != null) {
+            terugNaarSpelerSelectieScherm();
+            return;
+        }
+
+        if (getCenter() instanceof SetSpeelScherm) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText(null);
+            alert.setContentText(r.getString("TOMENU"));
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() != ButtonType.OK) {
+                return;
+            }
+        }
+        naarMenu();
     }
 
 }
