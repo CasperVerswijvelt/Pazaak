@@ -35,12 +35,12 @@ public class UC9 {
             System.out.println(r.getString("DATABASEERROR"));
             return;
         }
-        System.out.println(r.getString("LOADGAMEOPTION") + " | " + r.getString("BACKTOMENU"));
-        printLijn();
 
         if (overzicht.length == 0) {
             System.out.println(r.getString("NOGAMES"));
         } else {
+            System.out.println(r.getString("LOADGAMEOPTION") + " | " + r.getString("BACKTOMENU"));
+            printLijn();
             for (int i = 0; i < overzicht.length; i++) {
                 System.out.printf(" %d. %s [%s %s - %s %s]%n", i + 1, overzicht[i][0], overzicht[i][1], overzicht[i][2], overzicht[i][4], overzicht[i][3]);
             }

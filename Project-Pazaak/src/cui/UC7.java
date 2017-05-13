@@ -49,10 +49,12 @@ public class UC7 {
         System.out.println("| " + r.getString("SHOP") + " | " + r.getString("CREDITS") + ": " + dc.geefSpelerInfo(naam)[1] + " | " + r.getString("BACKTOMENU"));
         printLijn();
         String[][] nietGekochteKaarten = dc.geefNogNietGekochteKaarten(naam);
-        if(nietGekochteKaarten.length == 0) 
+        if (nietGekochteKaarten.length == 0) {
             System.out.println(r.getString("NOLIFE"));
-        else
+            return;
+        } else {
             System.out.println(formatteerStapelAlsLijst(nietGekochteKaarten, true));
+        }
 
         boolean valideKeuze = false;
         int keuze = 0;
@@ -68,7 +70,7 @@ public class UC7 {
                 }
                 String[] kaartKeuze = nietGekochteKaarten[keuze - 1];
                 dc.koopKaart(naam, kaartKeuze);
-                System.out.println(formatteerKaart(kaartKeuze, false) + " " + r.getString("BOUGHT") + kaartKeuze[2] + " " + r.getString("FORCREDIT"));
+                System.out.println(String.format(r.getString("CARDBOUGHT"),formatteerKaart(kaartKeuze, false), kaartKeuze[2] ));
                 valideKeuze = true;
             } catch (InsufficientBalanceException e) {
                 System.out.println(r.getString("INSUFFICIENTBALANCE"));

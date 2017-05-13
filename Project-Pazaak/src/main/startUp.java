@@ -1,8 +1,6 @@
 package main;
 
 import domein.DomeinController;
-import domein.SpelerEnKaartRepository;
-import persistentie.KaartMapper;
 import cui.Console;
 
 /*

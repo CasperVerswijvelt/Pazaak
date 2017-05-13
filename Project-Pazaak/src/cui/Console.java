@@ -48,18 +48,20 @@ public class Console {
                     + " 1. %s%n"
                     + " 2. %s%n"
                     + " 3. %s%n"
-                    + " 4. %s%n",
+                    + " 4. %s%n"
+                    + " 5. %s%n",
                     r.getString("EXIT"),
                     r.getString("NEWPLAYEROPTION"),
                     r.getString("STARTGAMEOPTION"),
                     r.getString("BUYCARDOPTION"),
-                    r.getString("LOADGAMEOPTION"));
+                    r.getString("LOADGAMEOPTION"),
+                    r.getString("RULES"));
 
             System.out.print(r.getString("CHOICE") + ": ");
             try {
                 keuze = Integer.parseInt(in.nextLine());
 
-                if (keuze > 4 || keuze < 0) {
+                if (keuze > 5 || keuze < 0) {
                     throw new InvalidNumberException();
                 }
                 printLijn();
@@ -82,6 +84,10 @@ public class Console {
                         System.out.println(r.getString("EXITGAME"));
                         printLijn();
                         System.exit(0);
+                        break;
+                    case 5:
+                        System.out.println(r.getString("REGELSTEKST"));
+                        break;
                 }
 
             } catch (InvalidNumberException | NumberFormatException e) {
@@ -130,7 +136,6 @@ public class Console {
                 type = "+/-";
                 break;
             case "T":
-                type = "xT";
                 waarde = "";
                 break;
             case "D":
