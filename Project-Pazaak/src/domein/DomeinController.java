@@ -181,7 +181,7 @@ public class DomeinController {
     }
 
     /**
-     * Possible doesn't work, gives card from start deck of the selected player
+     * Possibly doesn't work, gives card from start deck of the selected player
      * to make a game deck, that have not yet been selected
      *
      * @return

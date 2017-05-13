@@ -7,6 +7,7 @@ package gui;
 
 import domein.DomeinController;
 import exceptions.DatabaseException;
+import exceptions.NoPlayersAvailableException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -152,6 +153,8 @@ public class BorderPaneController extends BorderPane {
             btnBack.setVisible(true);
         } catch (DatabaseException e) {
 
+        } catch(NoPlayersAvailableException e) {
+            
         }
 
     }

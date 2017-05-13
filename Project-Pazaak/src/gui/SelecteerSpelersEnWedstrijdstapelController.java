@@ -7,9 +7,7 @@
 package gui;
 
 import domein.DomeinController;
-import exceptions.DatabaseException;
-import exceptions.NoPlayersAvailableException;
-import exceptions.PlayerDoesntExistException;
+import exceptions.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -110,8 +108,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         DBAlert.setContentText(r.getString("DATABASEERROR"));
 
         noPlayersAvailableAlert = new Alert(Alert.AlertType.ERROR);
-        playerNotFoundAlert.setTitle("Pazaak");
-        noPlayersAvailableAlert.setContentText(r.getString("NOTENOUGHPLAYERS"));
+        noPlayersAvailableAlert.setTitle("Pazaak");
 
         lblTitel.setText(r.getString("SELECTTWOPLAYERS"));
         lblSpeler1.setText(r.getString("PLAYER") + " 1");
@@ -141,11 +138,20 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
 
         try {
             spelerLijst = dc.geefAlleSpelerNamen();
+            noPlayersAvailableAlert.setContentText(String.format(r.getString("NOTENOUGHPLAYERS"), spelerLijst.size()));
+            if(spelerLijst.size()<2)
+                throw new NoPlayersAvailableException();
 
         } catch (DatabaseException e) {
 
             DBAlert.show();
             throw new DatabaseException(e);
+
+        }
+        catch (NoPlayersAvailableException e) {
+
+            noPlayersAvailableAlert.show();
+            throw new NoPlayersAvailableException(e);
 
         }
 
