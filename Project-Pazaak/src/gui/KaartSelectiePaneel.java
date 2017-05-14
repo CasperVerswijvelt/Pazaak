@@ -135,6 +135,7 @@ public class KaartSelectiePaneel extends VBox {
         } else {
             plaatsKaartTerug(button, speler);
         }
+        parent.verversConfirmKnop(speler, geefAantalGeselecteerd() != 6);
     }
 
     private int geefAantalGeselecteerd() {

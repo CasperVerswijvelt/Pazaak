@@ -74,7 +74,6 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
     private Label lblError;
     @FXML
     private HBox HBoxspelerSelectie;
-
     @FXML
     private void drukSelectPlayers(ActionEvent event) {
         drukSelecteerSpelers();
@@ -115,44 +114,29 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         lblSpeler2.setText(r.getString("PLAYER") + " 2");
         btnSelectPlayers.setText(r.getString("CONFIRM"));
         btnSelectPlayers.setDisable(true);
-        
-        btnNaarShop1 = new Button(r.getString("SHOP"));
-        btnNaarShop2 = new Button(r.getString("SHOP"));
-        
-        btnNaarShop1.getStyleClass().add("button-TaalSelectie");
-        btnNaarShop2.getStyleClass().add("button-TaalSelectie");
-        btnSelectPlayers.getStyleClass().add("button-TaalSelectie");
-        
-        btnNaarShop1.setPadding(new Insets(10));
-        btnNaarShop2.setPadding(new Insets(10));
-        
+
+        btnNaarShop1 = nieuweNaarShopButton();
+        btnNaarShop2 = nieuweNaarShopButton();
+
         btnNaarShop1.setOnAction((ActionEvent event) -> {
             naarKaartenWinkel(speler1);
-
         });
-
         btnNaarShop2.setOnAction((ActionEvent event) -> {
             naarKaartenWinkel(speler2);
-
         });
 
         try {
             spelerLijst = dc.geefAlleSpelerNamen();
             noPlayersAvailableAlert.setContentText(String.format(r.getString("NOTENOUGHPLAYERS"), spelerLijst.size()));
-            if(spelerLijst.size()<2)
+            if (spelerLijst.size() < 2) {
                 throw new NoPlayersAvailableException();
-
+            }
         } catch (DatabaseException e) {
-
             DBAlert.show();
             throw new DatabaseException(e);
-
-        }
-        catch (NoPlayersAvailableException e) {
-
+        } catch (NoPlayersAvailableException e) {
             noPlayersAvailableAlert.show();
             throw new NoPlayersAvailableException(e);
-
         }
 
         ObservableList<String> comboLijst = FXCollections.observableArrayList(spelerLijst);
@@ -213,64 +197,17 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         ksp2 = new KaartSelectiePaneel(dc, this, r);
         ksp1.activeerScherm(speler1);
         ksp2.activeerScherm(speler2);
-        btnConfirmSpeler1 = new Button(r.getString("CONFIRM"));
+        btnConfirmSpeler1 = nieuweConfirmWedstrijstapelButton();
         btnConfirmSpeler1.setOnAction((ActionEvent event) -> {
-            if (btnConfirmSpeler1.getText().equals(r.getString("CONFIRM"))) {
-                try {
-                    selecteerWedstrijdStapel(speler1);
-                    btnConfirmSpeler1.setDisable(true);
-                    ksp1.setDisable(true);
-                    ksp1.disable();
-                    checkBeideBevestigd();
-                    tabbladPaneel.getSelectionModel().select(1);
-                    lblError.setText(null);
-                    btnNaarShop1.setVisible(false);
-                } catch (IllegalArgumentException e) {
-                    lblError.setText(r.getString("SELECT6CARDS"));
-                }
-            } else {
-                parent.naarSpeelWedstrijdScherm();
-            }
+            drukBevestigWedstrijdStapel(speler1, btnConfirmSpeler1, ksp1, btnNaarShop1);
         });
-        btnConfirmSpeler2 = new Button(r.getString("CONFIRM"));
+        btnConfirmSpeler2 = nieuweConfirmWedstrijstapelButton();
         btnConfirmSpeler2.setOnAction((ActionEvent event) -> {
-            if (btnConfirmSpeler2.getText().equals(r.getString("CONFIRM"))) {
-                try {
-                    selecteerWedstrijdStapel(speler2);
-                    btnConfirmSpeler2.setDisable(true);
-                    ksp2.setDisable(true);
-                    ksp2.disable();
-                    checkBeideBevestigd();
-                    tabbladPaneel.getSelectionModel().select(0);
-                    lblError.setText(null);
-                    btnNaarShop2.setVisible(false);
-                } catch (IllegalArgumentException e) {
-                    lblError.setText(r.getString("SELECT6CARDS"));
-                }
-            } else {
-                parent.naarSpeelWedstrijdScherm();
-            }
-
+            drukBevestigWedstrijdStapel(speler2, btnConfirmSpeler2, ksp2, btnNaarShop2);
         });
-        
-        btnConfirmSpeler1.getStyleClass().add("button-TaalSelectie");
-        btnConfirmSpeler1.setPadding(new Insets(10));
-        btnConfirmSpeler2.getStyleClass().add("button-TaalSelectie");
-        btnConfirmSpeler2.setPadding(new Insets(10));
-        
-        Tab tab1 = new Tab();
-        VBox kaartSelectieSpeler1 = new VBox(ksp1, btnConfirmSpeler1, btnNaarShop1);
-        kaartSelectieSpeler1.setAlignment(Pos.CENTER);
-        kaartSelectieSpeler1.setSpacing(10);
-        tab1.setContent(kaartSelectieSpeler1);
-        tab1.setText(speler1);
 
-        Tab tab2 = new Tab();
-        VBox kaartSelectieSpeler2 = new VBox(ksp2, btnConfirmSpeler2, btnNaarShop2);
-        kaartSelectieSpeler2.setAlignment(Pos.CENTER);
-        kaartSelectieSpeler2.setSpacing(10);
-        tab2.setContent(kaartSelectieSpeler2);
-        tab2.setText(speler2);
+        Tab tab1 = nieuweKaartSelectieTab(ksp1, btnConfirmSpeler1, btnNaarShop1, speler1);
+        Tab tab2 = nieuweKaartSelectieTab(ksp2, btnConfirmSpeler2, btnNaarShop2, speler2);
 
         tabbladPaneel.getTabs().addAll(tab1, tab2);
         tabbladPaneel.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
@@ -279,7 +216,6 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         this.setTop(null);
 
         this.setCenter(tabbladPaneel);
-
     }
 
     private void selecteerWedstrijdStapel(String speler) {
@@ -289,7 +225,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         String[][] geselecteerdeKaarten = spelerKsp.geefGeselecteerdeKaarten();
 
         if (geselecteerdeKaarten.length < 6) {
-            throw new IllegalArgumentException();
+            throw new CardException();
         }
         for (String[] kaart : geselecteerdeKaarten) {
             dc.selecteerKaart(kaart);
@@ -320,13 +256,14 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         parent.setTerugKeerSchermWinkel(this);
         parent.naarKaartwinkelScherm(speler);
     }
-    
+
     public void verversKaarten() {
-        if(!ksp1.isDisabled())
+        if (!ksp1.isDisabled()) {
             ksp1.activeerScherm(speler1);
-        if(!ksp2.isDisabled())
+        }
+        if (!ksp2.isDisabled()) {
             ksp2.activeerScherm(speler2);
-        
+        }
     }
 
     public String getSpeler1() {
@@ -336,7 +273,52 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
     public String getSpeler2() {
         return speler2;
     }
-    
-    
 
+    private void drukBevestigWedstrijdStapel(String speler, Button btnConfirmSpeler, KaartSelectiePaneel ksp, Button btnNaarShop) {
+        if (btnConfirmSpeler.getText().equals(r.getString("CONFIRM"))) {
+            try {
+                selecteerWedstrijdStapel(speler);
+                btnConfirmSpeler.setDisable(true);
+                ksp.setDisable(true);
+                ksp.disable();
+                checkBeideBevestigd();
+                tabbladPaneel.getSelectionModel().select(tabbladPaneel.getSelectionModel().getSelectedIndex()==0?1:0);
+                lblError.setText(null);
+                btnNaarShop.setVisible(false);
+            } catch (CardException e) {
+                lblError.setText(r.getString("SELECT6CARDS"));
+            }
+        } else {
+            parent.naarSpeelWedstrijdScherm();
+        }
+    }
+
+    void verversConfirmKnop(String speler, boolean b) {
+        Button btnConfirmSpeler = speler.equals(speler1) ? btnConfirmSpeler1 : btnConfirmSpeler2;
+        btnConfirmSpeler.setDisable(b);
+    }
+
+    private Button nieuweConfirmWedstrijstapelButton() {
+        Button btnConfirmSpeler = new Button(r.getString("CONFIRM"));;
+        btnConfirmSpeler.getStyleClass().add("button-TaalSelectie");
+        btnConfirmSpeler.setPadding(new Insets(10));
+        btnConfirmSpeler.setDisable(true);
+        return btnConfirmSpeler;
+    }
+
+    private Tab nieuweKaartSelectieTab(KaartSelectiePaneel ksp, Button btnConfirmSpeler,Button btnNaarShop, String speler) {
+        Tab tab = new Tab(speler);
+        VBox kaartSelectieSpeler1 = new VBox(ksp, btnConfirmSpeler, btnNaarShop);
+        kaartSelectieSpeler1.setAlignment(Pos.CENTER);
+        kaartSelectieSpeler1.setSpacing(10);
+        tab.setContent(kaartSelectieSpeler1);
+        return tab;
+    }
+
+    private Button nieuweNaarShopButton() {
+        Button btnNaarShop = new Button(r.getString("SHOP"));
+        btnNaarShop.setPadding(new Insets(10));
+        btnNaarShop.getStyleClass().add("button-TaalSelectie");
+        return btnNaarShop;
+    }
 }
