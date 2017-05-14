@@ -51,7 +51,7 @@ public class Speler {
         int eerste = naam.charAt(0);
        
         if((eerste >47 && 
-                eerste <57 )|| 
+                eerste <58 )|| 
                 naam.contains(" ") || 
                 naam.matches("(?s).*\\p{Punct}.*"))
         throw new PlayerNameInvalidException();
