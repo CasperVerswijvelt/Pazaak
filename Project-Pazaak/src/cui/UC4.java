@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import static cui.Console.*;
+import exceptions.CardException;
 
 /**
  *
@@ -22,11 +23,6 @@ public class UC4 {
     public void start(DomeinController dc, ResourceBundle r) {
         Scanner in = new Scanner(System.in);
         List<String> spelers = dc.geefSpelersZonderWedstrijdStapel();
-        printLijn();
-        System.out.println(r.getString("SELECTEDPLAYERS"));
-        for (int i = 1; i <= spelers.size(); i++) {
-            System.out.println(i + ". " + spelers.get(i - 1));
-        }
         printLijn();
 
         //Spelers overlopen
@@ -86,7 +82,12 @@ public class UC4 {
             }
 
             //Wedstrdijstapel wordt gemaakt met geselecteerde kaarten
-            dc.maakWedstrijdStapel();
+            try{
+                dc.maakWedstrijdStapel();
+            }catch(CardException e) {
+                System.out.println(r.getString("SELECT6CARDS"));
+                return;
+            }
             printLijn();
 
         }
