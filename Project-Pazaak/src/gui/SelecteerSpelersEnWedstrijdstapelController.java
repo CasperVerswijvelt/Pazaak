@@ -114,6 +114,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
         lblSpeler2.setText(r.getString("PLAYER") + " 2");
         btnSelectPlayers.setText(r.getString("CONFIRM"));
         btnSelectPlayers.setDisable(true);
+        btnSelectPlayers.getStyleClass().add("button-TaalSelectie");
 
         btnNaarShop1 = nieuweNaarShopButton();
         btnNaarShop2 = nieuweNaarShopButton();
