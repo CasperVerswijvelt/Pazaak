@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import static cui.Console.*;
+import exceptions.PlayerDoesntExistException;
 
 /**
  *
@@ -34,9 +35,9 @@ public class UC3 {
     //Methodes
     public void start() {
         List<String> spelerLijst;
-        try{
+        try {
             spelerLijst = dc.geefAlleSpelerNamen();
-        } catch(DatabaseException e) {
+        } catch (DatabaseException e) {
             System.out.println(r.getString("DATABASEERROR"));
             return;
         }
@@ -47,15 +48,20 @@ public class UC3 {
             System.out.println(r.getString("CHOOSETWOPLAYERS"));
 
             //2 spelers vragen
-            for (int i = 0; i < 2; i++) {
-                String naam = promptSpelerUitLijst(r, spelerLijst, String.format(r.getString("PLAYERNAMEPROMPT"), i + 1));
+            while (dc.geefGeselecteerdeSpelers().size()<2) {
+                String naam = promptSpelerUitLijst(r, spelerLijst, String.format(r.getString("PLAYERNAMEPROMPT"), dc.geefGeselecteerdeSpelers().size() + 1));
                 spelerLijst.remove(naam);
-                dc.selecteerSpeler(naam);
+                try {
+                    dc.selecteerSpeler(naam);
+                } catch (PlayerDoesntExistException e) {
+                    System.out.println(r.getString("PLAYERNOTFOUND"));
+                }
+
             }
 
-            try{
+            try {
                 dc.maakNieuweWedstrijd();
-            } catch(NoPlayersAvailableException e) {
+            } catch (NoPlayersAvailableException e) {
                 System.out.println(r.getString("GAMECREATEERROR"));
                 return;
             }
@@ -64,5 +70,4 @@ public class UC3 {
 
     }
 
-    
 }

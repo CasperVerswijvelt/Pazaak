@@ -1,5 +1,6 @@
 package domein;
 
+import exceptions.CardException;
 import exceptions.NoPlayersAvailableException;
 import java.util.*;
 
@@ -211,6 +212,9 @@ public class DomeinController {
      * deck for, with the selected cards
      */
     public void maakWedstrijdStapel() {
+        if(geselecteerdeKaarten.size()!=6)
+            throw new CardException();
+        
         wedstrijd.maakWedstrijdstapel(geselecteerdeKaarten, geselecteerdeSpelerWedstrijdstapel);
         geselecteerdeKaarten.clear();
         geselecteerdeSpelerWedstrijdstapel = null;
