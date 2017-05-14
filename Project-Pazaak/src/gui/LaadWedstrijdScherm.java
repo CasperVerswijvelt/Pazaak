@@ -6,8 +6,7 @@
 package gui;
 
 import domein.DomeinController;
-import exceptions.DatabaseException;
-import exceptions.GameDoesntExistException;
+import exceptions.*;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

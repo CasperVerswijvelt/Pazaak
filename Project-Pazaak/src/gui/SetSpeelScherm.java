@@ -6,8 +6,7 @@
 package gui;
 
 import domein.DomeinController;
-import exceptions.DatabaseException;
-import exceptions.GameAlreadyExistsException;
+import exceptions.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.geometry.Insets;

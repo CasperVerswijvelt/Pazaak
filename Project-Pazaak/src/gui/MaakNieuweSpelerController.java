@@ -6,13 +6,9 @@
 package gui;
 
 import domein.DomeinController;
-import exceptions.DatabaseException;
-import exceptions.PlayerAlreadyExistsException;
-import exceptions.PlayerBirthInvalidException;
-import exceptions.PlayerNameInvalidException;
+import exceptions.*;
 import java.io.IOException;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

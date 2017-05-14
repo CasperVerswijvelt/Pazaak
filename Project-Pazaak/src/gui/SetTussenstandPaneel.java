@@ -19,11 +19,8 @@ import javafx.scene.layout.HBox;
 public class SetTussenstandPaneel extends HBox {
 
     private SetSpeelScherm ss;
-
     private final List<RadioButton> buttons;
-
     private final DomeinController dc;
-
     private final int speler;
 
     SetTussenstandPaneel(SetSpeelScherm aThis, DomeinController dc, ResourceBundle r, int speler) {
@@ -35,9 +32,7 @@ public class SetTussenstandPaneel extends HBox {
         }
 
         this.speler = speler;
-
         this.dc = dc;
-
         getChildren().addAll(buttons);
     }
 
@@ -52,7 +47,7 @@ public class SetTussenstandPaneel extends HBox {
                 buttons.get(i).setSelected(true);
             }
         } else {
-            for (int i = buttons.size()-score; i<buttons.size(); i++) {
+            for (int i = buttons.size() - score; i < buttons.size(); i++) {
                 buttons.get(i).setSelected(true);
             }
         }

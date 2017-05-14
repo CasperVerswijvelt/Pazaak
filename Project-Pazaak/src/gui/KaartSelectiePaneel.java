@@ -175,28 +175,25 @@ public class KaartSelectiePaneel extends VBox {
         List<Button> buttons = new ArrayList<>();
         for (int i = 6; i < selected.getChildren().size(); i++) {
             buttons.add((Button) selected.getChildren().get(i));
-
         }
         for (int i = 0; i < buttons.size(); i++) {
             selected.getChildren().remove(buttons.get(i));
-
         }
 
         for (int i = 0; i < buttons.size(); i++) {
             selected.add(buttons.get(i), i, 0);
-
         }
     }
 
     private void selecteerKaart(Button button, String speler) {
         int aantalGeselecteerdeKaarten = selected.getChildren().size() - 6;
         String kleur = speler.equals(parent.getSpeler1()) ? "Blauw" : "Rood";
-            
-            Background background = new Background(new BackgroundImage(new Image(getClass().getResource("/img/kaartVoorkant" + kleur + "-groot.png").toExternalForm()),
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT));
+
+        Background background = new Background(new BackgroundImage(new Image(getClass().getResource("/img/kaartVoorkant" + kleur + "-groot.png").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT));
         button.setBackground(background);
 
         button.setMinSize(75, 120);
@@ -209,5 +206,4 @@ public class KaartSelectiePaneel extends VBox {
             selected.getChildren().get(i).getStyleClass().clear();
         }
     }
-
 }

@@ -6,7 +6,7 @@
 package gui;
 
 import domein.DomeinController;
-import exceptions.DatabaseException;
+import exceptions.*;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;

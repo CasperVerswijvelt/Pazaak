@@ -323,7 +323,7 @@ public class KaartWinkelScherm extends GridPane {
                     break;
 
             }
-            String[] kaartGewoneLayout = Utilities.veranderNaarGewoonKaartFormaat(kaart);
+            String[] kaartGewoneLayout = veranderNaarGewoonKaartFormaat(kaart);
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Pazaak");
@@ -383,5 +383,24 @@ public class KaartWinkelScherm extends GridPane {
     void selecteerSpeler(String speler) {
         cbSpelerSpelectie.setValue(speler);
         selecteerSpeler();
+    }
+    
+    public String[] veranderNaarGewoonKaartFormaat(String[] kaart) {
+        String[] returnKaart = new String[3];
+        System.arraycopy(kaart, 0, returnKaart, 0, 3);
+        if (returnKaart[1].contains("&")) {
+            returnKaart[0] = "W";
+            returnKaart[1] = "2&4".equals(kaart[1])?"1":"2";
+        } else if (kaart[0].equals("1+/-2") || kaart[0].equals("C")) {
+            returnKaart[0] = "C";
+            returnKaart[1] = "1";
+        } else if (kaart[0].equals("T")) {
+            returnKaart[1] = "1";
+        } else if (kaart[0].equals("D")) {
+            returnKaart[1] = "0";
+        } else if (kaart[0].equals("+/-")) {
+            returnKaart[0] = "*";
+        }
+        return returnKaart;
     }
 }

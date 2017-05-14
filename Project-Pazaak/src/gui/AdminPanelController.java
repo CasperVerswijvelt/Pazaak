@@ -231,7 +231,6 @@ public class AdminPanelController extends GridPane {
 
     private String geselecteerdeSpeler() {
         if (cbSpelerSelectie.getSelectionModel().getSelectedItem() == null) {
-
             txfSpelerNaam.clear();
             txfKrediet.clear();
             txfSpelerGeboortedatum.clear();
@@ -264,9 +263,7 @@ public class AdminPanelController extends GridPane {
         } catch (NumberFormatException e) {
             lblError.setText(r.getString("NUMBERTOOLARGE"));
         } catch(IllegalArgumentException e) {
-            
         }
-
         laadSpelersInComboBox();
     }
 
@@ -279,7 +276,6 @@ public class AdminPanelController extends GridPane {
         } catch (Exception e) {
             lblError.setText(r.getString("DATABASEERROR"));
         }
-
         laadSpelersInComboBox();
     }
 
@@ -293,7 +289,6 @@ public class AdminPanelController extends GridPane {
         } catch (IllegalArgumentException e) {
             lblError.setText(r.getString("LOADERROR"));
         }
-
         laadGamesInComboBox();
     }
 
@@ -389,7 +384,6 @@ public class AdminPanelController extends GridPane {
         } catch (DatabaseException e) {
             lblError.setText(r.getString("DATABASEERROR"));
         } catch (Exception e) {
-
         }
     }
 
@@ -402,7 +396,6 @@ public class AdminPanelController extends GridPane {
         } catch (DatabaseException e) {
             lblError.setText(r.getString("DATABASEERROR"));
         } catch (Exception e) {
-
         }
     }
 }

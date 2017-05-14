@@ -6,8 +6,7 @@
 package gui;
 
 import domein.DomeinController;
-import exceptions.DatabaseException;
-import exceptions.NoPlayersAvailableException;
+import exceptions.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;

@@ -171,7 +171,6 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
     }
 
     private void drukSelecteerSpelers() {
-
         try {
             speler1 = cbSpelerSelectie1.getSelectionModel().getSelectedItem();
             speler2 = cbSpelerSelectie2.getSelectionModel().getSelectedItem();

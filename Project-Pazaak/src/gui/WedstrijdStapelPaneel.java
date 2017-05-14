@@ -6,8 +6,7 @@
 package gui;
 
 import domein.DomeinController;
-import static gui.Utilities.maakTextPassendInButton;
-import static gui.Utilities.veranderNaarMooieLayout;
+import static gui.Utilities.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
