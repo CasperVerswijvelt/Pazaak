@@ -103,7 +103,7 @@ public class DomeinController {
     }
     
     /**
-     * Gives a list of cards that were selected with selecteerKaart
+     * Gives a amount cards that were selected with selecteerKaart
      *
      * @return
      */

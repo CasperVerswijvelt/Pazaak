@@ -48,8 +48,8 @@ public class Speler {
         if(naam == null || naam.equals(""))
             throw new PlayerNameInvalidException("Leeg");
         
-        char eerste = naam.charAt(0);
-        
+        int eerste = naam.charAt(0);
+       
         if((eerste >47 && 
                 eerste <57 )|| 
                 naam.contains(" ") || 
