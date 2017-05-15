@@ -9,6 +9,7 @@ import domein.DomeinController;
 import exceptions.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -16,11 +17,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
 /**
  *
  * @author goran
@@ -73,7 +73,7 @@ public class SetSpeelScherm extends GridPane {
         gameExistsAlert = new Alert(Alert.AlertType.ERROR);
         gameExistsAlert.setTitle("Pazaak");
         gameExistsAlert.setContentText(r.getString("GAMEALREADYEXISTS"));
-        
+
         gameNameTooLongAlert = new Alert(Alert.AlertType.ERROR);
         gameNameTooLongAlert.setTitle("Pazaak");
         gameNameTooLongAlert.setContentText(r.getString("GAMENAMETOOLONG"));
@@ -116,8 +116,7 @@ public class SetSpeelScherm extends GridPane {
             //Checken of wedstrijd ni gedaan is kejt
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             String uitslag = dc.geefSetUitslag();
-            String alertUitslag = uitslag.equals("TIE") ? r.getString("TIE") : uitslag +" "+ r.getString("WINS");
-            
+            String alertUitslag = uitslag.equals("TIE") ? r.getString("TIE") : uitslag + " " + r.getString("WINS");
 
             alert.setTitle("Pazaak");
             int[] tussenstand = dc.geefWedstrijdTussenstand();
@@ -142,16 +141,21 @@ public class SetSpeelScherm extends GridPane {
                     while (true) {
 
                         TextInputDialog dialog = new TextInputDialog();
+                        dialog.getEditor().textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+ 
+                            dialog.getEditor().setText(newValue.length() > 50 ? newValue.substring(0, 50) : newValue);
+                        });
                         dialog.setTitle("Pazaak");
                         dialog.setHeaderText(null);
                         dialog.setContentText(r.getString("GAMENAME"));
 
                         Optional<String> invoer = dialog.showAndWait();
-                       
+
                         if (invoer.isPresent()) {
                             String naam = invoer.get().trim();
-                            if(naam.isEmpty())
+                            if (naam.isEmpty()) {
                                 continue;
+                            }
                             try {
                                 dc.slaWedstrijdOp(naam);
                             } catch (GameAlreadyExistsException e) {
@@ -160,25 +164,25 @@ public class SetSpeelScherm extends GridPane {
                             } catch (DatabaseException e) {
                                 DBAlert.showAndWait();
                                 continue;
-                            }catch (GameNameTooLongException e) {
-                                DBAlert.showAndWait();
+                            } catch (GameNameTooLongException e) {
+                                gameNameTooLongAlert.showAndWait();
                                 continue;
-                            }catch(Exception e) {
+                            } catch (Exception e) {
                                 new Alert(AlertType.ERROR, e.getMessage(), ButtonType.CLOSE);
                             }
-                            
+
                             Alert alertVerderSpelen = new Alert(Alert.AlertType.CONFIRMATION);
                             alertVerderSpelen.setTitle("Pazaak");
                             alertVerderSpelen.setHeaderText(String.format(r.getString("GAMESAVED"), naam));
                             alertVerderSpelen.setContentText(r.getString("DOORGAAN"));
-                            
+
                             Optional<ButtonType> resultaat = alertVerderSpelen.showAndWait();
-                            if (resultaat.get() != ButtonType.OK){
+                            if (resultaat.get() != ButtonType.OK) {
                                 parent.naarMenu();
-                            }else{
+                            } else {
                                 setEindeAfhandelen();
                             }
-                            
+
                             break;
 
                         } else {
@@ -216,10 +220,11 @@ public class SetSpeelScherm extends GridPane {
         String spelerAanBeurt = dc.geefSpelerAanBeurt();
         String[][] spelbord = dc.geefSpelBord();
         int score = dc.geefScore();
-        if (spelerAanBeurt.equals(speler1)) 
+        if (spelerAanBeurt.equals(speler1)) {
             sbp1.verversSpelbord(spelbord, score);
-        else 
+        } else {
             sbp2.verversSpelbord(spelbord, score);
+        }
         stp1.verversAantalWins();
         stp2.verversAantalWins();
 
@@ -229,8 +234,9 @@ public class SetSpeelScherm extends GridPane {
         dc.eindigBeurt();
         boolean setIsKlaar = dc.setIsKlaar();
         checkEindeSet();
-        if (setIsKlaar) 
+        if (setIsKlaar) {
             return;
+        }
         dc.deelKaartUit();
         verversSpelerScherm();
         checkEindeSet();
@@ -244,7 +250,6 @@ public class SetSpeelScherm extends GridPane {
     }
 
     void drukSpeelWedstrijdkaart(String[] kaart, int gewensteWaarde, char gewensteType) {
-        
 
         dc.gebruikWedstrijdKaart(kaart, gewensteWaarde, gewensteType);
         verversSpelerScherm();
@@ -260,7 +265,7 @@ public class SetSpeelScherm extends GridPane {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Pazaak");
             alert.setHeaderText(r.getString("GAMEOVER"));
-            alert.setContentText(winnaar + " " +r.getString("WINS") + "\n" + r.getString("NEWCREDIT") + " " + dc.geefSpelerInfo(winnaar)[1]);
+            alert.setContentText(winnaar + " " + r.getString("WINS") + "\n" + r.getString("NEWCREDIT") + " " + dc.geefSpelerInfo(winnaar)[1]);
             alert.showAndWait();
 
             parent.naarMenu();

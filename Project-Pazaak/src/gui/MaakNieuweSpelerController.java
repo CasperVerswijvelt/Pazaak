@@ -118,13 +118,11 @@ public class MaakNieuweSpelerController extends VBox {
 
         txfSpelerGeboorteJaar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             newValue = newValue.replaceAll("[^\\d]", "");
-            newValue = newValue.length() > 4 ? newValue.substring(0, 4) : newValue;
-            txfSpelerGeboorteJaar.setText(newValue);
+            txfSpelerGeboorteJaar.setText(newValue.length() > 4 ? newValue.substring(0, 4) : newValue);
         });
         txfSpelerNaam.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             newValue = newValue.replaceAll("\\p{Punct}|\\s", "");
-            newValue = newValue.length() > 50 ? newValue.substring(0, 50) : newValue;
-            txfSpelerNaam.setText(newValue.replaceAll("\\p{Punct}|\\s", ""));
+            txfSpelerNaam.setText(newValue.length() > 50 ? newValue.substring(0, 50) : newValue);
         });
 
         this.ttNaam = new Tooltip(r.getString("NAMEREQUIREMENTS"));
