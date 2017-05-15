@@ -56,6 +56,9 @@ public class Set {
      * method that draws a card
      */
     public void deelKaartUit() {
+        if(setIsKlaar())
+            return;
+        
         Kaart kaart = setStapel.get(0);
         setStapel.remove(0);
 
@@ -149,12 +152,10 @@ public class Set {
      * @param Ptype
      */
     public void gebruikWedstrijdKaart(Kaart kaart, int Pwaarde, char Ptype) {
-        List<Kaart> huidigSpelbord;
-        if (speler1AanBeurt) {
-            huidigSpelbord = spelbord1;
-        } else {
-            huidigSpelbord = spelbord2;
-        }
+        if(setIsKlaar())
+            return;
+        
+        List<Kaart> huidigSpelbord = speler1AanBeurt?spelbord1:spelbord2;
 
         int waarde = kaart.getWaarde();
         char origineelType = kaart.getType();
