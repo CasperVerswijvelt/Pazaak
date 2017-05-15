@@ -302,7 +302,7 @@ public class AdminPanelController extends GridPane {
             dialog.setHeaderText(r.getString("VALIDATETEXT"));
 
             // Set the icon (must be included in the project).
-            ImageView img = new ImageView(this.getClass().getResource("lock.png").toString());
+            ImageView img = new ImageView(this.getClass().getResource("/img/lock.png").toString());
             img.setFitWidth(100);
             img.setFitHeight(100);
             dialog.setGraphic(img);
