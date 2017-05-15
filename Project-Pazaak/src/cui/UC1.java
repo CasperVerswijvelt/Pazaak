@@ -30,9 +30,9 @@ public class UC1 {
         String naam="";
         
         System.out.println(r.getString("NEWPLAYEROPTION"));
-        printLijn();
         boolean opnieuw = true;
         do {
+            printLijn();
             try {
                 System.out.print(r.getString("NEWPLAYERNAME"));
                 naam = input.nextLine().trim();
@@ -53,23 +53,18 @@ public class UC1 {
             } catch (PlayerAlreadyExistsException e) {
                 printLijn();
                 System.out.println(r.getString("PLAYERALREADYEXISTS"));
-                return;
             } catch(PlayerNameInvalidException e){
                 printLijn();
                 System.out.println(r.getString("NAMEREQUIREMENTS"));
-                return;
             }catch(PlayerBirthInvalidException | NumberFormatException e) {
                 printLijn();
                 System.out.println(r.getString("BIRTHREQUIREMENTS"));
-                return;
             } catch(DatabaseException e) {
                 printLijn();
                 System.out.println(r.getString("DATABASEERROR"));
-                return;
             } catch(IllegalArgumentException e) {
                 printLijn();
                 System.out.println(r.getString("FILLINALLFIELDS"));
-                return;
             }
         //Zolang opgegeven info niet aan vereisten voldoet wordt deze opnieuw opgevraagd
         } while (opnieuw);

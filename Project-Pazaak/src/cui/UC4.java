@@ -74,10 +74,13 @@ public class UC4 {
                     array = new String[startStapel.size()][2];
                     startStapel.toArray(array);
                     
-                    for(String[] startstapelKaart : startStapel){
-                        for(String[] geselecteerdeKaart : dc.geefGeselecteerdeKaarten()) {
-                            if(Arrays.equals(startstapelKaart, geselecteerdeKaart))
-                                startStapel.remove(startstapelKaart);
+
+                    String[][] geselecteerdeKaarten = dc.geefGeselecteerdeKaarten();
+                    for(int i =0; i<startStapel.size(); i++){
+                        for (String[] geselecteerdeKaarten1 : geselecteerdeKaarten) {
+                            if (Arrays.equals(startStapel.get(i), geselecteerdeKaarten1)) {
+                                startStapel.remove(startStapel.get(i));
+                            }
                         }
                     }
                     
