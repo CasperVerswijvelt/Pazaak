@@ -74,7 +74,7 @@ public class Wedstrijd {
      * @param score1
      * @param score2
      */
-    public Wedstrijd(Speler speler1, Speler speler2, List<Kaart> wedstrijdStapel1, List<Kaart> wedstrijdStapel2, String beginnendeSpeler, int score1, int score2) {
+    public Wedstrijd(Speler speler1, Speler speler2, List<Kaart> wedstrijdStapel1, List<Kaart> wedstrijdStapel2, boolean speler1Begint, int score1, int score2) {
         this.aantalGewonnen = new int[2];
         this.wedstrijdStapels = new ArrayList<>();
 
@@ -88,11 +88,7 @@ public class Wedstrijd {
         aantalGewonnen[0] = score1;
         aantalGewonnen[1] = score2;
 
-        if (spelers.get(0).getNaam().equalsIgnoreCase(beginnendeSpeler)) {
-            eersteSpelerBegint = true;
-        } else {
-            eersteSpelerBegint = false;
-        }
+        eersteSpelerBegint = speler1Begint;
 
     }
 

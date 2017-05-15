@@ -39,10 +39,10 @@ public class WedstrijdMapper {
             }
 
             //Wedstrijd
-            PreparedStatement query = conn.prepareStatement("INSERT INTO " + Connectie.DBNAAM + ".Wedstrijd (naam, spelerAanBeurt, speler1, speler2, score1,score2)"
+            PreparedStatement query = conn.prepareStatement("INSERT INTO " + Connectie.DBNAAM + ".Wedstrijd (naam, speler1AanBeurt, speler1, speler2, score1,score2)"
                     + "VALUES (?, ?, ?, ?, ?,?)");
             query.setString(1, wedstrijdNaam);
-            query.setString(2, wedstrijd.geefSpelerAanBeurt());
+            query.setInt(2, wedstrijd.geefSpelerAanBeurt().equals(wedstrijd.geefSpelers().get(0).getNaam())?1:0);
             query.setString(3, wedstrijd.geefSpelers().get(0).getNaam());
             query.setString(4, wedstrijd.geefSpelers().get(1).getNaam());
             query.setInt(5, wedstrijd.geefTussenstand()[0]);
@@ -94,7 +94,8 @@ public class WedstrijdMapper {
 
             Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
 
-            String beginnendeSpeler = "", speler1 = "", speler2 = "";
+            String speler1 = "", speler2 = "";
+            boolean speler1Begint =true;
             int score1 = 0, score2 = 0;
             List<Kaart> ws1 = new ArrayList<>(), ws2 = new ArrayList<>();
 
@@ -104,7 +105,7 @@ public class WedstrijdMapper {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                beginnendeSpeler = rs.getString("spelerAanBeurt");
+                speler1Begint = rs.getInt("speler1AanBeurt")!=0;
                 speler1 = rs.getString("speler1");
                 speler2 = rs.getString("speler2");
                 score1 = rs.getInt("score1");
@@ -140,7 +141,7 @@ public class WedstrijdMapper {
             query.close();
 
             //Wedstrijd aanmaken met gegeven gegevens
-            return new Wedstrijd(sm.geefSpeler(speler1), sm.geefSpeler(speler2), ws1, ws2, beginnendeSpeler, score1, score2);
+            return new Wedstrijd(sm.geefSpeler(speler1), sm.geefSpeler(speler2), ws1, ws2, speler1Begint, score1, score2);
 
         } catch (SQLException ex) {
             throw new GameLoadDatabaseException(ex);
