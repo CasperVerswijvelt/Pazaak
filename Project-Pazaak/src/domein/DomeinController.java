@@ -108,8 +108,8 @@ public class DomeinController {
      *
      * @return
      */
-    public int geefAantalGeselecteerdeKaarten() {
-        return geselecteerdeKaarten.size();
+    public String[][] geefGeselecteerdeKaarten() {
+        return kaartenAlsString(geselecteerdeKaarten);
     }
 
     /**

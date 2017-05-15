@@ -38,7 +38,7 @@ public class UC4 {
             List<String[]> startStapel = new ArrayList<>(Arrays.asList(dc.geefStartStapel()));
 
             //6 kaarten kiezen
-            while(dc.geefAantalGeselecteerdeKaarten()<6) {
+            while (dc.geefGeselecteerdeKaarten().length < 6) {
 
                 //Kaarten tonen
                 String[][] array = new String[startStapel.size()][2];
@@ -69,6 +69,20 @@ public class UC4 {
                 //Gekozen kaart wordt geselecteerd en getoond
                 if (keuze == startStapel.size() + 1) {
                     new UC7(dc, r).start(speler);
+                    
+                    startStapel = new ArrayList<>(Arrays.asList(dc.geefStartStapel(speler)));
+                    array = new String[startStapel.size()][2];
+                    startStapel.toArray(array);
+                    
+                    for(String[] startstapelKaart : startStapel){
+                        for(String[] geselecteerdeKaart : dc.geefGeselecteerdeKaarten()) {
+                            if(Arrays.equals(startstapelKaart, geselecteerdeKaart))
+                                startStapel.remove(startstapelKaart);
+                        }
+                    }
+                    
+                    
+                    
                     printLijn();
                     System.out.printf(r.getString("SELECTCARDSFORPLAYER") + "%n", speler);
                     printLijn();
@@ -82,9 +96,9 @@ public class UC4 {
             }
 
             //Wedstrdijstapel wordt gemaakt met geselecteerde kaarten
-            try{
+            try {
                 dc.maakWedstrijdStapel();
-            }catch(CardException e) {
+            } catch (CardException e) {
                 System.out.println(r.getString("SELECT6CARDS"));
                 return;
             }
