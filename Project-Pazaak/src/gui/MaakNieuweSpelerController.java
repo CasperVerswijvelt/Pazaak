@@ -122,6 +122,8 @@ public class MaakNieuweSpelerController extends VBox {
             txfSpelerGeboorteJaar.setText(newValue);
         });
         txfSpelerNaam.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            newValue = newValue.replaceAll("\\p{Punct}|\\s", "");
+            newValue = newValue.length() > 50 ? newValue.substring(0, 50) : newValue;
             txfSpelerNaam.setText(newValue.replaceAll("\\p{Punct}|\\s", ""));
         });
 

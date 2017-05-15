@@ -44,16 +44,18 @@ public class Speler {
     }
 
     //Controle
-    private void controleerNaam(String naam) {
-        if(naam == null || naam.equals(""))
+    private void controleerNaam(String naamInput) {
+        if(naamInput == null || naamInput.equals(""))
             throw new PlayerNameInvalidException("Leeg");
+        String naam = naamInput.trim();
         
         int eerste = naam.charAt(0);
        
         if((eerste >47 && 
                 eerste <58 )|| 
                 naam.contains(" ") || 
-                naam.matches("(?s).*\\p{Punct}.*"))
+                naam.matches("(?s).*\\p{Punct}.*") ||
+                naam.length()>50)
         throw new PlayerNameInvalidException();
         if (naam.length() < 3) 
             throw new PlayerNameInvalidException("Naam moet minstens 3 karakters lang zijn.");

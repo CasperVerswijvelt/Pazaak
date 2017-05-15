@@ -47,8 +47,9 @@ public class UC8 {
                 System.out.println(r.getString("GAMEALREADYEXISTS"));
             } catch(DatabaseException e){
                 System.out.println(r.getString("DATABASEERROR"));
-                break;
-            }catch (IllegalArgumentException e) {
+            } catch (GameNameTooLongException e) {
+                System.out.println(r.getString("GAMENAMETOOLONG"));
+            } catch (IllegalArgumentException e) {
                 System.out.println(r.getString("INVALIDCHOICE"));
             }
             

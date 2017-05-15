@@ -5,6 +5,7 @@
  */
 package domein;
 
+import exceptions.GameNameTooLongException;
 import persistentie.WedstrijdMapper;
 
 /**
@@ -32,6 +33,8 @@ public class WedstrijdRepository {
      * @param naam
      */
     public void slaWedstrijdOp(Wedstrijd wedstrijd, String naam) {
+        if(naam.length()>50)
+            throw new GameNameTooLongException();
         wm.slaWedstrijdOp(wedstrijd, naam);
     }
     

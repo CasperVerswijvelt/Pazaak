@@ -43,7 +43,7 @@ public class SetSpeelScherm extends GridPane {
     private Label lblSpeler1;
     private Label lblSpeler2;
 
-    private Alert DBAlert, gameExistsAlert;
+    private Alert DBAlert, gameExistsAlert, gameNameTooLongAlert;
 
     SetSpeelScherm(BorderPaneController parent, DomeinController dc, ResourceBundle r) {
         this.parent = parent;
@@ -73,6 +73,10 @@ public class SetSpeelScherm extends GridPane {
         gameExistsAlert = new Alert(Alert.AlertType.ERROR);
         gameExistsAlert.setTitle("Pazaak");
         gameExistsAlert.setContentText(r.getString("GAMEALREADYEXISTS"));
+        
+        gameNameTooLongAlert = new Alert(Alert.AlertType.ERROR);
+        gameNameTooLongAlert.setTitle("Pazaak");
+        gameNameTooLongAlert.setContentText(r.getString("GAMENAMETOOLONG"));
 
         lblSpeler1 = new Label(speler1);
         lblSpeler2 = new Label(speler2);
@@ -101,7 +105,6 @@ public class SetSpeelScherm extends GridPane {
     }
 
     void checkEindeSet() {
-        Stage stage = (Stage) this.getScene().getWindow();
         if (dc.setIsKlaar()) {
             ap1.setDisable(true);
             ap2.setDisable(true);
@@ -157,6 +160,11 @@ public class SetSpeelScherm extends GridPane {
                             } catch (DatabaseException e) {
                                 DBAlert.showAndWait();
                                 continue;
+                            }catch (GameNameTooLongException e) {
+                                DBAlert.showAndWait();
+                                continue;
+                            }catch(Exception e) {
+                                new Alert(AlertType.ERROR, e.getMessage(), ButtonType.CLOSE);
                             }
                             
                             Alert alertVerderSpelen = new Alert(Alert.AlertType.CONFIRMATION);
