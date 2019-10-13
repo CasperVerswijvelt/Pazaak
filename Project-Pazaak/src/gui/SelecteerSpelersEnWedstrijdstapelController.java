@@ -178,6 +178,7 @@ public class SelecteerSpelersEnWedstrijdstapelController extends BorderPane {
             dc.selecteerSpeler(speler1);
             dc.selecteerSpeler(speler2);
             dc.maakNieuweWedstrijd();
+
         } catch (NullPointerException e) {
             lblError.setText(r.getString("SELECTTWOPLAYERS"));
             return;

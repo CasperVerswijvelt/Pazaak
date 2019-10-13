@@ -5,7 +5,7 @@
  */
 package main;
 
-import domein.DomeinController;
+import domein.*;
 import gui.BorderPaneController;
 import gui.TaalSelectieSBController;
 import javafx.application.Application;
@@ -13,10 +13,15 @@ import static javafx.application.Application.launch;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.util.Optional;
 
 /**
  *
@@ -28,7 +33,18 @@ public class startUpGui extends Application {
     private double xOffset, yOffset;
     @Override
     public void start(Stage primaryStage) throws Exception {
-        DomeinController dc = new DomeinController();
+        ButtonType online = new ButtonType("Online", ButtonBar.ButtonData.APPLY);
+        ButtonType offline = new ButtonType("Offline", ButtonBar.ButtonData.APPLY);
+        Alert alert = new Alert(Alert.AlertType.NONE, "Do you want to run Pazaak in online or offline mode?", online, offline);
+        alert.setTitle("Pazaak");
+        Optional<ButtonType> res = alert.showAndWait();
+
+        DomeinController dc = new DomeinController(new OfflineSpelerEnKaartRepository(), new OfflineWedstrijdRepository());
+
+        if (res.isPresent() && res.get() == online) {
+            dc = new DomeinController(new SpelerEnKaartRepository(),new WedstrijdRepository());
+        }
+
 
         BorderPaneController parent = new BorderPaneController(dc);
         

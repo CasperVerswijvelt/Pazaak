@@ -9,7 +9,7 @@ import persistentie.SpelerMapper;
  * Class that connects to the PlayerMapper
  * @author goran
  */
-public class SpelerEnKaartRepository {
+public class SpelerEnKaartRepository implements ISpelerEnKaartRepository{
 
     //Attributen
     private SpelerMapper sm;

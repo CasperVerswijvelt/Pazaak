@@ -11,8 +11,8 @@ import java.util.*;
 public class DomeinController {
 
     //Attributen
-    private final SpelerEnKaartRepository spelerRepo;
-    private final WedstrijdRepository wedstrijdRepo;
+    private ISpelerEnKaartRepository spelerRepo;
+    private IWedstrijdRepository wedstrijdRepo;
     private Wedstrijd wedstrijd;
     private final List<Speler> geselecteerdeSpelers;
     private final List<Kaart> geselecteerdeKaarten;
@@ -22,9 +22,9 @@ public class DomeinController {
     /**
      *
      */
-    public DomeinController() {
-        this.spelerRepo = new SpelerEnKaartRepository();
-        this.wedstrijdRepo = new WedstrijdRepository();
+    public DomeinController(ISpelerEnKaartRepository spelerRepo, IWedstrijdRepository wedstrijdRepo) {
+        this.spelerRepo = spelerRepo;
+        this.wedstrijdRepo = wedstrijdRepo;
         this.geselecteerdeSpelers = new ArrayList<>();
         this.geselecteerdeKaarten = new ArrayList<>();
     }

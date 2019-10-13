@@ -12,7 +12,7 @@ import persistentie.WedstrijdMapper;
  *  Game repository, can save or load games in the database (using the mapper)
  * @author Casper
  */
-public class WedstrijdRepository {
+public class WedstrijdRepository implements IWedstrijdRepository {
     //Attributen
     private WedstrijdMapper wm;
     
